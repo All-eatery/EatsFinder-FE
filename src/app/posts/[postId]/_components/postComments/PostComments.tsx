@@ -1,9 +1,14 @@
 import { ProfileImage } from '@/components/atoms';
 import { Comment, Search } from '@/components/molecules';
+import { CommentType } from '@/types/comment';
+
+interface PostCommentsProps {
+  postComments: CommentType[];
+}
 
 const example = new Array(4).fill(0);
 
-const PostComments = () => {
+const PostComments = ({ postComments }: PostCommentsProps) => {
   return (
     <section className='flex flex-col gap-6'>
       <div>
@@ -11,11 +16,11 @@ const PostComments = () => {
       </div>
       <div className='flex gap-6'>
         <ProfileImage size={60} />
-        <Search className='w-full' />
+        <Search searchIcon={false} placeholder='댓글 추가' className='w-full' />
       </div>
       <div>
-        {example.map((_, idx) => (
-          <Comment key={idx} />
+        {postComments.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
         ))}
       </div>
     </section>

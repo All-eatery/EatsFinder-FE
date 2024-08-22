@@ -1,13 +1,17 @@
 import { ProfileImage } from '@/components/atoms';
 import { ThumbsSVG } from '@/components/svg/ThumbsSVG';
+import { CommentType } from '@/types/comment';
 import { customTwMerge } from '@/utils/customTwMerge';
+import timeDifference from '@/utils/timeDifference';
 
 interface CommentProps {
+  comment: CommentType;
   isLiked?: boolean;
   isAuthor?: boolean;
 }
 
 export const Comment = ({
+  comment,
   isLiked = false,
   isAuthor = false,
 }: CommentProps) => {
@@ -23,15 +27,14 @@ export const Comment = ({
       </div>
       <div className='flex flex-col gap-3'>
         <div>
-          <span className='mr-3 text-gray-600 subTitle-18'>민정6632</span>
-          <span className='text-gray-300 body-16'>2개월전</span>
+          <span className='mr-3 text-gray-600 subTitle-18'>
+            {comment.nickname}
+          </span>
+          <span className='text-gray-300 body-16'>
+            {timeDifference(comment.createdAt)}
+          </span>
         </div>
-        <p className='break-normal text-gray-600 body-20'>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi sint
-          nobis accusamus eius minus cumque at inventore? Dolorem tempora
-          accusamus nam quasi itaque commodi ex sed. Voluptas soluta quas
-          assumenda.
-        </p>
+        <p className='break-normal text-gray-600 body-20'>{comment.content}</p>
         <div className='flex items-center gap-2'>
           <div
             className={customTwMerge(
@@ -41,7 +44,7 @@ export const Comment = ({
           >
             <ThumbsSVG />
           </div>
-          <span className='text-gray-300 body-16'>24</span>
+          <span className='text-gray-300 body-16'>{comment.likeCount}</span>
         </div>
       </div>
     </div>
