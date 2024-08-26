@@ -3,6 +3,8 @@ const timeDifference = (date: string) => {
   const msPerHour = msPerMinute * 60;
   const msPerDay = msPerHour * 24;
   const msPerWeek = msPerDay * 7;
+  const msPerMonth = msPerWeek * 4;
+  const msPerYear = msPerMonth * 12;
 
   const createdAt = new Date(date);
   const now = new Date();
@@ -17,8 +19,10 @@ const timeDifference = (date: string) => {
   else if (elapsed < msPerDay)
     return Math.round(elapsed / msPerHour) + '시간 전';
   else if (elapsed < msPerWeek) return Math.round(elapsed / msPerDay) + '일 전';
-  else
-    return `${createdAt.getFullYear()}.${createdAt.getMonth()}.${createdAt.getDate()}`;
+  else if (elapsed < msPerMonth)
+    return Math.round(elapsed / msPerMonth) + '개월 전';
+  else if (elapsed < msPerYear)
+    return Math.round(elapsed / msPerYear) + '년 전';
 };
 
 export default timeDifference;
