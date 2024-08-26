@@ -19,22 +19,29 @@ const searchVariant = cva(
 interface SearchProps
   extends VariantProps<typeof searchVariant>,
     InputHTMLAttributes<HTMLInputElement> {
-  onSearch?: () => void;
+  searchIcon?: boolean;
+  onSearch?: () => {};
 }
 
 export const Search = ({
   variant,
   className,
+  searchIcon = true,
   onSearch,
   ...props
 }: SearchProps) => {
   return (
     <div className={customTwMerge(searchVariant({ variant }), className)}>
-      <div className='pointer-events-none absolute'>
-        <SearchSVG />
-      </div>
-      <input className='w-full pl-8 outline-none' {...props} />
-      <button aria-label='search button' type='button' onClick={onSearch}>
+      {searchIcon && (
+        <div className='pointer-events-none absolute'>
+          <SearchSVG />
+        </div>
+      )}
+      <input
+        className={customTwMerge('w-full outline-none', searchIcon && 'pl-8')}
+        {...props}
+      />
+      <button aria-label='search button' onClick={onSearch}>
         <UploadSVG />
       </button>
     </div>
