@@ -52,6 +52,13 @@ export type EmailConfirmType = {
   email: string;
   code: string;
 };
+export type DeleteAccountType = {
+  deleteReason: string;
+  email: string;
+  code: string;
+  codeValidation: boolean;
+  agreed: boolean;
+};
 export type searchParams = {
   params?: { slug: string };
   searchParams?: { [key: string]: string | string[] | undefined };

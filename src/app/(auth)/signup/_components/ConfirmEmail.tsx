@@ -15,17 +15,28 @@ type ConfrimEmailProps = {
   errormessage?: FieldErrors<SignupFormType>;
   setValue: UseFormSetValue<SignupFormType>;
   trigger: UseFormTrigger<SignupFormType>;
+  layoutDirection?: 'col' | 'row';
 };
 //컨펌보낼 때 사용중인 이메일인지 확인도 해야할듯?
 export const ConfirmEmail = forwardRef<HTMLInputElement, ConfrimEmailProps>(
   function ConfirmEmail(
-    { register, watch, errormessage, setValue, trigger },
+    { register, watch, errormessage, setValue, trigger, layoutDirection },
     ref,
   ) {
     const { sendEmail, authButtonState, formatTime, time, confirmEmail } =
       useEmailConfirm(setValue, trigger);
+    const layout = (() => {
+      switch (layoutDirection) {
+        case 'row':
+          return 'gap-6';
+        case 'col':
+        default:
+          return 'flex-col gap-9';
+      }
+    })();
+    console.log(layout);
     return (
-      <div className='flex flex-col gap-9'>
+      <div className={`flex ${layout}`}>
         <TextFieldWithBtn
           {...register('email')}
           label='이메일'
