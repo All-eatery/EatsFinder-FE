@@ -1,6 +1,6 @@
-import { IconWithText } from '@/components/atoms/iconWithText/iconWithText';
 import { CheckSVG } from '@/components/svg/CheckSVG';
 import { DeleteAccountForm } from './DeleteAccountForm';
+import { IconWithText } from '@/components/atoms/iconWithText/IconWithText';
 const deleteAccountGuidelines = {
   guidelines: [
     '탈퇴할 경우 계정 복구가 불가능해요.',

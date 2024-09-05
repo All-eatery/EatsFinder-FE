@@ -16,20 +16,19 @@ export const useEmailConfirm = (
     //쓰로틀링이 더 나을까?
     debounce(async () => {
       if (isValidEmail(email)) {
-        const response = await isDuplicateEmail(email);
+        // const response = await isDuplicateEmail(email);
+        // if (response.statusCode === 'SUCCESS') {
+        const response = await sendCode(email);
         if (response.statusCode === 'SUCCESS') {
-          const response = await sendCode(email);
-          if (response.statusCode === 'SUCCESS') {
-            console.log(response.message);
-          } else if (response.statusCode === 'ERROR') {
-            return console.log('인증번호가 만료되지 않았습니다');
-          }
-          console.log('이메일방송', response);
-          setAuthButtonState(true);
-          startTimer();
-        } else {
-          return console.log('이미 가입된 이메일 입니다.');
+          console.log(response.message);
+        } else if (response.statusCode === 'ERROR') {
         }
+        console.log('이메일방송', response);
+        setAuthButtonState(true);
+        startTimer();
+        // } else {
+        //   return console.log('이미 가입된 이메일 입니다.');
+        // }
       }
     }, 1000);
 
@@ -42,6 +41,7 @@ export const useEmailConfirm = (
     } else if (response.statusCode === 'ERROR') {
       setValue('codeValidation', false);
       trigger('codeValidation');
+      return console.log('인증번호가 만료되지 않았습니다');
     }
     return response;
   };

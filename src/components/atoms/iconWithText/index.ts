@@ -1,1 +1,1 @@
-export * from './IconWithText.stories';
+export * from './IconWithText';

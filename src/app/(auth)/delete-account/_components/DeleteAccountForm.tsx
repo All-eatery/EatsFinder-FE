@@ -1,10 +1,10 @@
 'use client';
-import { IconWithText } from '@/components/atoms/iconWithText/iconWithText';
 
-import { CheckBoXSVG_Ver2, CheckBoxSVG } from '@/components/svg/CheckBoxSVG';
+import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
 import { useSignup } from '../../_hooks/useFormData';
 import { ConfirmEmail } from '../../signup/_components/ConfirmEmail';
 import { Button } from '@/components/atoms';
+import { IconWithText } from '@/components/atoms/iconWithText';
 type DeleteAccountFormType = {
   reasonForAccountDeletion: string[];
 };
@@ -27,13 +27,13 @@ export const DeleteAccountForm = ({
                 <input
                   type='radio'
                   id={`checkbox-${idx}`}
+                  name='deletionReason'
                   className='sr-only'
                 />
                 <label htmlFor={`checkbox-${idx}`} className='flex'>
                   <IconWithText
                     gap={1}
-                    icon={CheckBoXSVG_Ver2()}
-                    // icon={CheckBoxSVG({ isChecked: 'blank' })}
+                    icon={CheckBoXSVG_Ver2({ isChecked: 'blank' })}
                   >
                     {reason}
                   </IconWithText>
@@ -42,13 +42,23 @@ export const DeleteAccountForm = ({
             );
           })}
           <div>
-            <input type='radio' id={`etc`} className='sr-only' />
+            <input
+              type='radio'
+              id={`etc`}
+              name='deletionReason'
+              className='sr-only'
+            />
             <label htmlFor='etc'>
-              <IconWithText gap={1} icon={CheckBoXSVG_Ver2()}>
-                {/* <IconWithText gap={1} icon={CheckBoxSVG({ isChecked: 'blank' })}> */}
+              <IconWithText
+                gap={1}
+                icon={CheckBoXSVG_Ver2({ isChecked: 'blank' })}
+              >
                 기타
               </IconWithText>
-              <textarea />
+              <textarea
+                className='h-24 w-full resize-none overflow-auto border border-gray-200 p-2 body-16'
+                placeholder='소중한 의견을 남겨주시면 더 나은 서비스를 제공하도록 노력하겠습니다.'
+              />
             </label>
           </div>
         </div>
@@ -69,8 +79,7 @@ export const DeleteAccountForm = ({
         </div>
       </div>
       <div className='my-[60px] flex flex-col items-center gap-6'>
-        <IconWithText icon={CheckBoXSVG_Ver2()}>
-          {/* <IconWithText icon={CheckBoxSVG({ isChecked: 'blank' })}> */}
+        <IconWithText gap={1} icon={CheckBoXSVG_Ver2({ isChecked: 'blank' })}>
           안내 사항을 모두 확인했으며 이에 동의합니다.
         </IconWithText>
         <Button size={'large'}>탈퇴 신청하기</Button>

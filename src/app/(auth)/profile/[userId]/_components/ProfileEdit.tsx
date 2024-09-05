@@ -35,7 +35,7 @@ export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
                 type='file'
                 accept='image/*'
                 ref={imageInputRef}
-                className='hidden'
+                className='sr-only'
                 onChange={(e) => handleFileChange(e)}
               />
               {previewImage ? (

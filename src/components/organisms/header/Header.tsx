@@ -10,10 +10,7 @@ import { Modal } from '..';
 import { useEffect, useState } from 'react';
 import { useLogoutModal } from '@/app/(auth)/_hooks/useLogoutModal';
 import { AlarmBellSVG } from '@/components/svg/AlarmBellSVG';
-import { getServerUserInfo } from '@/utils/getServerUserInfo';
 import { UserData } from '@/types/authType';
-import Image from 'next/image';
-import { getClientUserInfo } from '@/utils/getClientUserInfo';
 
 const NAV_DATA = [
   {
@@ -38,9 +35,7 @@ type HeaderProps = {
 };
 export const Header = ({ userInfo }: HeaderProps) => {
   const path = usePathname();
-  if (path.startsWith('/login') || path.startsWith('/signup')) {
-    return <AuthHeader />;
-  }
+
   const userState = !!userInfo;
   const [isLoggedIn, setIsLoggedIn] = useState(userState);
   useEffect(() => {
@@ -52,6 +47,9 @@ export const Header = ({ userInfo }: HeaderProps) => {
   const { closeModal, isModalOpen, logoutButton, openLogoutModal } =
     useLogoutModal();
   console.log(userInfo);
+  if (path.startsWith('/login') || path.startsWith('/signup')) {
+    return <AuthHeader />;
+  }
   return (
     <header className='mb-[3.75rem] flex h-20 items-center justify-around'>
       <div className='flex w-full max-w-[1440px] items-center justify-between px-9'>

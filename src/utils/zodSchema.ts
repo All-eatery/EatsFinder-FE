@@ -115,3 +115,11 @@ export const changePasswordSchema = z
     message: '비밀번호가 일치하지 않습니다.',
     path: ['passwordCheck'],
   });
+
+export const DeleteAccountSchema = z.object({
+  deleteReason: z.string(),
+  email: z.string(),
+  code: z.string(),
+  codeValidation: z.boolean(),
+  agreed: z.boolean(),
+});

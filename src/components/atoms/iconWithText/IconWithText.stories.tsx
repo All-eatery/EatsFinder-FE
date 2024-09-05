@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { IconWithText } from './iconWithText';
+import { IconWithText } from '.';
 
 const meta: Meta<typeof IconWithText> = {
   title: 'atom/TextField',

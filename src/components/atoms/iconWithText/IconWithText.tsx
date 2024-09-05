@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement, MouseEventHandler } from 'react';
+import { ReactNode, ReactElement, MouseEventHandler } from 'react';
 
 type IconWithTextProps = {
   gap?: number;

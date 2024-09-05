@@ -1,5 +1,6 @@
 import {
   ChagePasswordType,
+  DeleteAccountType,
   LoginFormType,
   ProfileEditType,
   SignupFormType,
@@ -8,6 +9,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { changePassword, editUserProfile, login, signup } from './useAuth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  DeleteAccountSchema,
   changePasswordSchema,
   loginSchema,
   profileEditSchema,
@@ -119,5 +121,19 @@ export const useChangePassword = () => {
     register,
     handleSubmit: handleSubmit(onSubmit),
     errors,
+  };
+};
+
+export const useDeleteAccount = () => {
+  const { register, watch, handleSubmit } = useForm<DeleteAccountType>({
+    resolver: zodResolver(DeleteAccountSchema),
+  });
+  const onSubmit: SubmitHandler<DeleteAccountType> = (data) => {
+    console.log(data);
+  };
+  return {
+    register,
+    watch,
+    handleSubmit: handleSubmit(onSubmit),
   };
 };
