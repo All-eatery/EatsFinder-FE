@@ -116,6 +116,22 @@ export const changePasswordSchema = z
     path: ['passwordCheck'],
   });
 
+export const postFormSchema = z.object({
+  placeId: z.number({
+    required_error: '맛집을 선택해주세요',
+  }),
+  placeName: z.string(),
+  content: z.string(),
+  starRating: z.number(),
+  menus: z.string().array().max(5),
+  keywords: z.string().array().max(5),
+  imgs: z.any().array(),
+  preview: z.string().array(),
+  mainImgIndex: z.number(),
+});
+
+export type PostFormValue = z.infer<typeof postFormSchema>;
+
 export const DeleteAccountSchema = z.object({
   deleteReason: z.string(),
   email: z.string(),

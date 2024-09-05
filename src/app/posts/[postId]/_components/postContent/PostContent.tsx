@@ -2,7 +2,7 @@ import { ImageCarousel } from '@/components/organisms';
 import UserProfile from './UserProfile';
 import StoreInfo from './StoreInfo';
 import StoreMap from './StoreMap';
-import Keywords from './Keywords';
+import KeywordChips from './KeywordChips';
 import { PostContentType } from '@/types/postType';
 import parseImages from '@/utils/parseImages';
 
@@ -35,7 +35,7 @@ const PostContent = ({ postContent }: PostContentProps) => {
           menuTag={postContent.menuTag}
         />
         <StoreMap places={postContent.places} />
-        <Keywords keywords={postContent.keywordTag} />
+        <KeywordChips keywordIds={postContent.keywordTag} />
       </div>
     </section>
   );

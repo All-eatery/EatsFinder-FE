@@ -19,7 +19,7 @@ const searchVariant = cva(
 interface SearchProps
   extends VariantProps<typeof searchVariant>,
     InputHTMLAttributes<HTMLInputElement> {
-  onSearch?: () => {};
+  onSearch?: () => void;
 }
 
 export const Search = ({
@@ -34,7 +34,7 @@ export const Search = ({
         <SearchSVG />
       </div>
       <input className='w-full pl-8 outline-none' {...props} />
-      <button aria-label='search button' onClick={onSearch}>
+      <button aria-label='search button' type='button' onClick={onSearch}>
         <UploadSVG />
       </button>
     </div>

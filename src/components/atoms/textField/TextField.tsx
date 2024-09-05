@@ -1,6 +1,7 @@
 import { ComponentProps, ReactNode, forwardRef } from 'react';
+import { customTwMerge } from '@/utils/customTwMerge';
 
-interface AuthInputProps extends ComponentProps<'input'> {
+export interface TextFieldProps extends ComponentProps<'input'> {
   label?: string;
   message?: string;
   errormessage?: string;
@@ -8,14 +9,31 @@ interface AuthInputProps extends ComponentProps<'input'> {
   button?: ReactNode;
   timer?: string;
   underStoke?: boolean;
+  fullWidth?: boolean;
 }
-export const TextField = forwardRef<HTMLInputElement, AuthInputProps>(
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   function TextField(
-    { label, message, errormessage, icon, button, timer, underStoke, ...props },
+    {
+      className,
+      label,
+      message,
+      errormessage,
+      icon,
+      button,
+      timer,
+      underStoke,
+      fullWidth,
+      ...props
+    },
     ref,
   ) {
     return (
-      <div className='flex w-[370px] flex-col'>
+      <div
+        className={customTwMerge(
+          'flex w-[370px] flex-col',
+          fullWidth && 'w-full',
+        )}
+      >
         <label
           className={`text-gray-400 subTitle-16 ${errormessage && `text-primary-500`}`}
         >
@@ -25,11 +43,16 @@ export const TextField = forwardRef<HTMLInputElement, AuthInputProps>(
           <input
             {...props}
             ref={ref}
-            className={`w-[370px] p-[10px] text-gray-900 caret-primary-400 body-16 focus:outline-none ${
+            className={customTwMerge(
+              'w-full p-[10px] text-gray-900 caret-primary-400 body-16 focus:outline-none disabled:bg-gray-50 disabled:text-gray-200',
               underStoke
                 ? 'border-b border-b-gray-100 focus:border-b-primary-400'
-                : 'rounded border border-gray-100 focus:border-primary-400'
-            } ${errormessage && `border-error`} ${icon && `pr-6`} ${button && `pr-[98px]`} disabled:bg-gray-50 disabled:text-gray-200`}
+                : 'rounded border border-gray-100 focus:border-primary-400',
+              errormessage && 'border-error',
+              icon && 'pr-6',
+              button && 'pr-[98px]',
+              className,
+            )}
           />
           {(icon || button) && (
             <div className='absolute right-1 top-1/2 flex -translate-y-1/2'>
@@ -37,7 +60,6 @@ export const TextField = forwardRef<HTMLInputElement, AuthInputProps>(
             </div>
           )}
         </div>
-
         {(message || errormessage) && (
           <div className='flex justify-between'>
             <p

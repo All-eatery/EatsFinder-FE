@@ -1,9 +1,9 @@
 'use client';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { PlacesType } from '@/types/postType';
+import { PlaceType } from '@/types/postType';
 
 interface StoreMapProps {
-  places: PlacesType;
+  places: PlaceType;
 }
 
 const StoreMap = ({ places }: StoreMapProps) => {
