@@ -75,6 +75,7 @@ export const DeleteAccountForm = ({
             setValue={setValue}
             trigger={trigger}
             watch={watch}
+            checkDuplicate={false}
           />
         </div>
       </div>

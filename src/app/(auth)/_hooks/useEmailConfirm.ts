@@ -12,23 +12,26 @@ export const useEmailConfirm = (
 ) => {
   const [authButtonState, setAuthButtonState] = useState(false);
   const { time, startTimer, formatTime } = useTimer(300);
-  const sendEmail = (email: string) =>
-    //쓰로틀링이 더 나을까?
+  const sendEmail = (email: string, { checkDuplicate = true } = {}) =>
     debounce(async () => {
       if (isValidEmail(email)) {
-        // const response = await isDuplicateEmail(email);
-        // if (response.statusCode === 'SUCCESS') {
+        if (checkDuplicate) {
+          // 회원가입의 경우 이메일 중복 검사
+          const response = await isDuplicateEmail(email);
+          if (response.statusCode !== 'SUCCESS') {
+            return console.log('이미 가입된 이메일 입니다.');
+          }
+        }
+
+        // 중복 검사 여부와 상관없이 인증 코드 전송
         const response = await sendCode(email);
         if (response.statusCode === 'SUCCESS') {
           console.log(response.message);
-        } else if (response.statusCode === 'ERROR') {
+          setAuthButtonState(true);
+          startTimer();
+        } else {
+          console.log('인증번호가 만료되지 않았습니다');
         }
-        console.log('이메일방송', response);
-        setAuthButtonState(true);
-        startTimer();
-        // } else {
-        //   return console.log('이미 가입된 이메일 입니다.');
-        // }
       }
     }, 1000);
 
@@ -41,7 +44,6 @@ export const useEmailConfirm = (
     } else if (response.statusCode === 'ERROR') {
       setValue('codeValidation', false);
       trigger('codeValidation');
-      return console.log('인증번호가 만료되지 않았습니다');
     }
     return response;
   };
@@ -77,7 +79,16 @@ const sendCode = async (email: string) => {
       email,
     }),
   });
-  return response.json();
+  try {
+    const res = await response.json();
+    if (res.statusCode === 'SUCCESS') {
+      return res;
+    } else if (res.statusCode === 'ERROR') {
+      return res;
+    }
+  } catch (error) {
+    throw new Error('인증번호 발송 중 에러가 발생했습니다.');
+  }
 };
 const confirmCode = async (data: EmailConfirmType) => {
   const { code, email } = data;

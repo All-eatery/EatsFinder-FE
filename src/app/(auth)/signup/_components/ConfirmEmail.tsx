@@ -16,11 +16,19 @@ type ConfrimEmailProps = {
   setValue: UseFormSetValue<SignupFormType>;
   trigger: UseFormTrigger<SignupFormType>;
   layoutDirection?: 'col' | 'row';
+  checkDuplicate?: boolean;
 };
-//컨펌보낼 때 사용중인 이메일인지 확인도 해야할듯?
 export const ConfirmEmail = forwardRef<HTMLInputElement, ConfrimEmailProps>(
   function ConfirmEmail(
-    { register, watch, errormessage, setValue, trigger, layoutDirection },
+    {
+      register,
+      watch,
+      errormessage,
+      setValue,
+      trigger,
+      layoutDirection,
+      checkDuplicate,
+    },
     ref,
   ) {
     const { sendEmail, authButtonState, formatTime, time, confirmEmail } =
@@ -34,7 +42,6 @@ export const ConfirmEmail = forwardRef<HTMLInputElement, ConfrimEmailProps>(
           return 'flex-col gap-9';
       }
     })();
-    console.log(layout);
     return (
       <div className={`flex ${layout}`}>
         <TextFieldWithBtn
@@ -42,7 +49,7 @@ export const ConfirmEmail = forwardRef<HTMLInputElement, ConfrimEmailProps>(
           label='이메일'
           buttonMessage='발송하기'
           placeholder='abcd@gamil.com'
-          onButtonClick={sendEmail(watch('email'))}
+          onButtonClick={sendEmail(watch('email'), { checkDuplicate })}
           errormessage={errormessage?.email?.message}
         />
 
