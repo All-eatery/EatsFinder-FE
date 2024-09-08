@@ -125,9 +125,10 @@ export const useChangePassword = () => {
 };
 
 export const useDeleteAccount = () => {
-  const { register, watch, handleSubmit } = useForm<DeleteAccountType>({
-    resolver: zodResolver(DeleteAccountSchema),
-  });
+  const { register, watch, handleSubmit, setValue, trigger } =
+    useForm<DeleteAccountType>({
+      resolver: zodResolver(DeleteAccountSchema),
+    });
   const onSubmit: SubmitHandler<DeleteAccountType> = (data) => {
     console.log(data);
   };
@@ -135,5 +136,7 @@ export const useDeleteAccount = () => {
     register,
     watch,
     handleSubmit: handleSubmit(onSubmit),
+    setValue,
+    trigger,
   };
 };

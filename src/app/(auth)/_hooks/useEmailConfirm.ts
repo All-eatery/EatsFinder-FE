@@ -3,12 +3,19 @@ import { useTimer } from './useTimer';
 import { EmailConfirmType, SignupFormType } from '@/types/authType';
 import { debounce } from 'lodash';
 import { emailRegex } from '@/utils/zodSchema';
-import { UseFormSetValue, UseFormTrigger } from 'react-hook-form';
+import {
+  FieldValues,
+  Path,
+  UseFormSetValue,
+  UseFormTrigger,
+} from 'react-hook-form';
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
 
-export const useEmailConfirm = (
-  setValue: UseFormSetValue<SignupFormType>,
-  trigger: UseFormTrigger<SignupFormType>,
+export const useEmailConfirm = <
+  T extends FieldValues & { codeValidation?: boolean },
+>(
+  setValue: UseFormSetValue<T>,
+  trigger: UseFormTrigger<T>,
 ) => {
   const [authButtonState, setAuthButtonState] = useState(false);
   const { time, startTimer, formatTime } = useTimer(300);
@@ -16,14 +23,12 @@ export const useEmailConfirm = (
     debounce(async () => {
       if (isValidEmail(email)) {
         if (checkDuplicate) {
-          // 회원가입의 경우 이메일 중복 검사
           const response = await isDuplicateEmail(email);
           if (response.statusCode !== 'SUCCESS') {
             return console.log('이미 가입된 이메일 입니다.');
           }
         }
 
-        // 중복 검사 여부와 상관없이 인증 코드 전송
         const response = await sendCode(email);
         if (response.statusCode === 'SUCCESS') {
           console.log(response.message);
@@ -38,12 +43,12 @@ export const useEmailConfirm = (
   const confirmEmail = (data: EmailConfirmType) => async () => {
     const response = await confirmCode(data);
     if (response.statusCode === 'SUCCESS') {
-      setValue('codeValidation', true);
-      trigger('codeValidation');
+      setValue('codeValidation' as Path<T>, true as any);
+      trigger('codeValidation' as Path<T>);
       console.log('인증완료');
     } else if (response.statusCode === 'ERROR') {
-      setValue('codeValidation', false);
-      trigger('codeValidation');
+      setValue('codeValidation' as Path<T>, false as any);
+      trigger('codeValidation' as Path<T>);
     }
     return response;
   };

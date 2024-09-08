@@ -1,7 +1,7 @@
 'use client';
 
 import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
-import { useSignup } from '../../_hooks/useFormData';
+import { useDeleteAccount, useSignup } from '../../_hooks/useFormData';
 import { ConfirmEmail } from '../../signup/_components/ConfirmEmail';
 import { Button } from '@/components/atoms';
 import { IconWithText } from '@/components/atoms/iconWithText';
@@ -11,8 +11,8 @@ type DeleteAccountFormType = {
 export const DeleteAccountForm = ({
   reasonForAccountDeletion,
 }: DeleteAccountFormType) => {
-  const { errors, handleSubmit, register, setValue, trigger, watch } =
-    useSignup();
+  const { handleSubmit, register, setValue, trigger, watch } =
+    useDeleteAccount();
   return (
     <form className='flex flex-col gap-[60px]'>
       <div className='flex flex-col gap-6'>
