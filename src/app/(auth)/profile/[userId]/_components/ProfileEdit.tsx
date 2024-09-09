@@ -6,7 +6,7 @@ import { TextField } from '@/components/atoms/textField';
 import { EditSVG } from '@/components/svg/EditSVG';
 import { UserData } from '@/types/authType';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 type ProfileEditProps = {
   handler: () => void;
   userData: UserData;
