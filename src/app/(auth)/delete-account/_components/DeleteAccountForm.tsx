@@ -3,9 +3,11 @@
 import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
 import { useDeleteAccount, useSignup } from '../../_hooks/useFormData';
 import { ConfirmEmail } from '../../signup/_components/ConfirmEmail';
-import { Button } from '@/components/atoms';
+import { Button, Checkbox } from '@/components/atoms';
 import { IconWithText } from '@/components/atoms/iconWithText';
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { workerData } from 'worker_threads';
+import { useDeleteReason } from '../../_hooks/useDeleteReason';
 
 const reasonForAccountDeletion = [
   '원하는 맛집을 못찾았어요.',
@@ -17,32 +19,10 @@ const reasonForAccountDeletion = [
 export const DeleteAccountForm = () => {
   const { handleSubmit, register, setValue, trigger, watch } =
     useDeleteAccount();
-  console.log(watch());
-  // const handleClick=(e: MouseEvent<HTMLDivElement, MouseEvent>)=>{
-  //   console.log(e)
-  // }
-  // const handleReasonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   console.log(e.target.value);
-  // };
-  const [selectedReason, setSelectedReason] = useState('');
-  const reasonIcon = (reason: string) => {
-    return selectedReason === reason ? 'check' : 'blank';
-  };
-  const handleReasonClick = (value: string) => {
-    setSelectedReason(value);
-    console.log(selectedReason);
-    setValue('deleteReason', value);
-    console.log(watch());
-  };
-  const [isAgreed, setIsAgreed] = useState(false);
-  const handleAgreed = () => {
-    setIsAgreed((prev) => !prev);
-    setValue('agreed', isAgreed);
-  };
-  const agreedIcon = () => {
-    return isAgreed ? 'check' : 'blank';
-  };
 
+  const { etcReason, handleEtcReason, handleReasonClick, reasonIcon } =
+    useDeleteReason(setValue);
+  console.log(watch());
   return (
     <form className='flex flex-col gap-[60px]' onSubmit={handleSubmit}>
       <div className='flex flex-col gap-6'>
@@ -79,7 +59,6 @@ export const DeleteAccountForm = () => {
               id={`etc`}
               name='deletionReason'
               className='sr-only'
-              // onChange={(e) => handleReasonChange(e)}
             />
             <label htmlFor='etc'>
               <IconWithText
@@ -89,6 +68,8 @@ export const DeleteAccountForm = () => {
                 기타
               </IconWithText>
               <textarea
+                value={etcReason}
+                onChange={(e) => handleEtcReason(e)}
                 className='h-24 w-full resize-none overflow-auto border border-gray-200 p-2 body-16'
                 placeholder='소중한 의견을 남겨주시면 더 나은 서비스를 제공하도록 노력하겠습니다.'
               />
@@ -112,16 +93,13 @@ export const DeleteAccountForm = () => {
           />
         </div>
       </div>
-      <div
-        className='my-[60px] flex flex-col items-center gap-6'
-        onClick={handleAgreed}
-      >
-        <IconWithText
-          gap={1}
-          icon={CheckBoXSVG_Ver2({ isChecked: agreedIcon() })}
-        >
-          안내 사항을 모두 확인했으며 이에 동의합니다.
-        </IconWithText>
+      <div className='my-[60px] flex flex-col items-center gap-6'>
+        <Checkbox
+          className='text-gray-700 body-20'
+          {...register('agreed')}
+          label='안내 사항을 모두 확인했으며 이에 동의합니다.'
+          variant='Checkbox_Ver2'
+        />
         <Button size={'large'}>탈퇴 신청하기</Button>
       </div>
     </form>
