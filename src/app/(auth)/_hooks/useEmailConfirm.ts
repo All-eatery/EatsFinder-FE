@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTimer } from './useTimer';
-import { EmailConfirmType, SignupFormType } from '@/types/authType';
+import { EmailConfirmType } from '@/types/authType';
 import { debounce } from 'lodash';
 import { emailRegex } from '@/utils/zodSchema';
 import {

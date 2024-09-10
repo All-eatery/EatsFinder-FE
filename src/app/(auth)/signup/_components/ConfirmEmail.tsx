@@ -20,6 +20,7 @@ type ConfirmEmailProps<T extends FieldValues> = {
   trigger: UseFormTrigger<T>;
   layoutDirection?: 'col' | 'row';
   checkDuplicate?: boolean;
+  userEmail?: string;
 };
 
 // 제네릭을 사용한 ConfirmEmail 컴포넌트
@@ -35,6 +36,7 @@ export const ConfirmEmail = forwardRef<
     trigger,
     layoutDirection = 'col',
     checkDuplicate = true,
+    userEmail,
   }: ConfirmEmailProps<T>,
   ref: React.Ref<HTMLInputElement>,
 ) {
@@ -42,8 +44,8 @@ export const ConfirmEmail = forwardRef<
     useEmailConfirm(setValue, trigger);
 
   const layout = layoutDirection === 'row' ? 'gap-6' : 'flex-col gap-9';
-  const email = watch('email' as Path<T>); // watch 사용 시 Path<T>로 타입 캐스팅
-  const code = watch('code' as Path<T>); // 마찬가지로 code도 Path<T>로 캐스팅
+  const email = watch('email' as Path<T>);
+  const code = watch('code' as Path<T>);
 
   return (
     <div className={`flex ${layout}`}>

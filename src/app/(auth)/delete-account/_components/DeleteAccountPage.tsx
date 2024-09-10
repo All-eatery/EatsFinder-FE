@@ -1,13 +1,15 @@
 import { CheckSVG } from '@/components/svg/CheckSVG';
 import { DeleteAccountForm } from './DeleteAccountForm';
 import { IconWithText } from '@/components/atoms/iconWithText/IconWithText';
+import { getServerUserInfo } from '@/utils/getServerUserInfo';
 const deleteAccountGuidelines = [
   '탈퇴할 경우 계정 복구가 불가능해요.',
   '내 피드에 작성된 게시글은 삭제되지 않아요.',
   '내 피드에 작성된 글, 마이 이츠에 저장된 리스트 등 모든 정보가 삭제돼요.',
   '탈퇴 처리된 이메일 아이디는 재가입 방지를 위해 30일간 보존된 후 삭제돼요.',
 ];
-export const DeleteAccountPage = () => {
+export const DeleteAccountPage = async () => {
+  const userInfo = await getServerUserInfo();
   return (
     <div className='flex flex-col items-center gap-[60px] px-60'>
       <div className='flex flex-col items-center gap-4'>
@@ -32,7 +34,7 @@ export const DeleteAccountPage = () => {
             })}
           </div>
         </div>
-        <DeleteAccountForm />
+        {userInfo && <DeleteAccountForm email={userInfo.email} />}
       </div>
     </div>
   );

@@ -1,13 +1,12 @@
 'use client';
 
 import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
-import { useDeleteAccount, useSignup } from '../../_hooks/useFormData';
+import { useDeleteAccount } from '../../_hooks/useFormData';
 import { ConfirmEmail } from '../../signup/_components/ConfirmEmail';
 import { Button, Checkbox } from '@/components/atoms';
 import { IconWithText } from '@/components/atoms/iconWithText';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { workerData } from 'worker_threads';
 import { useDeleteReason } from '../../_hooks/useDeleteReason';
+import { UserData } from '@/types/authType';
 
 const reasonForAccountDeletion = [
   '원하는 맛집을 못찾았어요.',
@@ -16,13 +15,13 @@ const reasonForAccountDeletion = [
   '서비스 사용성이 불편해요.',
   '다른 서비스를 이용하고 있어요.',
 ];
-export const DeleteAccountForm = () => {
+export const DeleteAccountForm = (userEmail: { email: string }) => {
   const { handleSubmit, register, setValue, trigger, watch } =
     useDeleteAccount();
 
   const { etcReason, handleEtcReason, handleReasonClick, reasonIcon } =
     useDeleteReason(setValue);
-  console.log(watch());
+  // console.log(watch());
   return (
     <form className='flex flex-col gap-[60px]' onSubmit={handleSubmit}>
       <div className='flex flex-col gap-6'>
@@ -90,6 +89,7 @@ export const DeleteAccountForm = () => {
             trigger={trigger}
             watch={watch}
             checkDuplicate={false}
+            userEmail={userEmail.email}
           />
         </div>
       </div>

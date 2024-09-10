@@ -56,6 +56,7 @@ export const useSignup = () => {
     const { acceptPrivacyPolicy, acceptTerms, code } = data;
     if (acceptPrivacyPolicy && acceptTerms && code) {
       const response = await signup(data);
+      console.log(response);
       if (response.statusCode) {
         alert(response.message);
       }
