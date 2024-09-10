@@ -19,7 +19,7 @@ export const DeleteAccountForm = (userEmail: { email: string }) => {
   const { handleSubmit, register, setValue, trigger, watch } =
     useDeleteAccount();
 
-  const { etcReason, handleEtcReason, handleReasonClick, reasonIcon } =
+  const { etcReason, handleEtcReasonChange, handleReasonClick, reasonIcon } =
     useDeleteReason(setValue);
   console.log(watch());
   return (
@@ -61,17 +61,16 @@ export const DeleteAccountForm = (userEmail: { email: string }) => {
           })}
           <div>
             <input id={`etc`} className='sr-only' type='checkbox' />
-            <label htmlFor='etc'>
+            <label htmlFor='etc' onClick={() => handleReasonClick('Etc')}>
               <IconWithText
                 gap={1}
                 icon={CheckBoXSVG_Ver2({ isChecked: reasonIcon('Etc') })}
-                onClick={() => handleReasonClick('Etc')}
               >
                 기타
               </IconWithText>
               <textarea
                 value={etcReason}
-                onChange={(e) => handleEtcReason(e)}
+                onChange={(e) => handleEtcReasonChange(e)}
                 className='h-24 w-full resize-none overflow-auto border border-gray-200 p-2 body-16'
                 placeholder='소중한 의견을 남겨주시면 더 나은 서비스를 제공하도록 노력하겠습니다.'
               />

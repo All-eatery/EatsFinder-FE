@@ -139,4 +139,5 @@ export const DeleteAccountSchema = z.object({
   code: z.string(),
   codeValidation: z.boolean(),
   agreed: z.boolean(),
+  etcReason: z.string().nullish(),
 });

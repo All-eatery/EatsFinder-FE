@@ -58,6 +58,7 @@ export type DeleteAccountType = {
   code: string;
   codeValidation: boolean;
   agreed: boolean;
+  etcReason?: string;
 };
 export type searchParams = {
   params?: { slug: string };
