@@ -38,7 +38,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   cookiesStore.set('jwt', `${data.accessToken}`, options);
   const cookie = cookiesStore.get('jwt');
   if (cookie) {
-    const response = await fetch(`${KOTLIN_SERVER}/my-profile`, {
+    const response = await fetch(`${KOTLIN_SERVER}/users`, {
       method: 'GET',
       headers: {
         accept: '*/*',

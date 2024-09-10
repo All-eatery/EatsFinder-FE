@@ -98,7 +98,7 @@ export const editUserProfile = async (data: ProfileEditType) => {
       throw new Error('Access token is missing');
     }
 
-    const response = await fetch(`${KOTLIN_SERVER}/my-profile`, {
+    const response = await fetch(`${KOTLIN_SERVER}/users`, {
       method: 'PATCH',
       headers: {
         accept: '*/*',
@@ -122,7 +122,7 @@ export const editUserProfile = async (data: ProfileEditType) => {
 export const changePassword = async (data: ChagePasswordType) => {
   const { password, passwordCheck } = data;
   const token = await accessToken;
-  const response = await fetch(`${KOTLIN_SERVER}/my-profile/new-password`, {
+  const response = await fetch(`${KOTLIN_SERVER}/users/new-password`, {
     method: 'PUT',
     headers: {
       accept: '*/*',
