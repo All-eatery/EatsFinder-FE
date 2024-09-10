@@ -7,21 +7,21 @@ import { Button, Checkbox } from '@/components/atoms';
 import { IconWithText } from '@/components/atoms/iconWithText';
 import { useDeleteReason } from '../../_hooks/useDeleteReason';
 import { UserData } from '@/types/authType';
+enum ReasonForAccountDeletion {
+  Unavailability = '원하는 맛집을 못찾았어요.',
+  Infrequent = '자주 이용하지 않아요.',
+  Privacy = '개인 정보 문제가 걱정돼요.',
+  Inconvenience = '서비스 사용성이 불편해요.',
+  Switching = '다른 서비스를 이용하고 있어요.',
+}
 
-const reasonForAccountDeletion = [
-  '원하는 맛집을 못찾았어요.',
-  '자주 이용하지 않아요.',
-  '개인 정보 문제가 걱정돼요.',
-  '서비스 사용성이 불편해요.',
-  '다른 서비스를 이용하고 있어요.',
-];
 export const DeleteAccountForm = (userEmail: { email: string }) => {
   const { handleSubmit, register, setValue, trigger, watch } =
     useDeleteAccount();
 
   const { etcReason, handleEtcReason, handleReasonClick, reasonIcon } =
     useDeleteReason(setValue);
-  // console.log(watch());
+  console.log(watch());
   return (
     <form className='flex flex-col gap-[60px]' onSubmit={handleSubmit}>
       <div className='flex flex-col gap-6'>
@@ -30,20 +30,27 @@ export const DeleteAccountForm = (userEmail: { email: string }) => {
           <p className='text-primary-400 subTitle-24'>[필수]</p>
         </h3>
         <div className='flex flex-col gap-3'>
-          {reasonForAccountDeletion.map((reason, idx) => {
+          {Object.keys(ReasonForAccountDeletion).map((key, idx) => {
+            const reason =
+              ReasonForAccountDeletion[
+                key as keyof typeof ReasonForAccountDeletion
+              ];
             return (
-              <div key={idx} onClick={() => handleReasonClick(reason)}>
+              <div key={key}>
                 <input
-                  type='radio'
                   id={`checkbox-${idx}`}
-                  name='deletionReason'
                   className='sr-only'
+                  type='checkbox'
                 />
-                <label htmlFor={`checkbox-${idx}`} className='flex'>
+                <label
+                  htmlFor={`checkbox-${idx}`}
+                  className='flex'
+                  onClick={() => handleReasonClick(key)}
+                >
                   <IconWithText
                     gap={1}
                     icon={CheckBoXSVG_Ver2({
-                      isChecked: reasonIcon(reason),
+                      isChecked: reasonIcon(key),
                     })}
                   >
                     {reason}
@@ -52,17 +59,13 @@ export const DeleteAccountForm = (userEmail: { email: string }) => {
               </div>
             );
           })}
-          <div onClick={() => handleReasonClick('etc')}>
-            <input
-              type='radio'
-              id={`etc`}
-              name='deletionReason'
-              className='sr-only'
-            />
+          <div>
+            <input id={`etc`} className='sr-only' type='checkbox' />
             <label htmlFor='etc'>
               <IconWithText
                 gap={1}
-                icon={CheckBoXSVG_Ver2({ isChecked: reasonIcon('etc') })}
+                icon={CheckBoXSVG_Ver2({ isChecked: reasonIcon('Etc') })}
+                onClick={() => handleReasonClick('Etc')}
               >
                 기타
               </IconWithText>

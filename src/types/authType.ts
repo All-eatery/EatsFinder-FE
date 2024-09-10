@@ -53,7 +53,7 @@ export type EmailConfirmType = {
   code: string;
 };
 export type DeleteAccountType = {
-  deleteReason: string;
+  deleteReason: string[];
   email: string;
   code: string;
   codeValidation: boolean;
