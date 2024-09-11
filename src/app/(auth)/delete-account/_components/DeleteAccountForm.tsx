@@ -6,7 +6,6 @@ import { ConfirmEmail } from '../../signup/_components/ConfirmEmail';
 import { Button, Checkbox } from '@/components/atoms';
 import { IconWithText } from '@/components/atoms/iconWithText';
 import { useDeleteReason } from '../../_hooks/useDeleteReason';
-import { UserData } from '@/types/authType';
 enum ReasonForAccountDeletion {
   Unavailability = '원하는 맛집을 못찾았어요.',
   Infrequent = '자주 이용하지 않아요.',
@@ -18,7 +17,7 @@ enum ReasonForAccountDeletion {
 export const DeleteAccountForm = (userEmail: { email: string }) => {
   const { handleSubmit, register, setValue, trigger, watch } =
     useDeleteAccount();
-
+  console.log(userEmail.email);
   const { etcReason, handleEtcReasonChange, handleReasonClick, reasonIcon } =
     useDeleteReason(setValue);
   console.log(watch());

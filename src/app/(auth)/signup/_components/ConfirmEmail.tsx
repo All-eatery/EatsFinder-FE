@@ -44,7 +44,7 @@ export const ConfirmEmail = forwardRef<
     useEmailConfirm(setValue, trigger);
 
   const layout = layoutDirection === 'row' ? 'gap-6' : 'flex-col gap-9';
-  const email = watch('email' as Path<T>);
+  const email = userEmail || watch('email' as Path<T>);
   const code = watch('code' as Path<T>);
 
   return (
@@ -56,6 +56,8 @@ export const ConfirmEmail = forwardRef<
         placeholder='abcd@gmail.com'
         onButtonClick={sendEmail(email, { checkDuplicate })}
         errormessage={errormessage?.email?.message as string | undefined}
+        disabled={!!userEmail}
+        defaultValue={userEmail}
       />
 
       <TextFieldWithBtn
