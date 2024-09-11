@@ -1,5 +1,5 @@
 import { TextFieldWithBtn } from '@/components/molecules/texTFieldWithBtn';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import {
   FieldErrors,
   FieldValues,
@@ -10,6 +10,7 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 import { useEmailConfirm } from '../../_hooks/useEmailConfirm';
+import path from 'path';
 
 // 제네릭을 활용한 타입 정의, T는 FieldValues를 상속
 type ConfirmEmailProps<T extends FieldValues> = {
@@ -46,7 +47,9 @@ export const ConfirmEmail = forwardRef<
   const layout = layoutDirection === 'row' ? 'gap-6' : 'flex-col gap-9';
   const email = userEmail || watch('email' as Path<T>);
   const code = watch('code' as Path<T>);
-
+  useEffect(() => {
+    if (email) setValue('email' as Path<T>, email as any);
+  }, [email]);
   return (
     <div className={`flex ${layout}`}>
       <TextFieldWithBtn

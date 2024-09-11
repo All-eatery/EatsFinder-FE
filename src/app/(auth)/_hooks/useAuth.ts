@@ -145,17 +145,26 @@ export const deleteAccount = async (data: DeleteAccountType) => {
   console.log('여기', deleteReason);
   console.log(etcReason);
   return;
-  const response = await fetch(`${KOTLIN_SERVER}/users/?reasonType=`, {
-    method: 'DELETE',
-    headers: {
-      accept: '*/*',
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
+  console.log(
+    `${KOTLIN_SERVER}/users/?email=${email}&code=${code}&unavailability=${false}&infrequent=${false}&privacy=${false}&inconvenience=${false}&switching=${true}&others=${false}`,
+  );
+  const response = await fetch(
+    `${KOTLIN_SERVER}/users/?email=${email}&code=${code}&unavailability=${false}&infrequent=${false}&privacy=${false}&inconvenience=${false}&switching=${true}&others=${false}`,
+    {
+      method: 'DELETE',
+      headers: {
+        accept: '*/*',
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        code,
+        reason: etcReason,
+      }),
     },
-    body: JSON.stringify({
-      email,
-      code,
-      reason: etcReason,
-    }),
-  });
+  );
 };
+/*
+http://localhost:8080/users?email=20160366%40vision.hoseo.edu&code=QZL7MM6I9O&
+ */
