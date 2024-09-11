@@ -6,7 +6,13 @@ import {
   SignupFormType,
 } from '@/types/authType';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { changePassword, editUserProfile, login, signup } from './useAuth';
+import {
+  changePassword,
+  deleteAccount,
+  editUserProfile,
+  login,
+  signup,
+} from './useAuth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   DeleteAccountSchema,
@@ -130,8 +136,8 @@ export const useDeleteAccount = () => {
     useForm<DeleteAccountType>({
       resolver: zodResolver(DeleteAccountSchema),
     });
-  const onSubmit: SubmitHandler<DeleteAccountType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<DeleteAccountType> = async (data) => {
+    const response = await deleteAccount(data);
   };
   return {
     register,

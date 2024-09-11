@@ -1,6 +1,7 @@
 import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
 import {
   ChagePasswordType,
+  DeleteAccountType,
   LoginFormType,
   ProfileEditType,
   SignupFormType,
@@ -135,4 +136,26 @@ export const changePassword = async (data: ChagePasswordType) => {
     }),
   });
   return response.json();
+};
+
+export const deleteAccount = async (data: DeleteAccountType) => {
+  const { email, code, etcReason, deleteReason } = data;
+  const token = await accessToken;
+
+  console.log('여기', deleteReason);
+  console.log(etcReason);
+  return;
+  const response = await fetch(`${KOTLIN_SERVER}/users/?reasonType=`, {
+    method: 'DELETE',
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      code,
+      reason: etcReason,
+    }),
+  });
 };
