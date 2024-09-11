@@ -4,10 +4,9 @@ import { getServerUserInfo } from '@/utils/getServerUserInfo';
 import { Loading } from '../../_components/Loading';
 export default async function page() {
   const userData = await getServerUserInfo();
-  if (!userData) return <Loading />;
   return (
     <>
-      <ProfilePage userData={userData} />
+      <ProfilePage userData={userData!} />
     </>
   );
 }
