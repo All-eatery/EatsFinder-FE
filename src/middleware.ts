@@ -6,7 +6,13 @@ function isAuthenticated(request: NextRequest) {
   return !!token;
 }
 
-const authPages = ['/myaccount', '/find-account', '/settings', '/support'];
+const authPages = [
+  '/myaccount',
+  '/find-account',
+  '/settings',
+  '/support',
+  '/delete-account',
+];
 //탈퇴 마이잇츠 게시글 작성/수정
 const guestPages = ['/login', '/signup'];
 
@@ -42,5 +48,6 @@ export const config = {
     '/find-account',
     '/settings',
     '/support',
+    '/delete-account',
   ],
 };
