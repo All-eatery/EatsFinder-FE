@@ -31,3 +31,5 @@ export * from './userTimeline';
 export * from './point';
 
 export * from './portal';
+
+export * from './skeleton';
