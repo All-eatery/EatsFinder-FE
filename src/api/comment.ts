@@ -1,7 +1,7 @@
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
-import { CommentType } from '@/types/comment';
+import { PostCommentType } from '@/types/postType';
 
-export const getComments = async (postId: number): Promise<CommentType[]> => {
+export const getComments = async (postId: number): Promise<PostCommentType> => {
   const res = await fetch(`${KOTLIN_SERVER}/posts/${postId}/comments`, {
     method: 'GET',
     headers: {

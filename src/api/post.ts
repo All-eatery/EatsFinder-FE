@@ -18,7 +18,7 @@ export const createNewPost = async (formData: FormData) => {
 };
 
 export const getPostContent = async (
-  postId: string,
+  postId: number,
 ): Promise<PostContentType> => {
   const res = await fetch(`${NEST_SERVER}/posts/${postId}/details`, {
     method: 'GET',
