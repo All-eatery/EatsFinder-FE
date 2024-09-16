@@ -65,3 +65,24 @@ export interface ReportStateType {
   targetType: 'post' | 'comment' | 'reply' | null;
   targetId: number | null;
 }
+
+export interface NeighborPost {
+  followingUser: {
+    nickname: string;
+    profileImage: string;
+  };
+  placeName: string;
+  postId: number;
+  postThumbnamilUrl: string;
+  isPostLike: boolean;
+  postLikeCount: number;
+  updatedAt: string;
+}
+
+export interface Pagination {
+  totalPosts: number;
+  postsPerPage: number;
+  totalPage: number;
+  currentPage: number;
+  isLastPage: boolean;
+}
