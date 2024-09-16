@@ -7,14 +7,14 @@ interface KeywordIdsProps {
 
 const KeywordChips = ({ keywordIds }: KeywordIdsProps) => {
   const splitedKeywordIds = keywordIds.split(',');
-  const filteredKeywords = KEYWORDS.filter((keyword) =>
-    splitedKeywordIds.includes(keyword.text),
+  const keywords = KEYWORDS.filter((keyword) =>
+    splitedKeywordIds.includes(keyword.id),
   );
 
   return (
     <div className='flex flex-wrap gap-2'>
-      {filteredKeywords.map((it) => (
-        <Chip key={it.text} text={it.text} emoji={it.emoji} />
+      {keywords.map((it) => (
+        <Chip key={it.text} text={it.text} emoji={it.emoji} size='small' />
       ))}
     </div>
   );
