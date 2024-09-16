@@ -12,7 +12,7 @@ const KeywordChips = ({ keywordIds }: KeywordIdsProps) => {
   );
 
   return (
-    <div className='flex flex-wrap gap-2'>
+    <div className='flex h-24 flex-wrap gap-2'>
       {keywords.map((it) => (
         <Chip key={it.text} text={it.text} emoji={it.emoji} size='small' />
       ))}

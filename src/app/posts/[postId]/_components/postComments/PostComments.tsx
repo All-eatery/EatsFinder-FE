@@ -1,25 +1,38 @@
+'use client';
+import { useState } from 'react';
 import { ProfileImage } from '@/components/atoms';
 import { Comment, Search } from '@/components/molecules';
-import { CommentType } from '@/types/comment';
+import { PostCommentType } from '@/types/postType';
 
 interface PostCommentsProps {
-  postComments: CommentType[];
+  postComments: PostCommentType;
+  handleCreateComment: (content: string) => Promise<void>;
 }
 
-const example = new Array(4).fill(0);
+const PostComments = ({
+  postComments,
+  handleCreateComment,
+}: PostCommentsProps) => {
+  const [content, setContent] = useState('');
 
-const PostComments = ({ postComments }: PostCommentsProps) => {
   return (
     <section className='flex flex-col gap-6'>
       <div>
-        <h2 className='text-gray-700 subTitle-28'>댓글(4개)</h2>
+        <h2 className='text-gray-700 subTitle-28'>{`댓글(${postComments.totalCommentCount})`}</h2>
       </div>
       <div className='flex gap-6'>
         <ProfileImage size={60} />
-        <Search searchIcon={false} placeholder='댓글 추가' className='w-full' />
+        <Search
+          searchIcon={false}
+          placeholder='댓글 추가'
+          className='w-full'
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          onSearch={() => handleCreateComment(content)}
+        />
       </div>
       <div>
-        {postComments.map((comment) => (
+        {postComments.comments.map((comment) => (
           <Comment key={comment.id} comment={comment} />
         ))}
       </div>
