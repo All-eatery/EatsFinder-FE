@@ -1,3 +1,5 @@
+import { CommentType } from './comment';
+
 export interface PostContentType {
   id: number;
   content: string;
@@ -45,4 +47,9 @@ export interface KakaoPlaceType {
   road_address_name: string;
   x: string;
   y: string;
+}
+
+export interface PostCommentType {
+  totalCommentCount: number;
+  comments: CommentType[];
 }
