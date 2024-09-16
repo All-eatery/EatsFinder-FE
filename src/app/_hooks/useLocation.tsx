@@ -4,12 +4,12 @@ import { getRegionCode } from '@/api/place';
 export const useLocation = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isGeolocationAvailable, setIsGeolocationAvailable] = useState(false);
-  const [region, setRegion] = useState<string>('서울특별시 강남구');
+  const [region, setRegion] = useState<string>('서울 강남구');
 
-  const getGeolocation = () => {
+  const getGeolocation = (errorCallback?: () => void) => {
+    setIsLoading(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-        setIsLoading(true);
         try {
           const data = await getRegionCode(position);
           const regionName = `${data.documents[0].region_1depth_name} ${data.documents[0].region_2depth_name}  ${data.documents[0].region_3depth_name}`;
@@ -25,6 +25,9 @@ export const useLocation = () => {
         switch (err.code) {
           case 1:
             console.error(err.message);
+            if (errorCallback) {
+              errorCallback();
+            }
             break;
           case 2:
             console.error(err.message);
