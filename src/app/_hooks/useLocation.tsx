@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { getRegionCode } from '@/api/place';
 
 export const useLocation = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingLocation, setIsLoadingLocation] = useState(true);
   const [isGeolocationAvailable, setIsGeolocationAvailable] = useState(false);
   const [region, setRegion] = useState<string>('서울 강남구');
 
   const getGeolocation = (errorCallback?: () => void) => {
-    setIsLoading(true);
+    setIsLoadingLocation(true);
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
@@ -18,7 +18,7 @@ export const useLocation = () => {
         } catch (err) {
           console.log(err);
         } finally {
-          setIsLoading(false);
+          setIsLoadingLocation(false);
         }
       },
       (err) => {
@@ -40,7 +40,7 @@ export const useLocation = () => {
             break;
         }
         setIsGeolocationAvailable(false);
-        setIsLoading(false);
+        setIsLoadingLocation(false);
       },
     );
   };
@@ -53,7 +53,7 @@ export const useLocation = () => {
 
   return {
     region,
-    isLoading,
+    isLoadingLocation,
     isGeolocationAvailable,
     updateLocation: getGeolocation,
   };
