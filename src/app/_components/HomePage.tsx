@@ -1,16 +1,13 @@
-import { Hashtag, Button } from '@/components/atoms';
-import {
-  Card,
-  Search,
-  FollowCard,
-  HomeSection,
-  Category,
-} from '@/components/molecules';
-import { CardCarousel } from '@/components/organisms';
+import { Hashtag } from '@/components/atoms';
+import { Search, HomeSection, FollowCard } from '@/components/molecules';
+import NearByPlaces from './NearByPlaces';
+import Top20Post from './Top20Post';
+import FollowsPost from './FollowsPost';
+import { getServerUserInfo } from '@/utils/getServerUserInfo';
 
-const data = new Array(23).fill(0);
+const HomePage = async () => {
+  const userInfo = await getServerUserInfo();
 
-const HomePage = () => {
   return (
     <>
       <div className='flex flex-col gap-[80px]'>
@@ -18,15 +15,7 @@ const HomePage = () => {
           variant='large'
           placeholder='오늘 어떤 음식을 드실 에정인가요?'
         />
-        <HomeSection title='주변의 맛집'>
-          <div className='flex justify-between'>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-          </div>
-        </HomeSection>
+        <NearByPlaces userInfo={userInfo} />
         <HomeSection title='인기 급상승 키워드'>
           <div className='flex gap-6'>
             <Hashtag hashtag='혼밥하기 좋은' />
@@ -37,26 +26,14 @@ const HomePage = () => {
             <Hashtag hashtag='혼밥하기 좋은' />
           </div>
         </HomeSection>
-        <HomeSection title='이웃들의 새로운 게시물'>
-          <CardCarousel data={data} />
-        </HomeSection>
+        {!userInfo && <Top20Post />}
+        <FollowsPost />
         <HomeSection title='~님과 음식 취향이 비슷해요.'>
           <div className='grid grid-cols-4 grid-rows-1 gap-6'>
             <FollowCard />
             <FollowCard />
             <FollowCard />
             <FollowCard />
-          </div>
-          <div className='flex h-[250px] flex-col items-center justify-center gap-6'>
-            <div className='subTitle-20'>
-              이웃들을 팔로우하고 새로운 소식을 받아보세요
-            </div>
-            <Button size='medium'>피드 둘러보기</Button>
-          </div>
-        </HomeSection>
-        <HomeSection title='오늘 뭐먹지?'>
-          <div>
-            <Category />
           </div>
         </HomeSection>
       </div>
