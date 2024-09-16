@@ -22,7 +22,7 @@ export default function RootLayout({
         <div className='flex min-h-screen flex-col'>
           <HeaderFetchData />
           {/* <Header /> */}
-          <main className='mx-auto w-[1440px] grow p-9'>{children}</main>
+          <main className='mx-auto w-[1440px] grow px-9'>{children}</main>
           <Footer />
         </div>
         <Script
