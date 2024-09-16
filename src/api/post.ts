@@ -163,3 +163,17 @@ export const togglePostLike = async (
 
   return data;
 };
+
+export const getFollowsPosts = async (page: number) => {
+  const token = await getUserToken();
+  const res = await fetch(`${KOTLIN_SERVER}/posts/follows`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+};
