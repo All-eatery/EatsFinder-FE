@@ -30,6 +30,7 @@ export interface PlaceType {
   categoryName: string;
   categoryCode: string;
   thumbnailUrl: string;
+  categories: { name: string };
 }
 
 export type PlaceRequestType = Omit<PlaceType, 'id' | 'thumbnailUrl'>;
