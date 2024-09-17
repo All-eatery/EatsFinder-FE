@@ -12,7 +12,7 @@ type ProfileEditProps = {
   userData: UserData;
 };
 export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
-  const { nickname, phoneNumber, profileImage } = userData;
+  const { nickname, isOwnProfile: phoneNumber, profileImage } = userData;
   const { register, watch, handleSubmit, errors, setValue } = useProfileEdit();
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const { handleFileChange, handleImageInput, previewImage } = useImageInput();

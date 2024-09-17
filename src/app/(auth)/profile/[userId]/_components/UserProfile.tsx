@@ -1,20 +1,20 @@
 'use client';
-import { ProfileEdit } from './ProfileEdit';
-import { useToggleHandler } from '@/hooks/useToggleHandler';
+import { ProfilePageProps } from '@/types/authType';
 import { Profile } from './Profile';
-import { UserData } from '@/types/authType';
-type userProfileProps = {
-  userData: UserData;
-};
-export const UserProfile = ({ userData }: userProfileProps) => {
-  const { value: isEdit, handleValue: editHandler } = useToggleHandler();
+import { ProfileContents } from './ProfileContents';
+
+export const UserProfile = ({ userData, isOwnProfile }: ProfilePageProps) => {
+  const handler = () => {
+    return console.log('팔로우 버튼 생겨야해요');
+  };
   return (
     <>
-      {isEdit ? (
-        <ProfileEdit handler={editHandler} userData={userData} />
-      ) : (
-        <Profile handler={editHandler} userData={userData} />
-      )}
+      <Profile
+        handler={handler}
+        userData={userData}
+        isOwnProfile={isOwnProfile}
+      />
+      <ProfileContents userData={userData} isOwnProfile={isOwnProfile} />
     </>
   );
 };

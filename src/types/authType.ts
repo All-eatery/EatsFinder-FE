@@ -2,15 +2,20 @@ export type UserData = {
   id: number;
   nickname: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   profileImage: string;
   followingCount: number;
   followerCount: number;
   postCount: number;
-  userType: string;
+  userType?: string;
 };
+export type UserProfile = {
+  userData: UserData;
+};
+
 export type ProfilePageProps = {
   userData: UserData;
+  isOwnProfile: boolean;
 };
 export type LoginFormType = {
   email: string;
