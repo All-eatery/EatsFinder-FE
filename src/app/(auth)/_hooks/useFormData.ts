@@ -95,8 +95,11 @@ export const useProfileEdit = () => {
   });
 
   const onSubmit: SubmitHandler<ProfileEditType> = async (data) => {
+    console.log('data', data);
     const response = await editUserProfile(data);
+    console.log(response);
   };
+
   return {
     register,
     handleSubmit: handleSubmit(onSubmit),

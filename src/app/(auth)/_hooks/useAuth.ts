@@ -108,7 +108,7 @@ export const editUserProfile = async (data: ProfileEditType) => {
       },
       body: formData,
     });
-
+    console.log(response);
     if (!response.ok) {
       throw new Error(`Server responded with status: ${response.status}`);
     }
