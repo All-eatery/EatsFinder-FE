@@ -7,6 +7,7 @@ import {
   createComment,
   deleteComment,
   editComment,
+  toggleCommentLike,
 } from '@/api/comment';
 
 export default async function Post({ params }: { params: { postId: number } }) {
@@ -37,6 +38,16 @@ export default async function Post({ params }: { params: { postId: number } }) {
     }
   };
 
+  const handleToggleCommentLike = async (
+    commentId: number,
+    isLiked: boolean,
+  ) => {
+    'use server';
+    const data = await toggleCommentLike(commentId, isLiked);
+
+    console.log(data);
+  };
+
   try {
     const postContent = await getPostContent(postId);
     const postComments = await getComments(postId);
@@ -48,6 +59,7 @@ export default async function Post({ params }: { params: { postId: number } }) {
           handleCreateComment={handleCreateComment}
           handleDeleteComment={handleDeleteComment}
           handleEditComment={handleEditComment}
+          handleToggleCommentLike={handleToggleCommentLike}
         />
       </>
     );

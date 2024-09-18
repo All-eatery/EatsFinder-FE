@@ -7,3 +7,12 @@ export interface CommentType {
   isMyComment: boolean;
   createdAt: string;
 }
+
+export interface CommentLikeType {
+  id: number;
+  postPlaceName: string;
+  postedUser: string;
+  commentedUser: string;
+  commentContent: string;
+  commentLikesCount: number;
+}

@@ -10,6 +10,10 @@ interface PostCommentsProps {
   handleCreateComment: (content: string) => Promise<void>;
   handleDeleteComment: (commentId: number) => Promise<void>;
   handleEditComment: (commentId: number, content: string) => Promise<void>;
+  handleToggleCommentLike: (
+    commentId: number,
+    isLiked: boolean,
+  ) => Promise<void>;
 }
 
 const PostComments = ({
@@ -17,6 +21,7 @@ const PostComments = ({
   handleCreateComment,
   handleDeleteComment,
   handleEditComment,
+  handleToggleCommentLike,
 }: PostCommentsProps) => {
   const [content, setContent] = useState('');
 
@@ -57,6 +62,7 @@ const PostComments = ({
             comment={comment}
             handleDeleteComment={handleDeleteComment}
             handleEditComment={handleEditComment}
+            handleToggleCommentLike={handleToggleCommentLike}
           />
         ))}
       </div>

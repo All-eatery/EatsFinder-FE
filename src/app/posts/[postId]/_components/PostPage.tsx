@@ -8,6 +8,10 @@ interface PostPageProps {
   handleCreateComment: (content: string) => Promise<void>;
   handleDeleteComment: (commentId: number) => Promise<void>;
   handleEditComment: (commentId: number, content: string) => Promise<void>;
+  handleToggleCommentLike: (
+    commentId: number,
+    isLiked: boolean,
+  ) => Promise<void>;
 }
 
 const PostPage = ({
@@ -16,6 +20,7 @@ const PostPage = ({
   handleCreateComment,
   handleDeleteComment,
   handleEditComment,
+  handleToggleCommentLike,
 }: PostPageProps) => {
   return (
     <>
@@ -25,6 +30,7 @@ const PostPage = ({
         handleCreateComment={handleCreateComment}
         handleDeleteComment={handleDeleteComment}
         handleEditComment={handleEditComment}
+        handleToggleCommentLike={handleToggleCommentLike}
       />
     </>
   );

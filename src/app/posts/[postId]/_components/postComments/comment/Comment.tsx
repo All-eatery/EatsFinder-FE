@@ -17,6 +17,10 @@ interface CommentProps {
   isLiked?: boolean;
   handleDeleteComment: (commentId: number) => Promise<void>;
   handleEditComment: (commentId: number, content: string) => Promise<void>;
+  handleToggleCommentLike: (
+    commentId: number,
+    isLiked: boolean,
+  ) => Promise<void>;
 }
 
 export const Comment = ({
@@ -24,6 +28,7 @@ export const Comment = ({
   isLiked = false,
   handleDeleteComment,
   handleEditComment,
+  handleToggleCommentLike,
 }: CommentProps) => {
   const userInfo = getClientUserInfo();
   const [isEditMode, setIsEditMode] = useState(false);
