@@ -33,7 +33,10 @@ export interface PlaceType {
   categories: { name: string };
 }
 
-export type PlaceRequestType = Omit<PlaceType, 'id' | 'thumbnailUrl'>;
+export type PlaceRequestType = Omit<
+  PlaceType,
+  'id' | 'thumbnailUrl' | 'categories'
+>;
 
 export interface KakaoPlaceType {
   address_name: string;
