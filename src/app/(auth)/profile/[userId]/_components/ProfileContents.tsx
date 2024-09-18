@@ -7,22 +7,20 @@ import { Timeline } from './Timeline';
 import { ProfilePageProps } from '@/types/authType';
 
 export const ProfileContents = ({
-  userData,
   isOwnProfile,
+  userData,
 }: ProfilePageProps) => {
   const tabLabels = isOwnProfile ? ['내 피드', '내 활동'] : ['게시글'];
   const { activeIndex, handleTabClick } = useTabHandler();
-  console.log('ddd', isOwnProfile);
-
   const contents = () => {
     if (isOwnProfile) {
       if (activeIndex === 0) {
-        return <MyFeed />;
+        return <MyFeed userId={userData.id} />;
       } else if (activeIndex === 1) {
         return <Timeline />;
       }
     } else {
-      return <MyFeed />;
+      return <MyFeed userId={userData.id} />;
     }
   };
 

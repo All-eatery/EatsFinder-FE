@@ -1,12 +1,12 @@
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
-import { UserData } from '@/types/authType';
+import { Active, FeedType, UserData } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 type Result<T, E> =
   | { isSuccess: true; data: T }
   | { isSuccess: false; error: E };
 
 export const getUserProfile = async (
-  id: string,
+  id: number,
 ): Promise<Result<UserData, string>> => {
   try {
     const response = await fetch(`${KOTLIN_SERVER}/users/${id}`, {
@@ -24,52 +24,41 @@ export const getUserProfile = async (
     return { isSuccess: false, error: '유저정보조회 에러' };
   }
 };
-export const getMyfeeds = async () => {
+export const getMyfeeds = async (): Promise<FeedType[]> => {
   const token = await getUserToken();
-  try {
-    const response = await fetch(`${KOTLIN_SERVER}/users/feeds`, {
-      method: 'GET',
-      headers: {
-        accept: '*/*',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await fetch(`${KOTLIN_SERVER}/users/feeds`, {
+    method: 'GET',
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
 };
-export const getMyActives = async () => {
+export const getMyActives = async (): Promise<Active[]> => {
   const token = await getUserToken();
-  try {
-    const response = await fetch(`${KOTLIN_SERVER}/users/actives`, {
-      method: 'GET',
-      headers: {
-        accept: '*/*',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+
+  const response = await fetch(`${KOTLIN_SERVER}/users/actives`, {
+    method: 'GET',
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
 };
-export const getUserFeeds = async (id: string) => {
-  try {
-    const response = await fetch(`${KOTLIN_SERVER}/users/feeds/${id}`, {
-      method: 'GET',
-      headers: {
-        accept: '*/*',
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+export const getUserFeeds = async (id: number): Promise<FeedType[]> => {
+  const response = await fetch(`${KOTLIN_SERVER}/users/feeds/${id}`, {
+    method: 'GET',
+    headers: {
+      accept: '*/*',
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
 };

@@ -1,6 +1,6 @@
-import { CreatedBy } from '../timeLine/CreatedBy';
-import { CreatedAt } from '../timeLine/CreatedAt';
-import { Active, SimplifiedData } from '@/types/authType';
+import { SimplifiedData } from '@/types/authType';
+import { CreatedAt, CreatedBy } from '../timeLine';
+import Link from 'next/link';
 
 type TimeLineProps = {
   timeline: SimplifiedData;
@@ -8,7 +8,10 @@ type TimeLineProps = {
 export const UserTimeline = ({ timeline }: TimeLineProps) => {
   return (
     <div className='flex w-[1368px] items-center border-b-[1px] border-b-gray-50 px-5 pb-[25px] pt-5'>
-      <div className='flex w-full items-center gap-3'>
+      <Link
+        href={`/posts/${timeline.postId}`}
+        className='flex w-full items-center gap-3'
+      >
         <div className='flex items-center gap-1 text-gray-500 body-16'>
           <CreatedBy
             profileUrl={timeline.postImageUrl}
@@ -23,7 +26,7 @@ export const UserTimeline = ({ timeline }: TimeLineProps) => {
         )}
         {timeline.type === 'commentLike' && <p>에 좋아요를 눌렀어요.</p>}
         <CreatedAt createdAt={timeline.createdAt} />
-      </div>
+      </Link>
     </div>
   );
 };

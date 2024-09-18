@@ -8,7 +8,7 @@ import { getServerUserInfo } from '@/utils/getServerUserInfo';
 import { MyProfile } from './MyProfile';
 import { UserProfile } from './UserProfile';
 type Props = {
-  userId: string;
+  userId: number;
 };
 export const ProfilePage = async ({ userId }: Props) => {
   const currentUser = await getServerUserInfo();
@@ -18,12 +18,13 @@ export const ProfilePage = async ({ userId }: Props) => {
   // console.log('액트', act);
   // const user = await getUserFeeds(userId);
   // console.log(user);
-  if (currentUser && String(currentUser?.id) === userId) {
+  if (currentUser && currentUser?.id == userId) {
+    console.log('my');
     return <MyProfile userData={currentUser} isOwnProfile={true} />;
   }
   const userProfileData = await getUserProfile(userId);
   if (userProfileData.isSuccess) {
-    console.log(userProfileData.isSuccess);
+    console.log('user');
     return <UserProfile userData={userProfileData.data} isOwnProfile={false} />;
   } else {
     console.log(userProfileData.isSuccess);
