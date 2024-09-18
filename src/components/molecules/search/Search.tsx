@@ -20,7 +20,7 @@ interface SearchProps
   extends VariantProps<typeof searchVariant>,
     InputHTMLAttributes<HTMLInputElement> {
   searchIcon?: boolean;
-  onSearch?: () => {};
+  onSearch?: () => void;
 }
 
 export const Search = ({

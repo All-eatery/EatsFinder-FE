@@ -1,19 +1,34 @@
 import { notFound } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import PostPage from './_components/PostPage';
 import { getPostContent } from '@/api/post';
+import { getComments, createComment } from '@/api/comment';
 
-export default async function Post({ params }: { params: { postId: string } }) {
+export default async function Post({ params }: { params: { postId: number } }) {
   const { postId } = params;
+
+  const handleCreateComment = async (content: string) => {
+    'use server';
+    const data = await createComment(postId, content);
+
+    if (data.statusCode === 'SUCCESS') {
+      revalidatePath(`/posts/${postId}`);
+    }
+  };
+
   try {
     const postContent = await getPostContent(postId);
-
+    const postComments = await getComments(postId);
     return (
       <>
-        <PostPage postContent={postContent} />
+        <PostPage
+          postContent={postContent}
+          postComments={postComments}
+          handleCreateComment={handleCreateComment}
+        />
       </>
     );
   } catch (err) {
-    console.log(err);
     notFound();
   }
 }

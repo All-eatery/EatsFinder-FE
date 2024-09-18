@@ -27,8 +27,22 @@ const PostComments = ({
           placeholder='댓글 추가'
           className='w-full'
           value={content}
-          onChange={(e) => setContent(e.target.value)}
-          onSearch={() => handleCreateComment(content)}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.nativeEvent.isComposing) {
+              return;
+            }
+            if (e.code === 'Enter') {
+              handleCreateComment(content);
+              setContent('');
+            }
+          }}
+          onSearch={() => {
+            handleCreateComment(content);
+            setContent('');
+          }}
         />
       </div>
       <div>
