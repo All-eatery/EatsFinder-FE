@@ -14,6 +14,7 @@ interface UserProfileProps {
   profileImage: string | null;
   createdAt: string;
   handleIsEditable: () => Promise<string>;
+  handleDeletePost: () => Promise<void>;
 }
 
 const UserProfile = ({
@@ -21,11 +22,17 @@ const UserProfile = ({
   profileImage,
   createdAt,
   handleIsEditable,
+  handleDeletePost,
 }: UserProfileProps) => {
   const userInfo = getClientUserInfo();
-  const [alertMessage, setAlertMessage] = useState('');
+  const [modalStatus, setModalStatus] = useState({
+    title: '',
+    message: '',
+    buttonText: '',
+    handleButtonClick: () => {},
+  });
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
-  const { value: isOpenAlertModal, handleValue: handleOpenAlertModal } =
+  const { value: isOpenModal, handleValue: handleOpenModal } =
     useToggleHandler();
   const dropdownItems = [
     {
@@ -39,14 +46,27 @@ const UserProfile = ({
             onClick: async () => {
               const message = await handleIsEditable();
               if (message) {
-                setAlertMessage(message);
-                handleOpenAlertModal();
+                setModalStatus({
+                  title: '수정할 수 없어요',
+                  message: message,
+                  buttonText: '확인',
+                  handleButtonClick: handleOpenModal,
+                });
+                handleOpenModal();
               }
             },
           },
           {
             label: '삭제하기',
-            onClick: () => {},
+            onClick: () => {
+              setModalStatus({
+                title: '게시물 삭제',
+                message: '이 게시물을 삭제할까요?',
+                buttonText: '삭제',
+                handleButtonClick: handleDeletePost,
+              });
+              handleOpenModal();
+            },
           },
         ]
       : [{ label: '게시물 신고하기', onClick: () => {} }]),
@@ -71,14 +91,16 @@ const UserProfile = ({
         {isDropdownOpen && <DropdownMenu dropdownItems={dropdownItems} />}
       </div>
       <Modal
-        title='수정을 할 수 없어요'
+        title={modalStatus.title}
         size='medium'
-        isOpen={isOpenAlertModal}
-        mainButton='확인'
-        onMainClick={handleOpenAlertModal}
-        onClose={handleOpenAlertModal}
+        isOpen={isOpenModal}
+        mainButton={modalStatus.buttonText}
+        onMainClick={() => {
+          modalStatus.handleButtonClick();
+        }}
+        onClose={handleOpenModal}
       >
-        <p className='text-center'>{alertMessage}</p>
+        <p className='text-center'>{modalStatus.message}</p>
       </Modal>
     </div>
   );

@@ -9,6 +9,11 @@ export default async function Post({ params }: { params: { postId: number } }) {
   try {
     const postContent = await getPostContent(postId);
     const postComments = await getComments(postId);
+
+    if (postComments.statusCode === 'ERROR') {
+      notFound();
+    }
+
     return (
       <>
         <PostPage postContent={postContent} postComments={postComments} />

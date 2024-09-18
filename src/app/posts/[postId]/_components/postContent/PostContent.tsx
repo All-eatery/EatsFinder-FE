@@ -14,9 +14,14 @@ import { FavSVG } from '@/components/svg/FavSVG';
 interface PostContentProps {
   postContent: PostContentType;
   handleIsEditable: () => Promise<string>;
+  handleDeletePost: () => Promise<void>;
 }
 
-const PostContent = ({ postContent, handleIsEditable }: PostContentProps) => {
+const PostContent = ({
+  postContent,
+  handleIsEditable,
+  handleDeletePost,
+}: PostContentProps) => {
   const images = parseImages(
     postContent.thumbnailUrl,
     postContent.imageUrl,
@@ -30,6 +35,7 @@ const PostContent = ({ postContent, handleIsEditable }: PostContentProps) => {
           profileImage={postContent.users.profileImage}
           createdAt={postContent.createdAt}
           handleIsEditable={handleIsEditable}
+          handleDeletePost={handleDeletePost}
         />
       </div>
       <div className='mb-20 grid grid-cols-2 gap-6'>

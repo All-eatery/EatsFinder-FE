@@ -9,7 +9,7 @@ import {
   editComment,
   toggleCommentLike,
 } from '@/api/comment';
-import { getPostEditStatus } from '@/api/post';
+import { getPostEditStatus, deletePost } from '@/api/post';
 
 interface PostPageProps {
   postContent: PostContentType;
@@ -62,11 +62,21 @@ const PostPage = ({ postContent, postComments }: PostPageProps) => {
 
     redirect(`/post/new`);
   };
+
+  const handleDeletePost = async () => {
+    'use server';
+    const data = await deletePost(postContent.id);
+    if (data.statusCode === 200) {
+      redirect('/');
+    }
+  };
+
   return (
     <>
       <PostContent
         postContent={postContent}
         handleIsEditable={handleIsEditable}
+        handleDeletePost={handleDeletePost}
       />
       <PostComment
         postComments={postComments}

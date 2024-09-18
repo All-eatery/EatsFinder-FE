@@ -125,3 +125,18 @@ export const getPostEditStatus = async (
 
   return data;
 };
+
+export const deletePost = async (postId: number): Promise<NestResponseType> => {
+  const token = await getUserToken();
+  const res = await fetch(`${NEST_SERVER}/posts/${postId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+};

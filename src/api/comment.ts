@@ -4,7 +4,9 @@ import { KotlinResponseType } from '@/types/responseType';
 import { CommentLikeType } from '@/types/comment';
 import { getUserToken } from '@/utils/getServerUserInfo';
 
-export const getComments = async (postId: number): Promise<PostCommentType> => {
+export const getComments = async (
+  postId: number,
+): Promise<KotlinResponseType<PostCommentType>> => {
   const token = await getUserToken();
   const res = await fetch(`${KOTLIN_SERVER}/posts/${postId}/comments`, {
     method: 'GET',
