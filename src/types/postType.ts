@@ -8,6 +8,7 @@ export interface PostContentType {
   menuTag: string[];
   keywordTag: string;
   likeCount: number;
+  viewCount: number;
   createdAt: string;
   users: {
     id: number;

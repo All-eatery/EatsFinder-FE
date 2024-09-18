@@ -57,7 +57,7 @@ const PostContent = ({ postContent }: PostContentProps) => {
           <div className='flex gap-4 text-gray-300'>
             <div className='flex min-w-24 gap-1 [&>svg]:h-6 [&>svg]:w-6'>
               <EyeSVG />
-              <span>99999</span>
+              <span>{postContent.viewCount}</span>
             </div>
             <div className='flex gap-1 [&>svg]:h-6 [&>svg]:w-6'>
               <FavSVG />
