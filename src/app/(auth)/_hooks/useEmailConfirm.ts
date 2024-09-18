@@ -1,34 +1,41 @@
 import { useState } from 'react';
 import { useTimer } from './useTimer';
-import { EmailConfirmType, SignupFormType } from '@/types/authType';
+import { EmailConfirmType } from '@/types/authType';
 import { debounce } from 'lodash';
 import { emailRegex } from '@/utils/zodSchema';
-import { UseFormSetValue, UseFormTrigger } from 'react-hook-form';
+import {
+  FieldValues,
+  Path,
+  UseFormSetValue,
+  UseFormTrigger,
+} from 'react-hook-form';
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
 
-export const useEmailConfirm = (
-  setValue: UseFormSetValue<SignupFormType>,
-  trigger: UseFormTrigger<SignupFormType>,
+export const useEmailConfirm = <
+  T extends FieldValues & { codeValidation?: boolean },
+>(
+  setValue: UseFormSetValue<T>,
+  trigger: UseFormTrigger<T>,
 ) => {
   const [authButtonState, setAuthButtonState] = useState(false);
   const { time, startTimer, formatTime } = useTimer(300);
-  const sendEmail = (email: string) =>
-    //쓰로틀링이 더 나을까?
+  const sendEmail = (email: string, { checkDuplicate = true } = {}) =>
     debounce(async () => {
       if (isValidEmail(email)) {
-        const response = await isDuplicateEmail(email);
-        if (response.statusCode === 'SUCCESS') {
-          const response = await sendCode(email);
-          if (response.statusCode === 'SUCCESS') {
-            console.log(response.message);
-          } else if (response.statusCode === 'ERROR') {
-            return console.log('인증번호가 만료되지 않았습니다');
+        if (checkDuplicate) {
+          const response = await isDuplicateEmail(email);
+          if (response.statusCode !== 'SUCCESS') {
+            return console.log('이미 가입된 이메일 입니다.');
           }
-          console.log('이메일방송', response);
+        }
+
+        const response = await sendCode(email);
+        if (response.statusCode === 'SUCCESS') {
+          console.log(response.message);
           setAuthButtonState(true);
           startTimer();
         } else {
-          return console.log('이미 가입된 이메일 입니다.');
+          console.log('인증번호가 만료되지 않았습니다');
         }
       }
     }, 1000);
@@ -36,12 +43,12 @@ export const useEmailConfirm = (
   const confirmEmail = (data: EmailConfirmType) => async () => {
     const response = await confirmCode(data);
     if (response.statusCode === 'SUCCESS') {
-      setValue('codeValidation', true);
-      trigger('codeValidation');
+      setValue('codeValidation' as Path<T>, true as any);
+      trigger('codeValidation' as Path<T>);
       console.log('인증완료');
     } else if (response.statusCode === 'ERROR') {
-      setValue('codeValidation', false);
-      trigger('codeValidation');
+      setValue('codeValidation' as Path<T>, false as any);
+      trigger('codeValidation' as Path<T>);
     }
     return response;
   };
@@ -77,7 +84,16 @@ const sendCode = async (email: string) => {
       email,
     }),
   });
-  return response.json();
+  try {
+    const res = await response.json();
+    if (res.statusCode === 'SUCCESS') {
+      return res;
+    } else if (res.statusCode === 'ERROR') {
+      return res;
+    }
+  } catch (error) {
+    throw new Error('인증번호 발송 중 에러가 발생했습니다.');
+  }
 };
 const confirmCode = async (data: EmailConfirmType) => {
   const { code, email } = data;

@@ -45,7 +45,6 @@ export const Header = ({ userInfo }: HeaderProps) => {
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
   const { closeModal, isModalOpen, logoutButton, openLogoutModal } =
     useLogoutModal();
-  console.log('안녕하세요');
   if (path.startsWith('/login') || path.startsWith('/signup')) {
     return <AuthHeader />;
   }

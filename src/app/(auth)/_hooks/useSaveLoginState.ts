@@ -18,7 +18,6 @@ export const useSaveLoginState = () => {
     } else {
       document.cookie = 'isLoginSave=; path=/; max-age=0';
     }
-    console.log('insided', document.cookie);
   }, [loginSave]);
 
   return { loginSave, handleLoginSave };

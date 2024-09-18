@@ -59,3 +59,68 @@ export const CheckBoxSVG = ({ isChecked = 'default' }: SVGCheckBoxProps) => {
     </svg>
   );
 };
+export const CheckBoXSVG_Ver2 = ({
+  isChecked = 'default',
+}: SVGCheckBoxProps) => {
+  const { svgContent } = (() => {
+    switch (isChecked) {
+      case 'check':
+        return {
+          svgContent: (
+            <>
+              <rect x='3' y='3' width='18' height='18' rx='4' fill='#FB5607' />
+              <path
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M17.5121 8.44419C17.9356 8.87497 17.9356 9.57342 17.5121 10.0042L11.2765 16.3471C10.853 16.7779 10.1663 16.7779 9.74285 16.3471L6.4895 13.0377C6.066 12.607 6.066 11.9085 6.4895 11.4777C6.91301 11.0469 7.59964 11.0469 8.02314 11.4777L10.5097 14.007L15.9784 8.44419C16.4019 8.0134 17.0886 8.0134 17.5121 8.44419Z'
+                fill='white'
+              />
+            </>
+          ),
+        };
+      case 'blank':
+        return {
+          svgContent: (
+            <>
+              <rect x='4' y='4' width='16' height='16' rx='3' fill='white' />
+              <rect
+                x='4'
+                y='4'
+                width='16'
+                height='16'
+                rx='3'
+                stroke='#A6A6A6'
+                strokeWidth='2'
+              />
+            </>
+          ),
+        };
+      case 'default':
+      default:
+        return {
+          svgContent: (
+            <>
+              <rect x='3' y='3' width='18' height='18' rx='4' fill='#A6A6A6' />
+              <path
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M17.5121 8.44419C17.9356 8.87497 17.9356 9.57342 17.5121 10.0042L11.2765 16.3471C10.853 16.7779 10.1663 16.7779 9.74285 16.3471L6.4895 13.0377C6.066 12.607 6.066 11.9085 6.4895 11.4777C6.91301 11.0469 7.59964 11.0469 8.02314 11.4777L10.5097 14.007L15.9784 8.44419C16.4019 8.0134 17.0886 8.0134 17.5121 8.44419Z'
+                fill='white'
+              />{' '}
+            </>
+          ),
+        };
+    }
+  })();
+  return (
+    <svg
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      {svgContent}
+    </svg>
+  );
+};
