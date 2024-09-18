@@ -4,5 +4,6 @@ export interface CommentType {
   profileImage: string | null;
   content: string;
   likeCount: number;
+  isMyComment: boolean;
   createdAt: string;
 }

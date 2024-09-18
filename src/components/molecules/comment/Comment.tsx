@@ -7,19 +7,14 @@ import timeDifference from '@/utils/timeDifference';
 interface CommentProps {
   comment: CommentType;
   isLiked?: boolean;
-  isAuthor?: boolean;
 }
 
-export const Comment = ({
-  comment,
-  isLiked = false,
-  isAuthor = false,
-}: CommentProps) => {
+export const Comment = ({ comment, isLiked = false }: CommentProps) => {
   return (
     <div
       className={customTwMerge(
-        'flex rounded-3xl p-5',
-        isAuthor && 'bg-gray-50',
+        'mb-6 flex rounded-3xl p-5',
+        comment.isMyComment && 'bg-gray-50',
       )}
     >
       <div className='mr-6 flex items-center'>
