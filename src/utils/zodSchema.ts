@@ -77,21 +77,22 @@ export const signupSchema = z
   });
 
 export const profileEditSchema = z.object({
-  profileImage: z.any().nullable(),
-  // .refine((files) => {
-  //   return files?.[0]?.size <= MAX_FILE_SIZE;
-  // }, `Max image size is 5MB.`)
-  // .refine(
-  //   (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-  //   'Only .jpg, .jpeg, .png and .webp formats are supported.',
-  // )
+  profileImage: z
+    .any()
+    .nullable()
+    .refine((files) => {
+      return files?.[0]?.size <= MAX_FILE_SIZE;
+    }, `이미지의 최대 크기는 5MB 입니다.`)
+    .refine(
+      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
+      '.jpg,.jpeg,.png.webp 형식만 지원됩니다.',
+    ),
   nickname: z
     .string({ required_error: '닉네임을 입력해주세요.' })
     .regex(nicknameRegex, {
       message:
         '한글,영문,숫자를 사용하여 최소 2자에서 최대 12자의 닉네임을 입력해주세요.',
     }),
-  // nicknameDuplicated: z.boolean(),
   phoneNumber: z
     .string({ required_error: '전화번호를 입력해주세요.' })
     .regex(phoneRegex, { message: '전화번호 양식에 맞게 작성해주세요.' }),
@@ -131,3 +132,12 @@ export const postFormSchema = z.object({
 });
 
 export type PostFormValue = z.infer<typeof postFormSchema>;
+
+export const DeleteAccountSchema = z.object({
+  deleteReason: z.string().array(),
+  email: z.string(),
+  code: z.string(),
+  codeValidation: z.boolean(),
+  agreed: z.boolean(),
+  etcReason: z.string().nullish(),
+});

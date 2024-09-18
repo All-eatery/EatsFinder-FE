@@ -1,6 +1,7 @@
 import { getServerUserInfo } from '@/utils/getServerUserInfo';
 import { AccountInfo } from './AccountInfo';
 import { AccountForm } from './AccountForm';
+import Link from 'next/link';
 
 export const MyAccountPage = async () => {
   const userInfo = await getServerUserInfo();
@@ -10,7 +11,12 @@ export const MyAccountPage = async () => {
       <AccountInfo name={userInfo!.nickname} email={userInfo!.email} />
       <div className='flex flex-col items-center gap-1'>
         {userInfo!.userType === 'LOCAL' && <AccountForm />}
-        <button className='text-gray-100 underline body-16'>탈퇴하기</button>
+        <Link
+          href='/delete-account'
+          className='text-gray-100 underline body-16'
+        >
+          탈퇴하기
+        </Link>
       </div>
     </div>
   );

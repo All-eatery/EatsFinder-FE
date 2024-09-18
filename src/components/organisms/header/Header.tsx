@@ -10,10 +10,7 @@ import { Modal } from '..';
 import { useEffect, useState } from 'react';
 import { useLogoutModal } from '@/app/(auth)/_hooks/useLogoutModal';
 import { AlarmBellSVG } from '@/components/svg/AlarmBellSVG';
-import { getServerUserInfo } from '@/utils/getServerUserInfo';
 import { UserData } from '@/types/authType';
-import Image from 'next/image';
-import { getClientUserInfo } from '@/utils/getClientUserInfo';
 
 const NAV_DATA = [
   {
@@ -48,7 +45,6 @@ export const Header = ({ userInfo }: HeaderProps) => {
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
   const { closeModal, isModalOpen, logoutButton, openLogoutModal } =
     useLogoutModal();
-  console.log('안녕하세요');
   if (path.startsWith('/login') || path.startsWith('/signup')) {
     return <AuthHeader />;
   }

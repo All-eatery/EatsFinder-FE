@@ -45,7 +45,6 @@ export const UserDropdownMenu = ({
       <OptionButton onClick={handleLogoutBtn} className='w-[300px]'>
         로그아웃
       </OptionButton>
-      {/* <OptionButton className='w-[300px]'>로그아웃</OptionButton> */}
     </div>
   );
 };

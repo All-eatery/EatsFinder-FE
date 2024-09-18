@@ -6,7 +6,7 @@ import { TextField } from '@/components/atoms/textField';
 import { EditSVG } from '@/components/svg/EditSVG';
 import { UserData } from '@/types/authType';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 type ProfileEditProps = {
   handler: () => void;
   userData: UserData;
@@ -20,7 +20,6 @@ export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
     setValue('profileImage', userData.profileImage);
     if (previewImage) setValue('profileImage', previewImage);
   }, [previewImage]);
-  console.log(watch());
   return (
     <div>
       <form className='flex flex-col items-center' onSubmit={handleSubmit}>
@@ -35,7 +34,7 @@ export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
                 type='file'
                 accept='image/*'
                 ref={imageInputRef}
-                className='hidden'
+                className='sr-only'
                 onChange={(e) => handleFileChange(e)}
               />
               {previewImage ? (
