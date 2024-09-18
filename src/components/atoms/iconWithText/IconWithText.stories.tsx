@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { IconWithText } from '.';
 
 const meta: Meta<typeof IconWithText> = {
-  title: 'atom/TextField',
+  title: 'atom/IconWithText',
   component: IconWithText,
   parameters: {
     layout: 'centered',
