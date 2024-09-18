@@ -5,8 +5,9 @@ import { ProfileContents } from './ProfileContents';
 
 export const UserProfile = ({ userData, isOwnProfile }: ProfilePageProps) => {
   const handler = () => {
-    return console.log('팔로우 버튼 생겨야해요');
+    return console.log('팔로우 기능 생겨야해요');
   };
+
   return (
     <>
       <Profile
