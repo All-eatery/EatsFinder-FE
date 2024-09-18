@@ -13,3 +13,5 @@ export * from './modal';
 export * from './imageInput';
 
 export * from './rating';
+
+export * from './dropdownMenu';
