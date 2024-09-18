@@ -20,7 +20,6 @@ export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
     setValue('profileImage', userData.profileImage);
     if (previewImage) setValue('profileImage', previewImage);
   }, [previewImage]);
-  console.log(watch());
   return (
     <div>
       <form className='flex flex-col items-center' onSubmit={handleSubmit}>

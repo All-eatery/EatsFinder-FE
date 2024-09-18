@@ -4,6 +4,7 @@ import {
   DeleteAccountType,
   LoginFormType,
   ProfileEditType,
+  ReasonForAccountDeletion,
   SignupFormType,
 } from '@/types/authType';
 import { SignupType } from '@/types/authType';
@@ -108,8 +109,6 @@ export const editUserProfile = async (data: ProfileEditType) => {
       body: formData,
     });
 
-    console.log('응답:', await response.json());
-
     if (!response.ok) {
       throw new Error(`Server responded with status: ${response.status}`);
     }
@@ -139,32 +138,36 @@ export const changePassword = async (data: ChagePasswordType) => {
 };
 
 export const deleteAccount = async (data: DeleteAccountType) => {
-  const { email, code, etcReason, deleteReason } = data;
+  const { email, etcReason, deleteReason } = data;
   const token = await accessToken;
+  const queryParams: { [key: string]: boolean | string } = {
+    unavailability: false,
+    infrequent: false,
+    privacy: false,
+    inconvenience: false,
+    switching: false,
+    others: false,
+  };
+  for (const key in ReasonForAccountDeletion) {
+    if (deleteReason.includes(key)) {
+      queryParams[key.toLowerCase()] = true;
+    }
+  }
+  if (deleteReason.includes('Etc')) {
+    queryParams['others'] = true;
+    queryParams['reason'] = encodeURIComponent(etcReason || '');
+  }
+  const queryString = Object.entries(queryParams)
+    .map(([key, value]) => value !== undefined && `${key}=${value}`)
+    .join('&');
+  const requestUrl = `${KOTLIN_SERVER}/users?email=${email}&${queryString}`;
 
-  console.log('여기', deleteReason);
-  console.log(etcReason);
-  return;
-  console.log(
-    `${KOTLIN_SERVER}/users/?email=${email}&code=${code}&unavailability=${false}&infrequent=${false}&privacy=${false}&inconvenience=${false}&switching=${true}&others=${false}`,
-  );
-  const response = await fetch(
-    `${KOTLIN_SERVER}/users/?email=${email}&code=${code}&unavailability=${false}&infrequent=${false}&privacy=${false}&inconvenience=${false}&switching=${true}&others=${false}`,
-    {
-      method: 'DELETE',
-      headers: {
-        accept: '*/*',
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        code,
-        reason: etcReason,
-      }),
+  const response = await fetch(requestUrl, {
+    method: 'DELETE',
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
-  );
+  });
 };
-/*
-http://localhost:8080/users?email=20160366%40vision.hoseo.edu&code=QZL7MM6I9O&
- */

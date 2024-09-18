@@ -6,21 +6,13 @@ import { ConfirmEmail } from '../../signup/_components/ConfirmEmail';
 import { Button, Checkbox } from '@/components/atoms';
 import { IconWithText } from '@/components/atoms/iconWithText';
 import { useDeleteReason } from '../../_hooks/useDeleteReason';
-enum ReasonForAccountDeletion {
-  Unavailability = '원하는 맛집을 못찾았어요.',
-  Infrequent = '자주 이용하지 않아요.',
-  Privacy = '개인 정보 문제가 걱정돼요.',
-  Inconvenience = '서비스 사용성이 불편해요.',
-  Switching = '다른 서비스를 이용하고 있어요.',
-}
+import { ReasonForAccountDeletion } from '@/types/authType';
 
 export const DeleteAccountForm = (userEmail: { email: string }) => {
   const { handleSubmit, register, setValue, trigger, watch } =
     useDeleteAccount();
-  console.log(userEmail.email);
-  const { etcReason, handleEtcReasonChange, handleReasonClick, reasonIcon } =
+  const { handleEtcReasonChange, handleReasonClick, reasonIcon } =
     useDeleteReason(setValue);
-  console.log(watch());
   return (
     <form className='flex flex-col gap-[60px]' onSubmit={handleSubmit}>
       <div className='flex flex-col gap-6'>
@@ -59,21 +51,21 @@ export const DeleteAccountForm = (userEmail: { email: string }) => {
             );
           })}
           <div>
-            <input id={`etc`} className='sr-only' type='checkbox' />
-            <label htmlFor='etc' onClick={() => handleReasonClick('Etc')}>
+            <input id={`Etc`} className='sr-only' type='checkbox' />
+            <label htmlFor='Etc' onClick={() => handleReasonClick('Etc')}>
               <IconWithText
                 gap={1}
                 icon={CheckBoXSVG_Ver2({ isChecked: reasonIcon('Etc') })}
               >
                 기타
               </IconWithText>
-              <textarea
-                value={etcReason}
-                onChange={(e) => handleEtcReasonChange(e)}
-                className='h-24 w-full resize-none overflow-auto border border-gray-200 p-2 body-16'
-                placeholder='소중한 의견을 남겨주시면 더 나은 서비스를 제공하도록 노력하겠습니다.'
-              />
             </label>
+            <textarea
+              // value={etcReason}
+              onChange={(e) => handleEtcReasonChange(e)}
+              className='h-24 w-full resize-none overflow-auto border border-gray-200 p-2 body-16'
+              placeholder='소중한 의견을 남겨주시면 더 나은 서비스를 제공하도록 노력하겠습니다.'
+            />
           </div>
         </div>
       </div>
