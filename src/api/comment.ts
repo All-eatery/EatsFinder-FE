@@ -49,3 +49,24 @@ export const deleteComment = async (commentId: number) => {
     },
   });
 };
+
+export const editComment = async (
+  commentId: number,
+  content: string,
+): Promise<KotlinResponseType<string>> => {
+  const token = await getUserToken();
+  const body = JSON.stringify({ content: content });
+
+  const res = await fetch(`${KOTLIN_SERVER}/comments/${commentId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: body,
+  });
+
+  const data = await res.json();
+
+  return data;
+};

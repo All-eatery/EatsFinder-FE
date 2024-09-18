@@ -9,12 +9,14 @@ interface PostCommentsProps {
   postComments: PostCommentType;
   handleCreateComment: (content: string) => Promise<void>;
   handleDeleteComment: (commentId: number) => Promise<void>;
+  handleEditComment: (commentId: number, content: string) => Promise<void>;
 }
 
 const PostComments = ({
   postComments,
   handleCreateComment,
   handleDeleteComment,
+  handleEditComment,
 }: PostCommentsProps) => {
   const [content, setContent] = useState('');
 
@@ -54,6 +56,7 @@ const PostComments = ({
             key={comment.id}
             comment={comment}
             handleDeleteComment={handleDeleteComment}
+            handleEditComment={handleEditComment}
           />
         ))}
       </div>

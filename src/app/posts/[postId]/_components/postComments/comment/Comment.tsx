@@ -1,6 +1,8 @@
+import { useState, useCallback } from 'react';
 import { useDropdownHandler } from '@/hooks/useDropdownHandler';
 import { useToggleHandler } from '@/hooks/useToggleHandler';
-import { ProfileImage } from '@/components/atoms';
+import { ProfileImage, Button } from '@/components/atoms';
+import { TextField } from '@/components/atoms/textField';
 import { Modal } from '@/components/organisms';
 import { DropdownMenu } from '@/components/molecules/dropdownMenu';
 import { ThumbsSVG } from '@/components/svg/ThumbsSVG';
@@ -14,14 +16,18 @@ interface CommentProps {
   comment: CommentType;
   isLiked?: boolean;
   handleDeleteComment: (commentId: number) => Promise<void>;
+  handleEditComment: (commentId: number, content: string) => Promise<void>;
 }
 
 export const Comment = ({
   comment,
   isLiked = false,
   handleDeleteComment,
+  handleEditComment,
 }: CommentProps) => {
   const userInfo = getClientUserInfo();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedComment, setEditedComment] = useState(comment.content);
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
   const { value: isOpenDeleteModal, handleValue: handleOpenDeleteModal } =
     useToggleHandler();
@@ -31,7 +37,10 @@ export const Comment = ({
       ? [
           {
             label: '수정하기',
-            onClick: () => {},
+            onClick: () => {
+              setIsEditMode(true);
+              dropdownHanlder();
+            },
           },
           {
             label: '삭제하기',
@@ -43,6 +52,11 @@ export const Comment = ({
         ]
       : [{ label: '신고하기', onClick: () => {} }]),
   ];
+
+  const callbackRef = useCallback((current: HTMLInputElement) => {
+    current?.focus();
+  }, []);
+
   return (
     <div
       className={customTwMerge(
@@ -73,7 +87,34 @@ export const Comment = ({
             )}
           </div>
         </div>
-        <p className='break-normal text-gray-600 body-20'>{comment.content}</p>
+        {isEditMode ? (
+          <form>
+            <TextField
+              className='bg-transparent'
+              ref={callbackRef}
+              fullWidth={true}
+              underStoke={true}
+              value={editedComment}
+              onChange={(e) => setEditedComment(e.target.value)}
+              button={
+                <Button
+                  type='submit'
+                  size='mini'
+                  onClick={() => {
+                    handleEditComment(comment.id, editedComment);
+                    setIsEditMode(false);
+                  }}
+                >
+                  완료
+                </Button>
+              }
+            ></TextField>
+          </form>
+        ) : (
+          <p className='break-normal text-gray-600 body-20'>
+            {comment.content}
+          </p>
+        )}
         <div className='flex items-center gap-2'>
           <div
             className={customTwMerge(
