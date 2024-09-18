@@ -1,14 +1,17 @@
 import { UserTimeline } from '@/components/atoms/userTimeline';
 import React from 'react';
+import { activeDummyData } from './test/dummy';
+import { simplifyTimeLineData } from '@/utils/simplifyTimeLineData';
 
 export const Timeline = () => {
-  const arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '10', '23'];
+  const arr = activeDummyData;
 
   return (
     <>
-      {arr.map((arr) => (
-        <UserTimeline key={arr} />
-      ))}
+      {arr.map((data) => {
+        const timeLine = simplifyTimeLineData(data.data[0]);
+        return <UserTimeline key={timeLine.id} timeline={timeLine} />;
+      })}
     </>
   );
 };

@@ -74,3 +74,59 @@ export interface CookieOptions {
   secure?: boolean | undefined;
   value?: string | undefined;
 }
+export type FeedType = {
+  thumbnailUrl: string;
+  placeName: string;
+  content: string;
+  createdAt: string;
+};
+export type ActiveType = 'postLike' | 'commentLike' | 'comment';
+
+export type Active = {
+  data: [
+    {
+      type: ActiveType;
+      postLike?: ActivePostLikeType;
+      commentLike?: ActiveCommentLikeType;
+      comment?: ActiveCommentType;
+      createdAt: string;
+    },
+  ];
+};
+export type ActivePostLikeType = {
+  postId: number;
+  createdBy: {
+    postUserNickname: string;
+    postImageUrl: string;
+  };
+  postContent: string;
+};
+export type ActiveCommentLikeType = {
+  postId: number;
+  commentId: number;
+  createdBy: {
+    commentUserNickname: string;
+    commentUserImageUrl: string;
+  };
+  commentContent: string;
+};
+export type ActiveCommentType = {
+  id: number;
+  postId: number;
+  postDeletedAt: number; //????
+  createdBy: {
+    postUserNickname: string;
+    postImageUrl: string;
+  };
+  content: string;
+};
+export type SimplifiedData = {
+  type: string;
+  id: number;
+  postId: number;
+  postUserNickname: string;
+  postImageUrl: string;
+  typeMessage: string;
+  content?: string;
+  createdAt: string;
+};
