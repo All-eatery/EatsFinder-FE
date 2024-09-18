@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { ProfileImage } from '@/components/atoms';
-import { Comment, Search } from '@/components/molecules';
+import { Search } from '@/components/molecules';
+import { Comment } from './comment';
 import { PostCommentType } from '@/types/postType';
 
 interface PostCommentsProps {

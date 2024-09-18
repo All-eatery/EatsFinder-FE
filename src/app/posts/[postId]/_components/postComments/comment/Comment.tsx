@@ -2,7 +2,7 @@ import { useDropdownHandler } from '@/hooks/useDropdownHandler';
 import { useToggleHandler } from '@/hooks/useToggleHandler';
 import { ProfileImage } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
-import { DropdownMenu } from '../dropdownMenu';
+import { DropdownMenu } from '@/components/molecules/dropdownMenu';
 import { ThumbsSVG } from '@/components/svg/ThumbsSVG';
 import { MoreSVG } from '@/components/svg/MoreSVG';
 import { CommentType } from '@/types/comment';
