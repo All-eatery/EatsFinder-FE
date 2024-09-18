@@ -35,7 +35,7 @@ export const DeleteAccountForm = (userEmail: { email: string }) => {
                 />
                 <label
                   htmlFor={`checkbox-${idx}`}
-                  className='flex'
+                  className='inline-flex cursor-pointer'
                   onClick={() => handleReasonClick(key)}
                 >
                   <IconWithText
@@ -52,7 +52,11 @@ export const DeleteAccountForm = (userEmail: { email: string }) => {
           })}
           <div>
             <input id={`Etc`} className='sr-only' type='checkbox' />
-            <label htmlFor='Etc' onClick={() => handleReasonClick('Etc')}>
+            <label
+              className='inline-flex cursor-pointer'
+              htmlFor='Etc'
+              onClick={() => handleReasonClick('Etc')}
+            >
               <IconWithText
                 gap={1}
                 icon={CheckBoXSVG_Ver2({ isChecked: reasonIcon('Etc') })}
