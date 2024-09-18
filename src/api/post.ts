@@ -1,6 +1,7 @@
 import { NEST_SERVER } from '@/constants/baseUrl';
 import { PostContentType, PlaceRequestType } from '@/types/postType';
 import { getUserToken } from '@/utils/getServerUserInfo';
+import { NestResponseType } from '@/types/responseType';
 
 export const createNewPost = async (formData: FormData) => {
   const token = await getUserToken();
@@ -103,6 +104,21 @@ export const createMenu = async (menu: string, placeId: number) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ menu, placeId }),
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const getPostEditStatus = async (
+  postId: number,
+): Promise<NestResponseType> => {
+  const res = await fetch(`${NEST_SERVER}/posts/${postId}/check`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   const data = await res.json();

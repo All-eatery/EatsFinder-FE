@@ -1,7 +1,10 @@
 'use client';
+import { useState } from 'react';
+import { useToggleHandler } from '@/hooks/useToggleHandler';
 import { useDropdownHandler } from '@/hooks/useDropdownHandler';
 import { ProfileImage } from '@/components/atoms';
 import { DropdownMenu } from '@/components/molecules';
+import { Modal } from '@/components/organisms';
 import { MoreSVG } from '@/components/svg/MoreSVG';
 import timeDifference from '@/utils/timeDifference';
 import { getClientUserInfo } from '@/utils/getClientUserInfo';
@@ -10,15 +13,20 @@ interface UserProfileProps {
   nickname: string;
   profileImage: string | null;
   createdAt: string;
+  handleIsEditable: () => Promise<string>;
 }
 
 const UserProfile = ({
   nickname,
   profileImage,
   createdAt,
+  handleIsEditable,
 }: UserProfileProps) => {
   const userInfo = getClientUserInfo();
+  const [alertMessage, setAlertMessage] = useState('');
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
+  const { value: isOpenAlertModal, handleValue: handleOpenAlertModal } =
+    useToggleHandler();
   const dropdownItems = [
     {
       label: '피드 보기',
@@ -28,7 +36,13 @@ const UserProfile = ({
       ? [
           {
             label: '수정하기',
-            onClick: () => {},
+            onClick: async () => {
+              const message = await handleIsEditable();
+              if (message) {
+                setAlertMessage(message);
+                handleOpenAlertModal();
+              }
+            },
           },
           {
             label: '삭제하기',
@@ -56,6 +70,16 @@ const UserProfile = ({
         </button>
         {isDropdownOpen && <DropdownMenu dropdownItems={dropdownItems} />}
       </div>
+      <Modal
+        title='수정을 할 수 없어요'
+        size='medium'
+        isOpen={isOpenAlertModal}
+        mainButton='확인'
+        onMainClick={handleOpenAlertModal}
+        onClose={handleOpenAlertModal}
+      >
+        <p className='text-center'>{alertMessage}</p>
+      </Modal>
     </div>
   );
 };

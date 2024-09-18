@@ -1,3 +1,4 @@
+'use client';
 import { ImageCarousel } from '@/components/organisms';
 import UserProfile from './UserProfile';
 import StoreInfo from './StoreInfo';
@@ -12,9 +13,10 @@ import { FavSVG } from '@/components/svg/FavSVG';
 
 interface PostContentProps {
   postContent: PostContentType;
+  handleIsEditable: () => Promise<string>;
 }
 
-const PostContent = ({ postContent }: PostContentProps) => {
+const PostContent = ({ postContent, handleIsEditable }: PostContentProps) => {
   const images = parseImages(
     postContent.thumbnailUrl,
     postContent.imageUrl,
@@ -27,6 +29,7 @@ const PostContent = ({ postContent }: PostContentProps) => {
           nickname={postContent.users.nickname}
           profileImage={postContent.users.profileImage}
           createdAt={postContent.createdAt}
+          handleIsEditable={handleIsEditable}
         />
       </div>
       <div className='mb-20 grid grid-cols-2 gap-6'>
