@@ -3,7 +3,7 @@ import UserProfile from './UserProfile';
 import StoreInfo from './StoreInfo';
 import StoreMap from './StoreMap';
 import KeywordChips from './KeywordChips';
-import { Checkbox, Chip } from '@/components/atoms';
+import { Chip } from '@/components/atoms';
 import { PostContentType } from '@/types/postType';
 import parseImages from '@/utils/parseImages';
 import { ShareSVG } from '@/components/svg/ShareSVG';

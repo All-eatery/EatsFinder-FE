@@ -7,11 +7,13 @@ import { PostCommentType } from '@/types/postType';
 interface PostCommentsProps {
   postComments: PostCommentType;
   handleCreateComment: (content: string) => Promise<void>;
+  handleDeleteComment: (commentId: number) => Promise<void>;
 }
 
 const PostComments = ({
   postComments,
   handleCreateComment,
+  handleDeleteComment,
 }: PostCommentsProps) => {
   const [content, setContent] = useState('');
 
@@ -47,7 +49,11 @@ const PostComments = ({
       </div>
       <div>
         {postComments.comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+          <Comment
+            key={comment.id}
+            comment={comment}
+            handleDeleteComment={handleDeleteComment}
+          />
         ))}
       </div>
     </section>

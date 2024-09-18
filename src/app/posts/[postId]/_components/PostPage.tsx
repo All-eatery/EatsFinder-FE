@@ -6,12 +6,14 @@ interface PostPageProps {
   postContent: PostContentType;
   postComments: PostCommentType;
   handleCreateComment: (content: string) => Promise<void>;
+  handleDeleteComment: (commentId: number) => Promise<void>;
 }
 
 const PostPage = ({
   postContent,
   postComments,
   handleCreateComment,
+  handleDeleteComment,
 }: PostPageProps) => {
   return (
     <>
@@ -19,6 +21,7 @@ const PostPage = ({
       <PostComment
         postComments={postComments}
         handleCreateComment={handleCreateComment}
+        handleDeleteComment={handleDeleteComment}
       />
     </>
   );

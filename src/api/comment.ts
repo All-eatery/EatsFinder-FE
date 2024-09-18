@@ -48,8 +48,4 @@ export const deleteComment = async (commentId: number) => {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  const data = await res.json();
-
-  return data;
 };

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import PostPage from './_components/PostPage';
 import { getPostContent } from '@/api/post';
-import { getComments, createComment } from '@/api/comment';
+import { getComments, createComment, deleteComment } from '@/api/comment';
 
 export default async function Post({ params }: { params: { postId: number } }) {
   const { postId } = params;
@@ -16,6 +16,13 @@ export default async function Post({ params }: { params: { postId: number } }) {
     }
   };
 
+  const handleDeleteComment = async (commentId: number) => {
+    'use server';
+    await deleteComment(commentId);
+
+    revalidatePath(`/posts/${postId}`);
+  };
+
   try {
     const postContent = await getPostContent(postId);
     const postComments = await getComments(postId);
@@ -25,6 +32,7 @@ export default async function Post({ params }: { params: { postId: number } }) {
           postContent={postContent}
           postComments={postComments}
           handleCreateComment={handleCreateComment}
+          handleDeleteComment={handleDeleteComment}
         />
       </>
     );
