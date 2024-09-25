@@ -89,12 +89,10 @@ export const getKakaoPlace = async (placeName: string) => {
 };
 
 export const getMenus = async (placeId: number) => {
-  const token = await getUserToken();
   const res = await fetch(`${NEST_SERVER}/menus/${placeId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
   });
 
