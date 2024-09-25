@@ -1,5 +1,6 @@
 import { NEST_SERVER } from '@/constants/baseUrl';
 import { PostContentType, PlaceRequestType } from '@/types/postType';
+import { NestResponseError } from '@/types/responseType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 
 export const createNewPost = async (formData: FormData) => {
@@ -12,8 +13,12 @@ export const createNewPost = async (formData: FormData) => {
     body: formData,
   });
 
+  if (!res.ok) {
+    throw new NestResponseError(res.statusText, res.status);
+  }
+
   const data = await res.json();
-  console.log(data);
+
   return data;
 };
 
