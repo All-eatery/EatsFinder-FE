@@ -1,7 +1,7 @@
 import { MyFeedCard } from '@/components/molecules/myFeedCard';
 import React from 'react';
 import { feedDummyData } from './test/dummy';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getUserFeeds } from '@/api/profile';
 import { FeedType } from '@/types/authType';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
@@ -11,6 +11,7 @@ type UserIdProps = {
 };
 export const MyFeed = ({ userId }: UserIdProps) => {
   const arr = feedDummyData;
+
   const { data, error } = useQuery({
     queryKey: ['feeds', userId],
     queryFn: ({ queryKey }) => getUserFeeds(Number(queryKey[1])),
