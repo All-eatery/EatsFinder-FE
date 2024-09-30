@@ -6,6 +6,7 @@ import { getUserFeeds } from '@/api/profile';
 import { FeedType } from '@/types/authType';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
 import { Loading } from '@/app/(auth)/_components/Loading';
+import { Pagination } from './Pagination';
 type UserIdProps = {
   userId: number;
 };
@@ -24,11 +25,14 @@ export const MyFeed = ({ userId }: UserIdProps) => {
   }
   console.log(data);
   return data.length > 0 ? (
-    <div className='grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6'>
-      {data.map((feed, i) => (
-        <MyFeedCard data={feed} key={i} />
-      ))}
-    </div>
+    <>
+      <div className='grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6'>
+        {data.map((feed, i) => (
+          <MyFeedCard data={feed} key={i} />
+        ))}
+      </div>
+      <Pagination />
+    </>
   ) : (
     <NoContent msg='게시글이 없습니다.' />
   );

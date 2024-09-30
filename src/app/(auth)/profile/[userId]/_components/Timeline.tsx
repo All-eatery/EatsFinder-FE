@@ -6,6 +6,7 @@ import { getMyActives } from '@/api/profile';
 import { useQuery } from '@tanstack/react-query';
 import { Loading } from '@/app/(auth)/_components/Loading';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
+import { Pagination } from './Pagination';
 
 export const Timeline = () => {
   const arr = activeDummyData;
@@ -25,6 +26,7 @@ export const Timeline = () => {
         const timeLine = simplifyTimeLineData(data.data[0]);
         return <UserTimeline key={timeLine.id} timeline={timeLine} />;
       })}
+      <Pagination />
     </>
   ) : (
     <NoContent msg='내 활동이 없습니다.' />

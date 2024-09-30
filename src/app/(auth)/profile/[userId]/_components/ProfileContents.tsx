@@ -51,13 +51,11 @@ export const ProfileContents = ({
           )}
         </div>
 
-        {/* <ToggleBtn text_1='댓글만' text_2='좋아요만' /> */}
         {activeIndex === 1 && isOwnProfile && (
           <ToggleBtn text_1='댓글만' text_2='좋아요만' />
         )}
       </div>
       {contents()}
-      <Pagination />
     </div>
   );
 };

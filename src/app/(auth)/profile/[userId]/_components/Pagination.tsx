@@ -41,9 +41,7 @@ const PageButton = ({ direction, ...props }: ButtonDirection) => {
 };
 export const Pagination = () => {
   const arrLeng = 7;
-  console.log('됨?');
   const arr = new Array(arrLeng).fill(1);
-  console.log(arr);
   const [pageNumber, setPageNumber] = useState(0);
   const handlePaginationClick = (pageNumber: number) => {
     setPageNumber(pageNumber);
@@ -53,23 +51,24 @@ export const Pagination = () => {
     setPageNumber(pageNumber - 1);
   };
   const handleNextButtonClick = () => {
-    console.log(pageNumber);
     if (pageNumber === arrLeng - 1) return;
     setPageNumber(pageNumber + 1);
   };
   return (
-    <div className='flex gap-1'>
-      <PageButton direction='prev' onClick={handlePrevButtonClick} />
-      {Array.from({ length: arrLeng }).map((_, i) => (
-        <PageNumberButton
-          number={i + 1}
-          key={i}
-          isActive={i === pageNumber}
-          onClick={() => handlePaginationClick(i)}
-        />
-      ))}
+    <div className='flex justify-center'>
+      <div className='flex gap-1'>
+        <PageButton direction='prev' onClick={handlePrevButtonClick} />
+        {Array.from({ length: arrLeng }).map((_, i) => (
+          <PageNumberButton
+            number={i + 1}
+            key={i}
+            isActive={i === pageNumber}
+            onClick={() => handlePaginationClick(i)}
+          />
+        ))}
 
-      <PageButton onClick={handleNextButtonClick} direction='next' />
+        <PageButton onClick={handleNextButtonClick} direction='next' />
+      </div>
     </div>
   );
 };
