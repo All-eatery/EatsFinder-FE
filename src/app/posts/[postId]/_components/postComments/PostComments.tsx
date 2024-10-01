@@ -4,8 +4,10 @@ import { ProfileImage } from '@/components/atoms';
 import { Search } from '@/components/molecules';
 import { Comment } from './comment';
 import { PostCommentType } from '@/types/postType';
+import { UserData } from '@/types/authType';
 
 interface PostCommentsProps {
+  userInfo?: UserData;
   postComments: PostCommentType;
   handleCreateComment: (content: string) => Promise<void>;
   handleDeleteComment: (commentId: number) => Promise<void>;
@@ -17,6 +19,7 @@ interface PostCommentsProps {
 }
 
 const PostComments = ({
+  userInfo,
   postComments,
   handleCreateComment,
   handleDeleteComment,
@@ -59,6 +62,7 @@ const PostComments = ({
         {postComments.comments.map((comment) => (
           <Comment
             key={comment.id}
+            userInfo={userInfo}
             comment={comment}
             handleDeleteComment={handleDeleteComment}
             handleEditComment={handleEditComment}

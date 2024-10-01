@@ -11,10 +11,11 @@ import { CommentType } from '@/types/comment';
 import { customTwMerge } from '@/utils/customTwMerge';
 import timeDifference from '@/utils/timeDifference';
 import { getClientUserInfo } from '@/utils/getClientUserInfo';
+import { UserData } from '@/types/authType';
 
 interface CommentProps {
+  userInfo?: UserData;
   comment: CommentType;
-  isLiked?: boolean;
   handleDeleteComment: (commentId: number) => Promise<void>;
   handleEditComment: (commentId: number, content: string) => Promise<void>;
   handleToggleCommentLike: (
@@ -24,13 +25,12 @@ interface CommentProps {
 }
 
 export const Comment = ({
+  userInfo,
   comment,
-  isLiked = false,
   handleDeleteComment,
   handleEditComment,
   handleToggleCommentLike,
 }: CommentProps) => {
-  const userInfo = getClientUserInfo();
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.content);
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
@@ -38,7 +38,7 @@ export const Comment = ({
     useToggleHandler();
 
   const dropdownItems = [
-    ...(userInfo.nickname === comment.nickname
+    ...(userInfo?.nickname === comment.nickname
       ? [
           {
             label: '수정하기',
@@ -123,9 +123,12 @@ export const Comment = ({
         <div className='flex items-center gap-2'>
           <div
             className={customTwMerge(
-              '[&>svg]:h-[18px] [&>svg]:w-[18px]',
-              isLiked ? 'fill-primary-400' : 'fill-gray-400',
+              'cursor-pointer [&>svg]:h-[18px] [&>svg]:w-[18px]',
+              comment.likeStatus ? 'fill-primary-400' : 'fill-gray-400',
             )}
+            onClick={() => {
+              handleToggleCommentLike(comment.id, comment.likeStatus);
+            }}
           >
             <ThumbsSVG />
           </div>

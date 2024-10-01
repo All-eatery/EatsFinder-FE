@@ -10,8 +10,10 @@ import parseImages from '@/utils/parseImages';
 import { ShareSVG } from '@/components/svg/ShareSVG';
 import { EyeSVG } from '@/components/svg/EyeSVG';
 import { FavSVG } from '@/components/svg/FavSVG';
+import { UserData } from '@/types/authType';
 
 interface PostContentProps {
+  userInfo?: UserData;
   postContent: PostContentType;
   handleIsEditable: () => Promise<string>;
   handleDeletePost: () => Promise<void>;

@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import PostPage from './_components/PostPage';
 import { getPostContent } from '@/api/post';
 import { getComments } from '@/api/comment';
+import { getServerUserInfo } from '@/utils/getServerUserInfo';
 
 export default async function Post({ params }: { params: { postId: number } }) {
   const { postId } = params;
@@ -9,14 +10,19 @@ export default async function Post({ params }: { params: { postId: number } }) {
   try {
     const postContent = await getPostContent(postId);
     const postComments = await getComments(postId);
+    const userInfo = await getServerUserInfo();
 
-    if (postComments.statusCode === 'ERROR') {
-      notFound();
-    }
+    // if (postComments.statusCode === 'ERROR') {
+    //   notFound();
+    // }
 
     return (
       <>
-        <PostPage postContent={postContent} postComments={postComments} />
+        <PostPage
+          userInfo={userInfo}
+          postContent={postContent}
+          postComments={postComments}
+        />
       </>
     );
   } catch (err) {

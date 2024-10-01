@@ -7,9 +7,10 @@ import { DropdownMenu } from '@/components/molecules';
 import { Modal } from '@/components/organisms';
 import { MoreSVG } from '@/components/svg/MoreSVG';
 import timeDifference from '@/utils/timeDifference';
-import { getClientUserInfo } from '@/utils/getClientUserInfo';
+import { UserData } from '@/types/authType';
 
 interface UserProfileProps {
+  userInfo?: UserData;
   nickname: string;
   profileImage: string | null;
   createdAt: string;
@@ -18,13 +19,13 @@ interface UserProfileProps {
 }
 
 const UserProfile = ({
+  userInfo,
   nickname,
   profileImage,
   createdAt,
   handleIsEditable,
   handleDeletePost,
 }: UserProfileProps) => {
-  const userInfo = getClientUserInfo();
   const [modalStatus, setModalStatus] = useState({
     title: '',
     message: '',
@@ -34,12 +35,13 @@ const UserProfile = ({
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
   const { value: isOpenModal, handleValue: handleOpenModal } =
     useToggleHandler();
+
   const dropdownItems = [
     {
       label: '피드 보기',
       onClick: () => {},
     },
-    ...(userInfo.nickname === nickname
+    ...(userInfo?.nickname === nickname
       ? [
           {
             label: '수정하기',

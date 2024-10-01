@@ -10,13 +10,15 @@ import {
   toggleCommentLike,
 } from '@/api/comment';
 import { getPostEditStatus, deletePost } from '@/api/post';
+import { UserData } from '@/types/authType';
 
 interface PostPageProps {
+  userInfo?: UserData;
   postContent: PostContentType;
   postComments: PostCommentType;
 }
 
-const PostPage = ({ postContent, postComments }: PostPageProps) => {
+const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   const handleCreateComment = async (content: string) => {
     'use server';
     const data = await createComment(postContent.id, content);
@@ -49,7 +51,9 @@ const PostPage = ({ postContent, postComments }: PostPageProps) => {
     'use server';
     const data = await toggleCommentLike(commentId, isLiked);
 
-    console.log(data);
+    if (data.statusCode === 'SUCCESS') {
+      revalidatePath(`/posts/${postContent.id}`);
+    }
   };
 
   const handleIsEditable = async () => {
@@ -74,11 +78,13 @@ const PostPage = ({ postContent, postComments }: PostPageProps) => {
   return (
     <>
       <PostContent
+        userInfo={userInfo}
         postContent={postContent}
         handleIsEditable={handleIsEditable}
         handleDeletePost={handleDeletePost}
       />
       <PostComment
+        userInfo={userInfo}
         postComments={postComments}
         handleCreateComment={handleCreateComment}
         handleDeleteComment={handleDeleteComment}
