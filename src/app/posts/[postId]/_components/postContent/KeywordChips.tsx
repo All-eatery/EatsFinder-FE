@@ -6,7 +6,7 @@ interface KeywordIdsProps {
 }
 
 const KeywordChips = ({ keywordIds }: KeywordIdsProps) => {
-  const splitedKeywordIds = keywordIds.split(',');
+  const splitedKeywordIds = keywordIds.split(', ');
   const keywords = KEYWORDS.filter((keyword) =>
     splitedKeywordIds.includes(keyword.id),
   );
