@@ -48,7 +48,7 @@ const PostContent = ({
             starRatings={postContent.starRatings}
             category={postContent.places.categories.name}
           />
-          <KeywordChips keywordIds={'FR01,FR02,SM07,SM04,SM01'} />
+          <KeywordChips keywordIds={postContent.keywordTag} />
           <p className='min-h-[150px] rounded-3xl border border-gray-100 px-[20px] py-[10px] text-gray-700 body-16'>
             {postContent.content}
           </p>
