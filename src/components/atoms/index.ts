@@ -11,3 +11,5 @@ export * from './hashtag';
 export * from './chip';
 
 export * from './point';
+
+export * from './portal';

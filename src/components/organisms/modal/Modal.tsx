@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { createPortal } from 'react-dom';
+import { Portal } from '@/components/atoms';
 import { ModalHeader, ModalFooter } from '@/components/molecules';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -41,8 +41,8 @@ export const Modal = ({
 }: ModalProps) => {
   return (
     <>
-      {isOpen &&
-        createPortal(
+      {isOpen && (
+        <Portal>
           <div
             className='fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50'
             aria-modal={true}
@@ -61,9 +61,9 @@ export const Modal = ({
                 onSubClick={onSubClick}
               />
             </article>
-          </div>,
-          document.body,
-        )}
+          </div>
+        </Portal>
+      )}
     </>
   );
 };
