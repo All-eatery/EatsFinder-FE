@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Footer } from '@/components/organisms';
+import { Footer, LoginModal } from '@/components/organisms';
 import { Pretendard, TossFace } from '@/assets/fonts';
 import './globals.css';
 import { KAKAO_API_KEY } from '@/constants/baseUrl';
@@ -29,6 +29,7 @@ export default function RootLayout({
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services,clusterer&autoload=false`}
           strategy='beforeInteractive'
         />
+        <LoginModal />
       </body>
     </html>
   );

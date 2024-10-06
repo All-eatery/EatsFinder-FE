@@ -1,5 +1,5 @@
 export interface KotlinResponseType<T> {
-  statusCode: 'SUCCESS' | 'ERROR';
+  statusCode: 'SUCCESS' | 'ERROR' | number;
   data: T;
   message: string;
 }

@@ -50,7 +50,9 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   ) => {
     'use server';
     const data = await toggleCommentLike(commentId, isLiked);
-
+    if (data.statusCode === 403) {
+      redirect(`/posts/${postContent.id}?login=false`);
+    }
     if (data.statusCode === 'SUCCESS') {
       revalidatePath(`/posts/${postContent.id}`);
     }
