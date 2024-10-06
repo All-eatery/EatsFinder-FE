@@ -4,9 +4,7 @@ import { KotlinResponseType } from '@/types/responseType';
 import { CommentLikeType } from '@/types/comment';
 import { getUserToken } from '@/utils/getServerUserInfo';
 
-export const getComments = async (
-  postId: number,
-): Promise<KotlinResponseType<PostCommentType>> => {
+export const getComments = async (postId: number): Promise<PostCommentType> => {
   const token = await getUserToken();
   const res = await fetch(`${KOTLIN_SERVER}/posts/${postId}/comments`, {
     method: 'GET',
@@ -77,15 +75,20 @@ export const editComment = async (
 export const toggleCommentLike = async (
   commentId: number,
   isLiked: boolean,
-): Promise<KotlinResponseType<CommentLikeType>> => {
+): Promise<KotlinResponseType<string>> => {
   const token = await getUserToken();
-  const res = await fetch(`${KOTLIN_SERVER}/comment-likes/${commentId}`, {
-    method: isLiked ? 'DELETE' : 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+  const method = isLiked ? 'DELETE' : 'POST';
+  const res = await fetch(
+    `${KOTLIN_SERVER}/comment-likes?commentId=${commentId}`,
+    {
+      method: method,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
+  if (!res.ok)
+    return { statusCode: res.status, data: '', message: res.statusText };
 
   const data = await res.json();
 
