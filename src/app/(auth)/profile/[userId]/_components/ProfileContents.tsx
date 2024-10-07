@@ -5,8 +5,8 @@ import React from 'react';
 import { MyFeed } from './MyFeed';
 import { Timeline } from './Timeline';
 import { ProfilePageProps } from '@/types/authType';
-import { ToggleBtn } from '@/components/molecules/toggleBtn/ToggleBtn';
-import { Pagination } from './Pagination';
+import { TimeLineFilter } from './TimeLineFilter';
+import { useTimelineFilterState } from '@/app/(auth)/_hooks/useTimelineFilterState';
 
 export const ProfileContents = ({
   isOwnProfile,
@@ -14,6 +14,7 @@ export const ProfileContents = ({
 }: ProfilePageProps) => {
   const tabLabels = isOwnProfile ? ['내 피드', '내 활동'] : ['게시글'];
   const { activeIndex, handleTabClick } = useTabHandler();
+  const { TimelineFilter, handleFileterState } = useTimelineFilterState();
   const contents = () => {
     if (isOwnProfile) {
       if (activeIndex === 0) {
@@ -52,7 +53,9 @@ export const ProfileContents = ({
         </div>
 
         {activeIndex === 1 && isOwnProfile && (
-          <ToggleBtn text_1='댓글만' text_2='좋아요만' />
+          <>
+            <TimeLineFilter handler={handleFileterState} />
+          </>
         )}
       </div>
       {contents()}
