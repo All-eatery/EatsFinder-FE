@@ -103,6 +103,14 @@ const config: Config = {
           overflow: 'hidden',
           whiteSpace: 'nowrap',
         },
+        '.scrollbar-hide': {
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          '&::-moz-scrollbar': {
+            display: 'none',
+          },
+        },
       });
     }),
   ],

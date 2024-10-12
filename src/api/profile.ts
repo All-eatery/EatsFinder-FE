@@ -58,6 +58,7 @@ export const getUserFeeds = async (id: number): Promise<FeedType[]> => {
       accept: '*/*',
     },
   });
+
   const data = await response.json();
   console.log(data);
   return data;

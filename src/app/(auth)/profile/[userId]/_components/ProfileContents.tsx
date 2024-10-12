@@ -7,7 +7,6 @@ import { Timeline } from './Timeline';
 import { ProfilePageProps } from '@/types/authType';
 import { TimeLineFilter } from './TimeLineFilter';
 import { useTimelineFilterState } from '@/app/(auth)/_hooks/useTimelineFilterState';
-import { FollowList } from './FollowList';
 
 export const ProfileContents = ({
   isOwnProfile,
@@ -15,6 +14,7 @@ export const ProfileContents = ({
 }: ProfilePageProps) => {
   const tabLabels = isOwnProfile ? ['내 피드', '내 활동'] : ['게시글'];
   const { activeIndex, handleTabClick } = useTabHandler();
+  //내활동 필터에 따른 데이터전송시 사용
   const { TimelineFilter, handleFileterState } = useTimelineFilterState();
   const contents = () => {
     if (isOwnProfile) {
@@ -30,8 +30,6 @@ export const ProfileContents = ({
 
   return (
     <>
-      <FollowList title='내 팔로워' />
-
       <div className='flex w-[1368px] flex-col gap-6'>
         <div className='flex w-full items-center justify-between'>
           <div className='flex'>
