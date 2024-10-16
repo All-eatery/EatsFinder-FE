@@ -17,8 +17,9 @@ export const Profile = ({ handler, userData, isOwnProfile }: ProfileProps) => {
     phoneNumber,
     postCount,
     profileImage,
+    id,
   } = userData;
-
+  console.log('user', userData);
   const formattedNumber = phoneNumber && addDashes(phoneNumber);
   return (
     <div className='flex flex-col items-center gap-4'>
@@ -30,6 +31,7 @@ export const Profile = ({ handler, userData, isOwnProfile }: ProfileProps) => {
         isOwnProfile={isOwnProfile}
       />
       <UserProfileStats
+        id={id}
         postCount={postCount}
         followerCount={followerCount}
         followingCount={followingCount}

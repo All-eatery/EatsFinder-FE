@@ -1,5 +1,5 @@
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
-import { Active, FeedType, UserData } from '@/types/authType';
+import { Active, FeedType, FollowType, UserData } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 type Result<T, E> =
   | { isSuccess: true; data: T }
@@ -59,6 +59,22 @@ export const getUserFeeds = async (id: number): Promise<FeedType[]> => {
     },
   });
 
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
+export const getFollowing = async (id: number): Promise<FollowType[]> => {
+  const response = await fetch(`${KOTLIN_SERVER}/following?userId=${id}`, {
+    method: 'GET',
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
+export const getFollower = async (id: number) => {
+  const response = await fetch(`${KOTLIN_SERVER}/follower?userId=${id}`, {
+    method: 'GET',
+  });
   const data = await response.json();
   console.log(data);
   return data;

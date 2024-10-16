@@ -145,3 +145,7 @@ export type SimplifiedData = {
   content?: string;
   createdAt: string;
 };
+export type FollowType = {
+  followingUserNickname: string;
+  imageUrl: string;
+};
