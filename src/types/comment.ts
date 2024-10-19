@@ -4,9 +4,11 @@ export interface CommentType {
   profileImage: string | null;
   content: string;
   likeCount: number;
-  likeStatus: boolean;
   isMyComment: boolean;
+  likeStatus: boolean;
+  authorStatus: boolean;
   createdAt: string;
+  replyList?: Omit<CommentType, 'replyList'>[];
 }
 
 export interface CommentLikeType {
