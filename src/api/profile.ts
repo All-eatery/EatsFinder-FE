@@ -1,6 +1,7 @@
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
 import { Active, FeedType, FollowType, UserData } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
+import { size } from 'lodash';
 type Result<T, E> =
   | { isSuccess: true; data: T }
   | { isSuccess: false; error: E };
@@ -52,12 +53,17 @@ export const getMyActives = async (): Promise<Active[]> => {
   return data;
 };
 export const getUserFeeds = async (id: number): Promise<FeedType[]> => {
-  const response = await fetch(`${KOTLIN_SERVER}/users/feeds/${id}`, {
-    method: 'GET',
-    headers: {
-      accept: '*/*',
+  const page = 1;
+  const size = 1;
+  const response = await fetch(
+    `${KOTLIN_SERVER}/users/feeds/${id}?page=${page}&size=${size}`,
+    {
+      method: 'GET',
+      headers: {
+        accept: '*/*',
+      },
     },
-  });
+  );
 
   const data = await response.json();
   console.log(data);
