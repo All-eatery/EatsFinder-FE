@@ -8,7 +8,9 @@ export interface CommentType {
   likeStatus: boolean;
   authorStatus: boolean;
   createdAt: string;
-  replyList?: Omit<CommentType, 'replyList'>[];
+  isUpdated: boolean;
+  totalReplyCount?: number;
+  replies?: Omit<CommentType, 'replies' | 'totalReplyCount'>[];
 }
 
 export interface CommentLikeType {

@@ -69,7 +69,7 @@ export const Comment = ({
     <div>
       <div
         className={customTwMerge(
-          'flex rounded-3xl p-5',
+          'mb-6 flex rounded-3xl p-5',
           comment.isMyComment && 'bg-gray-50',
         )}
       >
@@ -142,12 +142,12 @@ export const Comment = ({
               </div>
               {!isReply && <div className='cursor-pointer'>댓글</div>}
             </div>
-            {!isReply && comment.replyList && (
+            {!isReply && comment.replies && (
               <div
                 className='flex cursor-pointer items-center text-gray-600 body-20'
                 onClick={() => setShowReply((prev) => !prev)}
               >
-                댓글 {comment.replyList.length}개
+                댓글 {comment.replies.length}개
                 <DropSVG isUp={showReply} />
               </div>
             )}
@@ -166,8 +166,8 @@ export const Comment = ({
       </div>
       <div className='pl-16'>
         {showReply &&
-          comment.replyList &&
-          comment.replyList.map((d) => {
+          comment.replies &&
+          comment.replies.map((d) => {
             console.log(d);
             return (
               <Comment
