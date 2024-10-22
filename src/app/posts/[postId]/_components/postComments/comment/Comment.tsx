@@ -142,7 +142,7 @@ export const Comment = ({
               </div>
               {!isReply && <div className='cursor-pointer'>댓글</div>}
             </div>
-            {!isReply && comment.replies && (
+            {!isReply && comment.replies && comment.replies.length > 0 && (
               <div
                 className='flex cursor-pointer items-center text-gray-600 body-20'
                 onClick={() => setShowReply((prev) => !prev)}
