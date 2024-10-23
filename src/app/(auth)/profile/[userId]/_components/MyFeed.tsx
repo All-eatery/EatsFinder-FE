@@ -3,7 +3,6 @@ import React from 'react';
 import { feedDummyData } from './test/dummy';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getUserFeeds } from '@/api/profile';
-import { FeedType } from '@/types/authType';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
 import { Loading } from '@/app/(auth)/_components/Loading';
 import { Pagination } from './Pagination';
@@ -15,23 +14,25 @@ export const MyFeed = ({ userId }: UserIdProps) => {
 
   const { data, error } = useQuery({
     queryKey: ['feeds', userId],
-    queryFn: ({ queryKey }) => getUserFeeds(Number(queryKey[1])),
+    queryFn: ({ queryKey }) =>
+      getUserFeeds({ id: Number(queryKey[1]), page: 0 }),
   });
   if (error) {
     return <div>피드를 가져오는 데 문제가 발생했습니다.</div>;
   }
-  if (!data || !Array.isArray(data)) {
+  if (!data?.data || !Array.isArray(data.data)) {
     return <Loading />;
   }
-  console.log(data);
-  return data.length > 0 ? (
+  console.log('data', data);
+  console.log(data.pagination);
+  return data.data.length > 0 ? (
     <>
       <div className='grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6'>
-        {data.map((feed, i) => (
+        {data.data.map((feed, i) => (
           <MyFeedCard data={feed} key={i} />
         ))}
       </div>
-      <Pagination />
+      <Pagination pagination={data.pagination} />
     </>
   ) : (
     <NoContent msg='게시글이 없습니다.' />

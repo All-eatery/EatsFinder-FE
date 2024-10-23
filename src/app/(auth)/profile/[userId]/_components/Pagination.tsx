@@ -1,5 +1,6 @@
 'use client';
 import { ArrowSVG } from '@/components/svg/ArrowSVG';
+import { PaginationType } from '@/types/authType';
 import { ComponentProps, useState } from 'react';
 interface PageNumberButtonProps extends ComponentProps<'button'> {
   number: number;
@@ -39,9 +40,8 @@ const PageButton = ({ direction, ...props }: ButtonDirection) => {
     </button>
   );
 };
-export const Pagination = () => {
-  const arrLeng = 7;
-  const arr = new Array(arrLeng).fill(1);
+
+export const Pagination = ({ pagination }: { pagination: PaginationType }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const handlePaginationClick = (pageNumber: number) => {
     setPageNumber(pageNumber);
@@ -51,14 +51,16 @@ export const Pagination = () => {
     setPageNumber(pageNumber - 1);
   };
   const handleNextButtonClick = () => {
-    if (pageNumber === arrLeng - 1) return;
+    if (pageNumber === pagination.totalPage - 1) return;
     setPageNumber(pageNumber + 1);
   };
+  console.log(pagination);
+  //페이지네이션 버튼 10에서 끊고
   return (
     <div className='flex justify-center'>
       <div className='flex gap-1'>
         <PageButton direction='prev' onClick={handlePrevButtonClick} />
-        {Array.from({ length: arrLeng }).map((_, i) => (
+        {Array.from({ length: pagination.totalPage }).map((_, i) => (
           <PageNumberButton
             number={i + 1}
             key={i}

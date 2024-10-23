@@ -1,5 +1,11 @@
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
-import { Active, FeedType, FollowType, UserData } from '@/types/authType';
+import {
+  Active,
+  FeedType,
+  FollowType,
+  PaginationFeedType,
+  UserData,
+} from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 import { size } from 'lodash';
 type Result<T, E> =
@@ -39,6 +45,8 @@ export const getMyfeeds = async (): Promise<FeedType[]> => {
   return data;
 };
 export const getMyActives = async (): Promise<Active[]> => {
+  // 'https://api-k-eatsfinder.gotiger.dev/users/actives?page=0&size=1&sort=string&sort=ㅠㅠㅠ' \
+
   const token = await getUserToken();
 
   const response = await fetch(`${KOTLIN_SERVER}/users/actives`, {
@@ -52,9 +60,15 @@ export const getMyActives = async (): Promise<Active[]> => {
   console.log(data);
   return data;
 };
-export const getUserFeeds = async (id: number): Promise<FeedType[]> => {
-  const page = 1;
-  const size = 1;
+export const getUserFeeds = async ({
+  id,
+  page,
+}: {
+  id: number;
+  page: number;
+}): Promise<PaginationFeedType> => {
+  console.log('userId', id);
+  const size = 10;
   const response = await fetch(
     `${KOTLIN_SERVER}/users/feeds/${id}?page=${page}&size=${size}`,
     {

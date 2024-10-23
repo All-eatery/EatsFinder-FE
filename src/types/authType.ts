@@ -95,6 +95,17 @@ export type FeedType = {
   content: string;
   createdAt: string;
 };
+export type PaginationType = {
+  currentPage: number;
+  feedsPerPage: number;
+  isLastPage: boolean;
+  totalFeed: number;
+  totalPage: number;
+};
+export type PaginationFeedType = {
+  data: FeedType[];
+  pagination: PaginationType;
+};
 export type ActiveType = 'postLike' | 'commentLike' | 'comment';
 
 export type Active = {
