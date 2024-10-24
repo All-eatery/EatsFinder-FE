@@ -11,7 +11,18 @@ export const LikePosts = () => {
           variant='large'
           placeholder='찾고 싶은 게시물 키워드를 검색해보세요.'
         />
-        <PostCard src={url} nickname='안녕' profileImage='' />
+        <div className='grid grid-cols-5 gap-4'>
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+          <PostCard src={url} nickname='안녕' profileImage='' />
+        </div>
       </div>
 
       <Button variant={'stroke'}>더보기</Button>
