@@ -41,21 +41,31 @@ const PageButton = ({ direction, ...props }: ButtonDirection) => {
   );
 };
 
-export const Pagination = ({ pagination }: { pagination: PaginationType }) => {
-  const [pageNumber, setPageNumber] = useState(0);
+interface PaginationProps {
+  pagination: PaginationType;
+  setPage: (page: number) => void;
+  currentPage: number;
+}
+
+export const Pagination = ({
+  pagination,
+  setPage,
+  currentPage,
+}: PaginationProps) => {
   const handlePaginationClick = (pageNumber: number) => {
-    setPageNumber(pageNumber);
+    setPage(pageNumber);
   };
+
   const handlePrevButtonClick = () => {
-    if (pageNumber === 0) return;
-    setPageNumber(pageNumber - 1);
+    if (currentPage === 0) return;
+    setPage(currentPage - 1);
   };
+
   const handleNextButtonClick = () => {
-    if (pageNumber === pagination.totalPage - 1) return;
-    setPageNumber(pageNumber + 1);
+    if (currentPage === pagination.totalPage - 1) return;
+    setPage(currentPage + 1);
   };
-  console.log(pagination);
-  //페이지네이션 버튼 10에서 끊고
+
   return (
     <div className='flex justify-center'>
       <div className='flex gap-1'>
@@ -64,12 +74,11 @@ export const Pagination = ({ pagination }: { pagination: PaginationType }) => {
           <PageNumberButton
             number={i + 1}
             key={i}
-            isActive={i === pageNumber}
+            isActive={i === currentPage}
             onClick={() => handlePaginationClick(i)}
           />
         ))}
-
-        <PageButton onClick={handleNextButtonClick} direction='next' />
+        <PageButton direction='next' onClick={handleNextButtonClick} />
       </div>
     </div>
   );

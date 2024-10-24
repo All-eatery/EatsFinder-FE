@@ -1,7 +1,6 @@
 import { MyFeedCard } from '@/components/molecules/myFeedCard';
-import React from 'react';
-import { feedDummyData } from './test/dummy';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { getUserFeeds } from '@/api/profile';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
 import { Loading } from '@/app/(auth)/_components/Loading';
@@ -10,12 +9,12 @@ type UserIdProps = {
   userId: number;
 };
 export const MyFeed = ({ userId }: UserIdProps) => {
-  const arr = feedDummyData;
+  const [page, setPage] = useState(0);
 
   const { data, error } = useQuery({
-    queryKey: ['feeds', userId],
+    queryKey: ['feeds', userId, page],
     queryFn: ({ queryKey }) =>
-      getUserFeeds({ id: Number(queryKey[1]), page: 0 }),
+      getUserFeeds({ id: Number(queryKey[1]), page: Number(queryKey[2]) }),
   });
   if (error) {
     return <div>피드를 가져오는 데 문제가 발생했습니다.</div>;
@@ -32,7 +31,11 @@ export const MyFeed = ({ userId }: UserIdProps) => {
           <MyFeedCard data={feed} key={i} />
         ))}
       </div>
-      <Pagination pagination={data.pagination} />
+      <Pagination
+        pagination={data.pagination}
+        setPage={setPage}
+        currentPage={page}
+      />
     </>
   ) : (
     <NoContent msg='게시글이 없습니다.' />
