@@ -1,19 +1,41 @@
 import { getFollowing } from '@/api/profile';
 import { FollowUser } from './FollowList';
 import { useQuery } from '@tanstack/react-query';
-
-export const FollowModal = ({ id }: { id: number }) => {
-  console.log('dddddd', id);
+import { useEffect, useRef } from 'react';
+type FollowModalProps = {
+  id: number;
+  onClose: () => void;
+};
+export const FollowModal = ({ id, onClose }: FollowModalProps) => {
   const { data } = useQuery({
     queryKey: ['follow', id],
     queryFn: ({ queryKey }) => getFollowing(Number(queryKey[1])),
   });
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
   console.log(data);
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center'>
-      <div className='z-10 flex h-[576px] w-[600px] flex-col items-center rounded-3xl bg-white px-[60px] shadow-lg'>
+      <div
+        className='z-10 flex h-[576px] w-[600px] flex-col items-center rounded-3xl bg-white px-[60px] shadow-lg'
+        ref={ref}
+      >
         <h2 className='my-[40px] text-gray-800 title-34'>내 팔로잉</h2>
-        <div className='scrollbar-hide mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px]'>
+        <div className='mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px] scrollbar-hide'>
           {data && data.length > 0 ? (
             data.map((data, i) => (
               <FollowUser

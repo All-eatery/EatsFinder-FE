@@ -1,7 +1,6 @@
 'use client';
 import { useRef, useState } from 'react';
 import { FollowModal } from './FollowModal';
-import { getFollowing } from '@/api/profile';
 
 type UserStatsProps = {
   id: number;
@@ -20,6 +19,9 @@ export const UserProfileStats = ({
     setIsFollowModalOpen(true);
     //데이터 가져오는 로직
   };
+  const handleCloseModal = () => {
+    setIsFollowModalOpen(false);
+  };
   console.log('stats', id);
   const ref = useRef(null);
   return (
@@ -32,7 +34,9 @@ export const UserProfileStats = ({
           팔로잉 {followingCount}
         </p>
         <p className='cursor-pointer p-[10px]'>팔로우 {followerCount}</p>
-        {isFollowModalOpen && <FollowModal id={id} />}
+        {isFollowModalOpen && (
+          <FollowModal id={id} onClose={handleCloseModal} />
+        )}
       </div>
     </>
   );
