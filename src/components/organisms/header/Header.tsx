@@ -23,7 +23,7 @@ const NAV_DATA = [
   },
   {
     label: 'MyEats',
-    href: '/',
+    href: '/myeats',
   },
   {
     label: '맛집정보',
