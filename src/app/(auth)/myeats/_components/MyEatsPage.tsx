@@ -18,6 +18,7 @@ export const MyEatsPage = () => {
     <div className='flex w-full flex-col'>
       <div className='mb-[60px] flex'>
         {tabLabels.map((label, i) => {
+          console.log(activeIndex);
           return (
             <Tab
               key={i}
