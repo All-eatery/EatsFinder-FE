@@ -26,3 +26,7 @@ export type SVGCheckProps = {
   size?: 'regular' | 'large';
   color?: 'default' | 'green' | 'orange';
 };
+export type SVGSizeProps = {
+  x?: number;
+  y?: number;
+};

@@ -1,4 +1,5 @@
 import { ScrapPlacesTab } from './ScrapPlacesTab';
+import { ScrapedListCard } from './ScrapedListCard';
 import { ScrapedPlaceCard } from './ScrapedPlaceCard';
 
 export const ScrapPlaces = () => {
@@ -10,7 +11,12 @@ export const ScrapPlaces = () => {
   return (
     <div>
       <ScrapPlacesTab />
-      <ScrapedPlaceCard src={url} />
+      <ScrapedListCard />
+      <div className='flex flex-col gap-9'>
+        <ScrapedPlaceCard src={url} />
+        <ScrapedPlaceCard src={url} />
+        <ScrapedPlaceCard src={url} />
+      </div>
     </div>
   );
 };
