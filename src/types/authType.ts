@@ -160,3 +160,11 @@ export type FollowType = {
   followingUserNickname: string;
   imageUrl: string;
 };
+export type FollowStatusType = FollowType & {
+  isFollowed: boolean;
+};
+export type FollowAPIType = {
+  profileId: number;
+  myId: number;
+  follow: 'following' | 'follower';
+};

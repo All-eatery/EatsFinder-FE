@@ -7,15 +7,10 @@ type FollowModalProps = {
   onClose: () => void;
 };
 export const FollowModal = ({ id, onClose }: FollowModalProps) => {
-  const { data } = useQuery({
-    queryKey: ['follow', id],
-    queryFn: ({ queryKey }) => getFollowing(Number(queryKey[1])),
+  const { data: data } = useQuery({
+    queryKey: ['following', id],
+    queryFn: () => getFollow({ profileId: id, myId: 6, follow: 'following' }),
   });
-  const { data: data1 } = useQuery({
-    queryKey: ['follow'],
-    queryFn: () => getFollow(),
-  });
-  console.log(data1);
 
   const ref = useRef<HTMLDivElement>(null);
 

@@ -2,6 +2,8 @@ import { KOTLIN_SERVER } from '@/constants/baseUrl';
 import {
   Active,
   FeedType,
+  FollowAPIType,
+  FollowStatusType,
   FollowType,
   PaginationFeedType,
   UserData,
@@ -99,10 +101,18 @@ export const getFollower = async (id: number) => {
   console.log(data);
   return data;
 };
-export const getFollow = async () => {
-  const response = await fetch('/api/auth/follow', {
-    method: 'GET',
-  });
+export const getFollow = async ({
+  profileId,
+  myId,
+  follow,
+}: FollowAPIType): Promise<FollowStatusType[]> => {
+  const response = await fetch(
+    `/api/auth/follow?profileId=${profileId}&myId=${myId}&follow=${follow}`,
+    {
+      method: 'GET',
+    },
+  );
   const data = await response.json();
   console.log('follow', data);
+  return data;
 };
