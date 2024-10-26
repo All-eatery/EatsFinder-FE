@@ -12,6 +12,10 @@ export const FollowUser = ({
   image,
   followListBtn,
 }: FollowUserProps) => {
+  if (!image) {
+    image =
+      'https://lh3.googleusercontent.com/a/ACg8ocL5qL_KbAxVIQMCT7KSAb4JqtAcYMl9mGBwcdJhtPl9owCW1A=s96-c';
+  }
   return (
     <div className='flex items-center justify-between'>
       <div className='flex items-center gap-3'>

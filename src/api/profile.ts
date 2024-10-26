@@ -112,6 +112,5 @@ export const getFollow = async ({
     },
   );
   const data = await response.json();
-  console.log('follow', data);
   return data;
 };
