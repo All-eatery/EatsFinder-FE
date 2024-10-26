@@ -18,6 +18,9 @@ export const GET = async (req: Request) => {
   const response2 = await fetch(`${KOTLIN_SERVER}/following?userId=${myId}`, {
     method: 'GET',
   });
+  if (!myId) {
+    return NextResponse.json(checkFollowStatus(data1, []));
+  }
   const data2 = await response2.json();
   console.log('data1', data1, '@@@@@@@@@@@@@@@@@', data2);
 

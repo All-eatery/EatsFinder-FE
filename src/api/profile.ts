@@ -8,8 +8,7 @@ import {
   PaginationFeedType,
   UserData,
 } from '@/types/authType';
-import { getUserToken } from '@/utils/getServerUserInfo';
-import { size } from 'lodash';
+import { getServerUserInfo, getUserToken } from '@/utils/getServerUserInfo';
 type Result<T, E> =
   | { isSuccess: true; data: T }
   | { isSuccess: false; error: E };
@@ -103,11 +102,11 @@ export const getFollower = async (id: number) => {
 };
 export const getFollow = async ({
   profileId,
-  myId,
   follow,
 }: FollowAPIType): Promise<FollowStatusType[]> => {
+  const loginUser = await getServerUserInfo();
   const response = await fetch(
-    `/api/auth/follow?profileId=${profileId}&myId=${myId}&follow=${follow}`,
+    `/api/auth/follow?profileId=${profileId}&myId=${loginUser?.id}&follow=${follow}`,
     {
       method: 'GET',
     },
