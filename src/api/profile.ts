@@ -99,3 +99,10 @@ export const getFollower = async (id: number) => {
   console.log(data);
   return data;
 };
+export const getFollow = async () => {
+  const response = await fetch('/api/auth/follow', {
+    method: 'GET',
+  });
+  const data = await response.json();
+  console.log('follow', data);
+};
