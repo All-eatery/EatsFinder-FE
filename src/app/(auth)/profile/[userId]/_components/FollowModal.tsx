@@ -5,11 +5,24 @@ import { useEffect, useRef } from 'react';
 type FollowModalProps = {
   id: number;
   onClose: () => void;
+  isOwnProfile: boolean;
+  nickname: string;
+  modalType: 'following' | 'follower';
 };
-export const FollowModal = ({ id, onClose }: FollowModalProps) => {
+export const FollowModal = ({
+  id,
+  nickname,
+  isOwnProfile,
+  onClose,
+  modalType,
+}: FollowModalProps) => {
+  const who = isOwnProfile ? '나' : `${nickname}님`;
+  const title =
+    modalType === 'following' ? `${who}의 팔로잉` : `${who}의 팔로워`;
+
   const { data: data } = useQuery({
     queryKey: ['following', id],
-    queryFn: () => getFollow({ profileId: id, myId: 6, follow: 'following' }),
+    queryFn: () => getFollow({ profileId: id, myId: 6, follow: modalType }),
   });
 
   const ref = useRef<HTMLDivElement>(null);
@@ -34,19 +47,21 @@ export const FollowModal = ({ id, onClose }: FollowModalProps) => {
         className='z-10 flex h-[576px] w-[600px] flex-col items-center rounded-3xl bg-white px-[60px] shadow-lg'
         ref={ref}
       >
-        <h2 className='my-[40px] text-gray-800 title-34'>내 팔로잉</h2>
+        <h2 className='my-[40px] text-gray-800 title-34'>{title}</h2>
         <div className='mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px] scrollbar-hide'>
           {data && data.length > 0 ? (
             data.map((data, i) => (
               <FollowUser
                 key={i}
-                followListBtn='팔로우'
+                followListBtn={data.isFollowed ? '팔로잉 취소' : '팔로우'}
                 image={data.imageUrl}
                 nickname={data.followingUserNickname}
               />
             ))
           ) : (
-            <div className='flex justify-center'>팔로잉 유저가 없습니다.</div>
+            <div className='flex justify-center'>
+              {modalType === 'following' ? '팔로잉' : '팔로워'} 유저가 없습니다.
+            </div>
           )}
         </div>
       </div>

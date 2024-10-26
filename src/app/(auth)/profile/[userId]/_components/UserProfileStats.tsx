@@ -7,15 +7,24 @@ type UserStatsProps = {
   postCount: number;
   followerCount: number;
   followingCount: number;
+  isOwnProfile: boolean;
+  nickname: string;
 };
 export const UserProfileStats = ({
   id,
   postCount,
   followingCount,
   followerCount,
+  nickname,
+  isOwnProfile,
 }: UserStatsProps) => {
   const [isFollowModalOpen, setIsFollowModalOpen] = useState(false);
-  const handleFollowingModal = () => {
+  const [modalType, setModalType] = useState<'following' | 'follower'>(
+    'following',
+  );
+
+  const handleFollowingModal = (type: 'following' | 'follower') => {
+    setModalType(type);
     setIsFollowModalOpen(true);
     //데이터 가져오는 로직
   };
@@ -28,14 +37,26 @@ export const UserProfileStats = ({
     <>
       <div className='flex gap-[30px] text-gray-700 subTitle-20'>
         <p className='p-[10px]'>게시물 {postCount}</p>
-        {/*팔로잉이나 팔로우 버튼을 누름으로써 모달을 연다.
-        그리고 팔로잉인지 팔로우인지 다른 api를 요청하고 버튼을 활성화한다. */}
-        <p className='cursor-pointer p-[10px]' onClick={handleFollowingModal}>
+        <p
+          className='cursor-pointer p-[10px]'
+          onClick={() => handleFollowingModal('following')}
+        >
           팔로잉 {followingCount}
         </p>
-        <p className='cursor-pointer p-[10px]'>팔로우 {followerCount}</p>
+        <p
+          className='cursor-pointer p-[10px]'
+          onClick={() => handleFollowingModal('follower')}
+        >
+          팔로워 {followerCount}
+        </p>
         {isFollowModalOpen && (
-          <FollowModal id={id} onClose={handleCloseModal} />
+          <FollowModal
+            id={id}
+            onClose={handleCloseModal}
+            isOwnProfile={isOwnProfile}
+            nickname={nickname}
+            modalType={modalType}
+          />
         )}
       </div>
     </>

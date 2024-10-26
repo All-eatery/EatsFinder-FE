@@ -32,6 +32,8 @@ export const Profile = ({ handler, userData, isOwnProfile }: ProfileProps) => {
       />
       <UserProfileStats
         id={id}
+        nickname={nickname}
+        isOwnProfile={isOwnProfile}
         postCount={postCount}
         followerCount={followerCount}
         followingCount={followingCount}
