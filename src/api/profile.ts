@@ -4,9 +4,10 @@ import {
   FeedType,
   FollowAPIType,
   FollowStatusType,
-  FollowType,
+  FollowDataType,
   PaginationFeedType,
   UserData,
+  FollowType,
 } from '@/types/authType';
 import { getServerUserInfo, getUserToken } from '@/utils/getServerUserInfo';
 type Result<T, E> =
@@ -84,7 +85,7 @@ export const getUserFeeds = async ({
   console.log(data);
   return data;
 };
-export const getFollowing = async (id: number): Promise<FollowType[]> => {
+export const getFollowing = async (id: number): Promise<FollowDataType[]> => {
   const response = await fetch(`${KOTLIN_SERVER}/following?userId=${id}`, {
     method: 'GET',
   });
@@ -111,6 +112,21 @@ export const getFollow = async ({
       method: 'GET',
     },
   );
+  const data = await response.json();
+  return data;
+};
+export const follow = async ({ type, id }: FollowType) => {
+  const token = await getUserToken();
+  const query = type === 'follow' ? 'followUserId' : 'unfollowUserId';
+  const method = type === 'follow' ? 'POST' : 'DELETE';
+
+  const response = await fetch(`${KOTLIN_SERVER}/follows?${query}=${id}`, {
+    method: method,
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const data = await response.json();
   return data;
 };

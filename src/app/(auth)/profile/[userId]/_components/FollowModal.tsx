@@ -22,7 +22,7 @@ export const FollowModal = ({
 
   const { data: data } = useQuery({
     queryKey: ['following', id],
-    queryFn: () => getFollow({ profileId: id, myId: 6, follow: modalType }),
+    queryFn: () => getFollow({ profileId: id, myId: 13, follow: modalType }),
   });
 
   const ref = useRef<HTMLDivElement>(null);
@@ -53,9 +53,10 @@ export const FollowModal = ({
             data.map((data, i) => (
               <FollowUser
                 key={i}
-                followListBtn={data.isFollowed ? '팔로잉 취소' : '팔로우'}
+                isFollowed={data.isFollowed}
+                id={data.followUserId}
                 image={data.imageUrl}
-                nickname={data.followingUserNickname}
+                nickname={data.followUserNickname}
               />
             ))
           ) : (

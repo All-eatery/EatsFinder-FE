@@ -156,15 +156,31 @@ export type SimplifiedData = {
   content?: string;
   createdAt: string;
 };
-export type FollowType = {
+export type FollowingDataType = {
+  followingUserId: string;
   followingUserNickname: string;
   imageUrl: string;
 };
-export type FollowStatusType = FollowType & {
+
+export type FollowerDataType = {
+  followerUserId: string;
+  followerUserNickname: string;
+  imageUrl: string;
+};
+
+export type FollowDataType = FollowingDataType | FollowerDataType;
+export type FollowStatusType = {
+  followUserId: number;
+  followUserNickname: string;
+  imageUrl: string;
   isFollowed: boolean;
 };
 export type FollowAPIType = {
   profileId: number;
   myId: number;
   follow: 'following' | 'follower';
+};
+export type FollowType = {
+  id: number;
+  type: 'follow' | 'unfollow';
 };

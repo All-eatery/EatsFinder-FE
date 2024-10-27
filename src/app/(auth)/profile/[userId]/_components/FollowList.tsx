@@ -1,16 +1,18 @@
-import { Button } from '@/components/atoms';
 import Image from 'next/image';
 import React from 'react';
+import { FollowButton } from './FollowButton';
 
 type FollowUserProps = {
+  id: number;
   nickname: string;
   image: string;
-  followListBtn: '팔로잉 취소' | '팔로우';
+  isFollowed: boolean;
 };
 export const FollowUser = ({
+  id,
   nickname,
   image,
-  followListBtn,
+  isFollowed,
 }: FollowUserProps) => {
   if (!image) {
     image =
@@ -28,7 +30,9 @@ export const FollowUser = ({
         />
         <span className='text-gray-600 subTitle-18'>{nickname}</span>
       </div>
-      <Button size='mini'>{followListBtn}</Button>
+      <FollowButton id={id} isFollowed={isFollowed} />
     </div>
   );
 };
+//팔로우 취소 텍스트가 들어가면 버튼 사이즈가 안맞아서 새로운 버튼 사용
+const FollowBtn = () => {};

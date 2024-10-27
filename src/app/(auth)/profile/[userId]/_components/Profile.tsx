@@ -1,3 +1,4 @@
+'use client';
 import { Button, ProfileImage } from '@/components/atoms';
 import { ProfileInfo } from './ProfileInfo';
 import { UserProfileStats } from './UserProfileStats';
