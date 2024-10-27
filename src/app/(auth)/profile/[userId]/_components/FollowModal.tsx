@@ -3,6 +3,7 @@ import { FollowUser } from './FollowList';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 type FollowModalProps = {
+  isLoggedIn: boolean;
   id: number;
   onClose: () => void;
   isOwnProfile: boolean;
@@ -10,6 +11,7 @@ type FollowModalProps = {
   modalType: 'following' | 'follower';
 };
 export const FollowModal = ({
+  isLoggedIn,
   id,
   nickname,
   isOwnProfile,
@@ -53,6 +55,7 @@ export const FollowModal = ({
             data.map((data, i) => (
               <FollowUser
                 key={i}
+                isLoggedIn={isLoggedIn}
                 isFollowed={data.isFollowed}
                 id={data.followUserId}
                 image={data.imageUrl}

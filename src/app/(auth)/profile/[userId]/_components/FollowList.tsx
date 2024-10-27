@@ -3,12 +3,14 @@ import React from 'react';
 import { FollowButton } from './FollowButton';
 
 type FollowUserProps = {
+  isLoggedIn: boolean;
   id: number;
   nickname: string;
   image: string;
   isFollowed: boolean;
 };
 export const FollowUser = ({
+  isLoggedIn,
   id,
   nickname,
   image,
@@ -30,9 +32,7 @@ export const FollowUser = ({
         />
         <span className='text-gray-600 subTitle-18'>{nickname}</span>
       </div>
-      <FollowButton id={id} isFollowed={isFollowed} />
+      <FollowButton id={id} isFollowed={isFollowed} isLoggedIn={isLoggedIn} />
     </div>
   );
 };
-//팔로우 취소 텍스트가 들어가면 버튼 사이즈가 안맞아서 새로운 버튼 사용
-const FollowBtn = () => {};

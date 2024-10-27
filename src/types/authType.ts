@@ -14,6 +14,7 @@ export type UserProfile = {
 };
 
 export type ProfilePageProps = {
+  loggedInUserId?: number;
   userData: UserData;
   isOwnProfile: boolean;
 };
@@ -97,11 +98,12 @@ export type FeedType = {
 };
 export type PaginationType = {
   currentPage: number;
-  feedsPerPage: number;
+  itemsPerPage: number;
   isLastPage: boolean;
-  totalFeed: number;
+  totalItems: number;
   totalPage: number;
 };
+
 export type PaginationFeedType = {
   data: FeedType[];
   pagination: PaginationType;

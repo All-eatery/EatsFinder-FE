@@ -13,7 +13,13 @@ export const ProfilePage = async ({ userId }: Props) => {
   }
   const userProfileData = await getUserProfile(userId);
   if (userProfileData.isSuccess) {
-    return <UserProfile userData={userProfileData.data} isOwnProfile={false} />;
+    return (
+      <UserProfile
+        userData={userProfileData.data}
+        loggedInUserId={currentUser?.id}
+        isOwnProfile={false}
+      />
+    );
   } else {
     return <div>찾으시는 유저가 없습니다.</div>;
   }

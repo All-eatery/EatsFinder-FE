@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 interface FollowButtonProps {
   id: number;
   isFollowed: boolean;
+  isLoggedIn: boolean;
 }
 
 interface FollowRequest {
@@ -18,10 +19,14 @@ interface FollowResponse {
   message?: string;
 }
 
-export const FollowButton = ({ isFollowed, id }: FollowButtonProps) => {
+export const FollowButton = ({
+  isFollowed,
+  id,
+  isLoggedIn,
+}: FollowButtonProps) => {
   const [followStatus, setFollowStatus] = useState(isFollowed);
   const buttonLabel = followStatus ? '팔로우 취소' : '팔로우';
-  const queryClient = useQueryClient();
+  //   const queryClient = useQueryClient();
   const mutation = useMutation<FollowResponse, Error, FollowRequest>({
     mutationFn: ({ type, id }) => follow({ type, id }),
     onMutate: () => {
@@ -33,22 +38,20 @@ export const FollowButton = ({ isFollowed, id }: FollowButtonProps) => {
     },
     onSettled: () => {
       console.log('성공');
-      console.log(followStatus);
       // 리벨리데이트 추가
       //   queryClient.invalidateQueries({ queryKey: ['following', id] });
     },
   });
-  console.log(followStatus);
+  console.log('loggedIn', isLoggedIn);
 
   const handleFollowButton = async () => {
+    if (!isLoggedIn) {
+      return console.log('로그인하세요');
+    }
     const type = followStatus ? 'unfollow' : 'follow';
 
     mutation.mutate({ type, id });
   };
-  //   const handleFollowButton = () => {
-  //     follow({ type, id });
-  //     setFollowStatus((prev) => !prev);
-  //   };
 
   return (
     <Button size='mini' onClick={handleFollowButton}>

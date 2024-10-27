@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { FollowModal } from './FollowModal';
 
 type UserStatsProps = {
+  isLoggedIn: boolean;
   id: number;
   postCount: number;
   followerCount: number;
@@ -11,6 +12,7 @@ type UserStatsProps = {
   nickname: string;
 };
 export const UserProfileStats = ({
+  isLoggedIn,
   id,
   postCount,
   followingCount,
@@ -51,6 +53,7 @@ export const UserProfileStats = ({
         </p>
         {isFollowModalOpen && (
           <FollowModal
+            isLoggedIn={isLoggedIn}
             id={id}
             onClose={handleCloseModal}
             isOwnProfile={isOwnProfile}
