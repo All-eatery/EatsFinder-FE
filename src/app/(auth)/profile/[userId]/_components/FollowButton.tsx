@@ -26,7 +26,7 @@ export const FollowButton = ({
 }: FollowButtonProps) => {
   const [followStatus, setFollowStatus] = useState(isFollowed);
   const buttonLabel = followStatus ? '팔로우 취소' : '팔로우';
-  //   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const mutation = useMutation<FollowResponse, Error, FollowRequest>({
     mutationFn: ({ type, id }) => follow({ type, id }),
     onMutate: () => {
@@ -38,8 +38,8 @@ export const FollowButton = ({
     },
     onSettled: () => {
       console.log('성공');
-      // 리벨리데이트 추가
-      //   queryClient.invalidateQueries({ queryKey: ['following', id] });
+      queryClient.invalidateQueries({ queryKey: ['userProfile', id] });
+      console.log('리벨리데이트완료');
     },
   });
   console.log('loggedIn', isLoggedIn);

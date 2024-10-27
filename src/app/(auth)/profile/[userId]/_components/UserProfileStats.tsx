@@ -28,7 +28,6 @@ export const UserProfileStats = ({
   const handleFollowingModal = (type: 'following' | 'follower') => {
     setModalType(type);
     setIsFollowModalOpen(true);
-    //데이터 가져오는 로직
   };
   const handleCloseModal = () => {
     setIsFollowModalOpen(false);
