@@ -33,6 +33,20 @@ export const getUserProfile = async (
     return { isSuccess: false, error: '유저정보조회 에러' };
   }
 };
+export const getLoggedInUserProfile = async (): Promise<UserData> => {
+  const token = await getUserToken();
+
+  const response = await fetch(`${KOTLIN_SERVER}/users`, {
+    method: 'GET',
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
+};
 export const getMyfeeds = async (): Promise<FeedType[]> => {
   const token = await getUserToken();
   const response = await fetch(`${KOTLIN_SERVER}/users/feeds`, {
