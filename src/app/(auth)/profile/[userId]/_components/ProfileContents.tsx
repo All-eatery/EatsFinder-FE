@@ -36,15 +36,13 @@ export const ProfileContents = ({
             {isOwnProfile ? (
               tabLabels.map((label, i) => {
                 return (
-                  <>
-                    <Tab
-                      key={i}
-                      active={activeIndex === i}
-                      onClick={() => handleTabClick(i)}
-                    >
-                      {label}
-                    </Tab>
-                  </>
+                  <Tab
+                    key={i}
+                    active={activeIndex === i}
+                    onClick={() => handleTabClick(i)}
+                  >
+                    {label}
+                  </Tab>
                 );
               })
             ) : (

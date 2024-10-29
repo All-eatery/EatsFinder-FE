@@ -61,8 +61,6 @@ export const getMyfeeds = async (): Promise<FeedType[]> => {
   return data;
 };
 export const getMyActives = async (): Promise<Active[]> => {
-  // 'https://api-k-eatsfinder.gotiger.dev/users/actives?page=0&size=1&sort=string&sort=ㅠㅠㅠ' \
-
   const token = await getUserToken();
 
   const response = await fetch(`${KOTLIN_SERVER}/users/actives`, {
@@ -83,8 +81,8 @@ export const getUserFeeds = async ({
   id: number;
   page: number;
 }): Promise<PaginationFeedType> => {
-  console.log('userId', id);
   const size = 10;
+  console.log('요청');
   const response = await fetch(
     `${KOTLIN_SERVER}/users/feeds/${id}?page=${page}&size=${size}`,
     {
@@ -94,8 +92,13 @@ export const getUserFeeds = async ({
       },
     },
   );
+  console.log(await response.json());
+  // 'https://api-k-eatsfinder.gotiger.dev/users/feeds/1?page=0&size=10&sort=string' \
+  // 'https://api-k-eatsfinder.gotiger.dev/users/feeds/1?page=0&size=10'
 
   const data = await response.json();
+  console.log('수신');
+
   console.log(data);
   return data;
 };

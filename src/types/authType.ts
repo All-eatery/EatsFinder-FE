@@ -12,6 +12,11 @@ export type UserData = {
 export type UserProfile = {
   userData: UserData;
 };
+export type ProfileProps = {
+  loggedInUserId?: number;
+  isOwnProfile: boolean;
+  userId: number;
+};
 
 export type ProfilePageProps = {
   loggedInUserId?: number;
