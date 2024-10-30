@@ -1,8 +1,12 @@
-import { BookmarkPlacesTab } from './BookmarkPlacesTab';
+import { ParamsProps } from '@/types/paramsType';
 import { BookmarkedListCard } from './BookmarkedListCard';
 import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
+import { BookmarkedPlacesTabController } from './BookmarkedPlacesTabController';
 
-export const BookmarkedPlaces = () => {
+export const BookmarkedPlaces = ({ searchParams }: ParamsProps) => {
+  console.log(searchParams);
+  const param = searchParams.all;
+  console.log(param);
   /**
    * 스크랩 탭 (전체보기 리스트보기) 거맥
    *
@@ -10,7 +14,7 @@ export const BookmarkedPlaces = () => {
    */
   return (
     <div>
-      <BookmarkPlacesTab />
+      <BookmarkedPlacesTabController searchParams={searchParams} />
       <BookmarkedListCard />
       <div className='flex flex-col gap-9'>
         <BookmarkedPlaceCard src={url} />

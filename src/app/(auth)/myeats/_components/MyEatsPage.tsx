@@ -1,36 +1,28 @@
-'use client';
 import { Tab } from '@/components/atoms/button/Tab';
-import { useTabHandler } from '@/hooks/useTabHandler';
+import Link from 'next/link';
 import React from 'react';
-import { LikedPosts } from './LikedPosts';
-import { BookmarkedPlaces } from './BookmarkedPlaces';
-export const MyEatsPage = () => {
-  const tabLabels = ['내가 좋아요한 게시물', '내가 스크랩한 맛집'];
-  const { activeIndex, handleTabClick } = useTabHandler();
-  const contents = () => {
-    if (activeIndex === 0) {
-      return <LikedPosts />;
-    } else if (activeIndex === 1) {
-      return <BookmarkedPlaces />;
-    }
-  };
+import { LikedPosts } from './like/LikedPosts';
+import { BookmarkedPlaces } from './bookmark/BookmarkedPlaces';
+import { ParamsProps } from '@/types/paramsType';
+export const MyEatsPage = ({ searchParams }: ParamsProps) => {
+  const tab = searchParams!.tab as string;
+  const view = searchParams!.view as string;
+  console.log(view);
   return (
     <div className='flex w-full flex-col'>
       <div className='mb-[60px] flex'>
-        {tabLabels.map((label, i) => {
-          console.log(activeIndex);
-          return (
-            <Tab
-              key={i}
-              active={activeIndex === i}
-              onClick={() => handleTabClick(i)}
-            >
-              {label}
-            </Tab>
-          );
-        })}
+        <Link href={'/myeats?tab=like'}>
+          <Tab active={tab === 'like'}>내가 좋아요한 게시물</Tab>
+        </Link>
+        <Link href={'/myeats?tab=scrap&view=all'}>
+          <Tab active={tab === 'scrap'}>내가 스크랩한 맛집</Tab>
+        </Link>
       </div>
-      {contents()}
+      {tab === 'like' ? (
+        <LikedPosts />
+      ) : (
+        <BookmarkedPlaces searchParams={searchParams} />
+      )}
     </div>
   );
 };
