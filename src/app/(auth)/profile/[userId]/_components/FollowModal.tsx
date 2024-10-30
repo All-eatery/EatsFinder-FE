@@ -2,6 +2,7 @@ import { getFollow, getFollowing } from '@/api/profile';
 import { FollowUser } from './FollowList';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
+import Loading from '@/components/atoms/loading/Loading';
 type FollowModalProps = {
   isLoggedIn: boolean;
   id: number;
@@ -22,7 +23,7 @@ export const FollowModal = ({
   const title =
     modalType === 'following' ? `${who}의 팔로잉` : `${who}의 팔로워`;
 
-  const { data: data } = useQuery({
+  const { data: data, isLoading } = useQuery({
     queryKey: ['following', id],
     queryFn: () => getFollow({ profileId: id, myId: 13, follow: modalType }),
   });
@@ -50,6 +51,7 @@ export const FollowModal = ({
         ref={ref}
       >
         <h2 className='my-[40px] text-gray-800 title-34'>{title}</h2>
+        {isLoading && <Loading />}
         <div className='mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px] scrollbar-hide'>
           {data && data.length > 0 ? (
             data.map((data, i) => (

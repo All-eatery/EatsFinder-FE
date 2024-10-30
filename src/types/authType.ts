@@ -96,17 +96,18 @@ export enum ReasonForAccountDeletion {
   Switching = '다른 서비스를 이용하고 있어요.',
 }
 export type FeedType = {
+  postId: number;
   thumbnailUrl: string;
   placeName: string;
   content: string;
   createdAt: string;
 };
 export type PaginationType = {
-  currentPage: number;
-  itemsPerPage: number;
-  isLastPage: boolean;
   totalItems: number;
+  itemsPerPage: number;
   totalPage: number;
+  currentPage: number;
+  isLastPage: boolean;
 };
 
 export type PaginationFeedType = {

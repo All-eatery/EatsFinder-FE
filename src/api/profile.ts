@@ -83,6 +83,7 @@ export const getUserFeeds = async ({
 }): Promise<PaginationFeedType> => {
   const size = 10;
   console.log('요청');
+  console.log('dsfasdfasdfdsa', id, page);
   const response = await fetch(
     `${KOTLIN_SERVER}/users/feeds/${id}?page=${page}&size=${size}`,
     {
@@ -92,10 +93,8 @@ export const getUserFeeds = async ({
       },
     },
   );
-  console.log(await response.json());
-  // 'https://api-k-eatsfinder.gotiger.dev/users/feeds/1?page=0&size=10&sort=string' \
-  // 'https://api-k-eatsfinder.gotiger.dev/users/feeds/1?page=0&size=10'
 
+  console.log(await response.json());
   const data = await response.json();
   console.log('수신');
 

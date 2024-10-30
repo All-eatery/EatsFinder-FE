@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getUserFeeds } from '@/api/profile';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
-import { Loading } from '@/app/(auth)/_components/Loading';
 import { Pagination } from '@/components/molecules/pagination';
+import Loading from '@/components/atoms/loading/Loading';
 type UserIdProps = {
   userId: number;
 };
