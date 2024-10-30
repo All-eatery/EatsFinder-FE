@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
-interface ScrapedPlaceCard {
+interface BookmarkedPlaceCard {
   id: string;
   src: string;
 }
-export const ScrapedPlaceCard = ({ src }: { src: string }) => {
+export const BookmarkedPlaceCard = ({ src }: { src: string }) => {
   return (
     <div className='flex h-[185px] items-center p-[10px]'>
       <div className='flex w-full gap-6 border-b-[1px] border-b-gray-50 p-5 pb-[25px]'>

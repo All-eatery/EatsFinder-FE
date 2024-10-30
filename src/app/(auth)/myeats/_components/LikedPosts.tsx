@@ -3,7 +3,7 @@ import { Search } from '@/components/molecules';
 import React from 'react';
 import { PostCard } from './PostCard';
 
-export const LikePosts = () => {
+export const LikedPosts = () => {
   return (
     <div className='flex flex-col items-center gap-20'>
       <div className='flex flex-col items-center gap-8'>

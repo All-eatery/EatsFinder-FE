@@ -1,11 +1,11 @@
-'use client';
-import { Tab } from '@/components/atoms/button/Tab';
 import { useTabHandler } from '@/hooks/useTabHandler';
 import React from 'react';
 import { LikedPosts } from './LikedPosts';
 import { BookmarkedPlaces } from './BookmarkedPlaces';
-export const MyEatsPage = () => {
-  const tabLabels = ['내가 좋아요한 게시물', '내가 스크랩한 맛집'];
+import { Tab } from '@/components/atoms/button/Tab';
+
+export const BookmarkPlacesTab = () => {
+  const tabLabels = ['전체보기', '리스트로 보기'];
   const { activeIndex, handleTabClick } = useTabHandler();
   const contents = () => {
     if (activeIndex === 0) {
@@ -16,7 +16,7 @@ export const MyEatsPage = () => {
   };
   return (
     <div className='flex w-full flex-col'>
-      <div className='mb-[60px] flex'>
+      <div className='flex'>
         {tabLabels.map((label, i) => {
           console.log(activeIndex);
           return (

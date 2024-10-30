@@ -11,7 +11,7 @@ const ListImg = () => {
   );
 };
 
-export const ScrapedListCard = () => {
+export const BookmarkedListCard = () => {
   return (
     <div
       className='relative flex h-[184px] w-full items-center justify-start gap-6 rounded-3xl p-5'

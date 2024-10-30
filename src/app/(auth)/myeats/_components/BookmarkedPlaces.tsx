@@ -1,8 +1,8 @@
-import { ScrapPlacesTab } from './ScrapPlacesTab';
-import { ScrapedListCard } from './ScrapedListCard';
-import { ScrapedPlaceCard } from './ScrapedPlaceCard';
+import { BookmarkPlacesTab } from './BookmarkPlacesTab';
+import { BookmarkedListCard } from './BookmarkedListCard';
+import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
 
-export const ScrapPlaces = () => {
+export const BookmarkedPlaces = () => {
   /**
    * 스크랩 탭 (전체보기 리스트보기) 거맥
    *
@@ -10,12 +10,12 @@ export const ScrapPlaces = () => {
    */
   return (
     <div>
-      <ScrapPlacesTab />
-      <ScrapedListCard />
+      <BookmarkPlacesTab />
+      <BookmarkedListCard />
       <div className='flex flex-col gap-9'>
-        <ScrapedPlaceCard src={url} />
-        <ScrapedPlaceCard src={url} />
-        <ScrapedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
       </div>
     </div>
   );
