@@ -1,11 +1,16 @@
+'use client';
 import { ParamsProps } from '@/types/paramsType';
 import { BookmarkedPlacesTab } from './BookmarkedPlacesTab';
 import Link from 'next/link';
 import { Search } from '@/components/molecules';
+import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
+import { useRouter } from 'next/navigation';
 
 export const BookmarkedPlacesTabController = ({
   searchParams,
 }: ParamsProps) => {
+  const router = useRouter();
+
   /**
    * (view=all)전체보기 리스트보기 서치바
    * (view=list)전쳅보기 리스트보기 선택
@@ -16,37 +21,85 @@ export const BookmarkedPlacesTabController = ({
   const view = searchParams.view;
   const select = searchParams.select;
   const list = searchParams.list;
+  const id = searchParams.id;
   const count = 1;
+  const listName = '기본 리스트';
+  const handleSelectToggle = () => {
+    const queryParams = new URLSearchParams();
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((val) => queryParams.append(key, val));
+      } else if (value !== undefined) {
+        queryParams.set(key, value);
+      }
+    });
+    if (select) {
+      queryParams.delete('select');
+      if (id) queryParams.delete('id');
+    } else {
+      queryParams.set('select', 'true');
+    }
+    queryParams.set('view', 'list');
+
+    router.push(`/myeats?${queryParams.toString()}`);
+  };
   return (
     <div className='flex w-full flex-col'>
       <div className='flex h-16 justify-between'>
-        <div className='flex gap-3'>
-          <Link href='/myeats?tab=scrap&view=all'>
-            <BookmarkedPlacesTab
-              active={view === 'all'}
-              display={!select === true}
-            >
-              {`전체보기(${count})`}
-            </BookmarkedPlacesTab>
-          </Link>
-          <div className='flex justify-center py-3 text-gray-50 subTitle-22'>
-            |
+        {select ? (
+          <button className='flex items-center gap-1'>
+            <CheckBoXSVG_Ver2 isChecked='blank' />
+            <span className='text-gray-400 subTitle-22'>{`전체 선택${count}`}</span>
+          </button>
+        ) : (
+          <div className='flex gap-3'>
+            <Link href='/myeats?tab=scrap&view=all'>
+              <BookmarkedPlacesTab
+                active={view === 'all'}
+                display={!select === true}
+              >
+                {`전체보기(${count})`}
+              </BookmarkedPlacesTab>
+            </Link>
+            <div className='flex justify-center py-3 text-gray-50 subTitle-22'>
+              |
+            </div>
+            <Link href='/myeats?tab=scrap&view=list'>
+              <BookmarkedPlacesTab
+                active={view === 'list' && !list}
+                display={!select === true}
+              >{`리스트로 보기(${count})`}</BookmarkedPlacesTab>
+            </Link>
+            {list && (
+              <>
+                <div className='flex justify-center py-3 text-gray-50 subTitle-22'>
+                  {'>'}
+                </div>
+                <BookmarkedPlacesTab
+                  active={!!list}
+                >{`${listName}${count}`}</BookmarkedPlacesTab>
+              </>
+            )}
           </div>
-          <Link href='/myeats?tab=scrap&view=list'>
-            <BookmarkedPlacesTab
-              active={view === 'list' && !list}
-              display={!select === true}
-            >{`리스트로 보기(${count})`}</BookmarkedPlacesTab>
-          </Link>
-        </div>
-        <div>
-          {view === 'all' && (
+        )}
+        {view === 'list' && (
+          <button
+            onClick={handleSelectToggle}
+            className={`flex items-center ${select ? 'text-primary-400' : 'text-gray-400'} subTitle-22`}
+          >
+            {select ? '취소' : '선택'}
+          </button>
+        )}
+
+        {view === 'all' && (
+          <div className='flex justify-end'>
             <Search
+              className=''
               variant='large'
               placeholder='스크랩했던 맛집을 빠르게 찾아보세요.'
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
