@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Search } from '@/components/molecules';
 import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
 import { useRouter } from 'next/navigation';
+import { convertToURLSearchParams } from '@/utils/convertToURLSearchParams';
 
 export const BookmarkedPlacesTabController = ({
   searchParams,
@@ -25,14 +26,7 @@ export const BookmarkedPlacesTabController = ({
   const count = 1;
   const listName = '기본 리스트';
   const handleSelectToggle = () => {
-    const queryParams = new URLSearchParams();
-    Object.entries(searchParams).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((val) => queryParams.append(key, val));
-      } else if (value !== undefined) {
-        queryParams.set(key, value);
-      }
-    });
+    const queryParams = convertToURLSearchParams({ searchParams });
     if (select) {
       queryParams.delete('select');
       if (id) queryParams.delete('id');
@@ -40,7 +34,6 @@ export const BookmarkedPlacesTabController = ({
       queryParams.set('select', 'true');
     }
     queryParams.set('view', 'list');
-
     router.push(`/myeats?${queryParams.toString()}`);
   };
   return (
