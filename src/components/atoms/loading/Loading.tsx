@@ -5,7 +5,7 @@ import loading from '@/assets/loading/loading.gif';
 const Loading = () => {
   return (
     <div className='flex justify-center'>
-      <Image src={loading} width={0} height={0} alt='loading' priority />;
+      <Image src={loading} width={300} height={300} alt='loading' priority />;
     </div>
   );
 };

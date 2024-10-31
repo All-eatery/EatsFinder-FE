@@ -23,9 +23,14 @@ export const FollowModal = ({
   const title =
     modalType === 'following' ? `${who}의 팔로잉` : `${who}의 팔로워`;
 
-  const { data: data, isLoading } = useQuery({
+  const {
+    data: data,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ['following', id],
     queryFn: () => getFollow({ profileId: id, myId: 13, follow: modalType }),
+    enabled: !!modalType,
   });
 
   const ref = useRef<HTMLDivElement>(null);
@@ -51,25 +56,29 @@ export const FollowModal = ({
         ref={ref}
       >
         <h2 className='my-[40px] text-gray-800 title-34'>{title}</h2>
-        {isLoading && <Loading />}
-        <div className='mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px] scrollbar-hide'>
-          {data && data.length > 0 ? (
-            data.map((data, i) => (
-              <FollowUser
-                key={i}
-                isLoggedIn={isLoggedIn}
-                isFollowed={data.isFollowed}
-                id={data.followUserId}
-                image={data.imageUrl}
-                nickname={data.followUserNickname}
-              />
-            ))
-          ) : (
-            <div className='flex justify-center'>
-              {modalType === 'following' ? '팔로잉' : '팔로워'} 유저가 없습니다.
-            </div>
-          )}
-        </div>
+        {isLoading || isFetching ? (
+          <Loading />
+        ) : (
+          <div className='scrollbar-hide mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px]'>
+            {data && data.length > 0 ? (
+              data.map((data, i) => (
+                <FollowUser
+                  key={i}
+                  isLoggedIn={isLoggedIn}
+                  isFollowed={data.isFollowed}
+                  id={data.followUserId}
+                  image={data.imageUrl}
+                  nickname={data.followUserNickname}
+                />
+              ))
+            ) : (
+              <div className='flex justify-center'>
+                {modalType === 'following' ? '팔로잉' : '팔로워'} 유저가
+                없습니다.
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
