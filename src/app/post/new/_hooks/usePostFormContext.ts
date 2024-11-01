@@ -1,11 +1,15 @@
 import { ChangeEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { type PostFormValue } from '@/utils/zodSchema';
 import { createNewPost } from '@/api/post';
+import { NestResponseError } from '@/types/responseType';
 
 const usePostFormContext = () => {
   const { register, handleSubmit, watch, setValue, getValues } =
     useFormContext<PostFormValue>();
+  const router = useRouter();
 
   const placeName = watch('placeName');
   const placeId = watch('placeId');
@@ -115,7 +119,14 @@ const usePostFormContext = () => {
     postForm.append('starRating', formData.starRating.toString());
     postForm.append('placeId', formData.placeId.toString());
 
-    const data = await createNewPost(postForm);
+    try {
+      const data = await createNewPost(postForm);
+      router.push(`/posts/${data.id}`);
+    } catch (err) {
+      if (err instanceof NestResponseError) {
+        console.log(err.message);
+      }
+    }
   });
 
   return {

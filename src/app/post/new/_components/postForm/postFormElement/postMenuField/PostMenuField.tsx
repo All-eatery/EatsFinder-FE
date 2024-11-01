@@ -11,16 +11,10 @@ export const PostMenuField = () => {
   const { placeId, menus, handleMenuAdd, handleMenuRemove } =
     usePostFormContext();
   const [menu, setMenu] = useState('');
-  const [recommendedMenus, setRecommendedMenus] = useState<
+  const [recommendMenus, setRecommendMenus] = useState<
     { id: number; menu: string }[]
   >([]);
-  const [placeMenus, setPlaceMenus] = useState<string[]>([
-    '고르곤졸라 피자',
-    '참나물 파스타',
-    '피쉬 앤 칩스',
-    '고구마',
-    'spagetti',
-  ]);
+  const [allMenus, setAllMenus] = useState<{ id: number; menu: string }[]>([]);
   const recommendedMenusRef = useRef(null);
 
   useEffect(() => {
@@ -28,7 +22,8 @@ export const PostMenuField = () => {
       const data = await getMenus(placeId);
 
       if (data) {
-        setRecommendedMenus(data);
+        setAllMenus(data.allMenus);
+        setRecommendMenus(data.recommendMenus);
       }
     };
 
@@ -52,10 +47,10 @@ export const PostMenuField = () => {
       }, '^'),
     );
 
-    return placeMenus.filter((menu) => {
+    return allMenus.filter(({ id, menu }) => {
       return reg.test(menu);
     });
-  }, [menu, placeMenus]);
+  }, [menu, allMenus]);
 
   return (
     <div>
@@ -107,7 +102,7 @@ export const PostMenuField = () => {
             <p className='mb-6 text-gray-800 body-18'>이런 메뉴는 어떠세요?</p>
             <div className='flex flex-wrap gap-3'>
               {menu.length === 0
-                ? recommendedMenus.map((menu) => (
+                ? recommendMenus.map((menu) => (
                     <MenuTag
                       key={menu.id}
                       onClick={() => handleMenuAdd(menu.menu)}
@@ -115,8 +110,8 @@ export const PostMenuField = () => {
                       {menu.menu}
                     </MenuTag>
                   ))
-                : filteredPlaceMenu.map((menu, index) => (
-                    <MenuTag key={index} onClick={() => handleMenuAdd(menu)}>
+                : filteredPlaceMenu.map(({ id, menu }) => (
+                    <MenuTag key={id} onClick={() => handleMenuAdd(menu)}>
                       {menu}
                     </MenuTag>
                   ))}
