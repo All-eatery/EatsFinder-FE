@@ -114,3 +114,17 @@ export const createMenu = async (menu: string, placeId: number) => {
 
   return data;
 };
+
+export const deletePost = async (id: number) => {
+  const token = await getUserToken();
+  const response = await fetch(`${NEST_SERVER}/posts/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  return { data, response };
+};
