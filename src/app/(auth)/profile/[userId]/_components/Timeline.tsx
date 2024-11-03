@@ -1,12 +1,12 @@
 import { UserTimeline } from '@/components/atoms/userTimeline';
 import React from 'react';
-import { activeDummyData } from './test/dummy';
 import { simplifyTimeLineData } from '@/utils/simplifyTimeLineData';
 import { getMyActives } from '@/api/profile';
 import { useQuery } from '@tanstack/react-query';
 import { Loading } from '@/app/(auth)/_components/Loading';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
 import { Pagination } from '@/components/molecules/pagination';
+import { activeDummyData } from './test/dummy';
 
 export const Timeline = () => {
   const arr = activeDummyData;
