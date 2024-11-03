@@ -25,14 +25,14 @@ export const CircleCloseSVG = () => {
       <path
         d='M7.54492 7.00781L17.8615 17.3244'
         stroke='white'
-        stroke-width='2'
-        stroke-linecap='round'
+        strokeWidth='2'
+        strokeLinecap='round'
       />
       <path
         d='M17.8613 7.00781L7.54475 17.3244'
         stroke='white'
-        stroke-width='2'
-        stroke-linecap='round'
+        strokeWidth='2'
+        strokeLinecap='round'
       />
     </svg>
   );

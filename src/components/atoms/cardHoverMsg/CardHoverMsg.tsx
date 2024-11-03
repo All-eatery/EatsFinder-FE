@@ -1,9 +1,8 @@
 import { FeedOptionMenu } from '@/app/(auth)/profile/[userId]/_components/FeedOptionMenu';
 import { MoreSVG } from '@/components/svg/MoreSVG';
 import { useToggleHandler } from '@/hooks/useToggleHandler';
-import { FeedType, MyfeedCardProps } from '@/types/authType';
+import { MyfeedCardProps } from '@/types/authType';
 import Link from 'next/link';
-import { useState } from 'react';
 
 export const CardHoverMsg = ({ data, isOwnProfile }: MyfeedCardProps) => {
   const { handleValue: feedOptionHandler, value: feedOption } =
