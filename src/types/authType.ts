@@ -114,21 +114,29 @@ export type PaginationFeedType = {
   data: FeedType[];
   pagination: PaginationType;
 };
-export type ActiveType = 'postLike' | 'commentLike' | 'comment';
+export type ActiveType =
+  | 'POST_LIKES'
+  | 'COMMENT_LIKES'
+  | 'COMMENT'
+  | 'REPLY'
+  | 'REPLY_LIKES';
 
 export type Active = {
   data: [
     {
       type: ActiveType;
-      postLike?: ActivePostLikeType;
-      commentLike?: ActiveCommentLikeType;
-      comment?: ActiveCommentType;
+      comment: ActiveCommentType | null;
+      commentLike: ActiveCommentLikeType | null;
+      postLike: ActivePostLikeType | null;
       createdAt: string;
+      reply: ActiveReplyType | null;
+      replyLike: ActiveReplyLikeType | null;
     },
   ];
 };
 export type ActivePostLikeType = {
   postId: number;
+  commentId: number;
   createdBy: {
     postUserNickname: string;
     postImageUrl: string;
@@ -147,13 +155,32 @@ export type ActiveCommentLikeType = {
 export type ActiveCommentType = {
   id: number;
   postId: number;
-  postDeletedAt: number; //????
+  postDeletedAt: string | null;
   createdBy: {
     postUserNickname: string;
     postImageUrl: string;
   };
   content: string;
 };
+export type ActiveReplyType = {
+  id: number;
+  commentId: number;
+  commentDeletedAt: string | null;
+  createdBy: {
+    replyUserNickname: string;
+    replyImageUrl: string;
+  };
+  content: string;
+};
+export type ActiveReplyLikeType = {
+  replyId: number;
+  createdBy: {
+    replyUserNickname: string;
+    replyImageUrl: string;
+  };
+  replyContent: string;
+};
+
 export type SimplifiedData = {
   type: string;
   id: number;
