@@ -10,12 +10,13 @@ type UserDropdownOptionProps = {
 type LogoutButtonProps = {
   openLogoutModal: (e: React.MouseEvent) => void;
   dropdownHanlder: () => void;
+  userId: string;
 };
 export const UserDropdownMenu = ({
   openLogoutModal,
   dropdownHanlder,
+  userId,
 }: LogoutButtonProps) => {
-  const userId = '1234';
   const UserDropdownOptions = useMemo<UserDropdownOptionProps[]>(
     () => [
       { label: '내 프로필', href: '/profile/', slug: userId },
@@ -28,9 +29,7 @@ export const UserDropdownMenu = ({
   );
   const handleLogoutBtn = (e: React.MouseEvent) => {
     openLogoutModal(e);
-    console.log('button');
     dropdownHanlder();
-    console.log('button222');
   };
   return (
     <div className='w-300 absolute right-1/2 z-20 flex translate-x-[50%] flex-col overflow-hidden rounded-3xl bg-white shadow-[0_-4px_6px_rgba(0,0,0,0.1),0_4px_6px_rgba(0,0,0,0.1)]'>

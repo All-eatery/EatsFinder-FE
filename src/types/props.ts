@@ -19,8 +19,9 @@ export type SVGRatingStarProps = {
 export type SVGCheckBoxProps = {
   isChecked?: 'default' | 'check' | 'blank';
 };
-export type SVGDirectionProps = {
+export type SVGArrowProps = {
   direction: 'down' | 'right' | 'left';
+  color?: 'default' | 'orange';
 };
 export type SVGCheckProps = {
   size?: 'regular' | 'large';

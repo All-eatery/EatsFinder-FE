@@ -87,6 +87,7 @@ const urlToFile = async (url: string, filename: string): Promise<File> => {
 };
 export const editUserProfile = async (data: ProfileEditType) => {
   const { nickname, phoneNumber, profileImage } = data;
+  console.log('data', data);
   const formData = new FormData();
   formData.append('nickname', nickname);
   formData.append('phoneNumber', phoneNumber);
@@ -99,6 +100,8 @@ export const editUserProfile = async (data: ProfileEditType) => {
     if (!token) {
       throw new Error('Access token is missing');
     }
+    console.log(Array.from(formData.entries()));
+    console.log('@@@@', token);
 
     const response = await fetch(`${KOTLIN_SERVER}/users`, {
       method: 'PATCH',
@@ -108,9 +111,11 @@ export const editUserProfile = async (data: ProfileEditType) => {
       },
       body: formData,
     });
-
+    const data = await response.json();
+    console.log('res', data);
     if (!response.ok) {
-      throw new Error(`Server responded with status: ${response.status}`);
+      console.log('!@#!@#@!#', Object.keys(data.data)[0]);
+      // throw new Error(`Server responded with status: ${response.status}`);
     }
 
     return await response.json();

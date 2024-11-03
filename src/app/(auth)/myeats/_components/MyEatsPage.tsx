@@ -9,7 +9,7 @@ export const MyEatsPage = ({ searchParams }: ParamsProps) => {
   const view = searchParams!.view as string;
   console.log(view);
   return (
-    <div className='flex w-full flex-col'>
+    <div className='flex w-[1440px] flex-col'>
       <div className='mb-[60px] flex'>
         <Link href={'/myeats?tab=like'}>
           <Tab active={tab === 'like'}>내가 좋아요한 게시물</Tab>

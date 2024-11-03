@@ -5,6 +5,7 @@ import { Pretendard, TossFace } from '@/assets/fonts';
 import './globals.css';
 import { KAKAO_API_KEY } from '@/constants/baseUrl';
 import { HeaderFetchData } from './_components/HeaderFetchData';
+import { CompoundProvider } from '@/provider/CompoundProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,16 +20,17 @@ export default function RootLayout({
   return (
     <html lang='ko' className={`${Pretendard.variable} ${TossFace.variable}`}>
       <body>
-        <div className='flex min-h-screen flex-col'>
-          <HeaderFetchData />
-          {/* <Header /> */}
-          <main className='mx-auto w-[1440px] grow p-9'>{children}</main>
-          <Footer />
-        </div>
-        <Script
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services,clusterer&autoload=false`}
-          strategy='beforeInteractive'
-        />
+        <CompoundProvider>
+          <div className='flex min-h-screen flex-col'>
+            <HeaderFetchData />
+            <main className='mx-auto max-w-[1440px] grow p-9'>{children}</main>
+            <Footer />
+          </div>
+          <Script
+            src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services,clusterer&autoload=false`}
+            strategy='beforeInteractive'
+          />
+        </CompoundProvider>
       </body>
     </html>
   );

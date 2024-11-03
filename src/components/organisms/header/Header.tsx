@@ -8,9 +8,9 @@ import { UserDropdownMenu } from '@/components/molecules/userDropdownMenu/UserDr
 import { useDropdownHandler } from '@/hooks/useDropdownHandler';
 import { Modal } from '..';
 import { useEffect, useState } from 'react';
-import { useLogoutModal } from '@/app/(auth)/_hooks/useLogoutModal';
 import { AlarmBellSVG } from '@/components/svg/AlarmBellSVG';
 import { UserData } from '@/types/authType';
+import { useLogoutModal } from '@/app/(auth)/_hooks/useModal';
 
 const NAV_DATA = [
   {
@@ -80,6 +80,7 @@ export const Header = ({ userInfo }: HeaderProps) => {
               <ProfileImage src={userInfo?.profileImage} size={50} />
               {isDropdownOpen && (
                 <UserDropdownMenu
+                  userId={String(userInfo!.id)}
                   openLogoutModal={openLogoutModal}
                   dropdownHanlder={dropdownHanlder}
                 />

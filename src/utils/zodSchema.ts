@@ -77,16 +77,14 @@ export const signupSchema = z
   });
 
 export const profileEditSchema = z.object({
-  profileImage: z
-    .any()
-    .nullable()
-    .refine((files) => {
-      return files?.[0]?.size <= MAX_FILE_SIZE;
-    }, `이미지의 최대 크기는 5MB 입니다.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-      '.jpg,.jpeg,.png.webp 형식만 지원됩니다.',
-    ),
+  profileImage: z.any().nullable(),
+  // .refine((files) => {
+  //   return files?.[0]?.size <= MAX_FILE_SIZE;
+  // }, `이미지의 최대 크기는 5MB 입니다.`)
+  // .refine(
+  //   (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
+  //   '.jpg,.jpeg,.png.webp 형식만 지원됩니다.',
+  // )
   nickname: z
     .string({ required_error: '닉네임을 입력해주세요.' })
     .regex(nicknameRegex, {
