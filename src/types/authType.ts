@@ -95,7 +95,7 @@ export enum ReasonForAccountDeletion {
   Inconvenience = '서비스 사용성이 불편해요.',
   Switching = '다른 서비스를 이용하고 있어요.',
 }
-export type FeedType = {
+export type FeedDataType = {
   postId: number;
   thumbnailUrl: string;
   placeName: string;
@@ -111,7 +111,11 @@ export type PaginationType = {
 };
 
 export type PaginationFeedType = {
-  data: FeedType[];
+  data: FeedDataType[];
+  pagination: PaginationType;
+};
+export type PaginationActiveType = {
+  data: ActiveDataType[];
   pagination: PaginationType;
 };
 export type ActiveType =
@@ -121,64 +125,73 @@ export type ActiveType =
   | 'REPLY'
   | 'REPLY_LIKES';
 
-export type Active = {
-  data: [
-    {
-      type: ActiveType;
-      comment: ActiveCommentType | null;
-      commentLike: ActiveCommentLikeType | null;
-      postLike: ActivePostLikeType | null;
-      createdAt: string;
-      reply: ActiveReplyType | null;
-      replyLike: ActiveReplyLikeType | null;
-    },
-  ];
+export type ActiveDataType = {
+  type: ActiveType;
+  comment: ActiveCommentType | null;
+  commentLike: ActiveCommentLikeType | null;
+  postLike: ActivePostLikeType | null;
+  createdAt: string;
+  reply: ActiveReplyType | null;
+  replyLike: ActiveReplyLikeType | null;
+};
+export type ActiveDataItemType = {
+  type: ActiveType;
+  comment: ActiveCommentType | null;
+  commentLike: ActiveCommentLikeType | null;
+  postLike: ActivePostLikeType | null;
+  createdAt: string;
+  reply: ActiveReplyType | null;
+  replyLike: ActiveReplyLikeType | null;
 };
 export type ActivePostLikeType = {
-  postId: number;
-  commentId: number;
+  postId: number; //좋아요 누른 포스트 id
   createdBy: {
+    // 포스트 작성자
     postUserNickname: string;
     postImageUrl: string;
   };
-  postContent: string;
+  postContent: string; //좋아요 누른 포스트 id
 };
 export type ActiveCommentLikeType = {
-  postId: number;
-  commentId: number;
+  postId: number; //댓글이 달린 게시글 id
+  commentId: number; //댓글 id
   createdBy: {
+    //댓글 작성자 id
     commentUserNickname: string;
     commentUserImageUrl: string;
   };
-  commentContent: string;
+  commentContent: string; //댓글 내용
 };
 export type ActiveCommentType = {
-  id: number;
-  postId: number;
+  id: number; //댓글 고유 id
+  postId: number; //댓글 단 게시글 id
   postDeletedAt: string | null;
   createdBy: {
+    //누구 게시글인지
     postUserNickname: string;
     postImageUrl: string;
   };
-  content: string;
+  content: string; //댓글 내용
 };
 export type ActiveReplyType = {
-  id: number;
-  commentId: number;
+  id: number; //대댓글 고유 id
+  commentId: number; //댓글 id
   commentDeletedAt: string | null;
   createdBy: {
+    //누구 댓글인지
     replyUserNickname: string;
     replyImageUrl: string;
   };
-  content: string;
+  content: string; //남긴 댓글
 };
 export type ActiveReplyLikeType = {
-  replyId: number;
+  replyId: number; //대댓좋아요 고유 아이디
   createdBy: {
+    //누구 대댓인지
     replyUserNickname: string;
     replyImageUrl: string;
   };
-  replyContent: string;
+  replyContent: string; //좋아요누른 대댓글
 };
 
 export type SimplifiedData = {
@@ -221,6 +234,6 @@ export type FollowType = {
 };
 
 export type MyfeedCardProps = {
-  data: FeedType;
+  data: FeedDataType;
   isOwnProfile: boolean;
 };

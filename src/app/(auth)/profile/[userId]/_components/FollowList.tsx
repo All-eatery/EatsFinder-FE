@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
 import { FollowButton } from './FollowButton';
-
+export const sampleImg =
+  'https://lh3.googleusercontent.com/a/ACg8ocL5qL_KbAxVIQMCT7KSAb4JqtAcYMl9mGBwcdJhtPl9owCW1A=s96-c';
 type FollowUserProps = {
   isLoggedIn: boolean;
   id: number;
@@ -17,8 +18,7 @@ export const FollowUser = ({
   isFollowed,
 }: FollowUserProps) => {
   if (!image) {
-    image =
-      'https://lh3.googleusercontent.com/a/ACg8ocL5qL_KbAxVIQMCT7KSAb4JqtAcYMl9mGBwcdJhtPl9owCW1A=s96-c';
+    image = sampleImg;
   }
   return (
     <div className='flex items-center justify-between'>

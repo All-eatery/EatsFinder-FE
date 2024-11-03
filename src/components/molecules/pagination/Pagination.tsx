@@ -26,6 +26,7 @@ export const Pagination = ({
     if (currentPage === pagination.totalPage - 1) return;
     setPage(currentPage + 1);
   };
+  if (!pagination) return;
 
   return (
     <div className='flex justify-center'>

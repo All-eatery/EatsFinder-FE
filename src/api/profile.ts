@@ -1,13 +1,12 @@
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
 import {
-  Active,
-  FeedType,
   FollowAPIType,
   FollowStatusType,
   FollowDataType,
   PaginationFeedType,
   UserData,
   FollowType,
+  PaginationActiveType,
 } from '@/types/authType';
 import { getServerUserInfo, getUserToken } from '@/utils/getServerUserInfo';
 type Result<T, E> =
@@ -47,23 +46,23 @@ export const getLoggedInUserProfile = async (): Promise<UserData> => {
   console.log(data);
   return data;
 };
-export const getMyfeeds = async (): Promise<FeedType[]> => {
-  const token = await getUserToken();
-  const response = await fetch(`${KOTLIN_SERVER}/users/feeds`, {
-    method: 'GET',
-    headers: {
-      accept: '*/*',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const data = await response.json();
-  console.log(data);
-  return data;
-};
+// export const getMyfeeds = async (): Promise<FeedDataType[]> => {
+//   const token = await getUserToken();
+//   const response = await fetch(`${KOTLIN_SERVER}/users/feeds`, {
+//     method: 'GET',
+//     headers: {
+//       accept: '*/*',
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+//   const data = await response.json();
+//   console.log(data);
+//   return data;
+// };
 export const getMyActives = async (
   filter: string,
   page: number,
-): Promise<Active[]> => {
+): Promise<PaginationActiveType> => {
   const token = await getUserToken();
   console.log('!@32132143214', filter);
   const size = 10;
@@ -78,8 +77,7 @@ export const getMyActives = async (
     },
   );
   const data = await response.json();
-  console.log(data);
-  return data;
+  return data[0];
 };
 export const getUserFeeds = async ({
   id,

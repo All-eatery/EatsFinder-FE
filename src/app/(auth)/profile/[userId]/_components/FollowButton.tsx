@@ -1,3 +1,4 @@
+'use client';
 import { follow } from '@/api/profile';
 import { Button } from '@/components/atoms';
 import React, { useState } from 'react';

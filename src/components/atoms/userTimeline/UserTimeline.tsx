@@ -24,7 +24,10 @@ export const UserTimeline = ({ timeline }: TimeLineProps) => {
             {timeline.content}
           </p>
         )}
-        {timeline.type === 'commentLike' && <p>에 좋아요를 눌렀어요.</p>}
+        {(timeline.type === 'commentLike' ||
+          timeline.type === 'replyLikes') && (
+          <p className='text-gray-500 body-16'>에 좋아요를 눌렀어요.</p>
+        )}
         <CreatedAt createdAt={timeline.createdAt} />
       </Link>
     </div>
