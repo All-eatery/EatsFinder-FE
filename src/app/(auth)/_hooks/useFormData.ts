@@ -21,6 +21,7 @@ import {
   profileEditSchema,
   signupSchema,
 } from '@/utils/zodSchema';
+import { useQueryClient } from '@tanstack/react-query';
 export const useLogin = () => {
   const {
     register,
@@ -81,7 +82,9 @@ export const useSignup = () => {
     trigger,
   };
 };
-export const useProfileEdit = () => {
+export const useProfileEdit = (handler: () => void) => {
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
@@ -94,9 +97,17 @@ export const useProfileEdit = () => {
     resolver: zodResolver(profileEditSchema),
   });
 
-  const onSubmit: SubmitHandler<ProfileEditType> = async (data) => {
-    const response = await editUserProfile(data);
+  const onSubmit: SubmitHandler<ProfileEditType> = async (formData) => {
+    handler();
+
+    const response = await editUserProfile(formData);
+    const data = await response.json();
+    if (data.statusCode === 'SUCCESS') {
+      queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+      handler();
+    }
   };
+
   return {
     register,
     handleSubmit: handleSubmit(onSubmit),

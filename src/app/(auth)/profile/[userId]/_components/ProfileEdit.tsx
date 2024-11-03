@@ -13,16 +13,20 @@ type ProfileEditProps = {
 };
 export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
   const { nickname, phoneNumber, profileImage } = userData;
-  const { register, watch, handleSubmit, errors, setValue } = useProfileEdit();
+  const { register, watch, handleSubmit, errors, setValue } =
+    useProfileEdit(handler);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const { handleFileChange, handleImageInput, previewImage } = useImageInput();
+
   useEffect(() => {
     setValue('profileImage', userData.profileImage);
     if (previewImage) setValue('profileImage', previewImage);
   }, [previewImage]);
+
   return (
     <div>
       <form className='flex flex-col items-center' onSubmit={handleSubmit}>
+        <div>{errors.profileImage?.message}</div>
         <div className='flex flex-col items-center gap-2'>
           <div className='relative'>
             <div

@@ -16,7 +16,7 @@ const buttonVariants = cva(
         error: 'bg-error text-white',
       },
       size: {
-        mini: 'w-[80px] h-[35px] rounded-[20px] body-14',
+        mini: 'min-w-[80px] max-w-[140px] h-[35px] rounded-[20px] body-14',
         small: 'w-[160px]',
         medium: 'w-[280px]',
         large: 'w-[370px]',
