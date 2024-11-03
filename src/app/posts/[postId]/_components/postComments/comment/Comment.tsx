@@ -4,7 +4,8 @@ import { useToggleHandler } from '@/hooks/useToggleHandler';
 import { ProfileImage, Button } from '@/components/atoms';
 import { TextField } from '@/components/atoms/textField';
 import { Modal } from '@/components/organisms';
-import { DropdownMenu } from '@/components/molecules/dropdownMenu';
+import { DropdownMenu } from '@/components/molecules';
+import ReplyInput from './ReplyInput';
 import { ThumbsSVG } from '@/components/svg/ThumbsSVG';
 import { MoreSVG } from '@/components/svg/MoreSVG';
 import { DropSVG } from '@/components/svg/DropSVG';
@@ -12,13 +13,23 @@ import { CommentType } from '@/types/comment';
 import { customTwMerge } from '@/utils/customTwMerge';
 import timeDifference from '@/utils/timeDifference';
 import { UserData } from '@/types/authType';
+import { ChatTextSVG } from '@/components/svg/ChatTextSVG';
 
 interface CommentProps {
   userInfo?: UserData;
   comment: CommentType;
   isReply?: boolean;
-  handleDeleteComment: (commentId: number) => Promise<void>;
-  handleEditComment: (commentId: number, content: string) => Promise<void>;
+  handleCreateComment: (
+    content: string,
+    isReply: boolean,
+    commentId?: number,
+  ) => Promise<void>;
+  handleDeleteComment: (targetId: number, isReply: boolean) => Promise<void>;
+  handleEditComment: (
+    targetId: number,
+    content: string,
+    isReply: boolean,
+  ) => Promise<void>;
   handleToggleCommentLike: (
     commentId: number,
     isLiked: boolean,
@@ -29,12 +40,14 @@ export const Comment = ({
   userInfo,
   comment,
   isReply = false,
+  handleCreateComment,
   handleDeleteComment,
   handleEditComment,
   handleToggleCommentLike,
 }: CommentProps) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [showReply, setShowReply] = useState(false);
+  const [showReplyInput, setShowReplyInput] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.content);
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
   const { value: isOpenDeleteModal, handleValue: handleOpenDeleteModal } =
@@ -73,7 +86,7 @@ export const Comment = ({
           comment.isMyComment && 'bg-gray-50',
         )}
       >
-        <div className='mr-6 flex items-center'>
+        <div className='mr-6 pt-4'>
           <ProfileImage size={70} />
         </div>
         <div className='flex flex-grow flex-col gap-3'>
@@ -110,7 +123,7 @@ export const Comment = ({
                     type='submit'
                     size='mini'
                     onClick={() => {
-                      handleEditComment(comment.id, editedComment);
+                      handleEditComment(comment.id, editedComment, isReply);
                       setIsEditMode(false);
                     }}
                   >
@@ -140,8 +153,21 @@ export const Comment = ({
                 </div>
                 <span>{comment.likeCount}</span>
               </div>
-              {!isReply && <div className='cursor-pointer'>댓글</div>}
+              {!isReply && (
+                <div
+                  className='flex cursor-pointer items-center justify-center'
+                  onClick={() => setShowReplyInput((prev) => !prev)}
+                >
+                  <ChatTextSVG />
+                </div>
+              )}
             </div>
+            {!isReply && showReplyInput && (
+              <ReplyInput
+                commentId={comment.id}
+                handleCreateComment={handleCreateComment}
+              />
+            )}
             {!isReply && comment.replies && comment.replies.length > 0 && (
               <div
                 className='flex cursor-pointer items-center text-gray-600 body-20'
@@ -158,7 +184,10 @@ export const Comment = ({
           size='medium'
           title='댓글 삭제'
           mainButton='삭제'
-          onMainClick={() => handleDeleteComment(comment.id)}
+          onMainClick={() => {
+            handleDeleteComment(comment.id, isReply);
+            handleOpenDeleteModal();
+          }}
           onClose={handleOpenDeleteModal}
         >
           <p className='text-center'>이 댓글을 삭제할까요?</p>
@@ -167,13 +196,14 @@ export const Comment = ({
       <div className='pl-16'>
         {showReply &&
           comment.replies &&
-          comment.replies.map((d) => {
-            console.log(d);
+          comment.replies.map((reply) => {
             return (
               <Comment
-                key={d.id}
-                comment={d}
+                key={reply.id}
+                userInfo={userInfo}
+                comment={reply}
                 isReply={true}
+                handleCreateComment={handleCreateComment}
                 handleEditComment={handleEditComment}
                 handleDeleteComment={handleDeleteComment}
                 handleToggleCommentLike={handleToggleCommentLike}

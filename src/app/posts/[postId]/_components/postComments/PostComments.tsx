@@ -9,9 +9,17 @@ import { UserData } from '@/types/authType';
 interface PostCommentsProps {
   userInfo?: UserData;
   postComments: PostCommentType;
-  handleCreateComment: (content: string) => Promise<void>;
-  handleDeleteComment: (commentId: number) => Promise<void>;
-  handleEditComment: (commentId: number, content: string) => Promise<void>;
+  handleCreateComment: (
+    content: string,
+    isReply: boolean,
+    commentId?: number,
+  ) => Promise<void>;
+  handleDeleteComment: (targetId: number, isReply: boolean) => Promise<void>;
+  handleEditComment: (
+    targetId: number,
+    content: string,
+    isReply: boolean,
+  ) => Promise<void>;
   handleToggleCommentLike: (
     commentId: number,
     isLiked: boolean,
@@ -48,12 +56,12 @@ const PostComments = ({
               return;
             }
             if (e.code === 'Enter') {
-              handleCreateComment(content);
+              handleCreateComment(content, false);
               setContent('');
             }
           }}
           onSearch={() => {
-            handleCreateComment(content);
+            handleCreateComment(content, false);
             setContent('');
           }}
         />
@@ -64,6 +72,7 @@ const PostComments = ({
             key={comment.id}
             userInfo={userInfo}
             comment={comment}
+            handleCreateComment={handleCreateComment}
             handleDeleteComment={handleDeleteComment}
             handleEditComment={handleEditComment}
             handleToggleCommentLike={handleToggleCommentLike}
