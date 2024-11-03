@@ -60,16 +60,23 @@ export const getMyfeeds = async (): Promise<FeedType[]> => {
   console.log(data);
   return data;
 };
-export const getMyActives = async (): Promise<Active[]> => {
+export const getMyActives = async (
+  filter: string,
+  page: number,
+): Promise<Active[]> => {
   const token = await getUserToken();
-
-  const response = await fetch(`${KOTLIN_SERVER}/users/actives`, {
-    method: 'GET',
-    headers: {
-      accept: '*/*',
-      Authorization: `Bearer ${token}`,
+  console.log('!@32132143214', filter);
+  const size = 10;
+  const response = await fetch(
+    `${KOTLIN_SERVER}/users/actives?filter=${filter}&page=${page}&size=${size}`,
+    {
+      method: 'GET',
+      headers: {
+        accept: '*/*',
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
   const data = await response.json();
   console.log(data);
   return data;

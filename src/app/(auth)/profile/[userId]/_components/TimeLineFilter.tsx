@@ -1,5 +1,4 @@
 import { Checkbox } from '@/components/atoms';
-import { useState } from 'react';
 type TimeLineFiletrProps = {
   handler: (value: string) => void;
 };
@@ -11,14 +10,14 @@ export const TimeLineFilter = ({ handler }: TimeLineFiletrProps) => {
         variant='Checkbox_Ver2'
         className='text-gray-700 subTitle-16'
         defaultChecked={true}
-        onChange={() => handler('comment')}
+        onChange={() => handler('COMMENT')}
       />
       <Checkbox
         label='좋아요만'
         variant='Checkbox_Ver2'
         className='text-gray-700 subTitle-16'
         defaultChecked={true}
-        onChange={() => handler('like')}
+        onChange={() => handler('LIKE')}
       />
     </div>
   );

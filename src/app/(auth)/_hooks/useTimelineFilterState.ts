@@ -1,5 +1,5 @@
 import { useState } from 'react';
-const initailValue = ['comment', 'like'];
+const initailValue = ['COMMENT', 'LIKE'];
 export const useTimelineFilterState = () => {
   const [TimelineFilter, setTimelineFilter] = useState(initailValue);
   const handleFileterState = (value: string) => {

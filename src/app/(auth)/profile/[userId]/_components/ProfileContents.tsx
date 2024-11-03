@@ -14,14 +14,13 @@ export const ProfileContents = ({
 }: ProfilePageProps) => {
   const tabLabels = isOwnProfile ? ['내 피드', '내 활동'] : ['게시글'];
   const { activeIndex, handleTabClick } = useTabHandler();
-  //내활동 필터에 따른 데이터전송시 사용
   const { TimelineFilter, handleFileterState } = useTimelineFilterState();
   const contents = () => {
     if (isOwnProfile) {
       if (activeIndex === 0) {
         return <MyFeed userId={userData.id} isOwnProfile={isOwnProfile} />;
       } else if (activeIndex === 1) {
-        return <Timeline />;
+        return <Timeline timelineFilter={TimelineFilter} />;
       }
     } else {
       return <MyFeed userId={userData.id} isOwnProfile={isOwnProfile} />;
