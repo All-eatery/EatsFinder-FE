@@ -20,13 +20,16 @@ export const getComments = async (postId: number): Promise<PostCommentType> => {
 };
 
 export const createComment = async (
-  postId: number,
+  targetId: number,
   content: string,
+  isReply: boolean,
 ): Promise<KotlinResponseType<string>> => {
   const token = await getUserToken();
   const body = JSON.stringify({ content });
-
-  const res = await fetch(`${KOTLIN_SERVER}/posts/${postId}/comments`, {
+  const endpont = !isReply
+    ? `${KOTLIN_SERVER}/posts/${targetId}/comments`
+    : `${KOTLIN_SERVER}/comments/${targetId}/replies`;
+  const res = await fetch(endpont, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -40,9 +43,12 @@ export const createComment = async (
   return data;
 };
 
-export const deleteComment = async (commentId: number) => {
+export const deleteComment = async (targetId: number, isReply: boolean) => {
   const token = await getUserToken();
-  const res = await fetch(`${KOTLIN_SERVER}/comments/${commentId}`, {
+  const endpoint = !isReply
+    ? `${KOTLIN_SERVER}/comments/${targetId}`
+    : `${KOTLIN_SERVER}/replies/${targetId}`;
+  const res = await fetch(endpoint, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -52,13 +58,16 @@ export const deleteComment = async (commentId: number) => {
 };
 
 export const editComment = async (
-  commentId: number,
+  targetId: number,
   content: string,
+  isReply: boolean,
 ): Promise<KotlinResponseType<string>> => {
   const token = await getUserToken();
   const body = JSON.stringify({ content: content });
-
-  const res = await fetch(`${KOTLIN_SERVER}/comments/${commentId}`, {
+  const endpoint = !isReply
+    ? `${KOTLIN_SERVER}/comments/${targetId}`
+    : `${KOTLIN_SERVER}/replies/${targetId}`;
+  const res = await fetch(endpoint, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
