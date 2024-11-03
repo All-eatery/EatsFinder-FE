@@ -19,12 +19,12 @@ export const ProfileContents = ({
   const contents = () => {
     if (isOwnProfile) {
       if (activeIndex === 0) {
-        return <MyFeed userId={userData.id} />;
+        return <MyFeed userId={userData.id} isOwnProfile={isOwnProfile} />;
       } else if (activeIndex === 1) {
         return <Timeline />;
       }
     } else {
-      return <MyFeed userId={userData.id} />;
+      return <MyFeed userId={userData.id} isOwnProfile={isOwnProfile} />;
     }
   };
 

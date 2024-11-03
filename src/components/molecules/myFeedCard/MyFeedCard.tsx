@@ -1,13 +1,10 @@
 'use client';
 import { CardHoverMsg } from '@/components/atoms/cardHoverMsg';
-import { FeedType } from '@/types/authType';
+import { MyfeedCardProps } from '@/types/authType';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
-type MyfeedCardProps = {
-  data: FeedType;
-};
-export const MyFeedCard = ({ data }: MyfeedCardProps) => {
+
+export const MyFeedCard = ({ data, isOwnProfile }: MyfeedCardProps) => {
   const [isHover, setIsHover] = useState(false);
   return (
     <div
@@ -23,7 +20,7 @@ export const MyFeedCard = ({ data }: MyfeedCardProps) => {
         priority={true}
         sizes='(max-width: 250px) 100vw, 250px'
       />
-      {isHover && <CardHoverMsg data={data} />}
+      {isHover && <CardHoverMsg data={data} isOwnProfile={isOwnProfile} />}
     </div>
   );
 };

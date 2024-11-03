@@ -192,3 +192,8 @@ export type FollowType = {
   id: number;
   type: 'follow' | 'unfollow';
 };
+
+export type MyfeedCardProps = {
+  data: FeedType;
+  isOwnProfile: boolean;
+};

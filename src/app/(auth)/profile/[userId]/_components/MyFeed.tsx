@@ -5,10 +5,11 @@ import { getUserFeeds } from '@/api/profile';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
 import { Pagination } from '@/components/molecules/pagination';
 import Loading from '@/components/atoms/loading/Loading';
-type UserIdProps = {
+type MyFeedProps = {
   userId: number;
+  isOwnProfile: boolean;
 };
-export const MyFeed = ({ userId }: UserIdProps) => {
+export const MyFeed = ({ userId, isOwnProfile }: MyFeedProps) => {
   const [page, setPage] = useState(0);
 
   const { data, error } = useQuery({
@@ -29,7 +30,7 @@ export const MyFeed = ({ userId }: UserIdProps) => {
     <>
       <div className='grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6'>
         {data.data.map((feed, i) => (
-          <MyFeedCard data={feed} key={i} />
+          <MyFeedCard data={feed} key={i} isOwnProfile={isOwnProfile} />
         ))}
       </div>
       <Pagination
