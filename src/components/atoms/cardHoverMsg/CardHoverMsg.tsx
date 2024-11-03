@@ -18,8 +18,8 @@ export const CardHoverMsg = ({ data }: MyfeedCardProps) => {
           onClick={feedOptionHandler}
         >
           <MoreSVG />
-          {feedOption && <FeedOptionMenu />}
         </button>
+        {feedOption && <FeedOptionMenu />}
       </div>
       <Link href={`/posts/${data.postId}`} className='flex flex-col gap-2'>
         <p className='truncate subTitle-20'>{data.placeName}</p>
