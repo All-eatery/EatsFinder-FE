@@ -81,6 +81,13 @@ export const getUserFeeds = async ({
   id: number;
   page: number;
 }): Promise<PaginationFeedType> => {
+  const token = await getUserToken();
+  const headers: { accept: string; Authorization?: string } = {
+    accept: '*/*',
+  };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
   const size = 10;
   console.log('요청');
   console.log('dsfasdfasdfdsa', id, page);
@@ -88,9 +95,7 @@ export const getUserFeeds = async ({
     `${KOTLIN_SERVER}/users/feeds/${id}?page=${page}&size=${size}`,
     {
       method: 'GET',
-      headers: {
-        accept: '*/*',
-      },
+      headers,
     },
   );
 
