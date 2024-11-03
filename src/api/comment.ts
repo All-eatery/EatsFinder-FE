@@ -82,20 +82,21 @@ export const editComment = async (
 };
 
 export const toggleCommentLike = async (
-  commentId: number,
+  targetId: number,
   isLiked: boolean,
+  isReply: boolean,
 ): Promise<KotlinResponseType<string>> => {
   const token = await getUserToken();
   const method = isLiked ? 'DELETE' : 'POST';
-  const res = await fetch(
-    `${KOTLIN_SERVER}/comment-likes?commentId=${commentId}`,
-    {
-      method: method,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const endpoint = !isReply
+    ? `${KOTLIN_SERVER}/comment-likes?commentId=${targetId}`
+    : `${KOTLIN_SERVER}/reply-likes?replyId=${targetId}`;
+  const res = await fetch(endpoint, {
+    method: method,
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
   if (!res.ok)
     return { statusCode: res.status, data: '', message: res.statusText };
 

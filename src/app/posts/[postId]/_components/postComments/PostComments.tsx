@@ -23,6 +23,7 @@ interface PostCommentsProps {
   handleToggleCommentLike: (
     commentId: number,
     isLiked: boolean,
+    isReply: boolean,
   ) => Promise<void>;
 }
 

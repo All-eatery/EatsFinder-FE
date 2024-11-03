@@ -19,25 +19,34 @@ interface PostPageProps {
 }
 
 const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
-  const handleCreateComment = async (content: string) => {
+  const handleCreateComment = async (
+    content: string,
+    isReply: boolean,
+    commentId?: number,
+  ) => {
     'use server';
-    const data = await createComment(postContent.id, content);
+    const targetId = commentId || postContent.id;
+    const data = await createComment(targetId, content, isReply);
 
     if (data.statusCode === 'SUCCESS') {
       revalidatePath(`/posts/${postContent.id}`);
     }
   };
 
-  const handleDeleteComment = async (commentId: number) => {
+  const handleDeleteComment = async (targetId: number, isReply: boolean) => {
     'use server';
-    await deleteComment(commentId);
+    await deleteComment(targetId, isReply);
 
     revalidatePath(`/posts/${postContent.id}`);
   };
 
-  const handleEditComment = async (commentId: number, content: string) => {
+  const handleEditComment = async (
+    targetId: number,
+    content: string,
+    isReply: boolean,
+  ) => {
     'use server';
-    const data = await editComment(commentId, content);
+    const data = await editComment(targetId, content, isReply);
 
     if (data.statusCode === 'SUCCESS') {
       revalidatePath(`/posts/${postContent.id}`);
@@ -47,9 +56,10 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   const handleToggleCommentLike = async (
     commentId: number,
     isLiked: boolean,
+    isReply: boolean,
   ) => {
     'use server';
-    const data = await toggleCommentLike(commentId, isLiked);
+    const data = await toggleCommentLike(commentId, isLiked, isReply);
     if (data.statusCode === 403) {
       redirect(`/posts/${postContent.id}?login=false`);
     }

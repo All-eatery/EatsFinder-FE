@@ -33,6 +33,7 @@ interface CommentProps {
   handleToggleCommentLike: (
     commentId: number,
     isLiked: boolean,
+    isReply: boolean,
   ) => Promise<void>;
 }
 
@@ -146,7 +147,11 @@ export const Comment = ({
                     comment.likeStatus ? 'fill-primary-400' : 'fill-gray-400',
                   )}
                   onClick={() => {
-                    handleToggleCommentLike(comment.id, comment.likeStatus);
+                    handleToggleCommentLike(
+                      comment.id,
+                      comment.likeStatus,
+                      isReply,
+                    );
                   }}
                 >
                   <ThumbsSVG />
