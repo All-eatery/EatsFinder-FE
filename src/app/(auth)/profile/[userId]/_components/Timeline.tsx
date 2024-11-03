@@ -6,9 +6,13 @@ import { Loading } from '@/app/(auth)/_components/Loading';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
 import { Pagination } from '@/components/molecules/pagination';
 import { simplifyTimeLineData } from '@/utils/simplifyTimeLineData';
-
-export const Timeline = ({ timelineFilter }: { timelineFilter: string[] }) => {
-  const [page, setPage] = useState(0);
+interface TimelineProps {
+  timelineFilter: string[];
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}
+export const Timeline = ({ timelineFilter, page, setPage }: TimelineProps) => {
+  // const [page, setPage] = useState(0);
 
   const filter = timelineFilter.length > 1 ? 'ALL' : timelineFilter[0];
   const { data, error, isLoading } = useQuery({

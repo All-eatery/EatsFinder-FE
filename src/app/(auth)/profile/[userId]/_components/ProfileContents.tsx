@@ -1,7 +1,7 @@
 'use client';
 import { Tab } from '@/components/atoms/button/Tab';
 import { useTabHandler } from '@/hooks/useTabHandler';
-import React from 'react';
+import React, { useState } from 'react';
 import { MyFeed } from './MyFeed';
 import { Timeline } from './Timeline';
 import { ProfilePageProps } from '@/types/authType';
@@ -14,13 +14,21 @@ export const ProfileContents = ({
 }: ProfilePageProps) => {
   const tabLabels = isOwnProfile ? ['내 피드', '내 활동'] : ['게시글'];
   const { activeIndex, handleTabClick } = useTabHandler();
-  const { TimelineFilter, handleFileterState } = useTimelineFilterState();
+  const [page, setPage] = useState(0);
+  const { TimelineFilter, handleFileterState } =
+    useTimelineFilterState(setPage);
   const contents = () => {
     if (isOwnProfile) {
       if (activeIndex === 0) {
         return <MyFeed userId={userData.id} isOwnProfile={isOwnProfile} />;
       } else if (activeIndex === 1) {
-        return <Timeline timelineFilter={TimelineFilter} />;
+        return (
+          <Timeline
+            timelineFilter={TimelineFilter}
+            page={page}
+            setPage={setPage}
+          />
+        );
       }
     } else {
       return <MyFeed userId={userData.id} isOwnProfile={isOwnProfile} />;
