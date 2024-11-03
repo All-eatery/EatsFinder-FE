@@ -94,7 +94,6 @@ export const getUserFeeds = async ({
     },
   );
 
-  console.log(await response.json());
   const data = await response.json();
   console.log('수신');
 

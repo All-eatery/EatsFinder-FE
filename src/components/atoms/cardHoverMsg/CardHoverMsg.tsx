@@ -2,6 +2,7 @@ import { FeedOptionMenu } from '@/app/(auth)/profile/[userId]/_components/FeedOp
 import { MoreSVG } from '@/components/svg/MoreSVG';
 import { useToggleHandler } from '@/hooks/useToggleHandler';
 import { FeedType } from '@/types/authType';
+import Link from 'next/link';
 import { useState } from 'react';
 type MyfeedCardProps = {
   data: FeedType;
@@ -20,11 +21,11 @@ export const CardHoverMsg = ({ data }: MyfeedCardProps) => {
           {feedOption && <FeedOptionMenu />}
         </button>
       </div>
-      <div className='flex flex-col gap-2'>
+      <Link href={`/posts/${data.postId}`} className='flex flex-col gap-2'>
         <p className='truncate subTitle-20'>{data.placeName}</p>
         <p className='line-clamp-3 body-16'>{data.content}</p>
         <p className='body-12'>{data.createdAt}</p>
-      </div>
+      </Link>
     </div>
   );
 };
