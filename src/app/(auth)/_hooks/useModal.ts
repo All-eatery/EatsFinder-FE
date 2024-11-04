@@ -27,7 +27,6 @@ export const useDeletePostModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const openModal = () => {
-    console.log('모달오픈');
     setIsModalOpen(true);
   };
   const confirmButton = async (id: number) => {
@@ -40,6 +39,34 @@ export const useDeletePostModal = () => {
     console.log('res', data);
     console.log('삭제되었습니다.');
     queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return { isModalOpen, closeModal, openModal, confirmButton };
+};
+export const useListNameEditModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const confirmButton = async () => {
+    console.log('컨펌.');
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return { isModalOpen, closeModal, openModal, confirmButton };
+};
+export const useDeleteListModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const confirmButton = async () => {
+    console.log('컨펌.');
     setIsModalOpen(false);
   };
   const closeModal = () => {

@@ -5,5 +5,11 @@ import { BookmarkedListCard } from './BookmarkedListCard';
 export const BookmarkedPlacesList = () => {
   const router = useRouter();
 
-  return <BookmarkedListCard />;
+  return (
+    <>
+      <BookmarkedListCard />
+      <BookmarkedListCard />
+      <BookmarkedListCard />
+    </>
+  );
 };
