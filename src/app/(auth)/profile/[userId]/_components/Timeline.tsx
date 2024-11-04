@@ -1,5 +1,4 @@
 import { UserTimeline } from '@/components/atoms/userTimeline';
-import React, { useState } from 'react';
 import { getMyActives } from '@/api/profile';
 import { useQuery } from '@tanstack/react-query';
 import { Loading } from '@/app/(auth)/_components/Loading';
@@ -12,8 +11,6 @@ interface TimelineProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 export const Timeline = ({ timelineFilter, page, setPage }: TimelineProps) => {
-  // const [page, setPage] = useState(0);
-
   const filter = timelineFilter.length > 1 ? 'ALL' : timelineFilter[0];
   const { data, error, isLoading } = useQuery({
     queryKey: ['timeline', filter, page],
@@ -26,8 +23,6 @@ export const Timeline = ({ timelineFilter, page, setPage }: TimelineProps) => {
   if (!data || !Array.isArray(data.data)) {
     return <Loading />;
   }
-  console.log('데이타 잘들어왔니?', data);
-  console.log(typeof data.data);
   return data.data.length > 0 ? (
     <>
       {data.data.map((data, i) => {
