@@ -6,6 +6,7 @@ import { Search } from '@/components/molecules';
 import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
 import { useRouter } from 'next/navigation';
 import { convertToURLSearchParams } from '@/utils/convertToURLSearchParams';
+import { Checkbox } from '@/components/atoms';
 
 export const BookmarkedPlacesTabController = ({
   searchParams,
@@ -41,7 +42,7 @@ export const BookmarkedPlacesTabController = ({
       <div className='flex h-16 justify-between'>
         {select ? (
           <button className='flex items-center gap-1'>
-            <CheckBoXSVG_Ver2 isChecked='blank' />
+            <Checkbox variant='Checkbox_Ver2' />
             <span className='text-gray-400 subTitle-22'>{`전체 선택${count}`}</span>
           </button>
         ) : (

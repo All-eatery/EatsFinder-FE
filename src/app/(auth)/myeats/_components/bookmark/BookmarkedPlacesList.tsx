@@ -1,15 +1,20 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { BookmarkedListCard } from './BookmarkedListCard';
 
 export const BookmarkedPlacesList = () => {
-  const router = useRouter();
-
+  const params = useSearchParams();
+  const select = params.get('select');
   return (
-    <>
-      <BookmarkedListCard />
-      <BookmarkedListCard />
-      <BookmarkedListCard />
-    </>
+    <div className='flex flex-col gap-4'>
+      <BookmarkedListCard isSelect={select} />
+      <BookmarkedListCard isSelect={select} />
+      <BookmarkedListCard isSelect={select} />
+      <BookmarkedListCard isSelect={select} />
+      <BookmarkedListCard isSelect={select} />
+      <BookmarkedListCard isSelect={select} />
+      <BookmarkedListCard isSelect={select} />
+      <BookmarkedListCard isSelect={select} />
+    </div>
   );
 };
