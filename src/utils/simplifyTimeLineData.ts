@@ -5,8 +5,8 @@ const typeMessages: Record<ActiveType, string> = {
   POST_LIKES: '님의 게시물에 좋아요를 눌렀어요.',
   COMMENT_LIKES: '님의 댓글',
   COMMENT: '님의 게시물에 남긴 댓글',
-  REPLY: '님의 댓글에 남긴 대댓글',
-  REPLY_LIKES: '님의 대댓글',
+  REPLY: '님의 댓글에 남긴 답글',
+  REPLY_LIKES: '님의 답글',
 };
 export const simplifyTimeLineData = (data: ActiveDataType): SimplifiedData => {
   const { type, createdAt } = data;
