@@ -174,7 +174,7 @@ export type ActiveCommentType = {
   content: string; //댓글 내용
 };
 export type ActiveReplyType = {
-  id: number; //대댓글 고유 id
+  id: number; //답글 고유 id
   commentId: number; //댓글 id
   commentDeletedAt: string | null;
   createdBy: {
@@ -191,7 +191,7 @@ export type ActiveReplyLikeType = {
     replyUserNickname: string;
     replyImageUrl: string;
   };
-  replyContent: string; //좋아요누른 대댓글
+  replyContent: string; //좋아요누른 답글
 };
 
 export type SimplifiedData = {

@@ -74,3 +74,17 @@ export const useDeleteListModal = () => {
   };
   return { isModalOpen, closeModal, openModal, confirmButton };
 };
+export const useListEditModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const confirmButton = async () => {
+    console.log('컨펌.');
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return { isModalOpen, closeModal, openModal, confirmButton };
+};
