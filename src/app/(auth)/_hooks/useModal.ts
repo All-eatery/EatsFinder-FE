@@ -66,7 +66,6 @@ export const useDeleteListModal = () => {
     setIsModalOpen(true);
   };
   const confirmButton = async () => {
-    console.log('컨펌.');
     setIsModalOpen(false);
   };
   const closeModal = () => {
@@ -74,13 +73,25 @@ export const useDeleteListModal = () => {
   };
   return { isModalOpen, closeModal, openModal, confirmButton };
 };
-export const useListEditModal = () => {
+export const useMovePlacesInListModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
   };
   const confirmButton = async () => {
-    console.log('컨펌.');
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return { isModalOpen, closeModal, openModal, confirmButton };
+};
+export const useDeletePlacesInListModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const confirmButton = async () => {
     setIsModalOpen(false);
   };
   const closeModal = () => {

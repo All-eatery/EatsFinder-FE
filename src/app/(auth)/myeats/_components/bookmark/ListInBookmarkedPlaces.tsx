@@ -4,7 +4,10 @@ import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
 import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
 import { Button, Checkbox } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
-import { useListEditModal } from '@/app/(auth)/_hooks/useModal';
+import {
+  useDeletePlacesInListModal,
+  useMovePlacesInListModal,
+} from '@/app/(auth)/_hooks/useModal';
 import { EditListBox } from './EditListBox';
 
 export const ListInBookmarkedPlaces = () => {
@@ -13,11 +16,17 @@ export const ListInBookmarkedPlaces = () => {
   const url = sampleImg;
   console.log('select', select);
   const {
-    closeModal: closeListEditModal,
-    confirmButton: listEditConfirmButton,
-    isModalOpen: isListEditModalOpen,
-    openModal: listEditModalOpen,
-  } = useListEditModal();
+    closeModal: closeMoveModal,
+    confirmButton: moveConfirmButton,
+    isModalOpen: isMoveModalOpen,
+    openModal: openEditModal,
+  } = useMovePlacesInListModal();
+  const {
+    closeModal: closeDeleteModal,
+    confirmButton: deleteConfirmButton,
+    isModalOpen: isDeleteModalOpen,
+    openModal: openDeleteModal,
+  } = useDeletePlacesInListModal();
   return (
     <div>
       <div
@@ -37,30 +46,45 @@ export const ListInBookmarkedPlaces = () => {
       </div>
       {select && (
         <div className='my-[60px] flex justify-center gap-3'>
-          <Button variant={'stroke'} size={'small'} onClick={listEditModalOpen}>
+          <Button
+            variant={'stroke'}
+            size={'small'}
+            onClick={() => openEditModal()}
+          >
             이동
           </Button>
-          <Button variant={'stroke'} size={'small'}>
+          <Button variant={'stroke'} size={'small'} onClick={openDeleteModal}>
             삭제
           </Button>
         </div>
       )}
       <Modal
-        isOpen={isListEditModalOpen}
-        onClose={closeListEditModal}
+        isOpen={isMoveModalOpen}
+        onClose={closeMoveModal}
         title='다른 리스트로 이동'
         description='이동할 리스트를 선택해주세요.'
-        onMainClick={listEditConfirmButton}
+        onMainClick={moveConfirmButton}
         mainButton='적용'
       >
         <div className='flex max-h-[500px] w-full flex-col items-center gap-5 overflow-y-auto pt-1 scrollbar-hide'>
-          {/* <div className='scrollbar-hide mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px]'> */}
-
           <EditListBox />
           <EditListBox />
           <EditListBox />
           <EditListBox />
           <EditListBox />
+        </div>
+      </Modal>
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        title='다른 리스트로 이동'
+        onMainClick={deleteConfirmButton}
+        mainButton='적용'
+        subButton='취소'
+      >
+        <div className='flex flex-col items-center justify-center text-gray-900 body-18'>
+          <p>선택한 맛집들이 영구적으로 삭제돼요.</p>
+          <p>계속 삭제할까요?</p>
         </div>
       </Modal>
     </div>

@@ -5,7 +5,7 @@ import { BookmarkedListOptionMenu } from './BookmarkedListOptionMenu';
 import { useDropdownHandler } from '@/hooks/useDropdownHandler';
 import { Modal } from '@/components/organisms';
 import {
-  useListEditModal,
+  useMovePlacesInListModal,
   useListNameEditModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { Checkbox, TextField } from '@/components/atoms';
@@ -40,7 +40,7 @@ export const BookmarkedListCard = ({ isSelect }: BookmarkedListCardProps) => {
     confirmButton: deleteListConfirmButton,
     isModalOpen: isDeleteListModalOpen,
     openModal: openDeleteListModal,
-  } = useListEditModal();
+  } = useMovePlacesInListModal();
   const a = () => {
     // 클릭시 리스트내로 이동 선택활성화시 버튼 xx
     console.log('hi');
