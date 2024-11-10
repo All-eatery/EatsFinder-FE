@@ -17,6 +17,7 @@ export interface PostContentType {
   };
   places: PlaceType;
   starRatings: number;
+  likeStatus: boolean;
 }
 
 export interface PlaceType {

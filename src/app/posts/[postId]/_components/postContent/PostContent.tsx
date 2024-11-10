@@ -78,7 +78,12 @@ const PostContent = ({
         </div>
         <button className='flex h-24 items-center justify-center rounded-3xl shadow-[0_4px_20px_0_rgba(90,90,90,0.1)]'>
           <div className='flex gap-3'>
-            <FavSVG isFill={false} />
+            {postContent.likeStatus ? (
+              <FavSVG fillColor='primary' />
+            ) : (
+              <FavSVG isFill={false} />
+            )}
+
             <span>{postContent.likeCount}</span>
           </div>
         </button>
