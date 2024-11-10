@@ -9,6 +9,7 @@ import {
   editComment,
   toggleCommentLike,
 } from '@/api/comment';
+import { togglePostLike } from '@/api/post';
 import { getPostEditStatus, deletePost } from '@/api/post';
 import { UserData } from '@/types/authType';
 
@@ -87,6 +88,13 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
     }
   };
 
+  const handleTogglePostLike = async (targetId: number, isLiked: boolean) => {
+    'use server';
+    const data = await togglePostLike(targetId, isLiked);
+
+    revalidatePath(`/posts/${postContent.id}`);
+  };
+
   return (
     <>
       <PostContent
@@ -94,6 +102,7 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
         postContent={postContent}
         handleIsEditable={handleIsEditable}
         handleDeletePost={handleDeletePost}
+        handleTogglePostLike={handleTogglePostLike}
       />
       <PostComment
         userInfo={userInfo}

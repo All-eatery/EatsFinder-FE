@@ -17,12 +17,14 @@ interface PostContentProps {
   postContent: PostContentType;
   handleIsEditable: () => Promise<string>;
   handleDeletePost: () => Promise<void>;
+  handleTogglePostLike: (targetId: number, isLiked: boolean) => Promise<void>;
 }
 
 const PostContent = ({
   postContent,
   handleIsEditable,
   handleDeletePost,
+  handleTogglePostLike,
 }: PostContentProps) => {
   const images = parseImages(
     postContent.thumbnailUrl,
@@ -76,7 +78,12 @@ const PostContent = ({
             </div>
           </div>
         </div>
-        <button className='flex h-24 items-center justify-center rounded-3xl shadow-[0_4px_20px_0_rgba(90,90,90,0.1)]'>
+        <button
+          className='flex h-24 items-center justify-center rounded-3xl shadow-[0_4px_20px_0_rgba(90,90,90,0.1)]'
+          onClick={() =>
+            handleTogglePostLike(postContent.id, postContent.likeStatus)
+          }
+        >
           <div className='flex gap-3'>
             {postContent.likeStatus ? (
               <FavSVG fillColor='primary' />

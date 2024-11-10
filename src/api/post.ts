@@ -1,7 +1,7 @@
-import { NEST_SERVER } from '@/constants/baseUrl';
+import { NEST_SERVER, KOTLIN_SERVER } from '@/constants/baseUrl';
 import { PostContentType, PlaceRequestType } from '@/types/postType';
 import { getUserToken } from '@/utils/getServerUserInfo';
-import { NestResponseType } from '@/types/responseType';
+import { NestResponseType, KotlinResponseType } from '@/types/responseType';
 
 export const createNewPost = async (formData: FormData) => {
   const token = await getUserToken();
@@ -135,6 +135,29 @@ export const deletePost = async (postId: number): Promise<NestResponseType> => {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const togglePostLike = async (
+  targetId: number,
+  isLiked: boolean,
+): Promise<KotlinResponseType<string>> => {
+  const token = await getUserToken();
+  const method = isLiked ? 'DELETE' : 'POST';
+
+  const endpoint = `${KOTLIN_SERVER}/post-likes?postId=${targetId}`;
+  const res = await fetch(endpoint, {
+    method: method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok)
+    return { statusCode: res.status, data: '', message: res.statusText };
 
   const data = await res.json();
 
