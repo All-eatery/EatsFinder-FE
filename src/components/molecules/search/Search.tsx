@@ -38,7 +38,10 @@ export const Search = ({
         </div>
       )}
       <input
-        className={customTwMerge('w-full outline-none', searchIcon && 'pl-8')}
+        className={customTwMerge(
+          'w-full bg-transparent outline-none',
+          searchIcon && 'pl-8',
+        )}
         {...props}
       />
       <button aria-label='search button' onClick={onSearch}>
