@@ -1,9 +1,9 @@
 import React from 'react';
 import { ParamsProps } from '@/types/paramsType';
-import { EatsHubPage } from './_components/EatsHubPage';
+import { EatsPlacePage } from './_components/EatsPlacePage';
 
 const page = async ({ searchParams }: ParamsProps) => {
-  return <EatsHubPage />;
+  return <EatsPlacePage />;
 };
 
 export default page;
