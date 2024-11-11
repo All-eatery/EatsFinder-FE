@@ -27,7 +27,7 @@ const NAV_DATA = [
   },
   {
     label: '맛집정보',
-    href: '/',
+    href: '/eatshub',
   },
 ];
 type HeaderProps = {
