@@ -11,7 +11,7 @@ export const EatsPlacePage = () => {
     <>
       <PlaceInfo />
       <div className='flex flex-col gap-10'>
-        {/* <PlaceMap /> */}
+        <PlaceMap />
         <PlaceTag />
         <div className='flex flex-col gap-6'>
           <div className='flex justify-end'>
