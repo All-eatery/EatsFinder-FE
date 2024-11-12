@@ -6,7 +6,6 @@ import './globals.css';
 import { KAKAO_API_KEY } from '@/constants/baseUrl';
 import { HeaderFetchData } from './_components/HeaderFetchData';
 import { CompoundProvider } from '@/provider/CompoundProvider';
-import { PostingButton } from '@/components/atoms/postingButton/PostingButton';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -25,7 +24,6 @@ export default function RootLayout({
           <div className='flex min-h-screen flex-col'>
             <HeaderFetchData />
             <main className='mx-auto max-w-[1440px] grow p-9'>{children}</main>
-            <PostingButton />
             <Footer />
           </div>
           <Script
