@@ -5,7 +5,6 @@ import {
   FollowDataType,
   PaginationFeedType,
   UserData,
-  FollowType,
   PaginationActiveType,
 } from '@/types/authType';
 import { getServerUserInfo, getUserToken } from '@/utils/getServerUserInfo';
@@ -140,21 +139,7 @@ export const getFollow = async ({
   const data = await response.json();
   return data;
 };
-export const follow = async ({ type, id }: FollowType) => {
-  const token = await getUserToken();
-  const query = type === 'follow' ? 'followUserId' : 'unfollowUserId';
-  const method = type === 'follow' ? 'POST' : 'DELETE';
 
-  const response = await fetch(`${KOTLIN_SERVER}/follows?${query}=${id}`, {
-    method: method,
-    headers: {
-      accept: '*/*',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const data = await response.json();
-  return data;
-};
 export const checkFollow = async (id: number) => {
   const token = await getUserToken();
   const response = await fetch(`${KOTLIN_SERVER}/follows?followUserId=${id}`, {

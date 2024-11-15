@@ -1,18 +1,15 @@
 'use client';
-import { follow } from '@/api/profile';
 import { Button } from '@/components/atoms';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { socialAction } from '@/api/socialActions';
+import { SocialActionsType } from '@/types/authType';
 
-interface FollowButtonProps {
+interface SocailActionProps {
   id: number;
-  isFollowed: boolean;
+  isConnected: boolean;
   isLoggedIn: boolean;
-}
-
-interface FollowRequest {
-  type: 'unfollow' | 'follow';
-  id: number;
+  type: 'reply' | 'post' | 'comment' | 'follow';
 }
 
 interface FollowResponse {
@@ -20,16 +17,17 @@ interface FollowResponse {
   message?: string;
 }
 
-export const FollowButton = ({
-  isFollowed,
+export const SocialActionButton = ({
+  isConnected,
   id,
   isLoggedIn,
-}: FollowButtonProps) => {
-  const [followStatus, setFollowStatus] = useState(isFollowed);
+  type,
+}: SocailActionProps) => {
+  const [followStatus, setFollowStatus] = useState(isConnected);
   const buttonLabel = followStatus ? '팔로우 취소' : '팔로우';
   const queryClient = useQueryClient();
-  const mutation = useMutation<FollowResponse, Error, FollowRequest>({
-    mutationFn: ({ type, id }) => follow({ type, id }),
+  const mutation = useMutation<FollowResponse, Error, SocialActionsType>({
+    mutationFn: ({ method, id, type }) => socialAction({ id, method, type }),
     onMutate: () => {
       setFollowStatus((prev) => !prev);
     },
@@ -49,9 +47,9 @@ export const FollowButton = ({
     if (!isLoggedIn) {
       return console.log('로그인하세요');
     }
-    const type = followStatus ? 'unfollow' : 'follow';
+    const method = followStatus ? 'disconnect' : 'connect';
 
-    mutation.mutate({ type, id });
+    mutation.mutate({ method, id, type });
   };
 
   return (

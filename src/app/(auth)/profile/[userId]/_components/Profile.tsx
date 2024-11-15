@@ -4,9 +4,9 @@ import { ProfileInfo } from './ProfileInfo';
 import { UserProfileStats } from './UserProfileStats';
 import { addDashes } from '@/utils/formatPhoneNumber';
 import { UserData } from '@/types/authType';
-import { FollowButton } from './FollowButton';
 import { useQuery } from '@tanstack/react-query';
 import { checkFollow } from '@/api/profile';
+import { SocialActionButton } from './SocialActionButton';
 type ProfileProps = {
   loggedInUserId?: number;
   handler: () => void;
@@ -65,9 +65,12 @@ export const Profile = ({
           내 프로필 수정하기
         </Button>
       ) : (
-        <FollowButton
+        <SocialActionButton
           id={id}
-          isFollowed={loggedInUserId ? (data.statusCode ? false : true) : false}
+          isConnected={
+            loggedInUserId ? (data.statusCode ? false : true) : false
+          }
+          type='follow'
           isLoggedIn={!!loggedInUserId}
         />
       )}
