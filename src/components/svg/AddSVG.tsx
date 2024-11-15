@@ -1,12 +1,16 @@
 import { SVGUsableProps } from '@/types/props';
 
-export const AddSVG = ({ isUsable = true }: SVGUsableProps) => {
+export const AddSVG = ({
+  isUsable = true,
+  width = 24,
+  height = 24,
+}: SVGUsableProps) => {
   const fillColor = isUsable ? '#A6A6A6' : '#F2F2F2';
 
   return (
     <svg
-      width='24'
-      height='24'
+      width={width}
+      height={height}
       viewBox='0 0 24 24'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
