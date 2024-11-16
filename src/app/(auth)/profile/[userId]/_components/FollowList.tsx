@@ -20,6 +20,7 @@ export const FollowUser = ({
   if (!image) {
     image = sampleImg;
   }
+
   return (
     <div className='flex items-center justify-between'>
       <div className='flex items-center gap-3'>

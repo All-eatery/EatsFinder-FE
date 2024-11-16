@@ -12,7 +12,7 @@ interface SocailActionProps {
   type: 'reply' | 'post' | 'comment' | 'follow';
 }
 
-interface FollowResponse {
+interface SocialActionResponse {
   success: boolean;
   message?: string;
 }
@@ -23,19 +23,24 @@ export const SocialActionButton = ({
   isLoggedIn,
   type,
 }: SocailActionProps) => {
-  const [followStatus, setFollowStatus] = useState(isConnected);
-  const buttonLabel = followStatus ? '팔로우 취소' : '팔로우';
+  const [socialActionStatus, setSocialActionStatus] = useState(isConnected);
+  const buttonLabel = socialActionStatus ? '팔로우 취소' : '팔로우';
   const queryClient = useQueryClient();
-  const mutation = useMutation<FollowResponse, Error, SocialActionsType>({
+  const mutation = useMutation<SocialActionResponse, Error, SocialActionsType>({
     mutationFn: ({ method, id, type }) => socialAction({ id, method, type }),
     onMutate: () => {
-      setFollowStatus((prev) => !prev);
+      console.log('1');
+      setSocialActionStatus((prev) => !prev);
     },
     onError: () => {
-      setFollowStatus((prev) => !prev);
+      console.log('2');
+
+      setSocialActionStatus((prev) => !prev);
       console.log('실패');
     },
     onSettled: () => {
+      console.log('3');
+
       console.log('성공');
       queryClient.invalidateQueries({ queryKey: ['userProfile', id] });
       console.log('리벨리데이트완료');
@@ -43,17 +48,17 @@ export const SocialActionButton = ({
   });
   console.log('loggedIn', isLoggedIn);
 
-  const handleFollowButton = async () => {
+  const handleSocialActionButton = async () => {
     if (!isLoggedIn) {
       return console.log('로그인하세요');
     }
-    const method = followStatus ? 'disconnect' : 'connect';
+    const method = socialActionStatus ? 'disconnect' : 'connect';
 
     mutation.mutate({ method, id, type });
   };
 
   return (
-    <Button size='mini' onClick={handleFollowButton}>
+    <Button size='mini' onClick={handleSocialActionButton}>
       {buttonLabel}
     </Button>
   );
