@@ -4,8 +4,9 @@ export const AddSVG = ({
   isUsable = true,
   width = 24,
   height = 24,
-}: SVGUsableProps) => {
-  const fillColor = isUsable ? '#A6A6A6' : '#F2F2F2';
+  color,
+}: SVGUsableProps & { color?: string }) => {
+  const fillColor = color || (isUsable ? '#A6A6A6' : '#F2F2F2');
 
   return (
     <svg
