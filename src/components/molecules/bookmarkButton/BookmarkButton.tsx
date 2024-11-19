@@ -6,7 +6,13 @@ import React, { useState } from 'react';
 
 const BookmarkModalCard = () => {
   return (
-    <div className='flex items-center justify-start gap-3 rounded-3xl px-5 py-6 shadow-2xl'>
+    <div
+      className='flex items-center justify-start gap-3 rounded-3xl px-5 py-6'
+      style={{
+        boxShadow:
+          '0 4px 10px rgba(0, 0, 0, 0.05), 0 -4px 10px rgba(45, 31, 31, 0.05), -4px 0 10px rgba(0, 0, 0, 0.05), 4px 0 10px rgba(0, 0, 0, 0.05)',
+      }}
+    >
       <Checkbox variant='Checkbox_Ver2' />
       <div className='flex flex-col'>
         <p className='text-gray-800 title-24'>기본 리스트</p>
@@ -32,7 +38,7 @@ export const BookmarkButton = () => {
         onMainClick={close}
         size={'medium'}
       >
-        <div className='flex flex-col items-center gap-10 px-10 pb-20'>
+        <div className='flex flex-col items-center gap-10 px-10 pb-10'>
           <div className='flex items-center'>
             <TextField
               placeholder='리스트명을 적어주세요.'
@@ -50,7 +56,7 @@ export const BookmarkButton = () => {
               </div>
             </Button>
           </div>
-          <div className='flex max-h-[380px] w-full flex-col gap-5 overflow-y-auto scrollbar-hide'>
+          <div className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'>
             <BookmarkModalCard />
             <BookmarkModalCard />
             <BookmarkModalCard />
