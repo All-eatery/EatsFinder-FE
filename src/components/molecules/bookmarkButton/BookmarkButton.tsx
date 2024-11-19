@@ -1,0 +1,63 @@
+'use client';
+import { Button, Checkbox, TextField } from '@/components/atoms';
+import { Modal } from '@/components/organisms';
+import { AddSVG } from '@/components/svg/AddSVG';
+import React, { useState } from 'react';
+
+const BookmarkModalCard = () => {
+  return (
+    <div className='flex items-center justify-start gap-3 rounded-3xl px-5 py-6 shadow-2xl'>
+      <Checkbox variant='Checkbox_Ver2' />
+      <div className='flex flex-col'>
+        <p className='text-gray-800 title-24'>기본 리스트</p>
+        <p className='text-gray-400 body-18'>4개의 게시물</p>
+      </div>
+    </div>
+  );
+};
+
+export const BookmarkButton = () => {
+  const [Active, setIsActive] = useState(true);
+  const close = () => {};
+  const color = Active ? '#0D0D0D' : '#D9D9D9';
+  return (
+    <>
+      <Checkbox variant='bookmark' />
+      <Modal
+        isOpen={true}
+        mainButton='확인'
+        title='리스트에 추가하기'
+        description='리스트를 만들고, 나만의 맛집지도를 완성해 보세요'
+        onClose={close}
+        onMainClick={close}
+        size={'medium'}
+      >
+        <div className='flex flex-col items-center gap-10 px-10 pb-20'>
+          <div className='flex items-center'>
+            <TextField
+              placeholder='리스트명을 적어주세요.'
+              className='w-[330px]'
+            />
+            <Button
+              className='h-12'
+              variant={'dash'}
+              size={'small'}
+              disabled={!Active}
+            >
+              <div className='flex items-center gap-1'>
+                <AddSVG color={color} />
+                <span>리스트 만들기</span>
+              </div>
+            </Button>
+          </div>
+          <div className='flex max-h-[380px] w-full flex-col gap-5 overflow-y-auto scrollbar-hide'>
+            <BookmarkModalCard />
+            <BookmarkModalCard />
+            <BookmarkModalCard />
+            <BookmarkModalCard />
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
+};
