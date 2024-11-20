@@ -1,13 +1,10 @@
-'use client';
-import { useState } from 'react';
 import { ImageCarousel } from '@/components/organisms';
 import UserProfile from './UserProfile';
 import StoreInfo from './StoreInfo';
 import StoreMap from './StoreMap';
 import KeywordChips from './KeywordChips';
 import { Chip } from '@/components/atoms';
-import ReportModal from './ReportModal';
-import { PostContentType, ReportStateType } from '@/types/postType';
+import { PostContentType } from '@/types/postType';
 import { UserData } from '@/types/authType';
 import parseImages from '@/utils/parseImages';
 import { ShareSVG } from '@/components/svg/ShareSVG';
@@ -20,6 +17,10 @@ interface PostContentProps {
   handleIsEditable: () => Promise<string>;
   handleDeletePost: () => Promise<void>;
   handleTogglePostLike: (targetId: number, isLiked: boolean) => Promise<void>;
+  handleOpenReportModal: (
+    targetType: 'post' | 'comment' | 'reply',
+    targetId: number,
+  ) => void;
 }
 
 const PostContent = ({
@@ -27,24 +28,8 @@ const PostContent = ({
   handleIsEditable,
   handleDeletePost,
   handleTogglePostLike,
+  handleOpenReportModal,
 }: PostContentProps) => {
-  const [reportState, setReportState] = useState<ReportStateType>({
-    isOpen: false,
-    targetType: null,
-    targetId: null,
-  });
-
-  const handleOpenReportModal: (
-    targetType: 'post' | 'comment' | 'reply',
-    targetId: number,
-  ) => void = (targetType, targetId) => {
-    setReportState({
-      isOpen: true,
-      targetType: targetType,
-      targetId: targetId,
-    });
-  };
-
   const images = parseImages(
     postContent.thumbnailUrl,
     postContent.imageUrl,
@@ -123,7 +108,6 @@ const PostContent = ({
           </div>
         </button>
       </div>
-      <ReportModal reportState={reportState} setReportState={setReportState} />
     </section>
   );
 };

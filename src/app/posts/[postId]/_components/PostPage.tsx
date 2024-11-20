@@ -1,8 +1,16 @@
+'use client';
+import { useState } from 'react';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import PostContent from './postContent';
 import PostComment from './postComments';
-import { PostContentType, PostCommentType } from '@/types/postType';
-import { revalidatePath } from 'next/cache';
+import ReportModal from './postContent/ReportModal';
+import {
+  PostContentType,
+  PostCommentType,
+  ReportStateType,
+} from '@/types/postType';
+import { UserData } from '@/types/authType';
 import {
   createComment,
   deleteComment,
@@ -11,7 +19,6 @@ import {
 } from '@/api/comment';
 import { togglePostLike } from '@/api/post';
 import { getPostEditStatus, deletePost } from '@/api/post';
-import { UserData } from '@/types/authType';
 
 interface PostPageProps {
   userInfo?: UserData;
@@ -20,12 +27,28 @@ interface PostPageProps {
 }
 
 const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
+  const [reportState, setReportState] = useState<ReportStateType>({
+    isOpen: false,
+    targetType: null,
+    targetId: null,
+  });
+
+  const handleOpenReportModal: (
+    targetType: 'post' | 'comment' | 'reply',
+    targetId: number,
+  ) => void = (targetType, targetId) => {
+    setReportState({
+      isOpen: true,
+      targetType: targetType,
+      targetId: targetId,
+    });
+  };
+
   const handleCreateComment = async (
     content: string,
     isReply: boolean,
     commentId?: number,
   ) => {
-    'use server';
     const targetId = commentId || postContent.id;
     const data = await createComment(targetId, content, isReply);
 
@@ -35,7 +58,6 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   };
 
   const handleDeleteComment = async (targetId: number, isReply: boolean) => {
-    'use server';
     await deleteComment(targetId, isReply);
 
     revalidatePath(`/posts/${postContent.id}`);
@@ -46,7 +68,6 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
     content: string,
     isReply: boolean,
   ) => {
-    'use server';
     const data = await editComment(targetId, content, isReply);
 
     if (data.statusCode === 'SUCCESS') {
@@ -59,7 +80,6 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
     isLiked: boolean,
     isReply: boolean,
   ) => {
-    'use server';
     const data = await toggleCommentLike(commentId, isLiked, isReply);
     if (data.statusCode === 403) {
       redirect(`/posts/${postContent.id}?login=false`);
@@ -70,7 +90,6 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   };
 
   const handleIsEditable = async () => {
-    'use server';
     const data = await getPostEditStatus(postContent.id);
 
     if (data.statusCode !== 200) {
@@ -81,7 +100,6 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   };
 
   const handleDeletePost = async () => {
-    'use server';
     const data = await deletePost(postContent.id);
     if (data.statusCode === 200) {
       redirect('/');
@@ -89,7 +107,6 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   };
 
   const handleTogglePostLike = async (targetId: number, isLiked: boolean) => {
-    'use server';
     const data = await togglePostLike(targetId, isLiked);
 
     revalidatePath(`/posts/${postContent.id}`);
@@ -103,6 +120,7 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
         handleIsEditable={handleIsEditable}
         handleDeletePost={handleDeletePost}
         handleTogglePostLike={handleTogglePostLike}
+        handleOpenReportModal={handleOpenReportModal}
       />
       <PostComment
         userInfo={userInfo}
@@ -111,7 +129,9 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
         handleDeleteComment={handleDeleteComment}
         handleEditComment={handleEditComment}
         handleToggleCommentLike={handleToggleCommentLike}
+        handleOpenReportModal={handleOpenReportModal}
       />
+      <ReportModal reportState={reportState} setReportState={setReportState} />
     </>
   );
 };

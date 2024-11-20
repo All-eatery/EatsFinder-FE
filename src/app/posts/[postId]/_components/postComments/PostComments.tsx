@@ -25,6 +25,10 @@ interface PostCommentsProps {
     isLiked: boolean,
     isReply: boolean,
   ) => Promise<void>;
+  handleOpenReportModal: (
+    targetType: 'post' | 'comment' | 'reply',
+    targetId: number,
+  ) => void;
 }
 
 const PostComments = ({
@@ -34,6 +38,7 @@ const PostComments = ({
   handleDeleteComment,
   handleEditComment,
   handleToggleCommentLike,
+  handleOpenReportModal,
 }: PostCommentsProps) => {
   const [content, setContent] = useState('');
 
@@ -77,6 +82,7 @@ const PostComments = ({
             handleDeleteComment={handleDeleteComment}
             handleEditComment={handleEditComment}
             handleToggleCommentLike={handleToggleCommentLike}
+            handleOpenReportModal={handleOpenReportModal}
           />
         ))}
       </div>

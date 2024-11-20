@@ -35,6 +35,10 @@ interface CommentProps {
     isLiked: boolean,
     isReply: boolean,
   ) => Promise<void>;
+  handleOpenReportModal: (
+    targetType: 'post' | 'comment' | 'reply',
+    targetId: number,
+  ) => void;
 }
 
 export const Comment = ({
@@ -45,6 +49,7 @@ export const Comment = ({
   handleDeleteComment,
   handleEditComment,
   handleToggleCommentLike,
+  handleOpenReportModal,
 }: CommentProps) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [showReply, setShowReply] = useState(false);
@@ -72,7 +77,14 @@ export const Comment = ({
             },
           },
         ]
-      : [{ label: '신고하기', onClick: () => {} }]),
+      : [
+          {
+            label: '신고하기',
+            onClick: () => {
+              handleOpenReportModal(!isReply ? 'comment' : 'reply', comment.id);
+            },
+          },
+        ]),
   ];
 
   const callbackRef = useCallback((current: HTMLInputElement) => {
@@ -212,6 +224,7 @@ export const Comment = ({
                 handleEditComment={handleEditComment}
                 handleDeleteComment={handleDeleteComment}
                 handleToggleCommentLike={handleToggleCommentLike}
+                handleOpenReportModal={handleOpenReportModal}
               />
             );
           })}

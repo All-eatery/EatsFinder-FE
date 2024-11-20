@@ -40,6 +40,8 @@ const ReportModal = ({ reportState, setReportState }: ReportModalProps) => {
       mainButton='신고하기'
       onClose={() => {
         setReportState({ isOpen: false, targetType: null, targetId: null });
+        setReportReason('');
+        setCustomReason('');
       }}
       onMainClick={() => {}}
       size='medium'
