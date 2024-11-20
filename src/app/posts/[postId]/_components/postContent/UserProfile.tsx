@@ -16,6 +16,7 @@ interface UserProfileProps {
   createdAt: string;
   handleIsEditable: () => Promise<string>;
   handleDeletePost: () => Promise<void>;
+  handleOpenReportModal: () => void;
 }
 
 const UserProfile = ({
@@ -25,6 +26,7 @@ const UserProfile = ({
   createdAt,
   handleIsEditable,
   handleDeletePost,
+  handleOpenReportModal,
 }: UserProfileProps) => {
   const [modalStatus, setModalStatus] = useState({
     title: '',
@@ -71,7 +73,12 @@ const UserProfile = ({
             },
           },
         ]
-      : [{ label: '게시물 신고하기', onClick: () => {} }]),
+      : [
+          {
+            label: '게시물 신고하기',
+            onClick: handleOpenReportModal,
+          },
+        ]),
   ];
   return (
     <div className='flex justify-between'>

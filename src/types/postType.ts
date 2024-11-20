@@ -59,3 +59,9 @@ export interface PostCommentType {
   totalCommentCount: number;
   comments: CommentType[];
 }
+
+export interface ReportStateType {
+  isOpen: boolean;
+  targetType: 'post' | 'comment' | 'reply' | null;
+  targetId: number | null;
+}
