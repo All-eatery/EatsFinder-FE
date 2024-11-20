@@ -5,10 +5,16 @@ interface ReportOptionProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-const ReportOption = ({ name, value, label }: ReportOptionProps) => {
+const ReportOption = ({ name, value, label, ...props }: ReportOptionProps) => {
   return (
-    <label className='body-20'>
-      <input className='mr-1 h-4 w-4' type='radio' name={name} value={value} />
+    <label className='mt-6 cursor-pointer body-20'>
+      <input
+        className='mr-2 h-4 w-4 cursor-pointer'
+        type='radio'
+        name={name}
+        value={value}
+        {...props}
+      />
       {label}
     </label>
   );

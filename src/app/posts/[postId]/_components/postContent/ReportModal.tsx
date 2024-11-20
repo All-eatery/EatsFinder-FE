@@ -1,5 +1,6 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 import { useToggleHandler } from '@/hooks/useToggleHandler';
+import { TextField } from '@/components/atoms/textField';
 import { Modal } from '@/components/organisms';
 import ReportOption from './ReportOption';
 import { ReportStateType } from '@/types/postType';
@@ -30,6 +31,7 @@ const reportOption = {
 
 const ReportModal = ({ reportState, setReportState }: ReportModalProps) => {
   const [reportReason, setReportReason] = useState('');
+  const [customReason, setCustomReason] = useState('');
 
   return (
     <Modal
@@ -43,7 +45,7 @@ const ReportModal = ({ reportState, setReportState }: ReportModalProps) => {
       size='medium'
     >
       <div className='w-full'>
-        <div className='m-auto flex w-[370px] flex-col gap-6'>
+        <div className='m-auto flex w-[370px] flex-col'>
           {reportState.targetType && reportState.targetType === 'post'
             ? reportOption.post.map((it) => (
                 <ReportOption
@@ -52,7 +54,10 @@ const ReportModal = ({ reportState, setReportState }: ReportModalProps) => {
                   label={it.label}
                   value={it.value}
                   checked={reportReason === it.value}
-                  onChange={(e) => setReportReason(e.target.value)}
+                  onChange={(e) => {
+                    setReportReason(e.target.value);
+                    setCustomReason('');
+                  }}
                 />
               ))
             : reportOption.comment.map((it) => (
@@ -62,9 +67,18 @@ const ReportModal = ({ reportState, setReportState }: ReportModalProps) => {
                   label={it.label}
                   value={it.value}
                   checked={reportReason === it.value}
-                  onChange={(e) => setReportReason(e.target.value)}
+                  onChange={(e) => {
+                    setReportReason(e.target.value);
+                    setCustomReason('');
+                  }}
                 />
               ))}
+          <TextField
+            className='mt-2'
+            disabled={reportReason !== 'others'}
+            value={customReason}
+            onChange={(e) => setCustomReason(e.target.value)}
+          />
         </div>
       </div>
     </Modal>
