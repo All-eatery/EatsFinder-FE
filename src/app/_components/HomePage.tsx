@@ -1,7 +1,8 @@
 import { Hashtag } from '@/components/atoms';
-import { Search, HomeSection, FollowCard } from '@/components/molecules';
+import { HomeSection, FollowCard } from '@/components/molecules';
 import NearByPlaces from './NearByPlaces';
 import Top20Post from './Top20Post';
+import SearchBar from './SearchBar';
 import FollowsPost from './FollowsPost';
 import { getServerUserInfo } from '@/utils/getServerUserInfo';
 
@@ -11,10 +12,7 @@ const HomePage = async () => {
   return (
     <>
       <div className='flex flex-col gap-[80px]'>
-        <Search
-          variant='large'
-          placeholder='오늘 어떤 음식을 드실 에정인가요?'
-        />
+        <SearchBar />
         <NearByPlaces userInfo={userInfo} />
         <HomeSection title='인기 급상승 키워드'>
           <div className='flex gap-6'>
@@ -26,16 +24,18 @@ const HomePage = async () => {
             <Hashtag hashtag='혼밥하기 좋은' />
           </div>
         </HomeSection>
-        {!userInfo && <Top20Post />}
+        <Top20Post />
+        {userInfo && (
+          <HomeSection title='~님과 음식 취향이 비슷해요.'>
+            <div className='grid grid-cols-4 grid-rows-1 gap-6'>
+              <FollowCard />
+              <FollowCard />
+              <FollowCard />
+              <FollowCard />
+            </div>
+          </HomeSection>
+        )}
         <FollowsPost />
-        <HomeSection title='~님과 음식 취향이 비슷해요.'>
-          <div className='grid grid-cols-4 grid-rows-1 gap-6'>
-            <FollowCard />
-            <FollowCard />
-            <FollowCard />
-            <FollowCard />
-          </div>
-        </HomeSection>
       </div>
     </>
   );

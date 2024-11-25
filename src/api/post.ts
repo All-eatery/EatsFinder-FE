@@ -3,6 +3,8 @@ import { PostContentType, PlaceRequestType } from '@/types/postType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 import { NestResponseType, KotlinResponseType } from '@/types/responseType';
 
+const PAGE_SIZE = 5;
+
 export const createNewPost = async (formData: FormData) => {
   const token = await getUserToken();
   const res = await fetch(`${NEST_SERVER}/posts`, {
@@ -166,14 +168,18 @@ export const togglePostLike = async (
 
 export const getFollowsPosts = async (page: number) => {
   const token = await getUserToken();
-  const res = await fetch(`${KOTLIN_SERVER}/posts/follows`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const res = await fetch(
+    `${KOTLIN_SERVER}/posts/follows?page=${page}&size=${PAGE_SIZE}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
+  console.log(res);
+  // const data = await res.json();
 
-  const data = await res.json();
-
-  return data;
+  // return data;
+  return undefined;
 };
