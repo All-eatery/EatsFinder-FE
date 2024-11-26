@@ -3,7 +3,7 @@ import { useBookmarkModal } from '@/app/(auth)/_hooks/useModal';
 import { Button, Checkbox, TextField } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
 import { AddSVG } from '@/components/svg/AddSVG';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const BookmarkModalCard = () => {
   const [isSelected, setIsSelected] = useState(false);
@@ -29,8 +29,15 @@ const BookmarkModalCard = () => {
 };
 
 export const BookmarkButton = () => {
-  const [Active, setIsActive] = useState(true);
-  const color = Active ? '#0D0D0D' : '#D9D9D9';
+  const [active, setIsActive] = useState(true);
+  const [color, setColor] = useState('#0D0D0D');
+  useEffect(() => {
+    if (!active) {
+      setColor('#D9D9D9');
+    } else {
+      setColor('#0D0D0D');
+    }
+  }, [active]);
   const { closeModal, confirmButton, isModalOpen, openModal } =
     useBookmarkModal();
   return (
@@ -52,10 +59,12 @@ export const BookmarkButton = () => {
               className='w-[330px]'
             />
             <Button
+              onMouseDown={() => setColor('white')}
+              onMouseUp={() => setColor('#0D0D0D')}
               className='h-12'
               variant={'dash'}
               size={'small'}
-              disabled={!Active}
+              disabled={!active}
             >
               <div className='flex items-center gap-1'>
                 <AddSVG color={color} />

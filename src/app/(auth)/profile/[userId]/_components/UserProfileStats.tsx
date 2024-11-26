@@ -44,7 +44,7 @@ export const UserProfileStats = ({
         >
           팔로잉 {followingCount}
         </p>
-        <p
+        <p 
           className='cursor-pointer p-[10px]'
           onClick={() => handleFollowingModal('follower')}
         >
