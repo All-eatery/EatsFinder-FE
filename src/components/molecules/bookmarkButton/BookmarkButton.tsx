@@ -29,8 +29,17 @@ const BookmarkModalCard = () => {
 };
 
 export const BookmarkButton = () => {
-  const [active, setIsActive] = useState(true);
+  const [active, setIsActive] = useState(false);
   const [color, setColor] = useState('#0D0D0D');
+  const [newListName, setNewListName] = useState('');
+
+  useEffect(() => {
+    if (newListName) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  }, [newListName]);
   useEffect(() => {
     if (!active) {
       setColor('#D9D9D9');
@@ -40,6 +49,19 @@ export const BookmarkButton = () => {
   }, [active]);
   const { closeModal, confirmButton, isModalOpen, openModal } =
     useBookmarkModal();
+  //form에서 관리될 목록
+  //맛집id 리스트배열
+  //리스트만들기 => 리스트명
+
+  const handleNewListName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewListName(e.target.value);
+  };
+  const makeNewList = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(newListName);
+    setNewListName('');
+  };
+
   return (
     <>
       <Checkbox variant='bookmark' onClick={openModal} />
@@ -53,10 +75,12 @@ export const BookmarkButton = () => {
         size={'medium'}
       >
         <div className='flex flex-col items-center gap-10 px-10 pb-10'>
-          <div className='flex items-center'>
+          <form className='flex items-center' onSubmit={(e) => makeNewList(e)}>
             <TextField
               placeholder='리스트명을 적어주세요.'
               className='w-[330px]'
+              value={newListName}
+              onChange={(e) => handleNewListName(e)}
             />
             <Button
               onMouseDown={() => setColor('white')}
@@ -71,7 +95,7 @@ export const BookmarkButton = () => {
                 <span>리스트 만들기</span>
               </div>
             </Button>
-          </div>
+          </form>
           <div className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'>
             <BookmarkModalCard />
             <BookmarkModalCard />
