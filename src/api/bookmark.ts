@@ -3,6 +3,7 @@ import { getUserToken } from '@/utils/getServerUserInfo';
 
 export const createNewBookmarkList = async (listname: string) => {
   const token = await getUserToken();
+  console.log('hi');
   const response = await fetch(`${NEST_SERVER}/bookmarks/lists`, {
     method: 'POST',
     headers: {
@@ -12,6 +13,8 @@ export const createNewBookmarkList = async (listname: string) => {
       listname,
     }),
   });
+
+  return response.json();
 };
 export const getBookmarkList = async (cursor: number) => {
   const token = await getUserToken();
@@ -24,6 +27,7 @@ export const getBookmarkList = async (cursor: number) => {
       },
     },
   );
+  return response.json();
 };
 export const renameBookmarkList = async (id: number, title: string) => {
   const token = await getUserToken();

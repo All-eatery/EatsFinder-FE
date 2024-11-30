@@ -1,17 +1,25 @@
 'use client';
+import { createNewBookmarkList, getBookmarkList } from '@/api/bookmark';
 import { useBookmarkModal } from '@/app/(auth)/_hooks/useModal';
 import { Button, Checkbox, TextField } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
 import { AddSVG } from '@/components/svg/AddSVG';
+import { BookmarkedLisdtsType } from '@/types/bookmarkType';
+import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-
-const BookmarkModalCard = () => {
+type BookmarkModalCardProps = {
+  id: number;
+  title: string;
+  count: number;
+};
+const BookmarkModalCard = ({ id, title, count }: BookmarkModalCardProps) => {
   const [isSelected, setIsSelected] = useState(false);
   const handleCard = () => {
     setIsSelected(!isSelected);
   };
   return (
     <button
+      key={id}
       onClick={handleCard}
       className={`flex items-center justify-start gap-3 rounded-3xl border-2 px-5 py-6 ${isSelected ? 'border-primary-400' : 'border-transparent'}`}
       style={{
@@ -21,8 +29,8 @@ const BookmarkModalCard = () => {
     >
       <Checkbox variant='Checkbox_Ver2' checked={isSelected} />
       <div className='flex flex-col'>
-        <p className='text-gray-800 title-24'>기본 리스트</p>
-        <p className='text-gray-400 body-18'>4개의 게시물</p>
+        <p className='text-gray-800 title-24'>{title || '기본리스트'}</p>
+        <p className='text-gray-400 body-18'>{`${count}개의 게시물`}</p>
       </div>
     </button>
   );
@@ -56,12 +64,20 @@ export const BookmarkButton = () => {
   const handleNewListName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewListName(e.target.value);
   };
-  const makeNewList = (e: React.FormEvent<HTMLFormElement>) => {
+  const makeNewList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(newListName);
+    const response = await createNewBookmarkList(newListName);
+    console.log(response.message);
     setNewListName('');
   };
 
+  const { data } = useQuery<BookmarkedLisdtsType>({
+    queryKey: ['bookmarkList'],
+    queryFn: () => getBookmarkList(2),
+    enabled: isModalOpen,
+  });
+  console.log('mybookmark', data);
+  console.log(isModalOpen);
   return (
     <>
       <Checkbox variant='bookmark' onClick={openModal} />
@@ -97,12 +113,13 @@ export const BookmarkButton = () => {
             </Button>
           </form>
           <div className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'>
-            <BookmarkModalCard />
-            <BookmarkModalCard />
-            <BookmarkModalCard />
-            <BookmarkModalCard />
-            <BookmarkModalCard />
-            <BookmarkModalCard />
+            {data?.items.map((list) => (
+              <BookmarkModalCard
+                id={list.id}
+                count={list.count}
+                title={list.title}
+              />
+            ))}
           </div>
         </div>
       </Modal>
