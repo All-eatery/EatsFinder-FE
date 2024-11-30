@@ -52,9 +52,12 @@ export const deleteBookmarkList = async (id: number) => {
 };
 export const addBookmarkPlaces = async (place: number, lists: number[]) => {
   const token = await getUserToken();
+  console.log(place, lists);
   const response = await fetch(`${NEST_SERVER}/bookmarks/places`, {
     method: 'POST',
+
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -62,6 +65,7 @@ export const addBookmarkPlaces = async (place: number, lists: number[]) => {
       lists,
     }),
   });
+  return response.json();
 };
 export const getBookmarkPlaces = async (id: number, cursor: number) => {
   const token = await getUserToken();

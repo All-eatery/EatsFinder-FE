@@ -34,13 +34,11 @@ export const SocialActionButton = ({
     },
     onError: () => {
       console.log('2');
-
       setSocialActionStatus((prev) => !prev);
       console.log('실패');
     },
     onSettled: () => {
       console.log('3');
-
       console.log('성공');
       queryClient.invalidateQueries({ queryKey: ['userProfile', id] });
       console.log('리벨리데이트완료');

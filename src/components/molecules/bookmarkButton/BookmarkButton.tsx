@@ -1,11 +1,15 @@
 'use client';
-import { createNewBookmarkList, getBookmarkList } from '@/api/bookmark';
+import {
+  addBookmarkPlaces,
+  createNewBookmarkList,
+  getBookmarkList,
+} from '@/api/bookmark';
 import { useBookmarkModal } from '@/app/(auth)/_hooks/useModal';
 import { Button, Checkbox, TextField } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
 import { AddSVG } from '@/components/svg/AddSVG';
 import { BookmarkedLisdtsType } from '@/types/bookmarkType';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 type BookmarkModalCardProps = {
   id: number;
@@ -78,6 +82,20 @@ export const BookmarkButton = () => {
   });
   console.log('mybookmark', data);
   console.log(isModalOpen);
+
+  // const mutation = useMutation({
+  //   mutationFn: () => addBookmarkPlaces(1, [1]),
+  //   onMutate: (response) => {
+  //     console.log('북마크 추가!', response);
+  //   },
+  //   onError: (error) => {
+  //     console.error('북마크 추가 에러', error);
+  //   },
+  // });
+  const addPlaces = async () => {
+    const response = await addBookmarkPlaces(1, [39, 40]);
+    console.log(response);
+  };
   return (
     <>
       <Checkbox variant='bookmark' onClick={openModal} />
@@ -87,7 +105,7 @@ export const BookmarkButton = () => {
         title='리스트에 추가하기'
         description='리스트를 만들고, 나만의 맛집지도를 완성해 보세요'
         onClose={closeModal}
-        onMainClick={confirmButton}
+        onMainClick={addPlaces}
         size={'medium'}
       >
         <div className='flex flex-col items-center gap-10 px-10 pb-10'>
