@@ -3,6 +3,8 @@ import { ComponentProps } from 'react';
 export interface ButtonProps extends ComponentProps<'button'> {}
 export type SVGUsableProps = {
   isUsable?: boolean;
+  width?: number;
+  height?: number;
 };
 export type SVGFilledProps = {
   isFill?: boolean;

@@ -59,7 +59,7 @@ export const FollowModal = ({
         {isLoading || isFetching ? (
           <Loading />
         ) : (
-          <div className='scrollbar-hide mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px]'>
+          <div className='mb-[40px] flex max-h-[380px] w-full flex-col gap-3 overflow-y-auto px-[20px] scrollbar-hide'>
             {data && data.length > 0 ? (
               data.map((data, i) => (
                 <FollowUser

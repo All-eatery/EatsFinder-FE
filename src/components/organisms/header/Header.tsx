@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { AlarmBellSVG } from '@/components/svg/AlarmBellSVG';
 import { UserData } from '@/types/authType';
 import { useLogoutModal } from '@/app/(auth)/_hooks/useModal';
+import { PostingButton } from '@/components/atoms/postingButton/PostingButton';
 
 const NAV_DATA = [
   {
@@ -103,6 +104,7 @@ export const Header = ({ userInfo }: HeaderProps) => {
           </Button>
         )}
       </div>
+      {isLoggedIn && <PostingButton />}
     </header>
   );
 };
