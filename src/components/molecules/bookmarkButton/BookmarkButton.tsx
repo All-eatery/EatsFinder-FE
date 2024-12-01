@@ -9,41 +9,53 @@ import { Button, Checkbox, TextField } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
 import { AddSVG } from '@/components/svg/AddSVG';
 import { BookmarkedLisdtsType } from '@/types/bookmarkType';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { ComponentProps, useEffect, useState } from 'react';
+import { boolean, number } from 'zod';
 type BookmarkModalCardProps = {
   id: number;
   title: string;
   count: number;
+  onClick?: (id: number) => void;
+  selectedLists: number[];
 };
-const BookmarkModalCard = ({ id, title, count }: BookmarkModalCardProps) => {
+
+const BookmarkModalCard = ({
+  id,
+  title,
+  count,
+  onClick,
+  selectedLists,
+}: BookmarkModalCardProps) => {
   const [isSelected, setIsSelected] = useState(false);
   const handleCard = () => {
-    setIsSelected(!isSelected);
+    onClick!(id);
   };
   return (
     <button
-      key={id}
       onClick={handleCard}
+      key={id}
       className={`flex items-center justify-start gap-3 rounded-3xl border-2 px-5 py-6 ${isSelected ? 'border-primary-400' : 'border-transparent'}`}
       style={{
         boxShadow:
           '0 4px 10px rgba(0, 0, 0, 0.05), 0 -4px 10px rgba(45, 31, 31, 0.05), -4px 0 10px rgba(0, 0, 0, 0.05), 4px 0 10px rgba(0, 0, 0, 0.05)',
       }}
     >
-      <Checkbox variant='Checkbox_Ver2' checked={isSelected} />
+      <Checkbox variant='Checkbox_Ver2' checked={selectedLists.includes(id)} />
       <div className='flex flex-col'>
-        <p className='text-gray-800 title-24'>{title || '기본리스트'}</p>
-        <p className='text-gray-400 body-18'>{`${count}개의 게시물`}</p>
+        <p className='flex text-gray-800 title-24'>{title}</p>
+        <p className='flex text-gray-400 body-18'>{`${count}개의 게시물`}</p>
       </div>
     </button>
   );
 };
 
-export const BookmarkButton = () => {
+export const BookmarkButton = ({ placeId }: { placeId: number }) => {
   const [active, setIsActive] = useState(false);
   const [color, setColor] = useState('#0D0D0D');
   const [newListName, setNewListName] = useState('');
+  const [selectedLists, setSelectedLists] = useState<number[]>([]);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (newListName) {
@@ -61,40 +73,65 @@ export const BookmarkButton = () => {
   }, [active]);
   const { closeModal, confirmButton, isModalOpen, openModal } =
     useBookmarkModal();
-  //form에서 관리될 목록
-  //맛집id 리스트배열
-  //리스트만들기 => 리스트명
 
+  const mutationAddBookmark = useMutation({
+    mutationFn: ({
+      id,
+      selectedLists,
+    }: {
+      id: number;
+      selectedLists: number[];
+    }) => addBookmarkPlaces(id, selectedLists),
+    onError: (error) => {
+      console.error('북마크 추가 에러', error);
+    },
+    onSettled: () => {
+      queryClient.refetchQueries({ queryKey: ['bookmarkList'] });
+      setSelectedLists([]);
+    },
+  });
+  const mutationCreateNewList = useMutation({
+    mutationFn: (newListName: string) => createNewBookmarkList(newListName),
+    onError: (error) => {
+      console.error('북마크 생성 에러', error);
+    },
+    onSettled: () => {
+      console.log('북마크 생성성공!', isModalOpen);
+      queryClient.refetchQueries({ queryKey: ['bookmarkList'] });
+    },
+  });
   const handleNewListName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewListName(e.target.value);
   };
   const makeNewList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await createNewBookmarkList(newListName);
-    console.log(response.message);
+    console.log(newListName);
+    // const response = await createNewBookmarkList(newListName);
+
+    // console.log(response);
+    mutationCreateNewList.mutate(newListName);
     setNewListName('');
+  };
+  const selectLists = (id: number) => {
+    if (selectedLists.includes(id)) {
+      setSelectedLists(selectedLists.filter((listId) => listId !== id)); // 선택 해제
+    } else {
+      setSelectedLists([...selectedLists, id]);
+    }
+    console.log('Selected ID:', id);
+    console.log(selectedLists);
   };
 
   const { data } = useQuery<BookmarkedLisdtsType>({
     queryKey: ['bookmarkList'],
-    queryFn: () => getBookmarkList(2),
+    queryFn: () => getBookmarkList(1),
     enabled: isModalOpen,
   });
-  console.log('mybookmark', data);
-  console.log(isModalOpen);
 
-  // const mutation = useMutation({
-  //   mutationFn: () => addBookmarkPlaces(1, [1]),
-  //   onMutate: (response) => {
-  //     console.log('북마크 추가!', response);
-  //   },
-  //   onError: (error) => {
-  //     console.error('북마크 추가 에러', error);
-  //   },
-  // });
   const addPlaces = async () => {
-    const response = await addBookmarkPlaces(1, [39, 40]);
-    console.log(response);
+    console.log(selectedLists);
+    // const response = await addBookmarkPlaces(1, selectedLists);
+    mutationAddBookmark.mutate({ id: placeId, selectedLists });
   };
   return (
     <>
@@ -133,6 +170,8 @@ export const BookmarkButton = () => {
           <div className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'>
             {data?.items.map((list) => (
               <BookmarkModalCard
+                onClick={(id) => selectLists(id)}
+                selectedLists={selectedLists}
                 id={list.id}
                 count={list.count}
                 title={list.title}

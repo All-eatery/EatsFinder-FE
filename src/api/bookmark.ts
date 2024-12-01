@@ -3,17 +3,16 @@ import { getUserToken } from '@/utils/getServerUserInfo';
 
 export const createNewBookmarkList = async (listname: string) => {
   const token = await getUserToken();
-  console.log('hi');
   const response = await fetch(`${NEST_SERVER}/bookmarks/lists`, {
     method: 'POST',
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       listname,
     }),
   });
-
   return response.json();
 };
 export const getBookmarkList = async (cursor: number) => {
