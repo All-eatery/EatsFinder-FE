@@ -1,5 +1,5 @@
 import { NEST_SERVER, KOTLIN_SERVER } from '@/constants/baseUrl';
-import { PostContentType, PlaceRequestType } from '@/types/postType';
+import { PostContentType, PlaceRequestType, PostCard } from '@/types/postType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 import { NestResponseType, KotlinResponseType } from '@/types/responseType';
 
@@ -177,9 +177,21 @@ export const getFollowsPosts = async (page: number) => {
       },
     },
   );
-  console.log(res);
-  // const data = await res.json();
+  const data = await res.json();
 
-  // return data;
-  return undefined;
+  return data;
+};
+
+export const getPopularPosts: () => Promise<PostCard[]> = async () => {
+  const token = await getUserToken();
+  const res = await fetch(`${KOTLIN_SERVER}/posts/popular`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
 };

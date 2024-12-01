@@ -86,3 +86,13 @@ export interface Pagination {
   currentPage: number;
   isLastPage: boolean;
 }
+
+export interface PostCard {
+  postId: number;
+  placeName: string;
+  postThumbnailUrl: string;
+  isPostLike: boolean;
+  postLikeCount: number;
+  profileImage: string;
+  nickname: string;
+}

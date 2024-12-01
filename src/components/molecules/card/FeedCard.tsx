@@ -3,32 +3,41 @@ import { Checkbox, ProfileImage } from '@/components/atoms';
 import { BookmarkButton } from '../bookmarkButton/BookmarkButton';
 
 interface FeedCardProps {
-  onClick?: () => void;
+  postId: number;
+  placeName: string;
+  postThumbnailUrl: string;
+  isPostLike: boolean;
+  postLikeCount: number;
+  profileImage: string;
+  nickname: string;
+  handleClick?: () => void;
+  handlePostLikeCick?: () => void;
 }
 
-export const FeedCard = ({ onClick }: FeedCardProps) => {
+export const FeedCard = ({ ...props }: FeedCardProps) => {
   return (
-    <div className='flex w-[250px] flex-col gap-1' onClick={onClick}>
-      <div className='relative h-[350px] overflow-hidden rounded-3xl'>
+    <div className='flex w-[250px] flex-col gap-1' onClick={props.handleClick}>
+      <div className='relative h-[350px] cursor-pointer overflow-hidden rounded-3xl'>
         <Image
           className='object-cover'
-          src='https://images.unsplash.com/photo-1719861032503-225fac307c59?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8'
+          src={props.postThumbnailUrl}
           fill={true}
-          alt='feed card'
+          sizes='100%'
+          alt={props.placeName}
         />
       </div>
       <div className='flex justify-between'>
         <div className='flex items-center justify-center gap-2'>
           <ProfileImage size={40} />
           <div className='flex flex-col'>
-            <span className='text-gray-500 subTitle-20'>betty_eat</span>
-            <span className='text-gray-500 body-14'>파스타 참 맛있는 집</span>
+            <span className='text-gray-500 subTitle-20'>{props.nickname}</span>
+            <span className='text-gray-500 body-14'>{props.placeName}</span>
           </div>
         </div>
         <div className='flex w-9 flex-col items-center justify-center'>
           {/* <Checkbox variant='fav' /> */}
           <BookmarkButton placeId={8} />
-          <span className='text-gray-600 body-14'>2400</span>
+          <span className='text-gray-600 body-14'>{props.postLikeCount}</span>
         </div>
       </div>
     </div>

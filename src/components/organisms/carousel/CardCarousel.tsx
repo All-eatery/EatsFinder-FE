@@ -3,32 +3,33 @@ import { useState, useMemo } from 'react';
 import { FeedCard } from '@/components/molecules';
 import { NextButton, PrevButton } from '@/components/atoms';
 import { customTwMerge } from '@/utils/customTwMerge';
+import { PostCard } from '@/types/postType';
 
 const CARD_WIDTH = 250;
 const MARGIN_LEFT = 29.5;
 const NUMBER_PER_SCROLL = 5;
 
-export const CardCarousel = ({ data }: { data: number[] }) => {
+export const CardCarousel = ({ datas }: { datas: PostCard[] }) => {
   const [slide, setSlide] = useState(0);
 
   const maxSlide = useMemo(() => {
-    return Math.floor(data.length / NUMBER_PER_SCROLL);
-  }, [data.length]);
+    return Math.floor(datas.length / NUMBER_PER_SCROLL);
+  }, [datas.length]);
 
   const calculateTranslate = useMemo(() => {
     if (slide === maxSlide) {
       return (
-        (data.length -
+        (datas.length -
           NUMBER_PER_SCROLL * slide +
           NUMBER_PER_SCROLL * (slide - 1)) *
         (CARD_WIDTH + MARGIN_LEFT)
       );
     }
     return (CARD_WIDTH + MARGIN_LEFT) * NUMBER_PER_SCROLL * slide;
-  }, [slide, maxSlide, data.length]);
+  }, [slide, maxSlide, datas.length]);
 
   const handleNext = () => {
-    if (slide === maxSlide) return;
+    if (slide === maxSlide - 1) return;
     setSlide((prev) => prev + 1);
   };
 
@@ -44,10 +45,10 @@ export const CardCarousel = ({ data }: { data: number[] }) => {
           className='flex transition-transform duration-700'
           style={{ transform: `translate3d(${-calculateTranslate}px, 0, 0)` }}
         >
-          {data.map((_, idx) => {
+          {datas.map((data) => {
             return (
-              <div key={idx} className='mr-[29.5px]'>
-                <FeedCard />
+              <div key={data.postId} className='mr-[29.5px]'>
+                <FeedCard {...data} />
               </div>
             );
           })}
@@ -64,7 +65,7 @@ export const CardCarousel = ({ data }: { data: number[] }) => {
       <div
         className={customTwMerge(
           'absolute right-0 top-1/2 -translate-y-1/2',
-          slide === maxSlide && 'hidden',
+          slide === maxSlide - 1 && 'hidden',
         )}
       >
         <NextButton onClick={handleNext} />
