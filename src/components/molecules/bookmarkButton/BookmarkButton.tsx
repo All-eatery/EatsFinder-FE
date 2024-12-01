@@ -11,7 +11,6 @@ import { AddSVG } from '@/components/svg/AddSVG';
 import { BookmarkedLisdtsType } from '@/types/bookmarkType';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { ComponentProps, useEffect, useState } from 'react';
-import { boolean, number } from 'zod';
 type BookmarkModalCardProps = {
   id: number;
   title: string;
@@ -56,7 +55,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
   const [newListName, setNewListName] = useState('');
   const [selectedLists, setSelectedLists] = useState<number[]>([]);
   const queryClient = useQueryClient();
-
+  //북마크 모달 내부에서 삭제도 되야하는가?
   useEffect(() => {
     if (newListName) {
       setIsActive(true);
@@ -71,8 +70,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
       setColor('#0D0D0D');
     }
   }, [active]);
-  const { closeModal, confirmButton, isModalOpen, openModal } =
-    useBookmarkModal();
+  const { closeModal, isModalOpen, openModal } = useBookmarkModal();
 
   const mutationAddBookmark = useMutation({
     mutationFn: ({
@@ -87,7 +85,9 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
     },
     onSettled: () => {
       queryClient.refetchQueries({ queryKey: ['bookmarkList'] });
+      closeModal();
       setSelectedLists([]);
+      console.log('북마크 추가 및 모달 닫기 => 알림');
     },
   });
   const mutationCreateNewList = useMutation({
@@ -105,10 +105,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
   };
   const makeNewList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(newListName);
-    // const response = await createNewBookmarkList(newListName);
 
-    // console.log(response);
     mutationCreateNewList.mutate(newListName);
     setNewListName('');
   };
@@ -118,8 +115,6 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
     } else {
       setSelectedLists([...selectedLists, id]);
     }
-    console.log('Selected ID:', id);
-    console.log(selectedLists);
   };
 
   const { data } = useQuery<BookmarkedLisdtsType>({
@@ -129,8 +124,6 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
   });
 
   const addPlaces = async () => {
-    console.log(selectedLists);
-    // const response = await addBookmarkPlaces(1, selectedLists);
     mutationAddBookmark.mutate({ id: placeId, selectedLists });
   };
   return (
