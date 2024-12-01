@@ -1,5 +1,7 @@
 import React from 'react';
 import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
+import { useQuery } from '@tanstack/react-query';
+import { getBookmarkPlaces } from '@/api/bookmark';
 
 export const AllBookmarkedPlaces = () => {
   return (

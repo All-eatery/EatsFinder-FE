@@ -15,6 +15,7 @@ export const BookmarkedPlaces = ({ searchParams }: ParamsProps) => {
    *
    * 맛집 / 리스트그룹(사진)
    */
+
   return (
     <div className='flex flex-col gap-6'>
       <BookmarkedPlacesTabController searchParams={searchParams} />

@@ -26,7 +26,6 @@ const BookmarkModalCard = ({
   onClick,
   selectedLists,
 }: BookmarkModalCardProps) => {
-  const [isSelected, setIsSelected] = useState(false);
   const handleCard = () => {
     onClick!(id);
   };
@@ -34,7 +33,7 @@ const BookmarkModalCard = ({
     <button
       onClick={handleCard}
       key={id}
-      className={`flex items-center justify-start gap-3 rounded-3xl border-2 px-5 py-6 ${isSelected ? 'border-primary-400' : 'border-transparent'}`}
+      className={`flex items-center justify-start gap-3 rounded-3xl border-2 px-5 py-6 ${selectedLists.includes(id) ? 'border-primary-400' : 'border-transparent'}`}
       style={{
         boxShadow:
           '0 4px 10px rgba(0, 0, 0, 0.05), 0 -4px 10px rgba(45, 31, 31, 0.05), -4px 0 10px rgba(0, 0, 0, 0.05), 4px 0 10px rgba(0, 0, 0, 0.05)',
@@ -84,7 +83,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
       console.error('북마크 추가 에러', error);
     },
     onSettled: () => {
-      queryClient.refetchQueries({ queryKey: ['bookmarkList'] });
+      queryClient.refetchQueries({ queryKey: ['bookmarkModal'] });
       closeModal();
       setSelectedLists([]);
       console.log('북마크 추가 및 모달 닫기 => 알림');
@@ -97,7 +96,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
     },
     onSettled: () => {
       console.log('북마크 생성성공!', isModalOpen);
-      queryClient.refetchQueries({ queryKey: ['bookmarkList'] });
+      queryClient.refetchQueries({ queryKey: ['bookmarkModal'] });
     },
   });
   const handleNewListName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +117,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
   };
 
   const { data } = useQuery<BookmarkedLisdtsType>({
-    queryKey: ['bookmarkList'],
+    queryKey: ['bookmarkModal'],
     queryFn: () => getBookmarkList(1),
     enabled: isModalOpen,
   });

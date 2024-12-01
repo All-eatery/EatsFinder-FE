@@ -28,6 +28,7 @@ export const getBookmarkList = async (cursor: number) => {
   );
   return response.json();
 };
+
 export const renameBookmarkList = async (id: number, title: string) => {
   const token = await getUserToken();
   const response = await fetch(`${NEST_SERVER}/bookmarks/lists/id=${id}`, {
@@ -51,7 +52,6 @@ export const deleteBookmarkList = async (id: number) => {
 };
 export const addBookmarkPlaces = async (place: number, lists: number[]) => {
   const token = await getUserToken();
-  console.log(place, lists);
   const response = await fetch(`${NEST_SERVER}/bookmarks/places`, {
     method: 'POST',
 

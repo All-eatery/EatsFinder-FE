@@ -21,9 +21,17 @@ const ListImg = () => {
 };
 interface BookmarkedListCardProps {
   isSelect: string | null;
+  title: string;
+  count: number;
+  thumbnails: {}[];
 }
 
-export const BookmarkedListCard = ({ isSelect }: BookmarkedListCardProps) => {
+export const BookmarkedListCard = ({
+  isSelect,
+  title,
+  count,
+  thumbnails,
+}: BookmarkedListCardProps) => {
   const {
     dropdownHanlder: bookmarkedListOptionHandler,
     dropdownRef: optionRef,
@@ -73,8 +81,8 @@ export const BookmarkedListCard = ({ isSelect }: BookmarkedListCardProps) => {
           <ListImg />
         </div>
         <div>
-          <p className='text-gray-800 title-24'>기본리스트</p>
-          <p className='text-gray-400 body-18'>135개의 게시물</p>
+          <p className='text-gray-800 title-24'>{title}</p>
+          <p className='text-gray-400 body-18'>{`${count}개의 게시물`}</p>
         </div>
       </div>
       <div className='absolute right-5 top-5' ref={optionRef}>
