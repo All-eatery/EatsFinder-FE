@@ -3,38 +3,29 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/atoms';
 import { HomeSection, FeedCard } from '@/components/molecules';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { getFollowsPosts } from '@/api/post';
+import { useGetFollowsPosts } from '../_hooks/useGetFollowsPosts';
 
 const FollowsPost = () => {
-  const [page, setPage] = useState(1);
-  const [followsPosts, setFollowsPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [requestCount, setRequestCount] = useState(0);
 
-  const handleObserve = async () => {
-    if (isLoading || requestCount > 2) return;
+  const { data, isLoading, fetchNextPage } = useGetFollowsPosts();
+  const followsPosts = data?.pages.at(-1)?.neighborPost;
 
-    setIsLoading(true);
-    const data = await getFollowsPosts(page);
-    setFollowsPosts(data.neighborPost);
-    setPage((prev) => prev++);
-    setRequestCount((prev) => prev++);
-    setIsLoading(false);
+  const getNextPageFollowsPosts = () => {
+    setRequestCount((prev) => prev + 1);
+    fetchNextPage();
   };
 
-  useEffect(() => {
-    handleObserve();
-  }, []);
-
-  const handleMoreClick = () => {
+  const handleGetMoreFollowsPosts = () => {
     setRequestCount(0);
+    fetchNextPage();
   };
 
-  const obCallbackRef = useInfiniteScroll(handleObserve);
+  const obCallbackRef = useInfiniteScroll(getNextPageFollowsPosts);
 
   return (
     <HomeSection title='이웃들의 새로운 게시물'>
-      {followsPosts.length === 0 ? (
+      {followsPosts && followsPosts.length === 0 ? (
         <div className='flex h-[250px] flex-col items-center justify-center gap-6'>
           <div className='subTitle-20'>
             이웃들을 팔로우하고 새로운 소식을 받아보세요
@@ -47,10 +38,10 @@ const FollowsPost = () => {
             <FeedCard />
           </div>
           <div>
-            {!isLoading && requestCount < 4 ? (
+            {!isLoading && requestCount < 3 ? (
               <div ref={obCallbackRef} className='h-20'></div>
             ) : (
-              <Button onClick={handleMoreClick}>더보기</Button>
+              <Button onClick={handleGetMoreFollowsPosts}>더보기</Button>
             )}
           </div>
         </>

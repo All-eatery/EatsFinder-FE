@@ -8,7 +8,6 @@ const useInfiniteScroll = (callback: () => void) => {
   const memoizedCallback = useCallback(callback, []);
 
   useEffect(() => {
-    console.log(obRef);
     if (obRef.current) {
       const io = new IntersectionObserver(
         (entries) => {
