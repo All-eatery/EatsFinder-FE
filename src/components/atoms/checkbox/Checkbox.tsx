@@ -20,6 +20,7 @@ const icon = {
 
 interface CheckBoxProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  isChecked?: boolean;
   variant?: keyof typeof icon;
 }
 

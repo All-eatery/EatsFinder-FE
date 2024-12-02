@@ -31,10 +31,11 @@ export const LikedPosts = () => {
           {data?.posts.map((post) => (
             <PostCard
               key={post.id}
-              id={post.id}
+              id={post.postId}
               nickname={post.postUserNickname}
               src={post.postThumbnailUrl}
               profileImage={post.postUserProfileImage}
+              isLiked={post.isPostLike}
             />
           ))}
         </div>

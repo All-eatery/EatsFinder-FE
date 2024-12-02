@@ -26,6 +26,8 @@ export const BookmarkedPlacesList = () => {
     getNextPageParam: (lastPage) => lastPage.lastItemId,
   });
   const handleCardClick = (id: number) => {
+    if (select) return;
+    //여기서 selectedList?
     const currentParams = new URLSearchParams(window.location.search);
 
     currentParams.set('list', id.toString());

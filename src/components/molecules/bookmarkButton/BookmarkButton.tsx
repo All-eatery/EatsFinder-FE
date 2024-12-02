@@ -6,11 +6,17 @@ import {
 } from '@/api/bookmark';
 import { useBookmarkModal } from '@/app/(auth)/_hooks/useModal';
 import { Button, Checkbox, TextField } from '@/components/atoms';
+import Loading from '@/components/atoms/loading/Loading';
 import { Modal } from '@/components/organisms';
 import { AddSVG } from '@/components/svg/AddSVG';
 import { BookmarkedLisdtsType } from '@/types/bookmarkType';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useInfiniteQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import React, { ComponentProps, useEffect, useState } from 'react';
+
 type BookmarkModalCardProps = {
   id: number;
   title: string;
@@ -54,21 +60,15 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
   const [newListName, setNewListName] = useState('');
   const [selectedLists, setSelectedLists] = useState<number[]>([]);
   const queryClient = useQueryClient();
-  //북마크 모달 내부에서 삭제도 되야하는가?
+
   useEffect(() => {
-    if (newListName) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
+    setIsActive(!!newListName);
   }, [newListName]);
+
   useEffect(() => {
-    if (!active) {
-      setColor('#D9D9D9');
-    } else {
-      setColor('#0D0D0D');
-    }
+    setColor(active ? '#0D0D0D' : '#D9D9D9');
   }, [active]);
+
   const { closeModal, isModalOpen, openModal } = useBookmarkModal();
 
   const mutationAddBookmark = useMutation({
@@ -89,6 +89,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
       console.log('북마크 추가 및 모달 닫기 => 알림');
     },
   });
+
   const mutationCreateNewList = useMutation({
     mutationFn: (newListName: string) => createNewBookmarkList(newListName),
     onError: (error) => {
@@ -99,32 +100,40 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
       queryClient.refetchQueries({ queryKey: ['bookmarkModal'] });
     },
   });
+
   const handleNewListName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewListName(e.target.value);
   };
+
   const makeNewList = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     mutationCreateNewList.mutate(newListName);
     setNewListName('');
   };
+
   const selectLists = (id: number) => {
-    if (selectedLists.includes(id)) {
-      setSelectedLists(selectedLists.filter((listId) => listId !== id)); // 선택 해제
-    } else {
-      setSelectedLists([...selectedLists, id]);
-    }
+    setSelectedLists((prev) =>
+      prev.includes(id)
+        ? prev.filter((listId) => listId !== id)
+        : [...prev, id],
+    );
   };
 
-  const { data } = useQuery<BookmarkedLisdtsType>({
-    queryKey: ['bookmarkModal'],
-    queryFn: () => getBookmarkList(0),
-    enabled: isModalOpen,
-  });
-
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<BookmarkedLisdtsType>({
+      queryKey: ['bookmarkModal'],
+      queryFn: ({ pageParam = 0 }) => getBookmarkList(pageParam as number),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => {
+        return lastPage.items.length > 0 ? lastPage.lastItemId : undefined;
+      },
+      enabled: isModalOpen,
+    });
+  console.log(data);
   const addPlaces = async () => {
     mutationAddBookmark.mutate({ id: placeId, selectedLists });
   };
+
   return (
     <>
       <Checkbox variant='bookmark' onClick={openModal} />
@@ -159,17 +168,42 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
               </div>
             </Button>
           </form>
-          <div className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'>
-            {data?.items.map((list) => (
-              <BookmarkModalCard
-                key={list.id}
-                onClick={(id) => selectLists(id)}
-                selectedLists={selectedLists}
-                id={list.id}
-                count={list.count}
-                title={list.title}
-              />
+          <div
+            className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'
+            ref={
+              data?.pages[data.pages.length - 1]?.items.length
+                ? (el) => {
+                    if (el && hasNextPage && !isFetchingNextPage) {
+                      const observer = new IntersectionObserver(
+                        (entries) => {
+                          if (entries[0].isIntersecting) {
+                            fetchNextPage();
+                          }
+                        },
+                        { threshold: 0.1 },
+                      );
+                      observer.observe(el);
+                      return () => observer.disconnect();
+                    }
+                  }
+                : undefined
+            }
+          >
+            {data?.pages.map((page, i) => (
+              <React.Fragment key={i}>
+                {page.items.map((list) => (
+                  <BookmarkModalCard
+                    key={list.id}
+                    onClick={(id) => selectLists(id)}
+                    selectedLists={selectedLists}
+                    id={list.id}
+                    count={list.count}
+                    title={list.title}
+                  />
+                ))}
+              </React.Fragment>
             ))}
+            {isFetchingNextPage && <Loading />}
           </div>
         </div>
       </Modal>
