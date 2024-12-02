@@ -6,6 +6,7 @@ import { BookmarkedLisdtsType } from '@/types/bookmarkType';
 import { Button } from '@/components/atoms';
 import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
 import Loading from '@/components/atoms/loading/Loading';
+import { convertToURLSearchParams } from '@/utils/convertToURLSearchParams';
 
 export const BookmarkedPlacesList = () => {
   const params = useSearchParams();
@@ -25,8 +26,17 @@ export const BookmarkedPlacesList = () => {
     getNextPageParam: (lastPage) => lastPage.lastItemId,
   });
   const handleCardClick = (id: number) => {
-    router.push(`?list=${id}`);
+    const currentParams = new URLSearchParams(window.location.search);
+
+    currentParams.set('list', id.toString());
+
+    const newParams = convertToURLSearchParams({
+      searchParams: Object.fromEntries(currentParams),
+    });
+
+    router.push(`?${newParams.toString()}`);
   };
+
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
 
