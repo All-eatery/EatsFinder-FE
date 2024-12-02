@@ -1,7 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
-import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
 import { Button } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
 import {
@@ -18,7 +17,6 @@ export const ListInBookmarkedPlaces = () => {
   const searchParams = useSearchParams();
   const select = searchParams.get('select');
   const id = searchParams.get('list');
-  const url = sampleImg;
   console.log('select', select);
 
   const {
@@ -55,9 +53,9 @@ export const ListInBookmarkedPlaces = () => {
       <div
         className={`${select && 'max-h-[calc(100vh-120px)] overflow-y-auto'} flex flex-col gap-9`}
       >
-        {data?.pages.map((page, pageIndex) => (
+        {data?.pages?.map((page, pageIndex) => (
           <div key={pageIndex} className='flex flex-col gap-4'>
-            {page.items.map((item, index) => {
+            {page.items?.map((item, index) => {
               const isLastItem =
                 pageIndex === data.pages.length - 1 &&
                 index === page.items.length - 1;
@@ -91,15 +89,24 @@ export const ListInBookmarkedPlaces = () => {
         <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
       )} */}
       {select && (
-        <div className='my-[60px] flex justify-center gap-3'>
+        // <div className='z-10 my-[60px] flex justify-center gap-3'>
+
+        <div className='fixed bottom-4 left-1/2 z-10 my-[60px] flex -translate-x-1/2 transform justify-center gap-3'>
+          {/* <div className='fixed bottom-72 left-1/2 z-10 my-[60px] flex -translate-x-1/2 transform justify-center gap-3'> */}
           <Button
             variant={'stroke'}
             size={'small'}
             onClick={() => openEditModal()}
+            className='bg-white'
           >
             이동
           </Button>
-          <Button variant={'stroke'} size={'small'} onClick={openDeleteModal}>
+          <Button
+            variant={'stroke'}
+            size={'small'}
+            onClick={openDeleteModal}
+            className='bg-white'
+          >
             삭제
           </Button>
         </div>
