@@ -124,6 +124,8 @@ export const BookmarkedListCard = ({
         description='리스트 이름을 수정하고 관리해 보세요.'
         onMainClick={() => listNameEditConfirmButton(id)}
         mainButton='완료'
+        subButton='취소'
+        onSubClick={closeListNameEditModal}
       >
         <div className='flex w-full flex-col items-center'>
           <div className='flex w-full justify-center p-10'>
@@ -134,7 +136,6 @@ export const BookmarkedListCard = ({
               onChange={(e) => handleNewListName(e)}
             />
           </div>
-          <button className='m-1 text-gray-400 subTitle-18'>리스트 삭제</button>
         </div>
       </Modal>
       <Modal
