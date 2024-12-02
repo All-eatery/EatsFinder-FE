@@ -1,5 +1,5 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { BookmarkedListCard } from './BookmarkedListCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getBookmarkList } from '@/api/bookmark';
@@ -11,6 +11,7 @@ import { Button } from '@/components/atoms';
 export const BookmarkedPlacesList = () => {
   const params = useSearchParams();
   const select = params.get('select');
+  const router = useRouter();
 
   const [isLoadMoreMode, setIsLoadMoreMode] = useState(false);
   const [scrollCount, setScrollCount] = useState(0);
@@ -71,6 +72,9 @@ export const BookmarkedPlacesList = () => {
     setIsLoadMoreMode(false);
     fetchNextPage();
   };
+  const handleCardClick = (id: number) => {
+    router.push(`?list=${id}`);
+  };
 
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
@@ -86,6 +90,7 @@ export const BookmarkedPlacesList = () => {
 
             return (
               <div
+                onClick={() => handleCardClick(item.id)}
                 key={item.id}
                 ref={isLastItem ? lastBookmarkElementRef : null}
               >

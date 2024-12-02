@@ -1,4 +1,4 @@
-import { deleteBookmarkList } from '@/api/bookmark';
+import { deleteBookmarkList, renameBookmarkList } from '@/api/bookmark';
 import { deletePost } from '@/api/post';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -52,6 +52,20 @@ export const useListNameEditModal = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: ({ id, title }: { id: number; title: string }) =>
+      renameBookmarkList(id, title),
+    onError: (error) => {
+      console.error('북마크 리스트 삭제 에러', error);
+    },
+    onSettled: (response) => {
+      console.log('북마크 리스트 삭제 성공');
+      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      setIsModalOpen(false);
+    },
+  });
   const confirmButton = async () => {
     console.log('컨펌.');
     setIsModalOpen(false);
