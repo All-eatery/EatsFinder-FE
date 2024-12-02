@@ -2,11 +2,17 @@ import { Checkbox, ProfileImage } from '@/components/atoms';
 import Image from 'next/image';
 import React from 'react';
 interface PostCardProps {
+  id: number;
   src: string;
   profileImage?: string;
   nickname: string;
 }
-export const PostCard = ({ src, profileImage, nickname }: PostCardProps) => {
+export const PostCard = ({
+  src,
+  profileImage,
+  nickname,
+  id,
+}: PostCardProps) => {
   return (
     <div className='relative h-[408px] w-[250px] overflow-hidden rounded-3xl'>
       <Image fill alt='게시글 이미지' src={src} />

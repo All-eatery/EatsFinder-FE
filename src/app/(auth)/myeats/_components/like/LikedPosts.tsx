@@ -1,9 +1,25 @@
+'use client';
 import { Button } from '@/components/atoms';
 import { Search } from '@/components/molecules';
 import React from 'react';
 import { PostCard } from './PostCard';
+import { getLikedPosts } from '@/api/socialActions';
+import { useQuery } from '@tanstack/react-query';
+import { LikePostsType } from '@/types/authType';
+import Loading from '@/components/atoms/loading/Loading';
 
 export const LikedPosts = () => {
+  const { data, isLoading, isError } = useQuery<LikePostsType>({
+    queryKey: ['likedPosts'],
+    queryFn: () => getLikedPosts(),
+  });
+  console.log(data);
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <div>에러</div>;
+  }
   return (
     <div className='flex flex-col items-center gap-20'>
       <div className='flex flex-col items-center gap-8'>
@@ -12,16 +28,15 @@ export const LikedPosts = () => {
           placeholder='찾고 싶은 게시물 키워드를 검색해보세요.'
         />
         <div className='grid grid-cols-5 gap-4'>
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
-          <PostCard src={url} nickname='안녕' profileImage='' />
+          {data?.posts.map((post) => (
+            <PostCard
+              key={post.id}
+              id={post.id}
+              nickname={post.postUserNickname}
+              src={post.postThumbnailUrl}
+              profileImage={post.postUserProfileImage}
+            />
+          ))}
         </div>
       </div>
 

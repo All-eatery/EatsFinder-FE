@@ -242,3 +242,18 @@ export type MyfeedCardProps = {
   data: FeedDataType;
   isOwnProfile: boolean;
 };
+
+export type LikedPostsType = {
+  totalPostCount: number;
+  posts: [
+    {
+      id: number;
+      postId: number;
+      postPlaceName: string;
+      postThumbnailUrl: string;
+      isPostLike: true;
+      postUserNickname: string;
+      postUserProfileImage: string;
+    },
+  ];
+};

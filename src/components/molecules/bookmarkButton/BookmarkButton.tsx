@@ -162,6 +162,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
           <div className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'>
             {data?.items.map((list) => (
               <BookmarkModalCard
+                key={list.id}
                 onClick={(id) => selectLists(id)}
                 selectedLists={selectedLists}
                 id={list.id}

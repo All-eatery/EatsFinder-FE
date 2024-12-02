@@ -39,3 +39,15 @@ export const socialAction = async ({ method, type, id }: SocialActionsType) => {
   const data = await response.json();
   return data;
 };
+
+export const getLikedPosts = async () => {
+  const token = await getUserToken();
+  const response = await fetch(`${KOTLIN_SERVER}/post-likes`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json();
+};

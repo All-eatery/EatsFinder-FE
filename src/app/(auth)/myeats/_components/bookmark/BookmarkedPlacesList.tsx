@@ -78,9 +78,9 @@ export const BookmarkedPlacesList = () => {
 
       {isFetchingNextPage && <Loading />}
 
-      {!hasNextPage && (
+      {/* {!hasNextPage && (
         <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
-      )}
+      )} */}
     </div>
   );
 };

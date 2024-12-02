@@ -87,9 +87,9 @@ export const ListInBookmarkedPlaces = () => {
 
       {isFetchingNextPage && <Loading />}
 
-      {!hasNextPage && (
+      {/* {!hasNextPage && (
         <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
-      )}
+      )} */}
       {select && (
         <div className='my-[60px] flex justify-center gap-3'>
           <Button

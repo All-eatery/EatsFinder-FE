@@ -4,6 +4,7 @@ import { Profile } from './Profile';
 import { ProfileContents } from './ProfileContents';
 import { useQuery } from '@tanstack/react-query';
 import { getUserProfile } from '@/api/profile';
+import Loading from '@/components/atoms/loading/Loading';
 
 export const UserProfile = ({
   userId,
@@ -18,7 +19,7 @@ export const UserProfile = ({
   console.log('vmfhvlfvpdlwl', typeof userId);
 
   if (isLoading) {
-    return <div>로딩중</div>;
+    return <Loading />;
   }
   if (userProfileData?.isSuccess) {
     return (
