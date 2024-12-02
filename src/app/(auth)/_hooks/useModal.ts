@@ -1,5 +1,6 @@
+import { deleteBookmarkList } from '@/api/bookmark';
 import { deletePost } from '@/api/post';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 export const useLogoutModal = () => {
@@ -65,9 +66,25 @@ export const useDeleteListModal = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  const confirmButton = async () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (id: number) => deleteBookmarkList(id),
+    onError: (error) => {
+      console.error('북마크 리스트 삭제 에러', error);
+    },
+    onSettled: (response) => {
+      console.log('북마크 리스트 삭제 성공');
+      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      setIsModalOpen(false);
+    },
+  });
+  const confirmButton = async (id: number) => {
+    console.log('컨펌!');
+    mutation.mutate(id);
     setIsModalOpen(false);
   };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -101,7 +118,6 @@ export const useDeletePlacesInListModal = () => {
 };
 export const useBookmarkModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const queryClient = useQueryClient();
   const openModal = () => {
     console.log('모달오픈');
     setIsModalOpen(true);

@@ -7,6 +7,7 @@ import { Modal } from '@/components/organisms';
 import {
   useMovePlacesInListModal,
   useListNameEditModal,
+  useDeleteListModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { Checkbox, TextField } from '@/components/atoms';
 
@@ -22,6 +23,7 @@ const ListImg = ({ url }: { url: string }) => {
   );
 };
 interface BookmarkedListCardProps {
+  id: number;
   isSelect: string | null;
   title: string;
   count: number;
@@ -29,6 +31,7 @@ interface BookmarkedListCardProps {
 }
 
 export const BookmarkedListCard = ({
+  id,
   isSelect,
   title,
   count,
@@ -50,7 +53,7 @@ export const BookmarkedListCard = ({
     confirmButton: deleteListConfirmButton,
     isModalOpen: isDeleteListModalOpen,
     openModal: openDeleteListModal,
-  } = useMovePlacesInListModal();
+  } = useDeleteListModal();
   const renderListImages = () => {
     const listThumbnails = Array.isArray(thumbnails) ? thumbnails : [];
 
@@ -64,7 +67,7 @@ export const BookmarkedListCard = ({
   };
   const a = () => {
     // 클릭시 리스트내로 이동 선택활성화시 버튼 xx
-    console.log('hi');
+    console.log('hi', id);
   };
   return (
     <div
@@ -96,7 +99,7 @@ export const BookmarkedListCard = ({
         </div>
       </div>
       <div className='absolute right-5 top-5' ref={optionRef}>
-        <button onClick={bookmarkedListOptionHandler}>
+        <button onClick={bookmarkedListOptionHandler} disabled={!!isSelect}>
           <MoreSVG x={32} y={32} />
         </button>
         {bookmarkedListOption && (
@@ -116,11 +119,7 @@ export const BookmarkedListCard = ({
       >
         <div className='flex w-full flex-col items-center'>
           <div className='flex w-full justify-center p-10'>
-            <TextField
-              label='리스트 이름'
-              fullWidth
-              defaultValue={'대구브런치'}
-            />
+            <TextField label='리스트 이름' fullWidth defaultValue={title} />
           </div>
           <button className='m-1 text-gray-400 subTitle-18'>리스트 삭제</button>
         </div>
@@ -129,7 +128,7 @@ export const BookmarkedListCard = ({
         isOpen={isDeleteListModalOpen}
         onClose={closeDeleteListModal}
         title='[리스트이름]를 삭제할까요?'
-        onMainClick={deleteListConfirmButton}
+        onMainClick={() => deleteListConfirmButton(id)}
         subButton='취소'
         onSubClick={closeDeleteListModal}
         mainButton='삭제'

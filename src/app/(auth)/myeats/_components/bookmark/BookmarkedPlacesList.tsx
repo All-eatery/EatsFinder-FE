@@ -17,7 +17,7 @@ export const BookmarkedPlacesList = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery<BookmarkedLisdtsType>({
-      queryKey: ['bookmarks', select],
+      queryKey: ['myBookmarks'],
       queryFn: ({ pageParam = 1 }) => getBookmarkList(pageParam as number),
       initialPageParam: 1,
       getNextPageParam: (lastPage) => {
@@ -90,6 +90,7 @@ export const BookmarkedPlacesList = () => {
                 ref={isLastItem ? lastBookmarkElementRef : null}
               >
                 <BookmarkedListCard
+                  id={item.id}
                   isSelect={select}
                   title={item.title}
                   count={item.count}

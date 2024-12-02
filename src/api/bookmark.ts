@@ -43,12 +43,13 @@ export const renameBookmarkList = async (id: number, title: string) => {
 };
 export const deleteBookmarkList = async (id: number) => {
   const token = await getUserToken();
-  const response = await fetch(`${NEST_SERVER}/bookmarks/lists/id=${id}`, {
+  const response = await fetch(`${NEST_SERVER}/bookmarks/lists/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+  return response.json();
 };
 export const addBookmarkPlaces = async (place: number, lists: number[]) => {
   const token = await getUserToken();
