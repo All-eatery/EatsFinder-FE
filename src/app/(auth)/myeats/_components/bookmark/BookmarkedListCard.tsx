@@ -65,10 +65,10 @@ export const BookmarkedListCard = ({
       <ListImg key={index} url={item.thumbnailUrl} />
     ));
   };
-  const a = () => {
-    // 클릭시 리스트내로 이동 선택활성화시 버튼 xx
-    console.log('hi', id);
-  };
+  // const a = () => {
+  //   // 클릭시 리스트내로 이동 선택활성화시 버튼 xx
+  //   console.log('hi', id);
+  // };
   return (
     <div
       className='relative rounded-3xl'
@@ -87,7 +87,7 @@ export const BookmarkedListCard = ({
         </div>
       )}
       <div
-        onClick={a}
+        // onClick={a}
         className='flex h-[184px] w-full cursor-pointer items-center justify-start gap-6 p-5'
       >
         <div className='grid h-36 w-[254px] grid-cols-2 grid-rows-2 gap-1'>
@@ -99,7 +99,14 @@ export const BookmarkedListCard = ({
         </div>
       </div>
       <div className='absolute right-5 top-5' ref={optionRef}>
-        <button onClick={bookmarkedListOptionHandler} disabled={!!isSelect}>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            console.log('click');
+            bookmarkedListOptionHandler();
+          }}
+          disabled={!!isSelect}
+        >
           <MoreSVG x={32} y={32} />
         </button>
         {bookmarkedListOption && (
