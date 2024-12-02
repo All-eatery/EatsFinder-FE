@@ -48,6 +48,7 @@ export const BookmarkedListCard = ({
     confirmButton: listNameEditConfirmButton,
     isModalOpen: isListNameEditModalOpen,
     openModal: openListNameEditModal,
+    handleNewListName,
   } = useListNameEditModal();
   const {
     closeModal: closeDeleteListModal,
@@ -121,12 +122,17 @@ export const BookmarkedListCard = ({
         onClose={closeListNameEditModal}
         title='리스트명 수정'
         description='리스트 이름을 수정하고 관리해 보세요.'
-        onMainClick={listNameEditConfirmButton}
+        onMainClick={() => listNameEditConfirmButton(id)}
         mainButton='완료'
       >
         <div className='flex w-full flex-col items-center'>
           <div className='flex w-full justify-center p-10'>
-            <TextField label='리스트 이름' fullWidth defaultValue={title} />
+            <TextField
+              label='리스트 이름'
+              fullWidth
+              defaultValue={title}
+              onChange={(e) => handleNewListName(e)}
+            />
           </div>
           <button className='m-1 text-gray-400 subTitle-18'>리스트 삭제</button>
         </div>

@@ -31,7 +31,8 @@ export const getBookmarkList = async (cursor: number) => {
 
 export const renameBookmarkList = async (id: number, title: string) => {
   const token = await getUserToken();
-  const response = await fetch(`${NEST_SERVER}/bookmarks/lists/id=${id}`, {
+  console.log(id, title);
+  const response = await fetch(`${NEST_SERVER}/bookmarks/lists/${id}`, {
     method: 'PATCH',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -40,6 +41,7 @@ export const renameBookmarkList = async (id: number, title: string) => {
       title,
     }),
   });
+  return response.json();
 };
 export const deleteBookmarkList = async (id: number) => {
   const token = await getUserToken();

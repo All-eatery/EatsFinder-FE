@@ -1,7 +1,7 @@
 import { deleteBookmarkList, renameBookmarkList } from '@/api/bookmark';
 import { deletePost } from '@/api/post';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 export const useLogoutModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,6 +49,10 @@ export const useDeletePostModal = () => {
 };
 export const useListNameEditModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editName, setEditName] = useState('');
+  const handleNewListName = (e: ChangeEvent<HTMLInputElement>) => {
+    setEditName(e.target.value);
+  };
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -58,22 +62,28 @@ export const useListNameEditModal = () => {
     mutationFn: ({ id, title }: { id: number; title: string }) =>
       renameBookmarkList(id, title),
     onError: (error) => {
-      console.error('북마크 리스트 삭제 에러', error);
+      console.error('북마크 리스트 수정 에러', error);
     },
     onSettled: (response) => {
-      console.log('북마크 리스트 삭제 성공');
+      console.log('북마크 리스트 수정 성공', response);
       queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
       setIsModalOpen(false);
     },
   });
-  const confirmButton = async () => {
-    console.log('컨펌.');
+  const confirmButton = async (id: number) => {
+    mutation.mutate({ id, title: editName });
     setIsModalOpen(false);
   };
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  return { isModalOpen, closeModal, openModal, confirmButton };
+  return {
+    isModalOpen,
+    closeModal,
+    openModal,
+    handleNewListName,
+    confirmButton,
+  };
 };
 export const useDeleteListModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
