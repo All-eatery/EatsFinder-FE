@@ -28,7 +28,6 @@ export const useInfiniteScroll = <T>({
   const lastElementRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (isFetchingNextPage) return;
-
       if (observerRef.current) observerRef.current.disconnect();
       observerRef.current = new IntersectionObserver(
         (entries) => {

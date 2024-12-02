@@ -10,6 +10,7 @@ import {
   useDeleteListModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { Checkbox, TextField } from '@/components/atoms';
+import { Dispatch, SetStateAction } from 'react';
 
 const ListImg = ({ url }: { url: string }) => {
   return (
@@ -102,7 +103,6 @@ export const BookmarkedListCard = ({
         <button
           onClick={(e) => {
             e.stopPropagation();
-            console.log('click');
             bookmarkedListOptionHandler();
           }}
           disabled={!!isSelect}
