@@ -1,82 +1,32 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BookmarkedListCard } from './BookmarkedListCard';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { getBookmarkList } from '@/api/bookmark';
-import { useCallback, useRef, useState } from 'react';
-import Loading from '@/components/atoms/loading/Loading';
 import { BookmarkedLisdtsType } from '@/types/bookmarkType';
 import { Button } from '@/components/atoms';
+import { useInfiniteScroll } from '@/app/(auth)/_hooks/useInfiniteScroll';
 
 export const BookmarkedPlacesList = () => {
   const params = useSearchParams();
   const select = params.get('select');
   const router = useRouter();
-
-  const [isLoadMoreMode, setIsLoadMoreMode] = useState(false);
-  const [scrollCount, setScrollCount] = useState(0);
-
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-    useInfiniteQuery<BookmarkedLisdtsType>({
-      queryKey: ['myBookmarks'],
-      queryFn: ({ pageParam = 1 }) => getBookmarkList(pageParam as number),
-      initialPageParam: 1,
-      getNextPageParam: (lastPage) => {
-        return lastPage.lastItemId || undefined;
-      },
-    });
-
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  const lastBookmarkElementRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      if (isFetchingNextPage) return;
-
-      if (observerRef.current) observerRef.current.disconnect();
-
-      observerRef.current = new IntersectionObserver(
-        (entries) => {
-          if (
-            !isLoadMoreMode &&
-            entries[0].isIntersecting &&
-            hasNextPage &&
-            !isFetchingNextPage
-          ) {
-            if (scrollCount >= 2) {
-              setIsLoadMoreMode(true);
-            } else {
-              setScrollCount((prev) => prev + 1);
-              fetchNextPage();
-            }
-          }
-        },
-        {
-          threshold: 0.1,
-          rootMargin: '0px',
-        },
-      );
-
-      if (node) observerRef.current.observe(node);
-    },
-    [
-      fetchNextPage,
-      hasNextPage,
-      isFetchingNextPage,
-      scrollCount,
-      isLoadMoreMode,
-    ],
-  );
-
-  const handleLoadMore = () => {
-    setScrollCount(0);
-    setIsLoadMoreMode(false);
-    fetchNextPage();
-  };
+  const {
+    data,
+    status,
+    isFetchingNextPage,
+    handleLoadMore,
+    hasNextPage,
+    lastElementRef,
+    isLoadMoreMode,
+  } = useInfiniteScroll<BookmarkedLisdtsType>({
+    queryKey: ['myBookmarks'],
+    queryFn: (page) => getBookmarkList(page),
+    getNextPageParam: (lastPage) => lastPage.lastItemId,
+  });
   const handleCardClick = (id: number) => {
     router.push(`?list=${id}`);
   };
-
-  if (status === 'pending') return <Loading />;
+  if (status === 'pending') return <div>로딩 중...</div>;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
 
   return (
@@ -90,9 +40,9 @@ export const BookmarkedPlacesList = () => {
 
             return (
               <div
-                onClick={() => handleCardClick(item.id)}
                 key={item.id}
-                ref={isLastItem ? lastBookmarkElementRef : null}
+                ref={isLastItem ? lastElementRef : null}
+                onClick={() => handleCardClick(item.id)}
               >
                 <BookmarkedListCard
                   id={item.id}
@@ -115,7 +65,7 @@ export const BookmarkedPlacesList = () => {
         </div>
       )}
 
-      {isFetchingNextPage && <Loading />}
+      {isFetchingNextPage && <div>로딩 중...</div>}
 
       {!hasNextPage && (
         <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
