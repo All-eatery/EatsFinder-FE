@@ -21,7 +21,7 @@ export const BookmarkedListOptionMenu = ({
       <OptionButton
         onClick={(e) => {
           e.stopPropagation();
-          editButton();
+          deleteButton();
         }}
       >
         삭제하기

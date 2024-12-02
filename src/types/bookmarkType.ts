@@ -17,6 +17,25 @@ export type BookmarkedLisdtsType = {
   ];
   lastItemId: number;
 };
+export type ListInPlacesType = {
+  pagination: {
+    totalItems: number;
+    itemsPerPage: number;
+  };
+  items: [
+    {
+      id: number;
+      places: {
+        id: number;
+        name: string;
+        roadAddress: string;
+        depth2: string;
+        thumbnailUrl: string;
+      };
+    },
+  ];
+  lastItemId: 321;
+};
 export type BookmarkedPlacesType = {
   pagination: {
     totalItems: number;

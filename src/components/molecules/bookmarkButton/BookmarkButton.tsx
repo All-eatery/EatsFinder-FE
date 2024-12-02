@@ -118,7 +118,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
 
   const { data } = useQuery<BookmarkedLisdtsType>({
     queryKey: ['bookmarkModal'],
-    queryFn: () => getBookmarkList(1),
+    queryFn: () => getBookmarkList(0),
     enabled: isModalOpen,
   });
 

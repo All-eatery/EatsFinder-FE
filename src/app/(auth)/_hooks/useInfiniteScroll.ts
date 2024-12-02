@@ -59,7 +59,7 @@ export const useInfiniteScrollPer3 = <T>({
   queryKey,
   queryFn,
   getNextPageParam,
-  initialPageParam = 1,
+  initialPageParam = 0,
 }: UseInfiniteScrollProps<T>) => {
   const [isLoadMoreMode, setIsLoadMoreMode] = useState(false);
   const [scrollCount, setScrollCount] = useState(0);

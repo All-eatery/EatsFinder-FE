@@ -1,20 +1,35 @@
+import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
 import Image from 'next/image';
 import React from 'react';
 interface BookmarkedPlaceCard {
-  id: string;
+  id: number;
   src: string;
+  category: string;
+  name: string;
+  address: string;
 }
-export const BookmarkedPlaceCard = ({ src }: { src: string }) => {
+export const BookmarkedPlaceCard = ({
+  src,
+  address,
+  category,
+  id,
+  name,
+}: BookmarkedPlaceCard) => {
   return (
     <div className='flex h-[185px] items-center p-[10px]'>
       <div className='flex w-full gap-6 border-b-[1px] border-b-gray-50 p-5 pb-[25px]'>
         <figure className='relative h-[120px] w-[180px] overflow-hidden rounded-3xl'>
-          <Image alt='게시글 이미지' src={src} fill className='object-cover' />
+          <Image
+            alt='게시글 이미지'
+            src={src || sampleImg}
+            fill
+            className='object-cover'
+          />
         </figure>
         <div className='flex flex-col justify-center gap-1'>
-          <p className='text-gray-500 body-16'>양식</p>
-          <p className='text-gray-800 subTitle-24'>서울부띠끄</p>
-          <p className='text-gray-500 body-16'>서울 중구 만리재로 209-1</p>
+          <p className='text-gray-500 body-16'>{category}</p>
+          <p className='text-gray-800 subTitle-24'>{name}</p>
+          <p className='text-gray-500 body-16'>{address}</p>
         </div>
       </div>
     </div>

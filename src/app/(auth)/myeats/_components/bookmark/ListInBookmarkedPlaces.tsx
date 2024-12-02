@@ -2,19 +2,25 @@
 import { useSearchParams } from 'next/navigation';
 import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
 import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
-import { Button, Checkbox } from '@/components/atoms';
+import { Button } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
 import {
   useDeletePlacesInListModal,
   useMovePlacesInListModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { EditListBox } from './EditListBox';
+import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
+import { ListInPlacesType } from '@/types/bookmarkType';
+import { getBookmarkPlaces } from '@/api/bookmark';
+import Loading from '@/components/atoms/loading/Loading';
 
 export const ListInBookmarkedPlaces = () => {
   const searchParams = useSearchParams();
   const select = searchParams.get('select');
+  const id = searchParams.get('list');
   const url = sampleImg;
   console.log('select', select);
+
   const {
     closeModal: closeMoveModal,
     confirmButton: moveConfirmButton,
@@ -27,23 +33,63 @@ export const ListInBookmarkedPlaces = () => {
     isModalOpen: isDeleteModalOpen,
     openModal: openDeleteModal,
   } = useDeletePlacesInListModal();
+
+  const {
+    data,
+    status,
+    isFetchingNextPage,
+    handleLoadMore,
+    hasNextPage,
+    lastElementRef,
+    isLoadMoreMode,
+  } = useInfiniteScrollPer3<ListInPlacesType>({
+    queryKey: ['bookmarkedInPlaces', id!],
+    queryFn: (cursor) => getBookmarkPlaces(Number(id), cursor),
+    getNextPageParam: (lastPage) => lastPage.lastItemId,
+  });
+
+  if (status === 'pending') return <Loading />;
+  if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
   return (
     <div>
       <div
         className={`${select && 'max-h-[calc(100vh-120px)] overflow-y-auto'} flex flex-col gap-9`}
       >
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
-        <BookmarkedPlaceCard src={url} />
+        {data?.pages.map((page, pageIndex) => (
+          <div key={pageIndex} className='flex flex-col gap-4'>
+            {page.items.map((item, index) => {
+              const isLastItem =
+                pageIndex === data.pages.length - 1 &&
+                index === page.items.length - 1;
+
+              return (
+                <div key={item.id} ref={isLastItem ? lastElementRef : null}>
+                  <BookmarkedPlaceCard
+                    category={item.places.depth2}
+                    id={item.places.id}
+                    name={item.places.name}
+                    src={item.places.thumbnailUrl}
+                    address={item.places.roadAddress}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
+      {isLoadMoreMode && hasNextPage && (
+        <div className='mt-7 flex justify-center'>
+          <Button onClick={handleLoadMore} variant={'stroke'}>
+            더보기
+          </Button>
+        </div>
+      )}
+
+      {isFetchingNextPage && <Loading />}
+
+      {!hasNextPage && (
+        <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
+      )}
       {select && (
         <div className='my-[60px] flex justify-center gap-3'>
           <Button

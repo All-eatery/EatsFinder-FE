@@ -5,6 +5,7 @@ import { getBookmarkList } from '@/api/bookmark';
 import { BookmarkedLisdtsType } from '@/types/bookmarkType';
 import { Button } from '@/components/atoms';
 import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
+import Loading from '@/components/atoms/loading/Loading';
 
 export const BookmarkedPlacesList = () => {
   const params = useSearchParams();
@@ -20,13 +21,13 @@ export const BookmarkedPlacesList = () => {
     isLoadMoreMode,
   } = useInfiniteScrollPer3<BookmarkedLisdtsType>({
     queryKey: ['myBookmarks'],
-    queryFn: (page) => getBookmarkList(page),
+    queryFn: (cursor) => getBookmarkList(cursor),
     getNextPageParam: (lastPage) => lastPage.lastItemId,
   });
   const handleCardClick = (id: number) => {
     router.push(`?list=${id}`);
   };
-  if (status === 'pending') return <div>로딩 중...</div>;
+  if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
 
   return (
@@ -65,7 +66,7 @@ export const BookmarkedPlacesList = () => {
         </div>
       )}
 
-      {isFetchingNextPage && <div>로딩 중...</div>}
+      {isFetchingNextPage && <Loading />}
 
       {!hasNextPage && (
         <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>

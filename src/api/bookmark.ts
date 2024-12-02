@@ -1,4 +1,5 @@
 import { NEST_SERVER } from '@/constants/baseUrl';
+import { ListInPlacesType } from '@/types/bookmarkType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 
 export const createNewBookmarkList = async (listname: string) => {
@@ -69,7 +70,10 @@ export const addBookmarkPlaces = async (place: number, lists: number[]) => {
   });
   return response.json();
 };
-export const getBookmarkPlaces = async (id: number, cursor: number) => {
+export const getBookmarkPlaces = async (
+  id: number,
+  cursor: number,
+): Promise<ListInPlacesType> => {
   const token = await getUserToken();
   const response = await fetch(
     `${NEST_SERVER}/bookmarks/places/${id}?cursor=${cursor}`,
@@ -80,6 +84,7 @@ export const getBookmarkPlaces = async (id: number, cursor: number) => {
       },
     },
   );
+  return response.json();
 };
 export const moveBookmarkPlaces = async (places: number[], lists: number[]) => {
   const token = await getUserToken();
