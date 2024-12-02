@@ -14,9 +14,6 @@ export const useInfiniteScroll = <T>({
   getNextPageParam,
   initialPageParam = 1,
 }: UseInfiniteScrollProps<T>) => {
-  const [isLoadMoreMode, setIsLoadMoreMode] = useState(false);
-  const [scrollCount, setScrollCount] = useState(0);
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery<T>({
       queryKey,
@@ -33,15 +30,59 @@ export const useInfiniteScroll = <T>({
       if (isFetchingNextPage) return;
 
       if (observerRef.current) observerRef.current.disconnect();
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+          }
+        },
+
+        {
+          threshold: 0.1,
+          rootMargin: '0px',
+        },
+      );
+
+      if (node) observerRef.current.observe(node);
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
+  );
+  return {
+    data,
+    status,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+    lastElementRef,
+  };
+};
+export const useInfiniteScrollPer3 = <T>({
+  queryKey,
+  queryFn,
+  getNextPageParam,
+  initialPageParam = 1,
+}: UseInfiniteScrollProps<T>) => {
+  const [isLoadMoreMode, setIsLoadMoreMode] = useState(false);
+  const [scrollCount, setScrollCount] = useState(0);
+  const { data, status, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useInfiniteScroll<T>({
+      queryKey,
+      queryFn,
+      getNextPageParam,
+      initialPageParam,
+    });
+
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const lastElementRefWithLoadMore = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isFetchingNextPage) return;
+
+      if (observerRef.current) observerRef.current.disconnect();
 
       observerRef.current = new IntersectionObserver(
         (entries) => {
-          if (
-            !isLoadMoreMode &&
-            entries[0].isIntersecting &&
-            hasNextPage &&
-            !isFetchingNextPage
-          ) {
+          if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
             if (scrollCount >= 2) {
               setIsLoadMoreMode(true);
             } else {
@@ -58,13 +99,7 @@ export const useInfiniteScroll = <T>({
 
       if (node) observerRef.current.observe(node);
     },
-    [
-      fetchNextPage,
-      hasNextPage,
-      isFetchingNextPage,
-      scrollCount,
-      isLoadMoreMode,
-    ],
+    [fetchNextPage, hasNextPage, isFetchingNextPage, scrollCount],
   );
 
   const handleLoadMore = () => {
@@ -77,9 +112,9 @@ export const useInfiniteScroll = <T>({
     data,
     status,
     isFetchingNextPage,
-    handleLoadMore,
     hasNextPage,
-    lastElementRef,
+    lastElementRef: lastElementRefWithLoadMore,
     isLoadMoreMode,
+    handleLoadMore,
   };
 };

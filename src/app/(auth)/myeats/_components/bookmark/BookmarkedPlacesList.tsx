@@ -4,7 +4,7 @@ import { BookmarkedListCard } from './BookmarkedListCard';
 import { getBookmarkList } from '@/api/bookmark';
 import { BookmarkedLisdtsType } from '@/types/bookmarkType';
 import { Button } from '@/components/atoms';
-import { useInfiniteScroll } from '@/app/(auth)/_hooks/useInfiniteScroll';
+import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
 
 export const BookmarkedPlacesList = () => {
   const params = useSearchParams();
@@ -18,7 +18,7 @@ export const BookmarkedPlacesList = () => {
     hasNextPage,
     lastElementRef,
     isLoadMoreMode,
-  } = useInfiniteScroll<BookmarkedLisdtsType>({
+  } = useInfiniteScrollPer3<BookmarkedLisdtsType>({
     queryKey: ['myBookmarks'],
     queryFn: (page) => getBookmarkList(page),
     getNextPageParam: (lastPage) => lastPage.lastItemId,
