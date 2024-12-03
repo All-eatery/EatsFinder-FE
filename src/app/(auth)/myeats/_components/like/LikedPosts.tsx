@@ -5,11 +5,11 @@ import React from 'react';
 import { PostCard } from './PostCard';
 import { getLikedPosts } from '@/api/socialActions';
 import { useQuery } from '@tanstack/react-query';
-import { LikePostsType } from '@/types/authType';
 import Loading from '@/components/atoms/loading/Loading';
+import { LikedPostsType } from '@/types/authType';
 
 export const LikedPosts = () => {
-  const { data, isLoading, isError } = useQuery<LikePostsType>({
+  const { data, isLoading, isError } = useQuery<LikedPostsType>({
     queryKey: ['likedPosts'],
     queryFn: () => getLikedPosts(),
   });

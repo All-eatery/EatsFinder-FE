@@ -7,7 +7,7 @@ interface UseInfiniteScrollProps<T> {
   getNextPageParam: (lastPage: T) => number | undefined;
   initialPageParam?: number;
 }
-
+//코드스플릿
 export const useInfiniteScroll = <T>({
   queryKey,
   queryFn,

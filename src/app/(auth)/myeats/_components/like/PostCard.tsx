@@ -27,8 +27,8 @@ export const PostCard = ({
       <Checkbox
         variant='fav'
         className='absolute right-5 top-5 z-10'
+        checked={isChecked}
         onChange={handleLike}
-        isChecked={isChecked}
       />
       <div className='absolute bottom-5 left-5 z-10 flex items-center gap-2'>
         <ProfileImage src={profileImage} size={60} />
