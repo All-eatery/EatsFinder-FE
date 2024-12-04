@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { FollowButton } from './FollowButton';
+import { SocialActionButton } from './SocialActionButton';
 export const sampleImg =
   'https://lh3.googleusercontent.com/a/ACg8ocL5qL_KbAxVIQMCT7KSAb4JqtAcYMl9mGBwcdJhtPl9owCW1A=s96-c';
 type FollowUserProps = {
@@ -20,6 +20,7 @@ export const FollowUser = ({
   if (!image) {
     image = sampleImg;
   }
+
   return (
     <div className='flex items-center justify-between'>
       <div className='flex items-center gap-3'>
@@ -32,7 +33,12 @@ export const FollowUser = ({
         />
         <span className='text-gray-600 subTitle-18'>{nickname}</span>
       </div>
-      <FollowButton id={id} isFollowed={isFollowed} isLoggedIn={isLoggedIn} />
+      <SocialActionButton
+        id={id}
+        isConnected={isFollowed}
+        type='follow'
+        isLoggedIn={isLoggedIn}
+      />
     </div>
   );
 };
