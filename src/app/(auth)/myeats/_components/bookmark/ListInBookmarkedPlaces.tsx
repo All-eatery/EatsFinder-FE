@@ -50,30 +50,59 @@ export const ListInBookmarkedPlaces = () => {
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
   return (
     <div>
-      <div
-        className={`${select && 'max-h-[calc(100vh-120px)] overflow-y-auto'} flex flex-col gap-9`}
-      >
-        {data?.pages?.map((page, pageIndex) => (
-          <div key={pageIndex} className='flex flex-col gap-4'>
-            {page.items?.map((item, index) => {
-              const isLastItem =
-                pageIndex === data.pages.length - 1 &&
-                index === page.items.length - 1;
+      <div className='relative'>
+        <div
+          className={`${select && 'max-h-[calc(100vh-120px)] overflow-y-auto'} flex flex-col gap-9`}
+        >
+          {data?.pages?.map((page, pageIndex) => (
+            <div key={pageIndex} className='flex flex-col gap-4'>
+              {page.items?.map((item, index) => {
+                const isLastItem =
+                  pageIndex === data.pages.length - 1 &&
+                  index === page.items.length - 1;
 
-              return (
-                <div key={item.id} ref={isLastItem ? lastElementRef : null}>
-                  <BookmarkedPlaceCard
-                    category={item.places.depth2}
-                    id={item.places.id}
-                    name={item.places.name}
-                    src={item.places.thumbnailUrl}
-                    address={item.places.roadAddress}
-                  />
-                </div>
-              );
-            })}
+                return (
+                  <div key={item.id} ref={isLastItem ? lastElementRef : null}>
+                    <BookmarkedPlaceCard
+                      category={item.places.depth2}
+                      id={item.places.id}
+                      name={item.places.name}
+                      src={item.places.thumbnailUrl}
+                      address={item.places.roadAddress}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+
+        {/* {!hasNextPage && (
+        <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
+      )} */}
+        {select && (
+          // <div className='z-10 my-[60px] flex justify-center gap-3'>
+
+          // <div className='absolute bottom-4 left-1/2 z-10 my-[60px] flex -translate-x-1/2 transform justify-center gap-3'>
+          <div className='sticky bottom-8 left-0 right-0 z-10 flex justify-center gap-3'>
+            <Button
+              variant={'stroke'}
+              size={'small'}
+              onClick={() => openEditModal()}
+              className='bg-white'
+            >
+              이동
+            </Button>
+            <Button
+              variant={'stroke'}
+              size={'small'}
+              onClick={openDeleteModal}
+              className='bg-white'
+            >
+              삭제
+            </Button>
           </div>
-        ))}
+        )}
       </div>
       {isLoadMoreMode && hasNextPage && (
         <div className='mt-7 flex justify-center'>
@@ -85,32 +114,6 @@ export const ListInBookmarkedPlaces = () => {
 
       {isFetchingNextPage && <Loading />}
 
-      {/* {!hasNextPage && (
-        <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
-      )} */}
-      {select && (
-        // <div className='z-10 my-[60px] flex justify-center gap-3'>
-
-        <div className='fixed bottom-4 left-1/2 z-10 my-[60px] flex -translate-x-1/2 transform justify-center gap-3'>
-          {/* <div className='fixed bottom-72 left-1/2 z-10 my-[60px] flex -translate-x-1/2 transform justify-center gap-3'> */}
-          <Button
-            variant={'stroke'}
-            size={'small'}
-            onClick={() => openEditModal()}
-            className='bg-white'
-          >
-            이동
-          </Button>
-          <Button
-            variant={'stroke'}
-            size={'small'}
-            onClick={openDeleteModal}
-            className='bg-white'
-          >
-            삭제
-          </Button>
-        </div>
-      )}
       <Modal
         isOpen={isMoveModalOpen}
         onClose={closeMoveModal}
