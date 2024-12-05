@@ -5,12 +5,10 @@ import { BookmarkedListOptionMenu } from './BookmarkedListOptionMenu';
 import { useDropdownHandler } from '@/hooks/useDropdownHandler';
 import { Modal } from '@/components/organisms';
 import {
-  useMovePlacesInListModal,
   useListNameEditModal,
   useDeleteListModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { Checkbox, TextField } from '@/components/atoms';
-import { Dispatch, SetStateAction } from 'react';
 
 const ListImg = ({ url }: { url: string }) => {
   return (

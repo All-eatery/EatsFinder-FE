@@ -12,13 +12,14 @@ import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
 import { ListInPlacesType } from '@/types/bookmarkType';
 import { getBookmarkPlaces } from '@/api/bookmark';
 import Loading from '@/components/atoms/loading/Loading';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useHandleCheckBox } from '@/app/(auth)/_hooks/useHandleCheckBox';
 
 export const ListInBookmarkedPlaces = () => {
   const searchParams = useSearchParams();
   const select = searchParams.get('select');
   const id = searchParams.get('list');
-  console.log('select', select);
-
   const {
     closeModal: closeMoveModal,
     confirmButton: moveConfirmButton,
@@ -31,7 +32,6 @@ export const ListInBookmarkedPlaces = () => {
     isModalOpen: isDeleteModalOpen,
     openModal: openDeleteModal,
   } = useDeletePlacesInListModal();
-
   const {
     data,
     status,
@@ -45,9 +45,10 @@ export const ListInBookmarkedPlaces = () => {
     queryFn: (cursor) => getBookmarkPlaces(Number(id), cursor),
     getNextPageParam: (lastPage) => lastPage.lastItemId,
   });
-
+  const { checkAllHandler, checkHandler, isChecked } = useHandleCheckBox();
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
+
   return (
     <div>
       <div className='relative'>
@@ -61,9 +62,20 @@ export const ListInBookmarkedPlaces = () => {
                   pageIndex === data.pages.length - 1 &&
                   index === page.items.length - 1;
 
-                return (
-                  <div key={item.id} ref={isLastItem ? lastElementRef : null}>
+                return select ? (
+                  <div
+                    key={item.id}
+                    ref={isLastItem ? lastElementRef : null}
+                    onClick={() => checkHandler(item.id)}
+                    className={`cursor-pointer rounded-3xl border-2 ${
+                      isChecked.includes(item.id)
+                        ? 'border-primary-100'
+                        : 'border-gray-100'
+                    }`}
+                  >
                     <BookmarkedPlaceCard
+                      select={!!select}
+                      isSeleceted={isChecked.includes(item.id)}
                       category={item.places.depth2}
                       id={item.places.id}
                       name={item.places.name}
@@ -71,6 +83,21 @@ export const ListInBookmarkedPlaces = () => {
                       address={item.places.roadAddress}
                     />
                   </div>
+                ) : (
+                  <Link
+                    href={`/posts/${id}`}
+                    key={item.id}
+                    ref={isLastItem ? lastElementRef : null}
+                    className='border-2 border-transparent'
+                  >
+                    <BookmarkedPlaceCard
+                      category={item.places.depth2}
+                      id={item.places.id}
+                      name={item.places.name}
+                      src={item.places.thumbnailUrl}
+                      address={item.places.roadAddress}
+                    />
+                  </Link>
                 );
               })}
             </div>
@@ -81,10 +108,7 @@ export const ListInBookmarkedPlaces = () => {
         <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
       )} */}
         {select && (
-          // <div className='z-10 my-[60px] flex justify-center gap-3'>
-
-          // <div className='absolute bottom-4 left-1/2 z-10 my-[60px] flex -translate-x-1/2 transform justify-center gap-3'>
-          <div className='sticky bottom-8 left-0 right-0 z-10 flex justify-center gap-3'>
+          <div className='sticky bottom-20 left-0 right-0 z-10 flex justify-center gap-3'>
             <Button
               variant={'stroke'}
               size={'small'}

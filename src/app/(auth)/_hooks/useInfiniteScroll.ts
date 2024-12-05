@@ -74,7 +74,7 @@ export const useInfiniteScrollPer3 = <T>({
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const lastElementRefWithLoadMore = useCallback(
-    (node: HTMLDivElement | null) => {
+    (node: HTMLDivElement | HTMLAnchorElement | null) => {
       if (isFetchingNextPage) return;
 
       if (observerRef.current) observerRef.current.disconnect();

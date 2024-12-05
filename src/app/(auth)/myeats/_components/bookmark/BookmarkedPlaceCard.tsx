@@ -1,4 +1,6 @@
 import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
+import { Checkbox } from '@/components/atoms';
+import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
 import Image from 'next/image';
 import React from 'react';
 interface BookmarkedPlaceCard {
@@ -7,16 +9,24 @@ interface BookmarkedPlaceCard {
   category: string;
   name: string;
   address: string;
+  select?: boolean;
+  isSeleceted?: boolean;
 }
 export const BookmarkedPlaceCard = ({
   src,
   address,
   category,
-  id,
   name,
+  select,
+  isSeleceted,
 }: BookmarkedPlaceCard) => {
   return (
-    <div className='flex h-[185px] items-center p-[10px]'>
+    <div className='relative flex h-[185px] items-center p-[10px]'>
+      {select && (
+        <div className='absolute left-6 top-6'>
+          <Checkbox variant='Checkbox_Ver2' checked={isSeleceted} />
+        </div>
+      )}
       <div className='flex w-full gap-6 border-b-[1px] border-b-gray-50 p-5 pb-[25px]'>
         <figure className='relative h-[120px] w-[180px] overflow-hidden rounded-3xl'>
           <Image
