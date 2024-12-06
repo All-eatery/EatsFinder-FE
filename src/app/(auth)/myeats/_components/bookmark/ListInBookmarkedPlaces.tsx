@@ -66,7 +66,6 @@ export const ListInBookmarkedPlaces = () => {
     },
     enabled: isMoveModalOpen,
   });
-  console.log(modalData);
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
 
@@ -218,7 +217,9 @@ export const ListInBookmarkedPlaces = () => {
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
         title='다른 리스트로 이동'
-        onMainClick={deleteConfirmButton}
+        onMainClick={() =>
+          deleteConfirmButton({ places: isChecked, listId: listId })
+        }
         mainButton='적용'
         subButton='취소'
       >

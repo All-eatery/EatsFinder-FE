@@ -1,4 +1,5 @@
 import {
+  deleteBookmarPlaces,
   deleteBookmarkList,
   moveBookmarkPlaces,
   renameBookmarkList,
@@ -126,8 +127,15 @@ export const useMovePlacesInListModal = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (data: { places: number[]; lists: number[]; id: number }) =>
-      moveBookmarkPlaces(data.places, data.lists),
+    mutationFn: ({
+      places,
+      lists,
+      id,
+    }: {
+      places: number[];
+      lists: number[];
+      id: number;
+    }) => moveBookmarkPlaces(places, lists),
     onError: (error) => {
       console.error('북마크 리스트 이동 에러', error);
     },
@@ -141,13 +149,16 @@ export const useMovePlacesInListModal = () => {
       setIsModalOpen(false);
     },
   });
-  const confirmButton = async (data: {
+  const confirmButton = async ({
+    places,
+    lists,
+    id,
+  }: {
     places: number[];
     lists: number[];
     id: number;
   }) => {
-    mutation.mutate(data);
-    // moveBookmarkPlaces(data.places, data.lists);
+    mutation.mutate({ places, lists, id });
     setIsModalOpen(false);
   };
   const closeModal = () => {
@@ -160,7 +171,33 @@ export const useDeletePlacesInListModal = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  const confirmButton = async () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: ({ placeId, listId }: { placeId: string; listId: number }) =>
+      deleteBookmarPlaces(placeId, listId),
+    onError: (error) => {
+      console.error('북마크 리스트 삭제 에러', error);
+    },
+    onSettled: (response, error, variables) => {
+      console.log('북마크 리스트 삭제 성공');
+      console.log(response);
+      queryClient.refetchQueries({
+        queryKey: ['bookmarkedInPlaces'],
+        // queryKey: ['bookmarkedInPlaces', String(variables.id)],
+      });
+      setIsModalOpen(false);
+    },
+  });
+  const confirmButton = async ({
+    places,
+    listId,
+  }: {
+    places: number[];
+    listId: number;
+  }) => {
+    const placeId = places.join(',');
+    mutation.mutate({ placeId, listId });
     setIsModalOpen(false);
   };
   const closeModal = () => {

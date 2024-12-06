@@ -114,4 +114,5 @@ export const deleteBookmarPlaces = async (placeId: string, listId: number) => {
       },
     },
   );
+  return response.json();
 };
