@@ -1,4 +1,8 @@
-import { deleteBookmarkList, renameBookmarkList } from '@/api/bookmark';
+import {
+  deleteBookmarkList,
+  moveBookmarkPlaces,
+  renameBookmarkList,
+} from '@/api/bookmark';
 import { deletePost } from '@/api/post';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
@@ -119,7 +123,31 @@ export const useMovePlacesInListModal = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  const confirmButton = async () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (data: { places: number[]; lists: number[]; id: number }) =>
+      moveBookmarkPlaces(data.places, data.lists),
+    onError: (error) => {
+      console.error('북마크 리스트 이동 에러', error);
+    },
+    onSettled: (response, error, variables) => {
+      console.log('북마크 리스트 이동 성공');
+      console.log(response);
+      queryClient.refetchQueries({
+        queryKey: ['bookmarkedInPlaces'],
+        // queryKey: ['bookmarkedInPlaces', String(variables.id)],
+      });
+      setIsModalOpen(false);
+    },
+  });
+  const confirmButton = async (data: {
+    places: number[];
+    lists: number[];
+    id: number;
+  }) => {
+    mutation.mutate(data);
+    // moveBookmarkPlaces(data.places, data.lists);
     setIsModalOpen(false);
   };
   const closeModal = () => {

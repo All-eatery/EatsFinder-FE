@@ -36,6 +36,7 @@ export const renameBookmarkList = async (id: number, title: string) => {
   const response = await fetch(`${NEST_SERVER}/bookmarks/lists/${id}`, {
     method: 'PATCH',
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -91,6 +92,7 @@ export const moveBookmarkPlaces = async (places: number[], lists: number[]) => {
   const response = await fetch(`${NEST_SERVER}/bookmarks/places`, {
     method: 'PATCH',
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -98,6 +100,7 @@ export const moveBookmarkPlaces = async (places: number[], lists: number[]) => {
       lists,
     }),
   });
+  return response.json();
 };
 export const deleteBookmarPlaces = async (placeId: string, listId: number) => {
   const token = await getUserToken();

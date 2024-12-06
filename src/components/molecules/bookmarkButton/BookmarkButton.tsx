@@ -25,7 +25,7 @@ type BookmarkModalCardProps = {
   selectedLists: number[];
 };
 
-const BookmarkModalCard = ({
+export const BookmarkModalCard = ({
   id,
   title,
   count,
