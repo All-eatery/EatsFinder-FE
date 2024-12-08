@@ -139,7 +139,7 @@ export const BookmarkedListCard = ({
       <Modal
         isOpen={isDeleteListModalOpen}
         onClose={closeDeleteListModal}
-        title='[리스트이름]를 삭제할까요?'
+        title={`[${title}] 리스트를 삭제할까요?`}
         onMainClick={() => deleteListConfirmButton(id)}
         subButton='취소'
         onSubClick={closeDeleteListModal}

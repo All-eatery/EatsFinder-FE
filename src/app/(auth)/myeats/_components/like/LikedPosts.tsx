@@ -40,7 +40,6 @@ export const LikedPosts = () => {
           ))}
         </div>
       </div>
-
       <Button variant={'stroke'}>더보기</Button>
     </div>
   );

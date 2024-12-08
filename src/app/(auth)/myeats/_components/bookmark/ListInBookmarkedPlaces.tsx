@@ -7,7 +7,6 @@ import {
   useDeletePlacesInListModal,
   useMovePlacesInListModal,
 } from '@/app/(auth)/_hooks/useModal';
-import { EditListBox } from './EditListBox';
 import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
 import { BookmarkedLisdtsType, ListInPlacesType } from '@/types/bookmarkType';
 import { getBookmarkList, getBookmarkPlaces } from '@/api/bookmark';
@@ -17,6 +16,7 @@ import { useHandleCheckBox } from '@/app/(auth)/_hooks/useHandleCheckBox';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import { BookmarkModalCard } from '@/components/molecules/bookmarkButton/BookmarkButton';
+import { StickyBox } from '@/components/atoms/stickyBox';
 
 export const ListInBookmarkedPlaces = () => {
   const searchParams = useSearchParams();
@@ -128,7 +128,7 @@ export const ListInBookmarkedPlaces = () => {
         <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
       )} */}
         {select && (
-          <div className='sticky bottom-20 left-0 right-0 z-10 flex justify-center gap-3'>
+          <StickyBox>
             <Button
               variant={'stroke'}
               size={'small'}
@@ -145,7 +145,7 @@ export const ListInBookmarkedPlaces = () => {
             >
               삭제
             </Button>
-          </div>
+          </StickyBox>
         )}
       </div>
       {isLoadMoreMode && hasNextPage && (
