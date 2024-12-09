@@ -1,4 +1,5 @@
 import {
+  createNewBookmarkList,
   deleteBookmarPlaces,
   deleteBookmarkList,
   moveBookmarkPlaces,
@@ -51,6 +52,43 @@ export const useDeletePostModal = () => {
     setIsModalOpen(false);
   };
   return { isModalOpen, closeModal, openModal, confirmButton };
+};
+export const createNewListModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newListName, setNewListName] = useState('');
+  const handleNewListName = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewListName(e.target.value);
+  };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (title: string) => createNewBookmarkList(title),
+    onError: (error) => {
+      console.error('북마크 리스트 등록 에러', error);
+    },
+    onSettled: (response) => {
+      console.log('북마크 리스트 등록 성공', response);
+      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      setIsModalOpen(false);
+    },
+  });
+  const confirmButton = async () => {
+    mutation.mutate(newListName);
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return {
+    isModalOpen,
+    closeModal,
+    openModal,
+    handleNewListName,
+    confirmButton,
+  };
 };
 export const useListNameEditModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
