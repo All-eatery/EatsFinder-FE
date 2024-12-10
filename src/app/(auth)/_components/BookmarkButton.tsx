@@ -16,7 +16,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { BookmarkModalCard } from '../bookmarkCard';
+import { BookmarkModalCard } from '../../../components/molecules/bookmarkCard';
 
 export const BookmarkButton = ({ placeId }: { placeId: number }) => {
   const [active, setIsActive] = useState(false);

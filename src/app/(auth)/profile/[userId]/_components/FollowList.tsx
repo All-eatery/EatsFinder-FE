@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { SocialActionButton } from './SocialActionButton';
+import { SocialActionButton } from '../../../_components/SocialActionButton';
 export const sampleImg =
   'https://lh3.googleusercontent.com/a/ACg8ocL5qL_KbAxVIQMCT7KSAb4JqtAcYMl9mGBwcdJhtPl9owCW1A=s96-c';
 type FollowUserProps = {
@@ -33,12 +33,7 @@ export const FollowUser = ({
         />
         <span className='text-gray-600 subTitle-18'>{nickname}</span>
       </div>
-      <SocialActionButton
-        id={id}
-        isConnected={isFollowed}
-        type='follow'
-        isLoggedIn={isLoggedIn}
-      />
+      <SocialActionButton id={id} isConnected={isFollowed} type='follow' />
     </div>
   );
 };

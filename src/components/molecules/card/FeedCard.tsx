@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { Checkbox, ProfileImage } from '@/components/atoms';
-import { BookmarkButton } from '../bookmarkButton/BookmarkButton';
+import { ProfileImage } from '@/components/atoms';
+import { BookmarkButton } from '../../../app/(auth)/_components/BookmarkButton';
 
 interface FeedCardProps {
   onClick?: () => void;

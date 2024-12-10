@@ -10,7 +10,6 @@ export const socialAction = async ({ method, type, id }: SocialActionsType) => {
         return 'commentId';
       case 'follow':
         return method === 'connect' ? 'followUserId' : 'unfollowUserId';
-      // return 'followUserId';
       case 'post':
         return 'postId';
       case 'reply':
