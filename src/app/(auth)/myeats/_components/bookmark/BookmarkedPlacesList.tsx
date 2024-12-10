@@ -12,8 +12,8 @@ import { Modal } from '@/components/organisms';
 import {
   createNewListModal,
   useDeleteListModal,
-  useListNameEditModal,
 } from '@/app/(auth)/_hooks/useModal';
+import { useHandleCheckBox } from '@/app/(auth)/_hooks/useHandleCheckBox';
 
 export const BookmarkedPlacesList = () => {
   const params = useSearchParams();
@@ -47,7 +47,6 @@ export const BookmarkedPlacesList = () => {
   } = createNewListModal();
   const handleCardClick = (id: number) => {
     if (select) return;
-    //여기서 selectedList?
     const currentParams = new URLSearchParams(window.location.search);
 
     currentParams.set('list', id.toString());
@@ -58,6 +57,7 @@ export const BookmarkedPlacesList = () => {
 
     router.push(`?${newParams.toString()}`);
   };
+  const { checkAllHandler, checkHandler, isChecked } = useHandleCheckBox();
 
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
@@ -76,11 +76,15 @@ export const BookmarkedPlacesList = () => {
                 <div
                   key={item.id}
                   ref={isLastItem ? lastElementRef : null}
-                  onClick={() => handleCardClick(item.id)}
+                  onClick={() => {
+                    handleCardClick(item.id);
+                    checkHandler(item.id);
+                  }}
                 >
                   <BookmarkedListCard
                     id={item.id}
-                    isSelect={select}
+                    isSelect={!!select}
+                    isSeleceted={isChecked.includes(item.id)}
                     title={item.title}
                     count={item.count}
                     thumbnails={item.bookmarkPlaces}

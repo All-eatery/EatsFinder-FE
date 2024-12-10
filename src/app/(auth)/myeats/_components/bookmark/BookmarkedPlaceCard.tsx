@@ -9,7 +9,7 @@ interface BookmarkedPlaceCard {
   category: string;
   name: string;
   address: string;
-  select?: boolean;
+  isSelect?: boolean;
   isSeleceted?: boolean;
 }
 export const BookmarkedPlaceCard = ({
@@ -17,12 +17,12 @@ export const BookmarkedPlaceCard = ({
   address,
   category,
   name,
-  select,
+  isSelect,
   isSeleceted,
 }: BookmarkedPlaceCard) => {
   return (
     <div className='relative flex h-[185px] items-center p-[10px]'>
-      {select && (
+      {isSelect && (
         <div className='absolute left-6 top-6'>
           <Checkbox variant='Checkbox_Ver2' checked={isSeleceted} />
         </div>

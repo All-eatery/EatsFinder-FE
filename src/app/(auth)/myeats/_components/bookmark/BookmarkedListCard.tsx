@@ -9,6 +9,7 @@ import {
   useDeleteListModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { Checkbox, TextField } from '@/components/atoms';
+import { cx } from 'class-variance-authority';
 
 const ListImg = ({ url }: { url: string }) => {
   return (
@@ -23,10 +24,12 @@ const ListImg = ({ url }: { url: string }) => {
 };
 interface BookmarkedListCardProps {
   id: number;
-  isSelect: string | null;
+  isSelect: boolean;
   title: string;
   count: number;
   thumbnails: { thumbnailUrl: string }[];
+  select?: boolean;
+  isSeleceted?: boolean;
 }
 
 export const BookmarkedListCard = ({
@@ -35,6 +38,7 @@ export const BookmarkedListCard = ({
   title,
   count,
   thumbnails,
+  isSeleceted,
 }: BookmarkedListCardProps) => {
   const {
     dropdownHanlder: bookmarkedListOptionHandler,
@@ -65,21 +69,18 @@ export const BookmarkedListCard = ({
       <ListImg key={index} url={item.thumbnailUrl} />
     ));
   };
-  // const a = () => {
-  //   // 클릭시 리스트내로 이동 선택활성화시 버튼 xx
-  //   console.log('hi', id);
-  // };
+
+  console.log(isSeleceted);
   return (
     <div
-      className='relative rounded-3xl'
-      //   className='relative flex h-[184px] w-full items-center justify-start gap-6 rounded-3xl p-5 outline outline-2 outline-gray-100'
-      //  선택 => outline outline-2 outline-gray-100
-      //  select => outline outline-2 outline-primary-400
-
-      style={{
-        boxShadow:
-          '0 4px 10px rgba(0, 0, 0, 0.05), 0 -4px 10px rgba(45, 31, 31, 0.05), -4px 0 10px rgba(0, 0, 0, 0.05), 4px 0 10px rgba(0, 0, 0, 0.05)',
-      }}
+      className={cx(
+        'relative cursor-pointer rounded-3xl border-2',
+        isSelect
+          ? isSeleceted
+            ? 'border-primary-100'
+            : 'border-gray-100'
+          : 'border-transparent shadow-[0_4px_10px_rgba(0,0,0,0.05),0_-4px_10px_rgba(45,31,31,0.05),-4px_0_10px_rgba(0,0,0,0.05),4px_0_10px_rgba(0,0,0,0.05)]',
+      )}
     >
       {isSelect && (
         <div className='absolute left-6 top-6 z-10'>

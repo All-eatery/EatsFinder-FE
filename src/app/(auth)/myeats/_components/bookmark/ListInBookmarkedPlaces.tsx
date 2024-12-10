@@ -15,8 +15,8 @@ import Link from 'next/link';
 import { useHandleCheckBox } from '@/app/(auth)/_hooks/useHandleCheckBox';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
-import { BookmarkModalCard } from '@/components/molecules/bookmarkButton/BookmarkButton';
 import { StickyBox } from '@/components/atoms/stickyBox';
+import { BookmarkModalCard } from '@/components/molecules/bookmarkCard';
 
 export const ListInBookmarkedPlaces = () => {
   const searchParams = useSearchParams();
@@ -95,7 +95,7 @@ export const ListInBookmarkedPlaces = () => {
                     }`}
                   >
                     <BookmarkedPlaceCard
-                      select={!!select}
+                      isSelect={!!select}
                       isSeleceted={isChecked.includes(item.places.id)}
                       category={item.places.depth2}
                       id={item.places.id}
@@ -106,6 +106,7 @@ export const ListInBookmarkedPlaces = () => {
                   </div>
                 ) : (
                   <Link
+                    //posts가아니라 맛집정보로 넘어가야함
                     href={`/posts/${id}`}
                     key={item.id}
                     ref={isLastItem ? lastElementRef : null}
