@@ -146,9 +146,9 @@ export const useDeleteListModal = () => {
       setIsModalOpen(false);
     },
   });
-  const confirmButton = async (id: number) => {
-    console.log('컨펌!');
-    mutation.mutate(id);
+  const confirmButton = async (id: number[] | number) => {
+    console.log('컨펌!', id);
+    // mutation.mutate(id);
     setIsModalOpen(false);
   };
 

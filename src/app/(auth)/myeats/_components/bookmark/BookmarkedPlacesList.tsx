@@ -147,7 +147,7 @@ export const BookmarkedPlacesList = () => {
         isOpen={isDeleteListModalOpen}
         onClose={closeDeleteListModal}
         title='선택한 리스트들을 삭제할까요?'
-        onMainClick={() => console.log('a')}
+        onMainClick={() => deleteListConfirmButton(isChecked)}
         subButton='취소'
         onSubClick={closeDeleteListModal}
         mainButton='삭제'

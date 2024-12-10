@@ -84,7 +84,7 @@ export const BookmarkedListCard = ({
     >
       {isSelect && (
         <div className='absolute left-6 top-6 z-10'>
-          <Checkbox variant='Checkbox_Ver2' />
+          <Checkbox variant='Checkbox_Ver2' checked={isSeleceted} />
         </div>
       )}
       <div
