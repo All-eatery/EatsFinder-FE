@@ -35,6 +35,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     options['maxAge'] = 2592000;
   }
 
+  cookiesStore.set('socialProvider', `${provider}`, options);
   cookiesStore.set('jwt', `${data.accessToken}`, options);
   const cookie = cookiesStore.get('jwt');
   if (cookie) {
