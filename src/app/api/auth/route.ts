@@ -34,7 +34,12 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   if (loginSaveState) {
     options['maxAge'] = 2592000;
   }
-
+  const providerOptions: CookieOptions = {
+    path: '/',
+    httpOnly: true,
+    maxAge: 31536000, // 1년 (초 단위)
+  };
+  cookiesStore.set('socialProvider', `${provider}`, providerOptions);
   cookiesStore.set('jwt', `${data.accessToken}`, options);
   const cookie = cookiesStore.get('jwt');
   if (cookie) {
