@@ -7,6 +7,7 @@ import { Timeline } from './Timeline';
 import { ProfilePageProps } from '@/types/authType';
 import { TimeLineFilter } from './TimeLineFilter';
 import { useTimelineFilterState } from '@/app/(auth)/_hooks/useTimelineFilterState';
+import { useToast } from '@/provider/contextProvider/ToastProvider';
 
 export const ProfileContents = ({
   isOwnProfile,
@@ -26,10 +27,24 @@ export const ProfileContents = ({
       return <MyFeed userId={userData.id} isOwnProfile={isOwnProfile} />;
     }
   };
+  const { showToast } = useToast();
+
+  const handleClick = () => {
+    console.log('toast');
+    showToast('Hello, this is a toast message!', 3000);
+  };
 
   return (
     <>
       <div className='flex w-[1368px] flex-col gap-6'>
+        <div className='p-4'>
+          <button
+            onClick={handleClick}
+            className='rounded bg-blue-500 px-4 py-2 text-white'
+          >
+            Show Toast
+          </button>
+        </div>
         <div className='flex w-full items-center justify-between'>
           <div className='flex'>
             {isOwnProfile ? (

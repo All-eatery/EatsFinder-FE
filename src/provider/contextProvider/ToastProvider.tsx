@@ -1,4 +1,4 @@
-// ToastContext.tsx
+'use client';
 import React, {
   createContext,
   useContext,
@@ -10,7 +10,7 @@ import React, {
 type Toast = {
   id: string;
   message: string;
-  duration?: number; // in milliseconds
+  duration?: number;
 };
 
 type ToastContextType = {
