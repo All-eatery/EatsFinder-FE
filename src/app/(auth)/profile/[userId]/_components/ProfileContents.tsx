@@ -8,6 +8,7 @@ import { ProfilePageProps } from '@/types/authType';
 import { TimeLineFilter } from './TimeLineFilter';
 import { useTimelineFilterState } from '@/app/(auth)/_hooks/useTimelineFilterState';
 import { useToast } from '@/provider/contextProvider/ToastProvider';
+import { error } from 'console';
 
 export const ProfileContents = ({
   isOwnProfile,
@@ -31,7 +32,7 @@ export const ProfileContents = ({
 
   const handleClick = () => {
     console.log('toast');
-    showToast('Hello, this is a toast message!', 3000);
+    showToast('Hello, this is a toast message!', 'success');
   };
 
   return (

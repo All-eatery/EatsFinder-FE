@@ -6,15 +6,15 @@ import React, {
   ReactNode,
   useCallback,
 } from 'react';
-
+type ToastMessageType = 'success' | 'error';
 type Toast = {
   id: string;
   message: string;
-  duration?: number;
+  type: ToastMessageType;
 };
 
 type ToastContextType = {
-  showToast: (message: string, duration?: number) => void;
+  showToast: (message: string, type: ToastMessageType) => void;
   removeToast: (id: string) => void;
   toasts: Toast[];
 };
@@ -24,13 +24,13 @@ const ToastContext = createContext<ToastContextType | null>(null);
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const showToast = useCallback((message: string, duration = 3000) => {
+  const showToast = useCallback((message: string, type: ToastMessageType) => {
     const id = Math.random().toString(36).substring(2, 15);
-    setToasts((prev) => [...prev, { id, message, duration }]);
+    setToasts((prev) => [...prev, { id, message, type }]);
 
     setTimeout(() => {
       removeToast(id);
-    }, duration);
+    }, 3000);
   }, []);
 
   const removeToast = useCallback((id: string) => {
