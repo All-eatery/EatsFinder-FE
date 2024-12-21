@@ -6,16 +6,13 @@ import { VariantProps, cva } from 'class-variance-authority';
 const ToastVariants = cva('rounded px-4 py-2 shadow-md transition-opacity ', {
   variants: {
     type: {
-      success: ' bg-primary-400 text-white',
-      error: ' bg-black text-white',
+      success: 'bg-primary-400 text-white',
+      error: 'bg-error text-white',
     },
   },
-  defaultVariants: {
-    type: 'success',
-  },
 });
-interface ToastMessageBoxProps extends VariantProps<typeof ToastVariants> {}
-export const ToastMessageBox = ({ type }: ToastMessageBoxProps) => {
+// interface ToastMessageBoxProps extends VariantProps<typeof ToastVariants> {}
+export const ToastMessageBox = () => {
   const { toasts, removeToast } = useToast();
 
   return (
@@ -23,7 +20,7 @@ export const ToastMessageBox = ({ type }: ToastMessageBoxProps) => {
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className={customTwMerge(ToastVariants({ type }))}
+          className={customTwMerge(ToastVariants({ type: toast.type }))}
           onClick={() => removeToast(toast.id)}
         >
           {toast.message}
