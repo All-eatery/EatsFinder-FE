@@ -22,7 +22,13 @@ import {
   signupSchema,
 } from '@/utils/zodSchema';
 import { useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/provider/contextProvider/ToastProvider';
+import { useRouter } from 'next/navigation';
+
 export const useLogin = () => {
+  const { showToast } = useToast();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -33,9 +39,24 @@ export const useLogin = () => {
   });
 
   const onSubmit: SubmitHandler<LoginFormType> = async (data) => {
-    const response = await login(data);
-    if (response) {
-      window.location.href = `${response.url}`;
+    try {
+      const response = await login(data);
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        showToast(responseData.message || '로그인에 실패했습니다.', 'error');
+        return;
+      }
+
+      showToast(responseData.message || '로그인에 성공했습니다.', 'success');
+
+      // 서버에서 전달받은 리다이렉트 URL로 이동
+      if (responseData.redirectUrl) {
+        router.push(responseData.redirectUrl);
+      }
+    } catch (error) {
+      showToast('서버와의 연결에 실패했습니다.', 'error');
+      console.error('Login error:', error);
     }
   };
 
