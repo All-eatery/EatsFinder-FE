@@ -44,6 +44,7 @@ export const useLogin = () => {
       const responseData = await response.json();
 
       if (!response.ok) {
+        console.log(responseData);
         showToast(responseData.message, 'error');
         return;
       }
@@ -51,7 +52,7 @@ export const useLogin = () => {
       showToast(responseData.message, 'success');
 
       if (responseData.redirectUrl) {
-        router.push(responseData.redirectUrl);
+        window.location.href = '/';
       }
     } catch (error) {
       showToast('서버와의 연결에 실패했습니다.', 'error');
@@ -66,6 +67,8 @@ export const useLogin = () => {
 };
 
 export const useSignup = () => {
+  const { showToast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -83,10 +86,10 @@ export const useSignup = () => {
     if (acceptPrivacyPolicy && acceptTerms && code) {
       const response = await signup(data);
       if (response.statusCode) {
-        alert(response.message);
+        showToast(response.message, 'error');
       }
       if (!response.statusCode) {
-        alert('회원가입이 완료되셨습니다.');
+        showToast('회원가입이 완료되셨습니다.', 'success');
         window.location.href = '/login';
       }
     }
