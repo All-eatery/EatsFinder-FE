@@ -141,6 +141,7 @@ export const useProfileEdit = (handler: () => void) => {
 };
 
 export const useChangePassword = () => {
+  const { showToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -152,8 +153,16 @@ export const useChangePassword = () => {
   const onSubmit: SubmitHandler<ChagePasswordType> = async (data) => {
     try {
       const response = await changePassword(data);
+      if (response.statusCode === 'ERROR') {
+        showToast('기존 비밀번호와 동일힙니다.', 'error');
+        return;
+      }
+      showToast(response.message, 'success');
     } catch (error) {
-      console.error('Error changing password:', error);
+      showToast(
+        '비밀번호 변경중 에러가 발생했습니다. 잠시후 다시 시도해 주세요.',
+        'error',
+      );
     }
   };
   return {
