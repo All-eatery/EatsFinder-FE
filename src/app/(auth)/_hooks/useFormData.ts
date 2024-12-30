@@ -44,19 +44,17 @@ export const useLogin = () => {
       const responseData = await response.json();
 
       if (!response.ok) {
-        showToast(responseData.message || '로그인에 실패했습니다.', 'error');
+        showToast(responseData.message, 'error');
         return;
       }
 
-      showToast(responseData.message || '로그인에 성공했습니다.', 'success');
+      showToast(responseData.message, 'success');
 
-      // 서버에서 전달받은 리다이렉트 URL로 이동
       if (responseData.redirectUrl) {
         router.push(responseData.redirectUrl);
       }
     } catch (error) {
       showToast('서버와의 연결에 실패했습니다.', 'error');
-      console.error('Login error:', error);
     }
   };
 
