@@ -17,6 +17,7 @@ export const MyFeed = ({ userId, isOwnProfile }: MyFeedProps) => {
     queryFn: ({ queryKey }) =>
       getUserFeeds({ id: Number(queryKey[1]), page: Number(queryKey[2]) }),
   });
+  console.log(data);
   if (error) {
     console.log('에러', error);
     return <div>피드를 가져오는 데 문제가 발생했습니다.</div>;

@@ -14,6 +14,7 @@ const buttonVariants = cva(
         grayStroke: 'border border-gray-300 text-gray-300',
         gray: 'bg-gray-100 text-gray-300',
         error: 'bg-error text-white',
+        dash: 'border border-dashed border-gary-100 bg-white text-gray-900 hover:bg-primary-25 active:bg-primary-500 active:text-white disabled:bg-gray-50 disabled:text-gray-100',
       },
       size: {
         mini: 'min-w-[80px] max-w-[140px] h-[35px] rounded-[20px] body-14',

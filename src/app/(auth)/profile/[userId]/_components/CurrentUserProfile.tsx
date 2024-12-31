@@ -1,15 +1,14 @@
 'use client';
 import { ProfileEdit } from './ProfileEdit';
 import { useToggleHandler } from '@/hooks/useToggleHandler';
-import { Profile } from './Profile';
 import { ProfilePageProps } from '@/types/authType';
+import { Profile } from './Profile';
 
 export const CurrentUserProfile = ({
   userData,
   isOwnProfile,
 }: ProfilePageProps) => {
   const { value: isEdit, handleValue: editHandler } = useToggleHandler();
-
   return (
     <>
       {isEdit ? (
@@ -19,6 +18,7 @@ export const CurrentUserProfile = ({
           handler={editHandler}
           userData={userData}
           isOwnProfile={isOwnProfile}
+          loggedInUserId={userData.id}
         />
       )}
     </>

@@ -21,6 +21,7 @@ export const POST = async (req: NextRequest) => {
   if (data.statusCode) {
     return redirect('/login?error=fail');
   }
+  console.log(data);
   const cookiesStore = cookies();
   const loginSaveState = cookiesStore.get('isLoginSave');
   const options: CookieOptions = {
