@@ -6,14 +6,13 @@ import { NoContent } from '@/components/atoms/noContent/NoContent';
 import { Pagination } from '@/components/molecules/pagination';
 import { simplifyTimeLineData } from '@/utils/simplifyTimeLineData';
 interface TimelineProps {
-  timelineFilter: string[];
+  timelineFilter: string;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 export const Timeline = ({ timelineFilter, page, setPage }: TimelineProps) => {
-  const filter = timelineFilter.length > 1 ? 'ALL' : timelineFilter[0];
   const { data, error, isLoading } = useQuery({
-    queryKey: ['timeline', filter, page],
+    queryKey: ['timeline', timelineFilter, page],
     queryFn: ({ queryKey }) =>
       getMyActives(String(queryKey[1]), Number(queryKey[2])),
   });
