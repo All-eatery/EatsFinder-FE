@@ -69,18 +69,18 @@ export const getMyActives = async (
 export const getUserFeeds = async ({
   id,
   page,
-  isOwnFeeds,
+  isOwnProfile,
 }: {
   id: number;
   page: number;
-  isOwnFeeds: boolean;
+  isOwnProfile: boolean;
 }): Promise<PaginationFeedType> => {
-  const url = isOwnFeeds ? 'users/feeds' : `users/feeds/${id}`;
+  const url = isOwnProfile ? 'users/feeds' : `users/feeds/${id}`;
   const token = await getUserToken();
   const headers: { accept: string; Authorization?: string } = {
     accept: '*/*',
   };
-  if (isOwnFeeds && token) {
+  if (isOwnProfile && token) {
     headers.Authorization = `Bearer ${token}`;
   }
   const size = 10;
