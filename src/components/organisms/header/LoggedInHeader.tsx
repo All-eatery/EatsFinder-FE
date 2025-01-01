@@ -20,8 +20,6 @@ export const LoggedInHeader = ({ loginStateHanlder }: LoggedInHeaderProps) => {
     queryFn: () => getUserInfo(),
     staleTime: Infinity,
   });
-  //새로고침시 가져오는동안 비어있는거 어떻게 해야하는가? 시간이 꽤 걸림....
-  if (isLoading) return;
 
   return (
     <div className='flex items-center gap-6'>
@@ -31,13 +29,19 @@ export const LoggedInHeader = ({ loginStateHanlder }: LoggedInHeaderProps) => {
         ref={dropdownRef}
         onClick={dropdownHanlder}
       >
-        <ProfileImage src={data?.profileImage} size={50} />
-        {isDropdownOpen && (
-          <UserDropdownMenu
-            userId={String(data?.id)}
-            openLogoutModal={openLogoutModal}
-            dropdownHanlder={dropdownHanlder}
-          />
+        {isLoading ? (
+          <div className='h-[50px] w-[50px] rounded-full border'></div>
+        ) : (
+          <>
+            <ProfileImage src={data?.profileImage} size={50} />
+            {isDropdownOpen && (
+              <UserDropdownMenu
+                userId={String(data?.id)}
+                openLogoutModal={openLogoutModal}
+                dropdownHanlder={dropdownHanlder}
+              />
+            )}
+          </>
         )}
         <Modal
           isOpen={isModalOpen}
