@@ -84,7 +84,6 @@ export const useSignup = () => {
 };
 export const useProfileEdit = (handler: () => void) => {
   const queryClient = useQueryClient();
-
   const {
     register,
     handleSubmit,
