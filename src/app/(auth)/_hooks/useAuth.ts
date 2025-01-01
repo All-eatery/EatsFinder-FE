@@ -1,4 +1,5 @@
 import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
+import { useToast } from '@/provider/contextProvider/ToastProvider';
 import {
   ChagePasswordType,
   DeleteAccountType,
@@ -9,6 +10,8 @@ import {
 } from '@/types/authType';
 import { SignupType } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
+import { urlToFile } from '@/utils/urlToFile';
+import { error } from 'console';
 import { UseFormSetValue, UseFormTrigger, UseFormWatch } from 'react-hook-form';
 const accessToken = getUserToken();
 
@@ -62,6 +65,7 @@ type isDuplicatedNicknameProps = {
   watch: UseFormWatch<SignupFormType>;
 };
 export const useNicknameDuplicateCheck = () => {
+  const { showToast } = useToast();
   const handleNicknameChecker = async ({
     watch,
     setValue,
@@ -71,23 +75,18 @@ export const useNicknameDuplicateCheck = () => {
     if (response.error) {
       setValue('nicknameDuplicated', false);
       trigger('nicknameDuplicated');
-      console.log(response.message);
+      showToast(response.message, 'error');
     } else {
       setValue('nicknameDuplicated', true);
       trigger('nicknameDuplicated');
-      console.log(response.message);
+      showToast(response.message, 'success');
     }
   };
   return { handleNicknameChecker };
 };
-const urlToFile = async (url: string, filename: string): Promise<File> => {
-  const response = await fetch(url);
-  const blob = await response.blob();
-  return new File([blob], filename, { type: blob.type });
-};
+
 export const editUserProfile = async (data: ProfileEditType) => {
   const { nickname, phoneNumber, profileImage } = data;
-  console.log('data', data);
   const formData = new FormData();
   formData.append('nickname', nickname);
   formData.append('phoneNumber', phoneNumber);
@@ -95,33 +94,22 @@ export const editUserProfile = async (data: ProfileEditType) => {
     const file = await urlToFile(profileImage, 'profile.png');
     formData.append('profileImage', file);
   }
-  try {
-    const token = await accessToken;
-    if (!token) {
-      throw new Error('Access token is missing');
-    }
-    console.log(Array.from(formData.entries()));
-    console.log('@@@@', token);
-
-    const response = await fetch(`${KOTLIN_SERVER}/users`, {
-      method: 'PATCH',
-      headers: {
-        accept: '*/*',
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
-    const data = await response.json();
-    console.log('res', data);
-    if (!response.ok) {
-      console.log('!@#!@#@!#', Object.keys(data.data)[0]);
-      // throw new Error(`Server responded with status: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error occurred:', error);
+  const token = await accessToken;
+  if (!token) {
+    throw new Error('Access token is missing');
   }
+  console.log(Array.from(formData.entries()));
+
+  const response = await fetch(`${KOTLIN_SERVER}/users`, {
+    method: 'PATCH',
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  return response;
 };
 
 export const changePassword = async (data: ChagePasswordType) => {
