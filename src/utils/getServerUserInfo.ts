@@ -1,13 +1,15 @@
 'use server';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 import { cookies } from 'next/headers';
 
-export const getServerUserInfo = async (): Promise<UserData | undefined> => {
+export const getServerUserInfo = async (): Promise<
+  UserDatatype | undefined
+> => {
   const data = cookies().get('userInfo');
   if (!data) {
     return undefined;
   }
-  const userInfo: UserData = await JSON.parse(data.value);
+  const userInfo: UserDatatype = await JSON.parse(data.value);
   return userInfo;
 };
 export const getUserToken = async () => {

@@ -3,7 +3,7 @@ import { Button, ProfileImage } from '@/components/atoms';
 import { ProfileInfo } from './ProfileInfo';
 import { UserProfileStats } from './UserProfileStats';
 import { addDashes } from '@/utils/formatPhoneNumber';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 import { useQuery } from '@tanstack/react-query';
 import { checkFollow } from '@/api/profile';
 import { SocialActionButton } from './SocialActionButton';
@@ -11,7 +11,7 @@ import Loading from '@/components/atoms/loading/Loading';
 type ProfileProps = {
   loggedInUserId?: number;
   handler?: () => void;
-  userData: UserData;
+  userData: UserDatatype;
   isOwnProfile: boolean;
 };
 export const Profile = ({

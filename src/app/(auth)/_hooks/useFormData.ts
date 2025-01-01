@@ -128,7 +128,9 @@ export const useProfileEdit = (handler: () => void) => {
         return;
       }
       console.log('성공 데이터', data);
-      queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+      queryClient.invalidateQueries({
+        queryKey: ['userProfile', 'LoggedInUserInfo'],
+      });
       showToast(data.message, 'success');
       handler();
     } catch (error) {

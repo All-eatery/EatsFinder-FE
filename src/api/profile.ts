@@ -4,7 +4,7 @@ import {
   FollowStatusType,
   FollowDataType,
   PaginationFeedType,
-  UserData,
+  UserDatatype,
   PaginationActiveType,
 } from '@/types/authType';
 import { getServerUserInfo, getUserToken } from '@/utils/getServerUserInfo';
@@ -14,7 +14,7 @@ type Result<T, E> =
 
 export const getUserProfile = async (
   id: number,
-): Promise<Result<UserData, string>> => {
+): Promise<Result<UserDatatype, string>> => {
   try {
     const response = await fetch(`${KOTLIN_SERVER}/users/${id}`, {
       method: 'GET',
@@ -31,7 +31,7 @@ export const getUserProfile = async (
     return { isSuccess: false, error: '유저정보조회 에러' };
   }
 };
-export const getLoggedInUserProfile = async (): Promise<UserData> => {
+export const getLoggedInUserProfile = async (): Promise<UserDatatype> => {
   const token = await getUserToken();
 
   const response = await fetch(`${KOTLIN_SERVER}/users`, {
