@@ -1,8 +1,6 @@
 'use client';
-import { getLoggedInUserProfile, getUserProfile } from '@/api/profile';
 import { MyProfile } from './MyProfile';
 import { UserProfile } from './UserProfile';
-import { useQuery } from '@tanstack/react-query';
 type Props = {
   userId: number;
   loggedInUserId?: number;

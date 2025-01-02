@@ -20,7 +20,7 @@ export const UserDropdownMenu = ({
   const UserDropdownOptions = useMemo<UserDropdownOptionProps[]>(
     () => [
       { label: '내 프로필', href: '/profile/', slug: userId },
-      { label: '내 계정', href: '/myaccount/', slug: userId },
+      { label: '내 계정', href: '/myaccount/' },
       { label: '공지사항', href: '/notices' },
       { label: '기타 설정', href: '/settings' },
       { label: '1:1 문의하기', href: '/support' },

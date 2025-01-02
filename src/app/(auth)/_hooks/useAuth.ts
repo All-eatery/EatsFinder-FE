@@ -1,4 +1,5 @@
 import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
+import { useToast } from '@/provider/contextProvider/ToastProvider';
 import {
   ChagePasswordType,
   DeleteAccountType,
@@ -9,6 +10,8 @@ import {
 } from '@/types/authType';
 import { SignupType } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
+import { urlToFile } from '@/utils/urlToFile';
+import { error } from 'console';
 import { UseFormSetValue, UseFormTrigger, UseFormWatch } from 'react-hook-form';
 const accessToken = getUserToken();
 
@@ -62,6 +65,7 @@ type isDuplicatedNicknameProps = {
   watch: UseFormWatch<SignupFormType>;
 };
 export const useNicknameDuplicateCheck = () => {
+  const { showToast } = useToast();
   const handleNicknameChecker = async ({
     watch,
     setValue,
@@ -71,20 +75,16 @@ export const useNicknameDuplicateCheck = () => {
     if (response.error) {
       setValue('nicknameDuplicated', false);
       trigger('nicknameDuplicated');
-      console.log(response.message);
+      showToast(response.message, 'error');
     } else {
       setValue('nicknameDuplicated', true);
       trigger('nicknameDuplicated');
-      console.log(response.message);
+      showToast(response.message, 'success');
     }
   };
   return { handleNicknameChecker };
 };
-const urlToFile = async (url: string, filename: string): Promise<File> => {
-  const response = await fetch(url);
-  const blob = await response.blob();
-  return new File([blob], filename, { type: blob.type });
-};
+
 export const editUserProfile = async (data: ProfileEditType) => {
   const { nickname, phoneNumber, profileImage } = data;
   console.log('data', data);
