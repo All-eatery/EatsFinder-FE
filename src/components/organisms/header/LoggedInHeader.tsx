@@ -18,7 +18,6 @@ export const LoggedInHeader = ({ loginStateHanlder }: LoggedInHeaderProps) => {
   const { data, isLoading } = useQuery({
     queryKey: ['LoggedInUserInfo'],
     queryFn: () => getUserInfo(),
-    staleTime: Infinity,
   });
 
   return (
