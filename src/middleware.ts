@@ -12,6 +12,7 @@ const authPages = [
   '/settings',
   '/support',
   '/delete-account',
+  '/post',
   '/myeats',
 ];
 //탈퇴 마이잇츠 게시글 작성/수정
@@ -50,6 +51,7 @@ export const config = {
     '/settings',
     '/support',
     '/delete-account',
+    '/post/:path*',
     '/myeats',
   ],
 };

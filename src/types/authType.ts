@@ -1,4 +1,4 @@
-export type UserData = {
+export type UserDatatype = {
   id: number;
   nickname: string;
   email: string;
@@ -10,7 +10,7 @@ export type UserData = {
   userType?: string;
 };
 export type UserProfile = {
-  userData: UserData;
+  userData: UserDatatype;
 };
 export type ProfileProps = {
   loggedInUserId?: number;
@@ -20,7 +20,7 @@ export type ProfileProps = {
 
 export type ProfilePageProps = {
   loggedInUserId?: number;
-  userData: UserData;
+  userData: UserDatatype;
   isOwnProfile: boolean;
 };
 export type LoginFormType = {

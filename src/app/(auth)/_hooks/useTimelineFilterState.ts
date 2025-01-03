@@ -1,13 +1,11 @@
 import { useState } from 'react';
-const initailValue = ['COMMENT', 'LIKE'];
-export const useTimelineFilterState = () => {
-  const [TimelineFilter, setTimelineFilter] = useState(initailValue);
+export const useTimelineFilterState = (
+  setPage: React.Dispatch<React.SetStateAction<number>>,
+) => {
+  const [TimelineFilter, setTimelineFilter] = useState('ALL');
   const handleFileterState = (value: string) => {
-    setTimelineFilter((prev) =>
-      prev.includes(value)
-        ? prev.filter((item) => item !== value)
-        : [...prev, value],
-    );
+    setTimelineFilter(value);
+    setPage(0);
   };
   return { TimelineFilter, handleFileterState };
 };

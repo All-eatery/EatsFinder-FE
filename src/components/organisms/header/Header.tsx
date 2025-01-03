@@ -2,15 +2,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AuthHeader } from '@/app/(auth)/_components/AuthHeader';
-import { Button, NavLink, ProfileImage } from '@/components/atoms';
+import { Button, NavLink } from '@/components/atoms';
 import { LogoImgSVG } from '@/components/svg/LogoSVG';
-import { UserDropdownMenu } from '@/components/molecules/userDropdownMenu/UserDropdownMenu';
-import { useDropdownHandler } from '@/hooks/useDropdownHandler';
-import { Modal } from '..';
+import { LoggedInHeader } from '..';
 import { useEffect, useState } from 'react';
-import { AlarmBellSVG } from '@/components/svg/AlarmBellSVG';
-import { UserData } from '@/types/authType';
-import { useLogoutModal } from '@/app/(auth)/_hooks/useModal';
+import { UserDatatype } from '@/types/authType';
 import { PostingButton } from '@/components/atoms/postingButton/PostingButton';
 
 const NAV_DATA = [
@@ -32,7 +28,7 @@ const NAV_DATA = [
   },
 ];
 type HeaderProps = {
-  userInfo: UserData | undefined;
+  userInfo: UserDatatype | undefined;
 };
 export const Header = ({ userInfo }: HeaderProps) => {
   const path = usePathname();
@@ -43,9 +39,7 @@ export const Header = ({ userInfo }: HeaderProps) => {
       localStorage.setItem('userInfo', JSON.stringify(userInfo));
     }
   }, [userInfo]);
-  const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
-  const { closeModal, isModalOpen, logoutButton, openLogoutModal } =
-    useLogoutModal();
+
   if (path.startsWith('/login') || path.startsWith('/signup')) {
     return <AuthHeader />;
   }
@@ -71,33 +65,7 @@ export const Header = ({ userInfo }: HeaderProps) => {
           </ul>
         </div>
         {isLoggedIn ? (
-          <div className='flex items-center gap-6'>
-            <AlarmBellSVG />
-            <div
-              className='relative cursor-pointer'
-              ref={dropdownRef}
-              onClick={dropdownHanlder}
-            >
-              <ProfileImage src={userInfo?.profileImage} size={50} />
-              {isDropdownOpen && (
-                <UserDropdownMenu
-                  userId={String(userInfo!.id)}
-                  openLogoutModal={openLogoutModal}
-                  dropdownHanlder={dropdownHanlder}
-                />
-              )}
-              <Modal
-                isOpen={isModalOpen}
-                onClose={() => closeModal}
-                title='로그아웃'
-                description='로그아웃하시려면 확인을 눌러주세요.'
-                subButton='취소'
-                onMainClick={() => logoutButton(setIsLoggedIn)}
-                onSubClick={closeModal}
-                mainButton='확인'
-              />
-            </div>
-          </div>
+          <LoggedInHeader loginStateHanlder={setIsLoggedIn} />
         ) : (
           <Button size={'mini'}>
             <Link href={'/login'}>로그인</Link>

@@ -4,12 +4,12 @@ import { useImageInput } from '@/app/(auth)/_hooks/useImageInput';
 import { Button, ProfileImage } from '@/components/atoms';
 import { TextField } from '@/components/atoms/textField';
 import { EditSVG } from '@/components/svg/EditSVG';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 type ProfileEditProps = {
   handler: () => void;
-  userData: UserData;
+  userData: UserDatatype;
 };
 export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
   const { nickname, phoneNumber, profileImage } = userData;
