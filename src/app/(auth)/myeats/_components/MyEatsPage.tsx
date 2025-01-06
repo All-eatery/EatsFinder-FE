@@ -7,7 +7,6 @@ import { ParamsProps } from '@/types/paramsType';
 export const MyEatsPage = ({ searchParams }: ParamsProps) => {
   const tab = searchParams!.tab as string;
   const view = searchParams!.view as string;
-  console.log(view);
   return (
     <div className='flex w-[1440px] flex-col'>
       <div className='mb-[60px] flex'>

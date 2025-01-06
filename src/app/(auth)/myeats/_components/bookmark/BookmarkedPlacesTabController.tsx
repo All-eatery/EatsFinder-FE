@@ -71,7 +71,7 @@ export const BookmarkedPlacesTabController = ({
                 </div>
                 <BookmarkedPlacesTab
                   active={!!list}
-                >{`${listName}${count}`}</BookmarkedPlacesTab>
+                >{`${list}(${count})`}</BookmarkedPlacesTab>
               </>
             )}
           </div>
@@ -98,3 +98,4 @@ export const BookmarkedPlacesTabController = ({
     </div>
   );
 };
+//TODO: 컨트롤러 상태관리
