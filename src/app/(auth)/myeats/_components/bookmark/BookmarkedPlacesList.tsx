@@ -45,8 +45,7 @@ export const BookmarkedPlacesList = () => {
     openModal: openCreateNewListModal,
     handleNewListName,
   } = createNewListModal();
-  const handleCardClick = (id: string) => {
-    //url을 통해 data를 가져오는게 아닌데 유효할까?
+  const handleCardClick = (id: number) => {
     if (select) return;
     const currentParams = new URLSearchParams(window.location.search);
 
@@ -78,7 +77,7 @@ export const BookmarkedPlacesList = () => {
                   key={item.id}
                   ref={isLastItem ? lastElementRef : null}
                   onClick={() => {
-                    handleCardClick(item.title);
+                    handleCardClick(item.id);
                     checkHandler(item.id);
                   }}
                 >
