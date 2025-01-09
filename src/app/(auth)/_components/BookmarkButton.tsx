@@ -9,7 +9,7 @@ import { Button, Checkbox, TextField } from '@/components/atoms';
 import Loading from '@/components/atoms/loading/Loading';
 import { Modal } from '@/components/organisms';
 import { AddSVG } from '@/components/svg/AddSVG';
-import { BookmarkedLisdtsType } from '@/types/bookmarkType';
+import { BookmarkedListsType } from '@/types/bookmarkType';
 import {
   useMutation,
   useInfiniteQuery,
@@ -84,7 +84,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
   };
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<BookmarkedLisdtsType>({
+    useInfiniteQuery<BookmarkedListsType>({
       queryKey: ['bookmarkModal'],
       queryFn: ({ pageParam = 0 }) => getBookmarkList(pageParam as number),
       initialPageParam: 0,

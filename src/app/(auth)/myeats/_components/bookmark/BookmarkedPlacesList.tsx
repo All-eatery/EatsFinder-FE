@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BookmarkedListCard } from './BookmarkedListCard';
 import { getBookmarkList } from '@/api/bookmark';
-import { BookmarkedLisdtsType } from '@/types/bookmarkType';
+import { BookmarkedListsType } from '@/types/bookmarkType';
 import { Button, TextField } from '@/components/atoms';
 import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
 import Loading from '@/components/atoms/loading/Loading';
@@ -14,11 +14,13 @@ import {
   useDeleteListModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { useHandleCheckBox } from '@/app/(auth)/_hooks/useHandleCheckBox';
+import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
 
 export const BookmarkedPlacesList = () => {
   const params = useSearchParams();
   const select = params.get('select');
   const router = useRouter();
+  const { setTotalLists, setListName } = useBookmarkContext();
   const {
     data,
     status,
@@ -27,7 +29,7 @@ export const BookmarkedPlacesList = () => {
     hasNextPage,
     lastElementRef,
     isLoadMoreMode,
-  } = useInfiniteScrollPer3<BookmarkedLisdtsType>({
+  } = useInfiniteScrollPer3<BookmarkedListsType>({
     queryKey: ['myBookmarks'],
     queryFn: (cursor) => getBookmarkList(cursor),
     getNextPageParam: (lastPage) => lastPage.lastItemId,
@@ -45,7 +47,7 @@ export const BookmarkedPlacesList = () => {
     openModal: openCreateNewListModal,
     handleNewListName,
   } = createNewListModal();
-  const handleCardClick = (id: number) => {
+  const handleCardClick = (id: number, title: string) => {
     if (select) return;
     const currentParams = new URLSearchParams(window.location.search);
 
@@ -55,12 +57,14 @@ export const BookmarkedPlacesList = () => {
       searchParams: Object.fromEntries(currentParams),
     });
 
+    setListName(title);
     router.push(`?${newParams.toString()}`);
   };
   const { checkAllHandler, checkHandler, isChecked } = useHandleCheckBox();
 
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
+  setTotalLists(data!.pages[0].pagination.totalItems);
 
   return (
     <div>
@@ -77,7 +81,7 @@ export const BookmarkedPlacesList = () => {
                   key={item.id}
                   ref={isLastItem ? lastElementRef : null}
                   onClick={() => {
-                    handleCardClick(item.id);
+                    handleCardClick(item.id, item.title);
                     checkHandler(item.id);
                   }}
                 >

@@ -1,4 +1,4 @@
-export type BookmarkedLisdtsType = {
+export type BookmarkedListsType = {
   pagination: {
     totalItems: number;
     itemsPerPage: number;

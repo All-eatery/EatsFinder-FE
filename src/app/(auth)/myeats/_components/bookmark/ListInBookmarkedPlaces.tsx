@@ -8,7 +8,7 @@ import {
   useMovePlacesInListModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
-import { BookmarkedLisdtsType, ListInPlacesType } from '@/types/bookmarkType';
+import { BookmarkedListsType, ListInPlacesType } from '@/types/bookmarkType';
 import { getBookmarkList, getBookmarkPlaces } from '@/api/bookmark';
 import Loading from '@/components/atoms/loading/Loading';
 import Link from 'next/link';
@@ -17,12 +17,14 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import { StickyBox } from '@/components/atoms/stickyBox';
 import { BookmarkModalCard } from '@/components/molecules/bookmarkCard';
+import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
 
 export const ListInBookmarkedPlaces = () => {
   const searchParams = useSearchParams();
   const select = searchParams.get('select');
   const id = searchParams.get('list');
   const listId = parseInt(id!);
+  const { setListName, setListCount } = useBookmarkContext();
   const {
     closeModal: closeMoveModal,
     confirmButton: moveConfirmButton,
@@ -57,7 +59,7 @@ export const ListInBookmarkedPlaces = () => {
     fetchNextPage,
     hasNextPage: modalHasNextPage,
     isFetchingNextPage: modalIsFetchingNextPage,
-  } = useInfiniteQuery<BookmarkedLisdtsType>({
+  } = useInfiniteQuery<BookmarkedListsType>({
     queryKey: ['bookmarkModal'],
     queryFn: ({ pageParam = 0 }) => getBookmarkList(pageParam as number),
     initialPageParam: 0,
@@ -68,7 +70,7 @@ export const ListInBookmarkedPlaces = () => {
   });
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
-
+  setListCount(data!.pages[0].pagination.totalItems);
   return (
     <div>
       <div className='relative'>
