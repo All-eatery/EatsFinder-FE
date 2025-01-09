@@ -1,3 +1,4 @@
+'use client';
 import React, { createContext, useContext, useState } from 'react';
 
 interface BookmarkContextType {
@@ -5,6 +6,8 @@ interface BookmarkContextType {
   setTotalItems: (count: number) => void;
   listCount: number;
   setListCount: (count: number) => void;
+  totalLists: number;
+  setTotalLists: (count: number) => void;
   listName: string;
   setListName: (name: string) => void;
 }
@@ -19,6 +22,7 @@ export const BookmarkProvider = ({
   children: React.ReactNode;
 }) => {
   const [totalItems, setTotalItems] = useState(0);
+  const [totalLists, setTotalLists] = useState(0);
   const [listCount, setListCount] = useState(0);
   const [listName, setListName] = useState('');
   return (
@@ -26,6 +30,8 @@ export const BookmarkProvider = ({
       value={{
         totalItems,
         setTotalItems,
+        totalLists,
+        setTotalLists,
         listCount,
         setListCount,
         listName,
@@ -37,10 +43,12 @@ export const BookmarkProvider = ({
   );
 };
 
-export const useBookmark = () => {
+export const useBookmarkContext = () => {
   const context = useContext(BookmarkContext);
   if (context === undefined) {
-    throw new Error('useBookmark must be used within a BookmarkProvider');
+    throw new Error(
+      'useBookmarkContext must be used within a BookmarkProvider',
+    );
   }
   return context;
 };
