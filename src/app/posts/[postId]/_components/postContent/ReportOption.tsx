@@ -1,18 +1,29 @@
 import { InputHTMLAttributes } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 interface ReportOptionProps extends InputHTMLAttributes<HTMLInputElement> {
-  name: string;
-  value: string;
   label: string;
+  register?: UseFormRegisterReturn<
+    | 'others'
+    | 'closed'
+    | 'differentPlace'
+    | 'differentMenu'
+    | 'sameReview'
+    | 'differentPrice'
+    | 'abusive'
+    | 'spam'
+    | 'porno'
+    | 'offensive'
+    | 'harmful'
+  >;
 }
 
-const ReportOption = ({ name, value, label, ...props }: ReportOptionProps) => {
+const ReportOption = ({ label, register, ...props }: ReportOptionProps) => {
   return (
     <label className='mt-6 cursor-pointer body-20'>
       <input
         className='mr-2 h-4 w-4 cursor-pointer'
-        type='radio'
-        name={name}
-        value={value}
+        type='checkbox'
+        {...register}
         {...props}
       />
       {label}
