@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/atoms';
 import { HomeSection, FeedCard } from '@/components/molecules';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
