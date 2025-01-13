@@ -10,7 +10,6 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 import { useEmailConfirm } from '../../_hooks/useEmailConfirm';
-import path from 'path';
 
 // 제네릭을 활용한 타입 정의, T는 FieldValues를 상속
 type ConfirmEmailProps<T extends FieldValues> = {

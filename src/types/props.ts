@@ -29,3 +29,6 @@ export type SVGCheckProps = {
   size?: 'regular' | 'large';
   color?: 'default' | 'green' | 'orange';
 };
+export type SVGRadioProps = {
+  isChecked: boolean;
+};

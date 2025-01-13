@@ -87,7 +87,6 @@ export const useNicknameDuplicateCheck = () => {
 
 export const editUserProfile = async (data: ProfileEditType) => {
   const { nickname, phoneNumber, profileImage } = data;
-  console.log('data', data);
   const formData = new FormData();
   formData.append('nickname', nickname);
   formData.append('phoneNumber', phoneNumber);
@@ -95,33 +94,22 @@ export const editUserProfile = async (data: ProfileEditType) => {
     const file = await urlToFile(profileImage, 'profile.png');
     formData.append('profileImage', file);
   }
-  try {
-    const token = await accessToken;
-    if (!token) {
-      throw new Error('Access token is missing');
-    }
-    console.log(Array.from(formData.entries()));
-    console.log('@@@@', token);
-
-    const response = await fetch(`${KOTLIN_SERVER}/users`, {
-      method: 'PATCH',
-      headers: {
-        accept: '*/*',
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
-    const data = await response.json();
-    console.log('res', data);
-    if (!response.ok) {
-      console.log('!@#!@#@!#', Object.keys(data.data)[0]);
-      // throw new Error(`Server responded with status: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Error occurred:', error);
+  const token = await accessToken;
+  if (!token) {
+    throw new Error('Access token is missing');
   }
+  console.log(Array.from(formData.entries()));
+
+  const response = await fetch(`${KOTLIN_SERVER}/users`, {
+    method: 'PATCH',
+    headers: {
+      accept: '*/*',
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  return response;
 };
 
 export const changePassword = async (data: ChagePasswordType) => {

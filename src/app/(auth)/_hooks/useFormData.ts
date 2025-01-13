@@ -105,8 +105,8 @@ export const useSignup = () => {
   };
 };
 export const useProfileEdit = (handler: () => void) => {
+  const { showToast } = useToast();
   const queryClient = useQueryClient();
-
   const {
     register,
     handleSubmit,
@@ -120,13 +120,21 @@ export const useProfileEdit = (handler: () => void) => {
   });
 
   const onSubmit: SubmitHandler<ProfileEditType> = async (formData) => {
-    handler();
-
-    const response = await editUserProfile(formData);
-    const data = await response.json();
-    if (data.statusCode === 'SUCCESS') {
-      queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+    try {
+      const response = await editUserProfile(formData);
+      const data = await response.json();
+      if (data.statusCode === 'ERROR') {
+        showToast(Object.keys(data.data)[0], 'error');
+        return;
+      }
+      console.log('성공 데이터', data);
+      queryClient.invalidateQueries({
+        queryKey: ['userProfile', 'LoggedInUserInfo'],
+      });
+      showToast(data.message, 'success');
       handler();
+    } catch (error) {
+      showToast('서버에서 에러가 발생했습니다.', 'error');
     }
   };
 

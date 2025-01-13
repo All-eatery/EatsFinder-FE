@@ -1,4 +1,4 @@
-export type UserData = {
+export type UserDatatype = {
   id: number;
   nickname: string;
   email: string;
@@ -10,7 +10,7 @@ export type UserData = {
   userType?: string;
 };
 export type UserProfile = {
-  userData: UserData;
+  userData: UserDatatype;
 };
 export type ProfileProps = {
   loggedInUserId?: number;
@@ -20,7 +20,7 @@ export type ProfileProps = {
 
 export type ProfilePageProps = {
   loggedInUserId?: number;
-  userData: UserData;
+  userData: UserDatatype;
   isOwnProfile: boolean;
 };
 export type LoginFormType = {
@@ -174,7 +174,7 @@ export type ActiveCommentType = {
   content: string; //댓글 내용
 };
 export type ActiveReplyType = {
-  id: number; //대댓글 고유 id
+  id: number; //답글 고유 id
   commentId: number; //댓글 id
   commentDeletedAt: string | null;
   createdBy: {
@@ -191,7 +191,7 @@ export type ActiveReplyLikeType = {
     replyUserNickname: string;
     replyImageUrl: string;
   };
-  replyContent: string; //좋아요누른 대댓글
+  replyContent: string; //좋아요누른 답글
 };
 
 export type SimplifiedData = {

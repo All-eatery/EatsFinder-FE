@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { SocialActionButton } from './SocialActionButton';
+import { logoImg } from '@/constants/logo';
 export const sampleImg =
   'https://lh3.googleusercontent.com/a/ACg8ocL5qL_KbAxVIQMCT7KSAb4JqtAcYMl9mGBwcdJhtPl9owCW1A=s96-c';
 type FollowUserProps = {
@@ -18,7 +19,7 @@ export const FollowUser = ({
   isFollowed,
 }: FollowUserProps) => {
   if (!image) {
-    image = sampleImg;
+    image = logoImg;
   }
 
   return (
