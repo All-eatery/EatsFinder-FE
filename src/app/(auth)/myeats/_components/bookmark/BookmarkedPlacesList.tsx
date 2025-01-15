@@ -70,7 +70,7 @@ export const BookmarkedPlacesList = () => {
     <div>
       <div>
         {data?.pages.map((page, pageIndex) => (
-          <div key={pageIndex} className='flex flex-col gap-4'>
+          <div key={pageIndex} className='grid grid-cols-2 gap-6'>
             {page.items.map((item, index) => {
               const isLastItem =
                 pageIndex === data.pages.length - 1 &&

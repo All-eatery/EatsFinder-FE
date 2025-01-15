@@ -1,3 +1,4 @@
+import { BookmarkButton } from '@/app/(auth)/_components/BookmarkButton';
 import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
 import { Checkbox } from '@/components/atoms';
 import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
@@ -13,6 +14,7 @@ interface BookmarkedPlaceCard {
   isSeleceted?: boolean;
 }
 export const BookmarkedPlaceCard = ({
+  id,
   src,
   address,
   category,
@@ -42,6 +44,7 @@ export const BookmarkedPlaceCard = ({
           <p className='text-gray-500 body-16'>{address}</p>
         </div>
       </div>
+      <BookmarkButton placeId={id} />
     </div>
   );
 };

@@ -87,10 +87,7 @@ export const BookmarkedListCard = ({
           <Checkbox variant='Checkbox_Ver2' checked={isSeleceted} />
         </div>
       )}
-      <div
-        // onClick={a}
-        className='flex h-[184px] w-full cursor-pointer items-center justify-start gap-6 p-5'
-      >
+      <div className='flex h-[184px] w-full cursor-pointer items-center justify-start gap-6 p-5'>
         <div className='grid h-36 w-[254px] grid-cols-2 grid-rows-2 gap-1'>
           {renderListImages()}
         </div>

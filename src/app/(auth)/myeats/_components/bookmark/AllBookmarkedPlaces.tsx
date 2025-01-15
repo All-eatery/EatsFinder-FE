@@ -3,7 +3,7 @@ import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
 
 export const AllBookmarkedPlaces = () => {
   return (
-    <div className='flex flex-col gap-9'>
+    <div className='grid grid-cols-2 gap-6'>
       <BookmarkedPlaceCard
         src={url}
         address='ㅇㄴㄴㅇ'
