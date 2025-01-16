@@ -17,8 +17,11 @@ import {
 } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { BookmarkModalCard } from '../../../components/molecules/bookmarkCard';
-
-export const BookmarkButton = ({ placeId }: { placeId: number }) => {
+interface BookmarkButtonProps {
+  placeId: number;
+  isMarked: boolean;
+}
+export const BookmarkButton = ({ placeId, isMarked }: BookmarkButtonProps) => {
   const [active, setIsActive] = useState(false);
   const [color, setColor] = useState('#0D0D0D');
   const [newListName, setNewListName] = useState('');
@@ -100,7 +103,7 @@ export const BookmarkButton = ({ placeId }: { placeId: number }) => {
 
   return (
     <>
-      <Checkbox variant='bookmark' onClick={openModal} />
+      <Checkbox variant='bookmark' checked={isMarked} onClick={openModal} />
       <Modal
         isOpen={isModalOpen}
         mainButton='확인'

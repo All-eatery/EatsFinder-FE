@@ -44,7 +44,7 @@ export const BookmarkedPlaceCard = ({
           <p className='text-gray-500 body-16'>{address}</p>
         </div>
       </div>
-      <BookmarkButton placeId={id} />
+      <BookmarkButton placeId={id} isMarked={true} />
     </div>
   );
 };

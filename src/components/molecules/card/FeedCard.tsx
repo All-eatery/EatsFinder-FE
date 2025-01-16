@@ -27,7 +27,7 @@ export const FeedCard = ({ onClick }: FeedCardProps) => {
         </div>
         <div className='flex w-9 flex-col items-center justify-center'>
           {/* <Checkbox variant='fav' /> */}
-          <BookmarkButton placeId={8} />
+          <BookmarkButton placeId={8} isMarked={true} />
           <span className='text-gray-600 body-14'>2400</span>
         </div>
       </div>
