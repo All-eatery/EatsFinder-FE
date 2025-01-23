@@ -27,7 +27,9 @@ export const getBookmarkList = async (cursor: number) => {
       },
     },
   );
-  return response.json();
+  const data = response.json();
+  console.log('bookmarkres', await data);
+  return data;
 };
 
 export const renameBookmarkList = async (id: number, title: string) => {

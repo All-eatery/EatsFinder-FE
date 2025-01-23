@@ -10,7 +10,6 @@ export const MyProfile = ({ isOwnProfile, userId }: ProfileProps) => {
     queryKey: ['userProfile', userId],
     queryFn: () => getLoggedInUserProfile(),
   });
-  console.log('myprofile$#@%$#@^%#$&^^&($#%$#^UIO(*&^%$#HJGFMKIU(KR^ETGW');
   if (isLoading) return <Loading />;
 
   return (

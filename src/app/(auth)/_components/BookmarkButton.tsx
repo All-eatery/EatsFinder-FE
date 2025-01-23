@@ -104,7 +104,7 @@ export const BookmarkButton = ({ placeId, isMarked }: BookmarkButtonProps) => {
   return (
     <>
       <Checkbox variant='bookmark' checked={isMarked} onClick={openModal} />
-      <Modal
+      {/* <Modal
         isOpen={isModalOpen}
         mainButton='확인'
         title='리스트에 추가하기'
@@ -135,6 +135,57 @@ export const BookmarkButton = ({ placeId, isMarked }: BookmarkButtonProps) => {
               </div>
             </Button>
           </form>
+          <div
+            className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'
+            ref={
+              data?.pages[data.pages.length - 1]?.items.length
+                ? (el) => {
+                    if (el && hasNextPage && !isFetchingNextPage) {
+                      const observer = new IntersectionObserver(
+                        (entries) => {
+                          if (entries[0].isIntersecting) {
+                            fetchNextPage();
+                          }
+                        },
+                        { threshold: 0.1 },
+                      );
+                      observer.observe(el);
+                      return () => observer.disconnect();
+                    }
+                  }
+                : undefined
+            }
+          >
+            {data?.pages.map((page, i) => (
+              <React.Fragment key={i}>
+                {page.items.map((list) => (
+                  <BookmarkModalCard
+                    key={list.id}
+                    onClick={(id) => selectLists(id)}
+                    selectedLists={selectedLists}
+                    id={list.id}
+                    count={list.count}
+                    title={list.title}
+                  />
+                ))}
+              </React.Fragment>
+            ))}
+            {isFetchingNextPage && <Loading />}
+          </div>
+        </div>
+      </Modal> */}
+
+      {/**삭제가 아니라 수정은? */}
+      <Modal
+        isOpen={isModalOpen}
+        mainButton='확인'
+        title='리스트에서 삭제하기'
+        description='저장된 맛집을 삭제할 리스트를 선택해 주세요.'
+        onClose={closeModal}
+        onMainClick={addPlaces}
+        size={'medium'}
+      >
+        <div className='flex flex-col items-center gap-10 px-10 pb-10'>
           <div
             className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'
             ref={

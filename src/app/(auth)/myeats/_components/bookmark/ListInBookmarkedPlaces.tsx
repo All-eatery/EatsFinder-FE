@@ -220,10 +220,11 @@ export const ListInBookmarkedPlaces = () => {
       <Modal
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
-        title='다른 리스트로 이동'
+        title='이 맛집들을 삭제할까요?'
         onMainClick={() =>
           deleteConfirmButton({ places: isChecked, listId: listId })
         }
+        onSubClick={closeDeleteModal}
         mainButton='적용'
         subButton='취소'
       >
