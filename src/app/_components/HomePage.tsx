@@ -11,7 +11,7 @@ const HomePage = async () => {
 
   return (
     <>
-      <div className='flex flex-col gap-[80px]'>
+      <div className='flex flex-col gap-20'>
         <SearchBar />
         <NearByPlaces userInfo={userInfo} />
         <HomeSection title='인기 급상승 키워드'>
