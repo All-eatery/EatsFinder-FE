@@ -7,10 +7,10 @@ import { DropdownMenu } from '@/components/molecules';
 import { Modal } from '@/components/organisms';
 import { MoreSVG } from '@/components/svg/MoreSVG';
 import timeDifference from '@/utils/timeDifference';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 
 interface UserProfileProps {
-  userInfo?: UserData;
+  userInfo?: UserDatatype;
   nickname: string;
   profileImage: string | null;
   createdAt: string;

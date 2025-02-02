@@ -4,10 +4,10 @@ import { ProfileImage } from '@/components/atoms';
 import { Search } from '@/components/molecules';
 import { Comment } from './comment';
 import { PostCommentType } from '@/types/postType';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 
 interface PostCommentsProps {
-  userInfo?: UserData;
+  userInfo?: UserDatatype;
   postComments: PostCommentType;
   handleCreateComment: (
     content: string,

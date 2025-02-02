@@ -10,7 +10,7 @@ import {
   PostCommentType,
   ReportStateType,
 } from '@/types/postType';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 import {
   createComment,
   deleteComment,
@@ -21,7 +21,7 @@ import { togglePostLike } from '@/api/post';
 import { getPostEditStatus, deletePost } from '@/api/post';
 
 interface PostPageProps {
-  userInfo?: UserData;
+  userInfo?: UserDatatype;
   postContent: PostContentType;
   postComments: PostCommentType;
 }
@@ -100,8 +100,8 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   };
 
   const handleDeletePost = async () => {
-    const data = await deletePost(postContent.id);
-    if (data.statusCode === 200) {
+    const { response } = await deletePost(postContent.id);
+    if (response.status === 200) {
       redirect('/');
     }
   };

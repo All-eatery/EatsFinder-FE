@@ -5,14 +5,14 @@ import StoreMap from './StoreMap';
 import KeywordChips from './KeywordChips';
 import { Chip } from '@/components/atoms';
 import { PostContentType } from '@/types/postType';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 import parseImages from '@/utils/parseImages';
 import { ShareSVG } from '@/components/svg/ShareSVG';
 import { EyeSVG } from '@/components/svg/EyeSVG';
 import { FavSVG } from '@/components/svg/FavSVG';
 
 interface PostContentProps {
-  userInfo?: UserData;
+  userInfo?: UserDatatype;
   postContent: PostContentType;
   handleIsEditable: () => Promise<string>;
   handleDeletePost: () => Promise<void>;
@@ -36,7 +36,7 @@ const PostContent = ({
     postContent.places.name,
   );
   return (
-    <section className='flex flex-col gap-8'>
+    <section className='flex grow flex-col gap-8'>
       <div>
         <UserProfile
           nickname={postContent.users.nickname}
