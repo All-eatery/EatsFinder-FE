@@ -7,7 +7,7 @@ import TagInSearch from './TagInSearch';
 
 const SearchBar = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [serachHistory, setSearchHistory] = useState<string[]>([]);
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [keyword, setKeyword] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -18,13 +18,12 @@ const SearchBar = () => {
     }
   }, []);
 
-  const recentSearchHistory = useMemo(() => {
-    return serachHistory.slice(0, 10);
-  }, [serachHistory]);
-
   const searchKeyword = (keyword: string) => {
     if (keyword) {
-      const newHistory = [keyword, ...serachHistory];
+      const newHistory = [
+        keyword,
+        ...searchHistory.filter((history) => history !== keyword),
+      ];
       setSearchHistory(newHistory);
       localStorage.setItem('searchHistory', JSON.stringify(newHistory));
       router.push(`/search?keyword=${keyword}&filter=all`);
@@ -70,8 +69,25 @@ const SearchBar = () => {
             <div>
               <div className='subTitle-20'>최근 검색어</div>
               <div className='flex w-full flex-wrap gap-5'>
-                {recentSearchHistory.map((history) => (
-                  <TagInSearch key={history}>{history}</TagInSearch>
+                {searchHistory.slice(0, 10).map((history) => (
+                  <TagInSearch
+                    key={history}
+                    onClick={() => {
+                      searchKeyword(history);
+                    }}
+                    onDelete={() => {
+                      const newHistory = searchHistory.filter(
+                        (h) => h !== history,
+                      );
+                      setSearchHistory(newHistory);
+                      localStorage.setItem(
+                        'searchHistory',
+                        JSON.stringify(newHistory),
+                      );
+                    }}
+                  >
+                    {history}
+                  </TagInSearch>
                 ))}
               </div>
             </div>
