@@ -1,0 +1,184 @@
+{
+  "feeds": [
+    {
+      "thumbnailUrl": "https://picsum.photos/id/1/300/200",
+      "placeName": "The Spicy Spoon",
+      "content": "Amazing fusion of traditional and modern flavors!",
+      "createdAt": "2024-09-01"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/2/300/200",
+      "placeName": "Burger Haven",
+      "content": "Best burgers in town, hands down.",
+      "createdAt": "2024-09-02"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/3/300/200",
+      "placeName": "Sushi World",
+      "content": "Fresh sushi, great service.",
+      "createdAt": "2024-09-03"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/4/300/200",
+      "placeName": "Pizza Palace",
+      "content": "Thin crust heaven!",
+      "createdAt": "2024-09-04"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/5/300/200",
+      "placeName": "Vegan Delights",
+      "content": "Delicious plant-based meals.",
+      "createdAt": "2024-09-05"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/6/300/200",
+      "placeName": "Pasta Point",
+      "content": "Homemade pasta that melts in your mouth.",
+      "createdAt": "2024-09-06"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/7/300/200",
+      "placeName": "Taco Town",
+      "content": "Spicy, crunchy, and flavorful!",
+      "createdAt": "2024-09-07"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/8/300/200",
+      "placeName": "BBQ Bliss",
+      "content": "Juicy ribs and smoky flavors.",
+      "createdAt": "2024-09-08"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/9/300/200",
+      "placeName": "Donut Dreams",
+      "content": "Sweet treats for every occasion.",
+      "createdAt": "2024-09-09"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/10/300/200",
+      "placeName": "Curry House",
+      "content": "Rich, aromatic curries full of flavor.",
+      "createdAt": "2024-09-10"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/11/300/200",
+      "placeName": "Coffee Corner",
+      "content": "The best place for your daily caffeine fix.",
+      "createdAt": "2024-09-11"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/12/300/200",
+      "placeName": "Waffle Wonderland",
+      "content": "Crispy waffles with various toppings.",
+      "createdAt": "2024-09-12"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/13/300/200",
+      "placeName": "Ice Cream Island",
+      "content": "Cool down with their signature flavors.",
+      "createdAt": "2024-09-13"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/14/300/200",
+      "placeName": "Steakhouse Supreme",
+      "content": "Tender steaks cooked to perfection.",
+      "createdAt": "2024-09-14"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/15/300/200",
+      "placeName": "Soup Kitchen",
+      "content": "Comfort food for the soul.",
+      "createdAt": "2024-09-15"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/16/300/200",
+      "placeName": "Bagel Barn",
+      "content": "Freshly baked bagels and spreads.",
+      "createdAt": "2024-09-16"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/17/300/200",
+      "placeName": "Smoothie Shack",
+      "content": "Healthy and refreshing smoothies.",
+      "createdAt": "2024-09-17"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/18/300/200",
+      "placeName": "Pancake Paradise",
+      "content": "Fluffy pancakes with your choice of toppings.",
+      "createdAt": "2024-09-18"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/19/300/200",
+      "placeName": "Dim Sum Dynasty",
+      "content": "Authentic dim sum, steamed to perfection.",
+      "createdAt": "2024-09-19"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/20/300/200",
+      "placeName": "Ramen Republic",
+      "content": "Savory ramen bowls with rich broth.",
+      "createdAt": "2024-09-20"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/21/300/200",
+      "placeName": "Pita Pit",
+      "content": "Fresh pitas stuffed with flavorful fillings.",
+      "createdAt": "2024-09-21"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/22/300/200",
+      "placeName": "Salad Station",
+      "content": "Crisp salads with a variety of dressings.",
+      "createdAt": "2024-09-22"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/23/300/200",
+      "placeName": "Crepe Café",
+      "content": "Delicate crepes with sweet and savory options.",
+      "createdAt": "2024-09-23"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/24/300/200",
+      "placeName": "Kebab Kingdom",
+      "content": "Succulent kebabs grilled to perfection.",
+      "createdAt": "2024-09-24"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/25/300/200",
+      "placeName": "Pho Palace",
+      "content": "Traditional Vietnamese pho, full of flavor.",
+      "createdAt": "2024-09-25"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/26/300/200",
+      "placeName": "Burger Bistro",
+      "content": "Gourmet burgers with all the fixings.",
+      "createdAt": "2024-09-26"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/27/300/200",
+      "placeName": "Fish Fry Shack",
+      "content": "Crispy fried fish and chips.",
+      "createdAt": "2024-09-27"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/28/300/200",
+      "placeName": "Hotpot Haven",
+      "content": "Warm, hearty hotpot meals to share.",
+      "createdAt": "2024-09-28"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/29/300/200",
+      "placeName": "Taco Truck",
+      "content": "Street-style tacos packed with flavor.",
+      "createdAt": "2024-09-29"
+    },
+    {
+      "thumbnailUrl": "https://picsum.photos/id/30/300/200",
+      "placeName": "Pancake Pitstop",
+      "content": "The fluffiest pancakes in town.",
+      "createdAt": "2024-09-30"
+    }
+  ]
+}

@@ -3,6 +3,8 @@ import { ComponentProps } from 'react';
 export interface ButtonProps extends ComponentProps<'button'> {}
 export type SVGUsableProps = {
   isUsable?: boolean;
+  width?: number;
+  height?: number;
 };
 export type SVGFilledProps = {
   isFill?: boolean;
@@ -19,10 +21,14 @@ export type SVGRatingStarProps = {
 export type SVGCheckBoxProps = {
   isChecked?: 'default' | 'check' | 'blank';
 };
-export type SVGDirectionProps = {
+export type SVGArrowProps = {
   direction: 'down' | 'right' | 'left';
+  color?: 'default' | 'orange';
 };
 export type SVGCheckProps = {
   size?: 'regular' | 'large';
   color?: 'default' | 'green' | 'orange';
+};
+export type SVGRadioProps = {
+  isChecked: boolean;
 };

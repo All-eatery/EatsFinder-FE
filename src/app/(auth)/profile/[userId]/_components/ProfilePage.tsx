@@ -1,18 +1,20 @@
-import { ProfilePageProps, UserData } from '@/types/authType';
-import { ProfileContents } from './ProfileContents';
+'use client';
+import { MyProfile } from './MyProfile';
 import { UserProfile } from './UserProfile';
-import { Suspense } from 'react';
-import { Loading } from '@/app/(auth)/_components/Loading';
-import { cookies } from 'next/headers';
-import { getServerUserInfo } from '@/utils/getServerUserInfo';
+type Props = {
+  userId: number;
+  loggedInUserId?: number;
+};
+export const ProfilePage = ({ userId, loggedInUserId }: Props) => {
+  if (loggedInUserId && loggedInUserId == userId) {
+    return <MyProfile userId={userId} isOwnProfile={true} />;
+  }
 
-export const ProfilePage = ({ userData }: ProfilePageProps) => {
   return (
-    <div className='flex flex-col gap-20'>
-      <Suspense fallback={<Loading />}>
-        <UserProfile userData={userData} />
-        <ProfileContents />
-      </Suspense>
-    </div>
+    <UserProfile
+      userId={userId}
+      loggedInUserId={loggedInUserId}
+      isOwnProfile={false}
+    />
   );
 };

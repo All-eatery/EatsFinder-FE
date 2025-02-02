@@ -126,9 +126,9 @@ export const getPostEditStatus = async (
   return data;
 };
 
-export const deletePost = async (postId: number): Promise<NestResponseType> => {
+export const deletePost = async (postId: number) => {
   const token = await getUserToken();
-  const res = await fetch(`${NEST_SERVER}/posts/${postId}`, {
+  const response = await fetch(`${NEST_SERVER}/posts/${postId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -136,9 +136,9 @@ export const deletePost = async (postId: number): Promise<NestResponseType> => {
     },
   });
 
-  const data = await res.json();
+  const data = await response.json();
 
-  return data;
+  return { data, response };
 };
 
 export const togglePostLike = async (

@@ -4,26 +4,29 @@ import { useImageInput } from '@/app/(auth)/_hooks/useImageInput';
 import { Button, ProfileImage } from '@/components/atoms';
 import { TextField } from '@/components/atoms/textField';
 import { EditSVG } from '@/components/svg/EditSVG';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 type ProfileEditProps = {
   handler: () => void;
-  userData: UserData;
+  userData: UserDatatype;
 };
 export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
   const { nickname, phoneNumber, profileImage } = userData;
-  const { register, watch, handleSubmit, errors, setValue } = useProfileEdit();
+  const { register, watch, handleSubmit, errors, setValue } =
+    useProfileEdit(handler);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const { handleFileChange, handleImageInput, previewImage } = useImageInput();
+
   useEffect(() => {
     setValue('profileImage', userData.profileImage);
     if (previewImage) setValue('profileImage', previewImage);
   }, [previewImage]);
-  console.log(watch());
+
   return (
     <div>
       <form className='flex flex-col items-center' onSubmit={handleSubmit}>
+        <div>{errors.profileImage?.message}</div>
         <div className='flex flex-col items-center gap-2'>
           <div className='relative'>
             <div
@@ -35,7 +38,7 @@ export const ProfileEdit = ({ handler, userData }: ProfileEditProps) => {
                 type='file'
                 accept='image/*'
                 ref={imageInputRef}
-                className='hidden'
+                className='sr-only'
                 onChange={(e) => handleFileChange(e)}
               />
               {previewImage ? (

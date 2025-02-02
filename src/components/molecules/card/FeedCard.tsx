@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Checkbox, ProfileImage } from '@/components/atoms';
+import { BookmarkButton } from '../bookmarkButton/BookmarkButton';
 
 interface FeedCardProps {
   onClick?: () => void;
@@ -25,7 +26,8 @@ export const FeedCard = ({ onClick }: FeedCardProps) => {
           </div>
         </div>
         <div className='flex w-9 flex-col items-center justify-center'>
-          <Checkbox variant='fav' />
+          {/* <Checkbox variant='fav' /> */}
+          <BookmarkButton placeId={8} />
           <span className='text-gray-600 body-14'>2400</span>
         </div>
       </div>

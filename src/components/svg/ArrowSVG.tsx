@@ -1,6 +1,6 @@
-import { SVGDirectionProps } from '@/types/props';
+import { SVGArrowProps } from '@/types/props';
 
-export const ArrowSVG = ({ direction }: SVGDirectionProps) => {
+export const ArrowSVG = ({ direction, color }: SVGArrowProps) => {
   const pathData = (() => {
     switch (direction) {
       case 'down':
@@ -15,6 +15,14 @@ export const ArrowSVG = ({ direction }: SVGDirectionProps) => {
         return '';
     }
   })();
+  const fillColor = (() => {
+    switch (color) {
+      case 'orange':
+        return '#FB5607';
+      default:
+        return '#262626';
+    }
+  })();
   return (
     <svg
       width='24'
@@ -23,7 +31,7 @@ export const ArrowSVG = ({ direction }: SVGDirectionProps) => {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <path d={pathData} fill='#262626' />
+      <path d={pathData} fill={fillColor} />
     </svg>
   );
 };

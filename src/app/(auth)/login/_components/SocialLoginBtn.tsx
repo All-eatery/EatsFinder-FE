@@ -4,7 +4,7 @@ import {
   SocialKakaoSVG,
   SocialNaverSVG,
 } from '@/components/svg/SocialSVG';
-import React, { ComponentProps, ReactNode } from 'react';
+import React, { ComponentProps, ReactNode, useEffect } from 'react';
 import { RecentLoginMsg } from './RecentLoginMsg';
 import Link from 'next/link';
 import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
@@ -30,23 +30,28 @@ const SocialLoginBtn = ({
     </div>
   );
 };
-export const SocialLoginBtnGroup = () => {
+export const SocialLoginBtnGroup = ({
+  socialProvider,
+}: {
+  socialProvider: string | undefined;
+}) => {
+  console.log(socialProvider);
   return (
     <div className='mb-[120px] flex justify-center gap-6'>
       <SocialLoginBtn
         provider='NAVER'
         icon={<SocialNaverSVG />}
-        recentLogin={true}
+        recentLogin={socialProvider === 'naver'}
       />
       <SocialLoginBtn
         provider='KAKAO'
         icon={<SocialKakaoSVG />}
-        recentLogin={false}
+        recentLogin={socialProvider === 'kakao'}
       />
       <SocialLoginBtn
         provider='GOOGLE'
         icon={<SocialGoogleSVG />}
-        recentLogin={false}
+        recentLogin={socialProvider === 'google'}
       />
     </div>
   );
