@@ -27,7 +27,7 @@ const SearchBar = () => {
       const newHistory = [keyword, ...serachHistory];
       setSearchHistory(newHistory);
       localStorage.setItem('searchHistory', JSON.stringify(newHistory));
-      router.push(`/search?keyword=${keyword}`);
+      router.push(`/search?keyword=${keyword}&filter=all`);
     }
   };
 
