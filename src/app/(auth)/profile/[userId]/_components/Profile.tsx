@@ -6,7 +6,7 @@ import { addDashes } from '@/utils/formatPhoneNumber';
 import { UserDatatype } from '@/types/authType';
 import { useQuery } from '@tanstack/react-query';
 import { checkFollow } from '@/api/profile';
-import { SocialActionButton } from './SocialActionButton';
+import { SocialActionButton } from '../../../_components/SocialActionButton';
 import Loading from '@/components/atoms/loading/Loading';
 type ProfileProps = {
   loggedInUserId?: number;
@@ -72,7 +72,6 @@ export const Profile = ({
             loggedInUserId ? (data.statusCode ? false : true) : false
           }
           type='follow'
-          isLoggedIn={!!loggedInUserId}
         />
       )}
     </div>

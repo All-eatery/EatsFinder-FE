@@ -1,10 +1,10 @@
 import { UserTimeline } from '@/components/atoms/userTimeline';
 import { getMyActives } from '@/api/profile';
 import { useQuery } from '@tanstack/react-query';
-import { Loading } from '@/app/(auth)/_components/Loading';
 import { NoContent } from '@/components/atoms/noContent/NoContent';
 import { Pagination } from '@/components/molecules/pagination';
 import { simplifyTimeLineData } from '@/utils/simplifyTimeLineData';
+import Loading from '@/components/atoms/loading/Loading';
 interface TimelineProps {
   timelineFilter: string;
   page: number;

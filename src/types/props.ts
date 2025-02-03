@@ -32,3 +32,7 @@ export type SVGCheckProps = {
 export type SVGRadioProps = {
   isChecked: boolean;
 };
+export type SVGSizeProps = {
+  x?: number;
+  y?: number;
+};

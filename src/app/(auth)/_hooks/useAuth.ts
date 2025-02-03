@@ -7,6 +7,7 @@ import {
   ProfileEditType,
   ReasonForAccountDeletion,
   SignupFormType,
+  UserDatatype,
 } from '@/types/authType';
 import { SignupType } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
@@ -85,11 +86,18 @@ export const useNicknameDuplicateCheck = () => {
   return { handleNicknameChecker };
 };
 
-export const editUserProfile = async (data: ProfileEditType) => {
+export const editUserProfile = async (
+  data: ProfileEditType,
+  userData: UserDatatype,
+) => {
   const { nickname, phoneNumber, profileImage } = data;
   const formData = new FormData();
-  formData.append('nickname', nickname);
-  formData.append('phoneNumber', phoneNumber);
+  if (data.nickname !== userData.nickname) {
+    formData.append('nickname', nickname);
+  }
+  if (data.phoneNumber !== userData.phoneNumber) {
+    formData.append('phoneNumber', phoneNumber);
+  }
   if (profileImage) {
     const file = await urlToFile(profileImage, 'profile.png');
     formData.append('profileImage', file);

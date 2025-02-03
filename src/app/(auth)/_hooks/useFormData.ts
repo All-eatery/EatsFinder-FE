@@ -4,6 +4,7 @@ import {
   LoginFormType,
   ProfileEditType,
   SignupFormType,
+  UserDatatype,
 } from '@/types/authType';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
@@ -104,7 +105,7 @@ export const useSignup = () => {
     trigger,
   };
 };
-export const useProfileEdit = (handler: () => void) => {
+export const useProfileEdit = (handler: () => void, userData: UserDatatype) => {
   const { showToast } = useToast();
   const queryClient = useQueryClient();
   const {
@@ -121,7 +122,7 @@ export const useProfileEdit = (handler: () => void) => {
 
   const onSubmit: SubmitHandler<ProfileEditType> = async (formData) => {
     try {
-      const response = await editUserProfile(formData);
+      const response = await editUserProfile(formData, userData);
       const data = await response.json();
       if (data.statusCode === 'ERROR') {
         showToast(Object.keys(data.data)[0], 'error');
