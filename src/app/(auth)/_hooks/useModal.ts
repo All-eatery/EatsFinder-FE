@@ -204,7 +204,7 @@ export const useMovePlacesInListModal = () => {
   };
   return { isModalOpen, closeModal, openModal, confirmButton };
 };
-export const useDeletePlacesInListModal = () => {
+export const useDeletePlacesModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
@@ -264,6 +264,7 @@ export const useDeleteBookmarkModal = () => {
     setIsModalOpen(true);
   };
   const confirmButton = async () => {
+    console.log('삭제버튼');
     setIsModalOpen(false);
   };
   const closeModal = () => {

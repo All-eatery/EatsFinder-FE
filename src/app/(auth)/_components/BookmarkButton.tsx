@@ -139,7 +139,7 @@ export const BookmarkButton = ({ placeId, isMarked }: BookmarkButtonProps) => {
           title='리스트에서 삭제하기'
           description='저장된 맛집을 삭제할 리스트를 선택해 주세요.'
           onClose={closeDeleteModal}
-          onMainClick={addPlaces}
+          onMainClick={deleteModalComfirm}
           size={'medium'}
         >
           <div className='flex flex-col items-center gap-10 px-10 pb-10'>

@@ -4,7 +4,7 @@ import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
 import { Button } from '@/components/atoms';
 import { Modal } from '@/components/organisms';
 import {
-  useDeletePlacesInListModal,
+  useDeletePlacesModal,
   useMovePlacesInListModal,
 } from '@/app/(auth)/_hooks/useModal';
 import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
@@ -36,7 +36,7 @@ export const ListInBookmarkedPlaces = () => {
     confirmButton: deleteConfirmButton,
     isModalOpen: isDeleteModalOpen,
     openModal: openDeleteModal,
-  } = useDeletePlacesInListModal();
+  } = useDeletePlacesModal();
   const {
     data,
     status,
