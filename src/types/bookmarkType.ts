@@ -55,3 +55,6 @@ export type BookmarkedPlacesType = {
   ];
   lastItemId: number;
 };
+export type BookmarkListByPlace = {
+  items: { id: number; title: string; count: number }[];
+};

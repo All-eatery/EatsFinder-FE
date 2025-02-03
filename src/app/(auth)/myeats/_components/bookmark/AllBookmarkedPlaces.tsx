@@ -8,10 +8,10 @@ export const AllBookmarkedPlaces = () => {
         src={url}
         address='ㅇㄴㄴㅇ'
         category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
+        id={7}
         name='ㅇㄴㄹㄴㅇ'
       />
-      <BookmarkedPlaceCard
+      {/* <BookmarkedPlaceCard
         src={url}
         address='ㅇㄴㄴㅇ'
         category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
@@ -80,7 +80,7 @@ export const AllBookmarkedPlaces = () => {
         category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
         id={33}
         name='ㅇㄴㄹㄴㅇ'
-      />
+      /> */}
     </div>
   );
 };

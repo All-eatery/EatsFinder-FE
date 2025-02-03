@@ -257,3 +257,17 @@ export const useBookmarkModal = () => {
   };
   return { isModalOpen, closeModal, openModal, confirmButton };
 };
+export const useDeleteBookmarkModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    console.log('모달오픈');
+    setIsModalOpen(true);
+  };
+  const confirmButton = async () => {
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return { isModalOpen, closeModal, openModal, confirmButton };
+};

@@ -3,8 +3,12 @@ import {
   addBookmarkPlaces,
   createNewBookmarkList,
   getBookmarkList,
+  getBookmarkListByPlace,
 } from '@/api/bookmark';
-import { useBookmarkModal } from '@/app/(auth)/_hooks/useModal';
+import {
+  useBookmarkModal,
+  useDeleteBookmarkModal,
+} from '@/app/(auth)/_hooks/useModal';
 import { Button, Checkbox, TextField } from '@/components/atoms';
 import Loading from '@/components/atoms/loading/Loading';
 import { Modal } from '@/components/organisms';
@@ -14,6 +18,7 @@ import {
   useMutation,
   useInfiniteQuery,
   useQueryClient,
+  useQuery,
 } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { BookmarkModalCard } from '../../../components/molecules/bookmarkCard';
@@ -36,7 +41,20 @@ export const BookmarkButton = ({ placeId, isMarked }: BookmarkButtonProps) => {
     setColor(active ? '#0D0D0D' : '#D9D9D9');
   }, [active]);
 
-  const { closeModal, isModalOpen, openModal } = useBookmarkModal();
+  const {
+    closeModal: closeAddModal,
+    isModalOpen: isAddModalOpen,
+    openModal: openAddModal,
+  } = useBookmarkModal();
+  const {
+    closeModal: closeDeleteModal,
+    isModalOpen: isDeleteModalOpen,
+    openModal: openDeleteModal,
+    confirmButton: deleteModalComfirm,
+  } = useDeleteBookmarkModal();
+  const handleBookmarkModal = (isMarked: boolean) => {
+    isMarked ? openDeleteModal() : openAddModal();
+  };
 
   const mutationAddBookmark = useMutation({
     mutationFn: ({
@@ -51,7 +69,7 @@ export const BookmarkButton = ({ placeId, isMarked }: BookmarkButtonProps) => {
     },
     onSettled: () => {
       queryClient.refetchQueries({ queryKey: ['bookmarkModal'] });
-      closeModal();
+      closeAddModal();
       setSelectedLists([]);
       console.log('북마크 추가 및 모달 닫기 => 알림');
     },
@@ -63,7 +81,7 @@ export const BookmarkButton = ({ placeId, isMarked }: BookmarkButtonProps) => {
       console.error('북마크 생성 에러', error);
     },
     onSettled: () => {
-      console.log('북마크 생성성공!', isModalOpen);
+      console.log('북마크 생성성공!', isAddModalOpen);
       queryClient.refetchQueries({ queryKey: ['bookmarkModal'] });
     },
   });
@@ -94,137 +112,129 @@ export const BookmarkButton = ({ placeId, isMarked }: BookmarkButtonProps) => {
       getNextPageParam: (lastPage) => {
         return lastPage.items.length > 0 ? lastPage.lastItemId : undefined;
       },
-      enabled: isModalOpen,
+      enabled: isAddModalOpen && !isMarked,
     });
-  console.log(data);
   const addPlaces = async () => {
     mutationAddBookmark.mutate({ id: placeId, selectedLists });
   };
 
+  const { data: item } = useQuery({
+    queryKey: ['listByPlace'],
+    queryFn: () => getBookmarkListByPlace(placeId),
+    enabled: isDeleteModalOpen && isMarked,
+  });
+
   return (
     <>
-      <Checkbox variant='bookmark' checked={isMarked} onClick={openModal} />
-      {/* <Modal
-        isOpen={isModalOpen}
-        mainButton='확인'
-        title='리스트에 추가하기'
-        description='리스트를 만들고, 나만의 맛집지도를 완성해 보세요'
-        onClose={closeModal}
-        onMainClick={addPlaces}
-        size={'medium'}
-      >
-        <div className='flex flex-col items-center gap-10 px-10 pb-10'>
-          <form className='flex items-center' onSubmit={(e) => makeNewList(e)}>
-            <TextField
-              placeholder='리스트명을 적어주세요.'
-              className='w-[330px]'
-              value={newListName}
-              onChange={(e) => handleNewListName(e)}
-            />
-            <Button
-              onMouseDown={() => setColor('white')}
-              onMouseUp={() => setColor('#0D0D0D')}
-              className='h-12'
-              variant={'dash'}
-              size={'small'}
-              disabled={!active}
+      <Checkbox
+        variant='bookmark'
+        checked={isMarked}
+        onClick={() => handleBookmarkModal(isMarked)}
+      />
+      {isMarked ? (
+        //삭제모달
+        <Modal
+          isOpen={isDeleteModalOpen}
+          mainButton='삭제하기'
+          title='리스트에서 삭제하기'
+          description='저장된 맛집을 삭제할 리스트를 선택해 주세요.'
+          onClose={closeDeleteModal}
+          onMainClick={addPlaces}
+          size={'medium'}
+        >
+          <div className='flex flex-col items-center gap-10 px-10 pb-10'>
+            <div className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'>
+              {item?.items.map((item) => {
+                return (
+                  <BookmarkModalCard
+                    key={item?.id}
+                    onClick={(id) => selectLists(id)}
+                    selectedLists={selectedLists}
+                    id={item.id}
+                    count={item.count}
+                    title={item.title}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </Modal>
+      ) : (
+        //등록모달
+        <Modal
+          isOpen={isAddModalOpen}
+          mainButton='확인'
+          title='리스트에 추가하기'
+          description='리스트를 만들고, 나만의 맛집지도를 완성해 보세요'
+          onClose={closeAddModal}
+          onMainClick={addPlaces}
+          size={'medium'}
+        >
+          <div className='flex flex-col items-center gap-10 px-10 pb-10'>
+            <form
+              className='flex items-center'
+              onSubmit={(e) => makeNewList(e)}
             >
-              <div className='flex items-center gap-1'>
-                <AddSVG color={color} />
-                <span>리스트 만들기</span>
-              </div>
-            </Button>
-          </form>
-          <div
-            className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'
-            ref={
-              data?.pages[data.pages.length - 1]?.items.length
-                ? (el) => {
-                    if (el && hasNextPage && !isFetchingNextPage) {
-                      const observer = new IntersectionObserver(
-                        (entries) => {
-                          if (entries[0].isIntersecting) {
-                            fetchNextPage();
-                          }
-                        },
-                        { threshold: 0.1 },
-                      );
-                      observer.observe(el);
-                      return () => observer.disconnect();
+              <TextField
+                placeholder='리스트명을 적어주세요.'
+                className='w-[330px]'
+                value={newListName}
+                onChange={(e) => handleNewListName(e)}
+              />
+              <Button
+                onMouseDown={() => setColor('white')}
+                onMouseUp={() => setColor('#0D0D0D')}
+                className='h-12'
+                variant={'dash'}
+                size={'small'}
+                disabled={!active}
+              >
+                <div className='flex items-center gap-1'>
+                  <AddSVG color={color} />
+                  <span>리스트 만들기</span>
+                </div>
+              </Button>
+            </form>
+            <div
+              className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'
+              ref={
+                data?.pages[data.pages.length - 1]?.items.length
+                  ? (el) => {
+                      if (el && hasNextPage && !isFetchingNextPage) {
+                        const observer = new IntersectionObserver(
+                          (entries) => {
+                            if (entries[0].isIntersecting) {
+                              fetchNextPage();
+                            }
+                          },
+                          { threshold: 0.1 },
+                        );
+                        observer.observe(el);
+                        return () => observer.disconnect();
+                      }
                     }
-                  }
-                : undefined
-            }
-          >
-            {data?.pages.map((page, i) => (
-              <React.Fragment key={i}>
-                {page.items.map((list) => (
-                  <BookmarkModalCard
-                    key={list.id}
-                    onClick={(id) => selectLists(id)}
-                    selectedLists={selectedLists}
-                    id={list.id}
-                    count={list.count}
-                    title={list.title}
-                  />
-                ))}
-              </React.Fragment>
-            ))}
-            {isFetchingNextPage && <Loading />}
+                  : undefined
+              }
+            >
+              {data?.pages.map((page, i) => (
+                <React.Fragment key={i}>
+                  {page.items.map((list) => (
+                    <BookmarkModalCard
+                      key={list.id}
+                      onClick={(id) => selectLists(id)}
+                      selectedLists={selectedLists}
+                      id={list.id}
+                      count={list.count}
+                      title={list.title}
+                    />
+                  ))}
+                </React.Fragment>
+              ))}
+              {isFetchingNextPage && <Loading />}
+            </div>
           </div>
-        </div>
-      </Modal> */}
-
-      {/**삭제가 아니라 수정은? */}
-      <Modal
-        isOpen={isModalOpen}
-        mainButton='확인'
-        title='리스트에서 삭제하기'
-        description='저장된 맛집을 삭제할 리스트를 선택해 주세요.'
-        onClose={closeModal}
-        onMainClick={addPlaces}
-        size={'medium'}
-      >
-        <div className='flex flex-col items-center gap-10 px-10 pb-10'>
-          <div
-            className='flex max-h-[400px] w-full flex-col gap-5 overflow-y-auto px-2 py-2 scrollbar-hide'
-            ref={
-              data?.pages[data.pages.length - 1]?.items.length
-                ? (el) => {
-                    if (el && hasNextPage && !isFetchingNextPage) {
-                      const observer = new IntersectionObserver(
-                        (entries) => {
-                          if (entries[0].isIntersecting) {
-                            fetchNextPage();
-                          }
-                        },
-                        { threshold: 0.1 },
-                      );
-                      observer.observe(el);
-                      return () => observer.disconnect();
-                    }
-                  }
-                : undefined
-            }
-          >
-            {data?.pages.map((page, i) => (
-              <React.Fragment key={i}>
-                {page.items.map((list) => (
-                  <BookmarkModalCard
-                    key={list.id}
-                    onClick={(id) => selectLists(id)}
-                    selectedLists={selectedLists}
-                    id={list.id}
-                    count={list.count}
-                    title={list.title}
-                  />
-                ))}
-              </React.Fragment>
-            ))}
-            {isFetchingNextPage && <Loading />}
-          </div>
-        </div>
-      </Modal>
+        </Modal>
+      )}
     </>
   );
 };

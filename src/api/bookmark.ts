@@ -1,5 +1,8 @@
 import { NEST_SERVER } from '@/constants/baseUrl';
-import { ListInPlacesType } from '@/types/bookmarkType';
+import {
+  BookmarkListByPlace as BookmarkListByPlaceType,
+  ListInPlacesType,
+} from '@/types/bookmarkType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 
 export const createNewBookmarkList = async (listname: string) => {
@@ -31,7 +34,19 @@ export const getBookmarkList = async (cursor: number) => {
   console.log('bookmarkres', await data);
   return data;
 };
-
+export const getBookmarkListByPlace = async (
+  placeId: number,
+): Promise<BookmarkListByPlaceType> => {
+  const token = await getUserToken();
+  const response = await fetch(`${NEST_SERVER}/bookmarks/lists/${placeId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = response.json();
+  return data;
+};
 export const renameBookmarkList = async (id: number, title: string) => {
   const token = await getUserToken();
   console.log(id, title);
