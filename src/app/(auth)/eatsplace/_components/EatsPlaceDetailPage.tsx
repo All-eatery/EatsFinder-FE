@@ -6,7 +6,7 @@ import { PlaceInfo } from './PlaceInfo';
 import { PlaceMap } from './PlaceMap';
 import { PlaceTag } from './PlaceTag';
 
-export const EatsPlacePage = () => {
+export const EatsPlaceDetailPage = () => {
   return (
     <>
       <PlaceInfo />

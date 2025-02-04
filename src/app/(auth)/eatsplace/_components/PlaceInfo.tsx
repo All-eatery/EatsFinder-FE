@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import { url } from '../../../myeats/_components/bookmark/AllBookmarkedPlaces';
+import { url } from '../../myeats/_components/bookmark/AllBookmarkedPlaces';
 import { BookmarkSVG } from '@/components/svg/BookmarkSVG';
 import { Checkbox, Chip } from '@/components/atoms';
 
