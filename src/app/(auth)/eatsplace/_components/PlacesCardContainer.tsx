@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BookmarkedPlaceCard } from '../../myeats/_components/bookmark/BookmarkedPlaceCard';
 import { sampleImg } from '../../profile/[userId]/_components/FollowList';
 import { Pagination } from '@/components/molecules/pagination';
+import { SurroundingPlacesCard } from './SurroundingPlacesCard';
 const sampleData = {
   totalItems: 10,
   itemsPerPage: 8,
@@ -15,14 +16,12 @@ export const PlacesCardContainer = () => {
   return (
     <>
       <div className='grid grid-cols-2'>
-        <BookmarkedPlaceCard src={sampleImg} />
-        <BookmarkedPlaceCard src={sampleImg} />
-        <BookmarkedPlaceCard src={sampleImg} />
-        <BookmarkedPlaceCard src={sampleImg} />
-        <BookmarkedPlaceCard src={sampleImg} />
-        <BookmarkedPlaceCard src={sampleImg} />
-        <BookmarkedPlaceCard src={sampleImg} />
-        <BookmarkedPlaceCard src={sampleImg} />
+        <SurroundingPlacesCard src={sampleImg} />
+        <SurroundingPlacesCard src={sampleImg} />
+        <SurroundingPlacesCard src={sampleImg} />
+        <SurroundingPlacesCard src={sampleImg} />
+        <SurroundingPlacesCard src={sampleImg} />
+        <SurroundingPlacesCard src={sampleImg} />
       </div>
       <Pagination
         currentPage={page}

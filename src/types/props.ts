@@ -15,6 +15,7 @@ export type SVGUpDownProps = {
 };
 export type SVGRatingStarProps = {
   isFill?: 'fill' | 'half' | 'empty';
+  size?: number;
 };
 export type SVGCheckBoxProps = {
   isChecked?: 'default' | 'check' | 'blank';

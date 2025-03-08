@@ -4,7 +4,7 @@ import { SurroundingPlaces } from './SurroundingPlaces';
 
 export const EatsPlacePage = () => {
   return (
-    <div className='w flex flex-col gap-14'>
+    <div className='flex w-[1368px] flex-col gap-14'>
       <Search variant={'large'} />
       {/**확실한 넓이가 업어서 기준점이 서치바가됨 */}
       <SurroundingPlaces />
