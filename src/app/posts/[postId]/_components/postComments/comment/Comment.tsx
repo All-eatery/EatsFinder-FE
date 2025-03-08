@@ -12,11 +12,11 @@ import { DropSVG } from '@/components/svg/DropSVG';
 import { CommentType } from '@/types/comment';
 import { customTwMerge } from '@/utils/customTwMerge';
 import timeDifference from '@/utils/timeDifference';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 import { ChatTextSVG } from '@/components/svg/ChatTextSVG';
 
 interface CommentProps {
-  userInfo?: UserData;
+  userInfo?: UserDatatype;
   comment: CommentType;
   isReply?: boolean;
   handleCreateComment: (
@@ -36,7 +36,7 @@ interface CommentProps {
     isReply: boolean,
   ) => Promise<void>;
   handleOpenReportModal: (
-    targetType: 'post' | 'comment' | 'reply',
+    targetType: 'posts' | 'comments' | 'replies',
     targetId: number,
   ) => void;
 }
@@ -81,7 +81,10 @@ export const Comment = ({
           {
             label: '신고하기',
             onClick: () => {
-              handleOpenReportModal(!isReply ? 'comment' : 'reply', comment.id);
+              handleOpenReportModal(
+                !isReply ? 'comments' : 'replies',
+                comment.id,
+              );
             },
           },
         ]),

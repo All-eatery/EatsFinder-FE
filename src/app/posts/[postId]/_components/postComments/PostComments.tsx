@@ -26,7 +26,7 @@ interface PostCommentsProps {
     isReply: boolean,
   ) => Promise<void>;
   handleOpenReportModal: (
-    targetType: 'post' | 'comment' | 'reply',
+    targetType: 'posts' | 'comments' | 'replies',
     targetId: number,
   ) => void;
 }

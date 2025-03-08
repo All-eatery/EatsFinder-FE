@@ -67,18 +67,23 @@ const ReportModal = ({ reportState, setReportState }: ReportModalProps) => {
     }
 
     const res = await submitReport(
-      data,
-      reportState.targetType,
-      reportState.targetId,
+      { ...data, reason: otherReason },
+      reportState.targetType!,
+      reportState.targetId!,
     );
 
-    console.log(res);
+    if (res.statusCode === 'SUCCESS') {
+      alert('신고가 완료되었습니다');
+      setReportState({ isOpen: false, targetType: null, targetId: null });
+      postReportReset();
+      commentReportReset();
+    }
   };
 
   return (
     <Modal
       isOpen={reportState.isOpen}
-      title={`${reportState.targetType === 'post' ? '게시물' : '댓글'} 신고하기`}
+      title={`${reportState.targetType === 'posts' ? '게시물' : '댓글'} 신고하기`}
       mainButton='신고하기'
       onClose={() => {
         setReportState({ isOpen: false, targetType: null, targetId: null });
@@ -96,13 +101,13 @@ const ReportModal = ({ reportState, setReportState }: ReportModalProps) => {
         className='w-full'
         ref={reportFormRef}
         onSubmit={
-          reportState.targetType === 'post'
+          reportState.targetType === 'posts'
             ? handlePostReportSubmit(onSubmit)
             : handleCommentReportSubmit(onSubmit)
         }
       >
         <div className='m-auto flex w-[370px] flex-col'>
-          {reportState.targetType === 'post'
+          {reportState.targetType === 'posts'
             ? reportOption['post'].map((option) => (
                 <ReportOption
                   key={option.name}

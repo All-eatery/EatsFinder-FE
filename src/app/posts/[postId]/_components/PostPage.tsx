@@ -34,7 +34,7 @@ const PostPage = ({ userInfo, postContent, postComments }: PostPageProps) => {
   });
 
   const handleOpenReportModal: (
-    targetType: 'post' | 'comment' | 'reply',
+    targetType: 'posts' | 'comments' | 'replies',
     targetId: number,
   ) => void = (targetType, targetId) => {
     setReportState({

@@ -18,7 +18,7 @@ interface PostContentProps {
   handleDeletePost: () => Promise<void>;
   handleTogglePostLike: (targetId: number, isLiked: boolean) => Promise<void>;
   handleOpenReportModal: (
-    targetType: 'post' | 'comment' | 'reply',
+    targetType: 'posts' | 'comments' | 'replies',
     targetId: number,
   ) => void;
 }
@@ -45,7 +45,7 @@ const PostContent = ({
           handleIsEditable={handleIsEditable}
           handleDeletePost={handleDeletePost}
           handleOpenReportModal={() => {
-            handleOpenReportModal('post', postContent.id);
+            handleOpenReportModal('posts', postContent.id);
           }}
         />
       </div>
