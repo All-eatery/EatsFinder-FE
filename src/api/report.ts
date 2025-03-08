@@ -1,11 +1,14 @@
-import { KOTLIN_SERVER } from '@/constants/baseUrl';
 import { getUserToken } from '@/utils/getServerUserInfo';
-import { KotlinResponseType } from '@/types/responseType';
 
-export const submitReport = async (reasons, targetType, targetId) => {
+export const submitReport = async (
+  reasons: any,
+  targetType: string,
+  targetId: number,
+) => {
   const token = await getUserToken();
+
   const res = await fetch(
-    `${KOTLIN_SERVER}/reports/${targetType}/${targetId}`,
+    `api/report?targetType=${targetType}&targetId=${targetId}`,
     {
       method: 'POST',
       headers: {
@@ -15,8 +18,6 @@ export const submitReport = async (reasons, targetType, targetId) => {
       body: JSON.stringify(reasons),
     },
   );
-
-  console.log(res);
 
   const data = await res.json();
 

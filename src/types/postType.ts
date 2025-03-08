@@ -62,7 +62,7 @@ export interface PostCommentType {
 
 export interface ReportStateType {
   isOpen: boolean;
-  targetType: 'post' | 'comment' | 'reply' | null;
+  targetType: 'posts' | 'comments' | 'replies' | null;
   targetId: number | null;
 }
 
