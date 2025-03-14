@@ -17,5 +17,5 @@ export const useGetCoordinate = () => {
     }
   }, []);
 
-  return coordinate;
+  return { coordinate };
 };
