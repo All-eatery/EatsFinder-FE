@@ -1,4 +1,9 @@
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import {
+  Map,
+  MapMarker,
+  MapTypeControl,
+  ZoomControl,
+} from 'react-kakao-maps-sdk';
 import Loading from '@/components/atoms/loading/Loading';
 import { useGetCoordinate } from '../../_hooks/useGetCoordinate';
 import { useEffect, useRef, useState } from 'react';
@@ -9,7 +14,7 @@ export const PlaceMap = () => {
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [address, setAddress] = useState('');
   console.log('render?', coordinate);
-
+  const [boundary, setBoundary] = useState<kakao.maps.LatLngBounds>();
   useEffect(() => {
     if (!map || !coordinate) return;
     const geocoder = new kakao.maps.services.Geocoder();
@@ -23,13 +28,20 @@ export const PlaceMap = () => {
       },
     );
   }, [coordinate, map]);
+  useEffect(() => {
+    if (map) {
+      setBoundary(map.getBounds());
+    }
+  }, [map]);
   if (!coordinate) return <Loading />;
-
-  console.log('맛집지도', address);
+  const getBounday = (mapInstance: kakao.maps.Map) => {
+    setBoundary(mapInstance.getBounds());
+  };
   //바운더리 값구함
-  // const boundary = map?.getBounds();
-  // console.log(boundary);
-  //  좌표에 맞는 마커 띄우기, 드래그,휠시 map 재조정, 지역
+  console.log('바운더리', boundary);
+
+  //  좌표에 맞는 마커 띄우기
+  // 드래그,휠시 map 재조정
   return (
     <>
       <h2 className='text-gray-700 subTitle-28'>주변의 맛집 ({address})</h2>
@@ -43,15 +55,19 @@ export const PlaceMap = () => {
             setMap(mapInstance);
           }}
           draggable={true}
+          onZoomChanged={getBounday}
+          onDrag={getBounday}
         >
           {/**마커 */}
-          {/* <MapMarker
-          position={{ lat: coordinate.lat, lng: coordinate.lng }}
-          image={{
-            src: '/marker.png',
-            size: { width: 48, height: 48 },
-          }}
-        /> */}
+          <MapMarker
+            position={{ lat: 37.1527, lng: 127.088 }}
+            image={{
+              src: '/marker.png',
+              size: { width: 48, height: 48 },
+            }}
+          />
+          <MapTypeControl position={'TOPRIGHT'} />
+          <ZoomControl position={'RIGHT'} />
         </Map>
         <div className='mb-2 flex justify-between body-16'>
           <span className='text-gray-600'>{'부산 동구 중앙대로 225'}</span>
