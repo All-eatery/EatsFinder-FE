@@ -6,7 +6,6 @@ export const SurroundingPlaces = () => {
   return (
     <div className='flex flex-col gap-6'>
       <PlaceMap />
-      {/* <MapInfo /> */}
       <PlacesCardContainer />
     </div>
   );

@@ -2,10 +2,12 @@
 const nextConfig = {
   images: {
     remotePatterns: [
+      { protocol: 'http', hostname: 'localhost' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
       {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_S3_SERVER,
+        pathname: '**',
       },
       {
         protocol: 'http',
