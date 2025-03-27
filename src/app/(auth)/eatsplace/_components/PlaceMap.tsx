@@ -44,12 +44,14 @@ const marekers: Markers[] = [
 ];
 interface PlaceMapProps {
   isSurrounding?: boolean;
+  lat?: number;
+  lng?: number;
 }
-export const PlaceMap = ({ isSurrounding = true }: PlaceMapProps) => {
+export const PlaceMap = ({ isSurrounding = true, lat, lng }: PlaceMapProps) => {
   const router = useRouter();
 
   const mapRef = useRef<kakao.maps.Map | null>(null);
-  const { coordinate } = useGetCoordinate();
+  const { coordinate } = useGetCoordinate({ lat: lat, lng: lng });
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [address, setAddress] = useState('');
   const [boundary, setBoundary] = useState<kakao.maps.LatLngBounds>();
@@ -85,6 +87,7 @@ export const PlaceMap = ({ isSurrounding = true }: PlaceMapProps) => {
     }
   }, [map]);
   if (!coordinate) return <Loading />;
+  console.log(coordinate);
   const getBounday = (mapInstance: kakao.maps.Map) => {
     setBoundary(mapInstance.getBounds());
   };
@@ -117,6 +120,7 @@ export const PlaceMap = ({ isSurrounding = true }: PlaceMapProps) => {
             const markerSize = hoveredMarkerId === marker.id ? 64 : 48;
             return (
               <MapMarker
+                key={marker.id}
                 position={{ lat: marker.lat, lng: marker.lng }}
                 image={{
                   src: markerImage,

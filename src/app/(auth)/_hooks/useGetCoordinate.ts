@@ -4,11 +4,22 @@ const DEFAULT_COORDINATE = {
   lng: 128.601247028514,
 };
 //홈에서부터 가져오고 이를 전역에 저장해두자
-export const useGetCoordinate = () => {
+export const useGetCoordinate = (initialCoordinate?: {
+  lat?: number;
+  lng?: number;
+}) => {
   const [coordinate, setCoordinate] = useState<{
     lat: number;
     lng: number;
-  } | null>(null);
+  } | null>(() => {
+    if (initialCoordinate?.lat && initialCoordinate?.lng) {
+      return {
+        lat: initialCoordinate.lat,
+        lng: initialCoordinate.lng,
+      };
+    }
+    return null;
+  });
 
   useEffect(() => {
     if (!coordinate) {

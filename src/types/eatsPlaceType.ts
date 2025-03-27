@@ -3,4 +3,6 @@ export type PlaceInfoProps = {
   placeName: string;
   url: string;
   popular: string[];
+  lng: number;
+  lat: number;
 };
