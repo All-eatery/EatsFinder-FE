@@ -52,7 +52,6 @@ export const PlaceMap = ({ isSurrounding = true }: PlaceMapProps) => {
   const { coordinate } = useGetCoordinate();
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [address, setAddress] = useState('');
-  console.log('render?', coordinate);
   const [boundary, setBoundary] = useState<kakao.maps.LatLngBounds>();
   const [hoveredMarkerId, setHoveredMarkerId] = useState<Number | null>(null);
   useEffect(() => {
@@ -90,7 +89,7 @@ export const PlaceMap = ({ isSurrounding = true }: PlaceMapProps) => {
     setBoundary(mapInstance.getBounds());
   };
   //바운더리 값구함
-  console.log('바운더리', boundary);
+  // console.log('바운더리', boundary);
 
   return (
     <>

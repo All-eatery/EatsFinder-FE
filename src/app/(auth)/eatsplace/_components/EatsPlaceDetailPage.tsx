@@ -4,14 +4,19 @@ import { PlacePosts } from './PlacePosts';
 import { ToggleBtn } from '@/components/molecules/toggleBtn/ToggleBtn';
 import { PlaceInfo } from './PlaceInfo';
 import { PlaceMap } from './PlaceMap';
-import { PlaceTag } from './PlaceTag';
 import KeywordChips from '@/app/posts/[postId]/_components/postContent/KeywordChips';
+import { PlaceInfoProps } from '@/types/eatsPlaceType';
 const tag = 'FR01,FR02,FR03';
 
-export const EatsPlaceDetailPage = () => {
+export const EatsPlaceDetailPage = ({ data }: { data: PlaceInfoProps }) => {
   return (
     <>
-      <PlaceInfo />
+      <PlaceInfo
+        id={data.id}
+        placeName={data.placeName}
+        url={data.url}
+        popular={data.popular}
+      />
       <div className='flex flex-col gap-10'>
         <PlaceMap isSurrounding={false} />
         <KeywordChips keywordIds={tag} keywordsGap={5} />
