@@ -21,13 +21,13 @@ const marekers: Markers[] = [
     id: 1,
     lat: 38.19155,
     lng: 128.60124,
-    selected: true,
+    selected: false,
   },
   {
     id: 2,
     lat: 38.19165,
     lng: 128.60134,
-    selected: true,
+    selected: false,
   },
   {
     id: 3,

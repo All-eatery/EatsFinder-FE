@@ -10,5 +10,3 @@ export const SurroundingPlaces = () => {
     </div>
   );
 };
-
-//TODO: 내위치 가져오기

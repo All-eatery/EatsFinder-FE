@@ -5,6 +5,8 @@ import { ToggleBtn } from '@/components/molecules/toggleBtn/ToggleBtn';
 import { PlaceInfo } from './PlaceInfo';
 import { PlaceMap } from './PlaceMap';
 import { PlaceTag } from './PlaceTag';
+import KeywordChips from '@/app/posts/[postId]/_components/postContent/KeywordChips';
+const tag = 'FR01,FR02,FR03';
 
 export const EatsPlaceDetailPage = () => {
   return (
@@ -12,7 +14,7 @@ export const EatsPlaceDetailPage = () => {
       <PlaceInfo />
       <div className='flex flex-col gap-10'>
         <PlaceMap isSurrounding={false} />
-        <PlaceTag />
+        <KeywordChips keywordIds={tag} keywordsGap={5} />
         <div className='flex flex-col gap-6'>
           <div className='flex justify-end'>
             <ToggleBtn text_1='최신순' text_2='좋아요순' />
