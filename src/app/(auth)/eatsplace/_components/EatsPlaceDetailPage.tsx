@@ -21,7 +21,12 @@ export const EatsPlaceDetailPage = ({ data }: { data: PlaceInfoProps }) => {
         lng={data.lng}
       />
       <div className='flex flex-col gap-10'>
-        <PlaceMap isSurrounding={false} lat={data.lat} lng={data.lng} />
+        <PlaceMap
+          isSurrounding={false}
+          lat={data.lat}
+          lng={data.lng}
+          id={data.id}
+        />
         <KeywordChips keywordIds={tag} keywordsGap={5} />
         <div className='flex flex-col gap-6'>
           <div className='flex justify-end'>

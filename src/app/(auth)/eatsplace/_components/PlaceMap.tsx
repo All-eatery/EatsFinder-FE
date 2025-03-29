@@ -14,6 +14,7 @@ type Markers = {
   id: number;
   lat: number;
   lng: number;
+  name: string;
   selected: boolean;
 };
 const marekers: Markers[] = [
@@ -22,32 +23,63 @@ const marekers: Markers[] = [
     lat: 38.19155,
     lng: 128.60124,
     selected: false,
+    name: '1번',
   },
   {
     id: 2,
     lat: 38.19165,
     lng: 128.60134,
     selected: false,
+    name: '2번',
   },
   {
     id: 3,
     lat: 38.19258,
     lng: 128.60227,
     selected: false,
+    name: '3번',
   },
   {
     id: 4,
     lat: 38.19035,
     lng: 128.60014,
     selected: false,
+    name: '4번',
+  },
+  {
+    id: 5,
+    lat: 37.152934,
+    lng: 127.088255,
+    selected: false,
+    name: '5번',
+  },
+  {
+    id: 6,
+    lat: 37.152754,
+    lng: 127.088105,
+    selected: false,
+    name: '6번',
+  },
+  {
+    id: 7,
+    lat: 37.152724,
+    lng: 127.088225,
+    selected: false,
+    name: '7번',
   },
 ];
 interface PlaceMapProps {
   isSurrounding?: boolean;
   lat?: number;
   lng?: number;
+  id?: number;
 }
-export const PlaceMap = ({ isSurrounding = true, lat, lng }: PlaceMapProps) => {
+export const PlaceMap = ({
+  isSurrounding = true,
+  lat,
+  lng,
+  id,
+}: PlaceMapProps) => {
   const router = useRouter();
 
   const mapRef = useRef<kakao.maps.Map | null>(null);
@@ -114,10 +146,14 @@ export const PlaceMap = ({ isSurrounding = true, lat, lng }: PlaceMapProps) => {
             let markerImage = marker.selected
               ? '/marker.png'
               : '/marker_unSelected.png';
-            if (hoveredMarkerId === marker.id) {
+            let markerSize = hoveredMarkerId === marker.id ? 64 : 48;
+            if (id === marker.id) {
+              markerImage = '/marker.png';
+              markerSize = 64;
+            } else if (hoveredMarkerId === marker.id) {
               markerImage = '/marker.png';
             }
-            const markerSize = hoveredMarkerId === marker.id ? 64 : 48;
+
             return (
               <MapMarker
                 key={marker.id}
@@ -134,7 +170,7 @@ export const PlaceMap = ({ isSurrounding = true, lat, lng }: PlaceMapProps) => {
               >
                 {hoveredMarkerId === marker.id && (
                   <div style={{ padding: '5px', color: '#000' }}>
-                    Hello World!
+                    {marker.name}
                   </div>
                 )}
               </MapMarker>
