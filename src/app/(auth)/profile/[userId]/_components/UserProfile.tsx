@@ -21,15 +21,10 @@ export const UserProfile = ({
     return <div>로딩중</div>;
   }
   if (userProfileData?.isSuccess) {
-    console.log('유저데이터', userProfileData.data);
-    const handler = () => {
-      return console.log('팔로우 기능 생겨야해요');
-    };
     return (
       <>
         <Profile
           loggedInUserId={loggedInUserId}
-          handler={handler}
           userData={userProfileData.data}
           isOwnProfile={isOwnProfile}
         />

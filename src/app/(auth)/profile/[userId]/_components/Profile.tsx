@@ -3,14 +3,15 @@ import { Button, ProfileImage } from '@/components/atoms';
 import { ProfileInfo } from './ProfileInfo';
 import { UserProfileStats } from './UserProfileStats';
 import { addDashes } from '@/utils/formatPhoneNumber';
-import { UserData } from '@/types/authType';
-import { FollowButton } from './FollowButton';
+import { UserDatatype } from '@/types/authType';
 import { useQuery } from '@tanstack/react-query';
 import { checkFollow } from '@/api/profile';
+import { SocialActionButton } from './SocialActionButton';
+import Loading from '@/components/atoms/loading/Loading';
 type ProfileProps = {
   loggedInUserId?: number;
-  handler: () => void;
-  userData: UserData;
+  handler?: () => void;
+  userData: UserDatatype;
   isOwnProfile: boolean;
 };
 export const Profile = ({
@@ -40,7 +41,7 @@ export const Profile = ({
   });
   console.log('data', data);
   if (isLoading) {
-    return <div>Loading...</div>; // 로딩 상태 처리
+    return <Loading />;
   }
   return (
     <div className='flex flex-col items-center gap-4'>
@@ -65,9 +66,12 @@ export const Profile = ({
           내 프로필 수정하기
         </Button>
       ) : (
-        <FollowButton
+        <SocialActionButton
           id={id}
-          isFollowed={loggedInUserId ? (data.statusCode ? false : true) : false}
+          isConnected={
+            loggedInUserId ? (data.statusCode ? false : true) : false
+          }
+          type='follow'
           isLoggedIn={!!loggedInUserId}
         />
       )}

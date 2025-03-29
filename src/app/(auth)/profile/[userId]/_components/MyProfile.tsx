@@ -9,11 +9,10 @@ export const MyProfile = ({ isOwnProfile, userId }: ProfileProps) => {
     queryKey: ['userProfile', userId],
     queryFn: () => getLoggedInUserProfile(),
   });
-
+  console.log('myprofile$#@%$#@^%#$&^^&($#%$#^UIO(*&^%$#HJGFMKIU(KR^ETGW');
   if (isLoading) {
     return <div>로딩중</div>;
   }
-  console.log('ddd', isOwnProfile);
 
   return (
     <>

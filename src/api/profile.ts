@@ -4,8 +4,7 @@ import {
   FollowStatusType,
   FollowDataType,
   PaginationFeedType,
-  UserData,
-  FollowType,
+  UserDatatype,
   PaginationActiveType,
 } from '@/types/authType';
 import { getServerUserInfo, getUserToken } from '@/utils/getServerUserInfo';
@@ -15,7 +14,7 @@ type Result<T, E> =
 
 export const getUserProfile = async (
   id: number,
-): Promise<Result<UserData, string>> => {
+): Promise<Result<UserDatatype, string>> => {
   try {
     const response = await fetch(`${KOTLIN_SERVER}/users/${id}`, {
       method: 'GET',
@@ -32,7 +31,7 @@ export const getUserProfile = async (
     return { isSuccess: false, error: '유저정보조회 에러' };
   }
 };
-export const getLoggedInUserProfile = async (): Promise<UserData> => {
+export const getLoggedInUserProfile = async (): Promise<UserDatatype> => {
   const token = await getUserToken();
 
   const response = await fetch(`${KOTLIN_SERVER}/users`, {
@@ -46,19 +45,7 @@ export const getLoggedInUserProfile = async (): Promise<UserData> => {
   console.log(data);
   return data;
 };
-// export const getMyfeeds = async (): Promise<FeedDataType[]> => {
-//   const token = await getUserToken();
-//   const response = await fetch(`${KOTLIN_SERVER}/users/feeds`, {
-//     method: 'GET',
-//     headers: {
-//       accept: '*/*',
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-//   const data = await response.json();
-//   console.log(data);
-//   return data;
-// };
+
 export const getMyActives = async (
   filter: string,
   page: number,
@@ -82,22 +69,23 @@ export const getMyActives = async (
 export const getUserFeeds = async ({
   id,
   page,
+  isOwnProfile,
 }: {
   id: number;
   page: number;
+  isOwnProfile: boolean;
 }): Promise<PaginationFeedType> => {
+  const url = isOwnProfile ? 'users/feeds' : `users/feeds/${id}`;
   const token = await getUserToken();
   const headers: { accept: string; Authorization?: string } = {
     accept: '*/*',
   };
-  if (token) {
+  if (isOwnProfile && token) {
     headers.Authorization = `Bearer ${token}`;
   }
   const size = 10;
-  console.log('요청');
-  console.log('dsfasdfasdfdsa', id, page);
   const response = await fetch(
-    `${KOTLIN_SERVER}/users/feeds/${id}?page=${page}&size=${size}`,
+    `${KOTLIN_SERVER}/${url}?page=${page}&size=${size}`,
     {
       method: 'GET',
       headers,
@@ -105,9 +93,6 @@ export const getUserFeeds = async ({
   );
 
   const data = await response.json();
-  console.log('수신');
-
-  console.log(data);
   return data;
 };
 export const getFollowing = async (id: number): Promise<FollowDataType[]> => {
@@ -115,7 +100,6 @@ export const getFollowing = async (id: number): Promise<FollowDataType[]> => {
     method: 'GET',
   });
   const data = await response.json();
-  console.log(data);
   return data;
 };
 export const getFollower = async (id: number) => {
@@ -123,7 +107,6 @@ export const getFollower = async (id: number) => {
     method: 'GET',
   });
   const data = await response.json();
-  console.log(data);
   return data;
 };
 export const getFollow = async ({
@@ -140,21 +123,7 @@ export const getFollow = async ({
   const data = await response.json();
   return data;
 };
-export const follow = async ({ type, id }: FollowType) => {
-  const token = await getUserToken();
-  const query = type === 'follow' ? 'followUserId' : 'unfollowUserId';
-  const method = type === 'follow' ? 'POST' : 'DELETE';
 
-  const response = await fetch(`${KOTLIN_SERVER}/follows?${query}=${id}`, {
-    method: method,
-    headers: {
-      accept: '*/*',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const data = await response.json();
-  return data;
-};
 export const checkFollow = async (id: number) => {
   const token = await getUserToken();
   const response = await fetch(`${KOTLIN_SERVER}/follows?followUserId=${id}`, {

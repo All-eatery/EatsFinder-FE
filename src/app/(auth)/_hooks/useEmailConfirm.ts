@@ -10,6 +10,7 @@ import {
   UseFormTrigger,
 } from 'react-hook-form';
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
+import { useToast } from '@/provider/contextProvider/ToastProvider';
 
 export const useEmailConfirm = <
   T extends FieldValues & { codeValidation?: boolean },
@@ -18,34 +19,37 @@ export const useEmailConfirm = <
   trigger: UseFormTrigger<T>,
 ) => {
   const [authButtonState, setAuthButtonState] = useState(false);
-  const { time, startTimer, formatTime } = useTimer(300);
+  const { time, startTimer, formatTime, resetTimer } = useTimer(300);
+  const { showToast } = useToast();
   const sendEmail = (email: string, { checkDuplicate = true } = {}) =>
     debounce(async () => {
       if (isValidEmail(email)) {
         if (checkDuplicate) {
           const response = await isDuplicateEmail(email);
           if (response.statusCode !== 'SUCCESS') {
-            return console.log('이미 가입된 이메일 입니다.');
+            return showToast('이미 가입되어 있는 이메일 입니다.', 'error');
           }
         }
 
         const response = await sendCode(email);
         if (response.statusCode === 'SUCCESS') {
-          console.log(response.message);
+          showToast(response.message, 'success');
           setAuthButtonState(true);
           startTimer();
         } else {
-          console.log('인증번호가 만료되지 않았습니다');
+          showToast('인증번호가 만료되지 않았습니다', 'error');
         }
       }
-    }, 1000);
+    }, 300);
 
   const confirmEmail = (data: EmailConfirmType) => async () => {
     const response = await confirmCode(data);
     if (response.statusCode === 'SUCCESS') {
       setValue('codeValidation' as Path<T>, true as any);
       trigger('codeValidation' as Path<T>);
-      console.log('인증완료');
+      resetTimer();
+      setAuthButtonState(false);
+      showToast('이메일 인증완료', 'success');
     } else if (response.statusCode === 'ERROR') {
       setValue('codeValidation' as Path<T>, false as any);
       trigger('codeValidation' as Path<T>);
