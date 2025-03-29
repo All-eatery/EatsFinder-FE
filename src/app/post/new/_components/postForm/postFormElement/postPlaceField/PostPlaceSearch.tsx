@@ -1,6 +1,6 @@
 import Place from './Place';
 import { Search } from '@/components/molecules';
-import { KakaoPlaceType, PlaceType } from '@/types/postType';
+import { KakaoPlaceType, PlaceType } from '@/types/kakaomapType';
 import { customTwMerge } from '@/utils/customTwMerge';
 import { ChangeEvent, ComponentProps, forwardRef } from 'react';
 
