@@ -27,7 +27,6 @@ export const useDeletePostModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const openModal = () => {
-    console.log('모달오픈');
     setIsModalOpen(true);
   };
   const confirmButton = async (id: number) => {
@@ -47,11 +46,49 @@ export const useDeletePostModal = () => {
   };
   return { isModalOpen, closeModal, openModal, confirmButton };
 };
-export const useBookmarkModal = () => {
+export const useListNameEditModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const queryClient = useQueryClient();
   const openModal = () => {
-    console.log('모달오픈');
+    setIsModalOpen(true);
+  };
+  const confirmButton = async () => {
+    console.log('컨펌.');
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return { isModalOpen, closeModal, openModal, confirmButton };
+};
+export const useDeleteListModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const confirmButton = async () => {
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return { isModalOpen, closeModal, openModal, confirmButton };
+};
+export const useMovePlacesInListModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const confirmButton = async () => {
+    setIsModalOpen(false);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  return { isModalOpen, closeModal, openModal, confirmButton };
+};
+export const useDeletePlacesInListModal = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
     setIsModalOpen(true);
   };
   const confirmButton = async () => {

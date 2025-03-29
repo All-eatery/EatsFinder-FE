@@ -3,6 +3,8 @@ type LayoutPops = {
 };
 export default function AuthLayout({ children }: LayoutPops) {
   return (
-    <div className='flex select-none flex-col items-center'>{children}</div>
+    <div className='flex w-full select-none flex-col items-center'>
+      {children}
+    </div>
   );
 }

@@ -20,11 +20,11 @@ const NAV_DATA = [
   },
   {
     label: 'MyEats',
-    href: '/',
+    href: '/myeats?tab=like',
   },
   {
     label: '맛집정보',
-    href: '/',
+    href: '/eatsplace',
   },
 ];
 type HeaderProps = {

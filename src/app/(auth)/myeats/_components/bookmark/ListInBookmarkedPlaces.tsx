@@ -1,0 +1,92 @@
+'use client';
+import { useSearchParams } from 'next/navigation';
+import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
+import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
+import { Button, Checkbox } from '@/components/atoms';
+import { Modal } from '@/components/organisms';
+import {
+  useDeletePlacesInListModal,
+  useMovePlacesInListModal,
+} from '@/app/(auth)/_hooks/useModal';
+import { EditListBox } from './EditListBox';
+
+export const ListInBookmarkedPlaces = () => {
+  const searchParams = useSearchParams();
+  const select = searchParams.get('select');
+  const url = sampleImg;
+  console.log('select', select);
+  const {
+    closeModal: closeMoveModal,
+    confirmButton: moveConfirmButton,
+    isModalOpen: isMoveModalOpen,
+    openModal: openEditModal,
+  } = useMovePlacesInListModal();
+  const {
+    closeModal: closeDeleteModal,
+    confirmButton: deleteConfirmButton,
+    isModalOpen: isDeleteModalOpen,
+    openModal: openDeleteModal,
+  } = useDeletePlacesInListModal();
+  return (
+    <div>
+      <div
+        className={`${select && 'max-h-[calc(100vh-120px)] overflow-y-auto'} flex flex-col gap-9`}
+      >
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+        <BookmarkedPlaceCard src={url} />
+      </div>
+      {select && (
+        <div className='my-[60px] flex justify-center gap-3'>
+          <Button
+            variant={'stroke'}
+            size={'small'}
+            onClick={() => openEditModal()}
+          >
+            이동
+          </Button>
+          <Button variant={'stroke'} size={'small'} onClick={openDeleteModal}>
+            삭제
+          </Button>
+        </div>
+      )}
+      <Modal
+        isOpen={isMoveModalOpen}
+        onClose={closeMoveModal}
+        title='다른 리스트로 이동'
+        description='이동할 리스트를 선택해주세요.'
+        onMainClick={moveConfirmButton}
+        mainButton='적용'
+      >
+        <div className='flex max-h-[500px] w-full flex-col items-center gap-5 overflow-y-auto pt-1 scrollbar-hide'>
+          <EditListBox />
+          <EditListBox />
+          <EditListBox />
+          <EditListBox />
+          <EditListBox />
+        </div>
+      </Modal>
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        title='다른 리스트로 이동'
+        onMainClick={deleteConfirmButton}
+        mainButton='적용'
+        subButton='취소'
+      >
+        <div className='flex flex-col items-center justify-center text-gray-900 body-18'>
+          <p>선택한 맛집들이 영구적으로 삭제돼요.</p>
+          <p>계속 삭제할까요?</p>
+        </div>
+      </Modal>
+    </div>
+  );
+};
