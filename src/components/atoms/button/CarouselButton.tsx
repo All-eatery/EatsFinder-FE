@@ -17,7 +17,7 @@ export const NextButton = ({
       {...props}
     >
       <div className='fill-primary-400 align-middle [&>svg]:h-10 [&>svg]:w-10'>
-        <ArrowSVG direction='right' />
+        <ArrowSVG direction='right' color='orange' />
       </div>
     </button>
   );
@@ -38,7 +38,7 @@ export const PrevButton = ({
       {...props}
     >
       <div className='fill-primary-400 [&>svg]:h-10 [&>svg]:w-10'>
-        <ArrowSVG direction='left' />
+        <ArrowSVG direction='left' color='orange' />
       </div>
     </button>
   );

@@ -16,7 +16,7 @@ const NAV_DATA = [
   },
   {
     label: '탐색피드',
-    href: '/',
+    href: '/explore',
   },
   {
     label: 'MyEats',
