@@ -17,6 +17,7 @@ export type SVGUpDownProps = {
 };
 export type SVGRatingStarProps = {
   isFill?: 'fill' | 'half' | 'empty';
+  size?: number;
 };
 export type SVGCheckBoxProps = {
   isChecked?: 'default' | 'check' | 'blank';
@@ -29,10 +30,10 @@ export type SVGCheckProps = {
   size?: 'regular' | 'large';
   color?: 'default' | 'green' | 'orange';
 };
-export type SVGRadioProps = {
-  isChecked: boolean;
-};
 export type SVGSizeProps = {
   x?: number;
   y?: number;
+};
+export type SVGRadioProps = {
+  isChecked: boolean;
 };

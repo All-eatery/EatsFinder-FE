@@ -1,5 +1,6 @@
 import { NEST_SERVER } from '@/constants/baseUrl';
-import { PostContentType, PlaceRequestType } from '@/types/postType';
+import { PlaceRequestType } from '@/types/kakaomapType';
+import { PostContentType } from '@/types/postType';
 import { NestResponseError } from '@/types/responseType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 

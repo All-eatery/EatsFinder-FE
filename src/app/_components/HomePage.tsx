@@ -5,6 +5,7 @@ import {
   FollowCard,
   HomeSection,
   Category,
+  FeedCard,
 } from '@/components/molecules';
 import { CardCarousel } from '@/components/organisms';
 
@@ -38,7 +39,9 @@ const HomePage = () => {
           </div>
         </HomeSection>
         <HomeSection title='이웃들의 새로운 게시물'>
-          <CardCarousel data={data} />
+          <CardCarousel data={data}>
+            <FeedCard />
+          </CardCarousel>
         </HomeSection>
         <HomeSection title='~님과 음식 취향이 비슷해요.'>
           <div className='grid grid-cols-4 grid-rows-1 gap-6'>

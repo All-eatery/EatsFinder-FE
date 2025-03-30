@@ -8,7 +8,11 @@ import { TextField } from '@/components/atoms/textField';
 import { Modal } from '@/components/organisms';
 import { PostPlaceSearch } from './PostPlaceSearch';
 import { getPlace, getKakaoPlace, createPlace } from '@/api/post';
-import { PlaceType, KakaoPlaceType, PlaceRequestType } from '@/types/postType';
+import {
+  KakaoPlaceType,
+  PlaceRequestType,
+  PlaceType,
+} from '@/types/kakaomapType';
 
 export const PostPlaceField = () => {
   const { placeName, handleSetPlace } = usePostFormContext();

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FeedCard } from '@/components/molecules';
 import { NextButton, PrevButton } from '@/components/atoms';
 import { customTwMerge } from '@/utils/customTwMerge';
@@ -8,7 +8,13 @@ const CARD_WIDTH = 250;
 const MARGIN_LEFT = 29.5;
 const NUMBER_PER_SCROLL = 5;
 
-export const CardCarousel = ({ data }: { data: number[] }) => {
+export const CardCarousel = ({
+  data,
+  children,
+}: {
+  data: number[];
+  children: React.ReactNode;
+}) => {
   const [slide, setSlide] = useState(0);
 
   const maxSlide = useMemo(() => {
@@ -47,7 +53,7 @@ export const CardCarousel = ({ data }: { data: number[] }) => {
           {data.map((_, idx) => {
             return (
               <div key={idx} className='mr-[29.5px]'>
-                <FeedCard />
+                {children}
               </div>
             );
           })}
