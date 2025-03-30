@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Button } from '@/components/atoms';
 import { DissatisfiedSVG } from '@/components/svg/DissatisfiedSVG';
 import { useState } from 'react';
@@ -17,9 +18,35 @@ const SearchSection = <T,>({
   filter,
   renderItem,
 }: SearchSectionProps<T>) => {
-  const scrollCount = useState(0);
-  const visibleCount = useState(6);
-  const visibleItems = items;
+  const [scrollCount, setScrollCount] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const observerRef = useRef<HTMLDivElement>(null);
+  const visibleItems = items.slice(0, visibleCount);
+
+  useEffect(() => {
+    const target = observerRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const isVisible = entries[0].isIntersecting;
+        if (isVisible && visibleCount < items.length) {
+          setVisibleCount((prev) => prev + 6);
+          setScrollCount((prev) => prev + 1);
+        }
+      },
+      {
+        root: null,
+        threshold: 1.0,
+      },
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [visibleCount, items.length]);
 
   return (
     <div>
@@ -41,7 +68,21 @@ const SearchSection = <T,>({
             {visibleItems.map((item) => renderItem(item))}
           </div>
           <div className='mt-20 flex justify-center'>
-            <Button variant='stroke'>더보기</Button>
+            {scrollCount % 3 === 0 ? (
+              <Button
+                variant='stroke'
+                onClick={() => {
+                  setVisibleCount((prev) => prev + 6);
+                  setScrollCount((prev) => prev + 1);
+                }}
+              >
+                더보기
+              </Button>
+            ) : (
+              visibleCount < items.length && (
+                <div ref={observerRef} className='mt-20 h-10' />
+              )
+            )}
           </div>
         </>
       )}
