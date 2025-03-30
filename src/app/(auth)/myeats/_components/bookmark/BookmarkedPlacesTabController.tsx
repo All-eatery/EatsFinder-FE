@@ -7,11 +7,13 @@ import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
 import { useRouter } from 'next/navigation';
 import { convertToURLSearchParams } from '@/utils/convertToURLSearchParams';
 import { Checkbox } from '@/components/atoms';
+import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
 
 export const BookmarkedPlacesTabController = ({
   searchParams,
 }: ParamsProps) => {
   const router = useRouter();
+  const { listCount, listName, totalLists, totalItems } = useBookmarkContext();
 
   /**
    * (view=all)전체보기 리스트보기 서치바
@@ -24,8 +26,6 @@ export const BookmarkedPlacesTabController = ({
   const select = searchParams.select;
   const list = searchParams.list;
   const id = searchParams.id;
-  const count = 1;
-  const listName = '기본 리스트';
   const handleSelectToggle = () => {
     const queryParams = convertToURLSearchParams({ searchParams });
     if (select) {
@@ -43,7 +43,7 @@ export const BookmarkedPlacesTabController = ({
         {select ? (
           <button className='flex items-center gap-1'>
             <Checkbox variant='Checkbox_Ver2' />
-            <span className='text-gray-400 subTitle-22'>{`전체 선택${count}`}</span>
+            <span className='text-gray-400 subTitle-22'>{`전체 선택${listCount}`}</span>
           </button>
         ) : (
           <div className='flex gap-3'>
@@ -52,7 +52,7 @@ export const BookmarkedPlacesTabController = ({
                 active={view === 'all'}
                 display={!select === true}
               >
-                {`전체보기(${count})`}
+                {`전체보기(${totalItems})`}
               </BookmarkedPlacesTab>
             </Link>
             <div className='flex justify-center py-3 text-gray-50 subTitle-22'>
@@ -62,7 +62,7 @@ export const BookmarkedPlacesTabController = ({
               <BookmarkedPlacesTab
                 active={view === 'list' && !list}
                 display={!select === true}
-              >{`리스트로 보기(${count})`}</BookmarkedPlacesTab>
+              >{`리스트로 보기(${totalLists})`}</BookmarkedPlacesTab>
             </Link>
             {list && (
               <>
@@ -71,7 +71,7 @@ export const BookmarkedPlacesTabController = ({
                 </div>
                 <BookmarkedPlacesTab
                   active={!!list}
-                >{`${listName}${count}`}</BookmarkedPlacesTab>
+                >{`${listName}(${listCount})`}</BookmarkedPlacesTab>
               </>
             )}
           </div>
@@ -98,3 +98,4 @@ export const BookmarkedPlacesTabController = ({
     </div>
   );
 };
+//TODO: 컨트롤러 상태관리

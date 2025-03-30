@@ -13,6 +13,7 @@ const authPages = [
   '/support',
   '/delete-account',
   '/post',
+  '/myeats',
 ];
 //탈퇴 마이잇츠 게시글 작성/수정
 const guestPages = ['/login', '/signup'];
@@ -51,5 +52,6 @@ export const config = {
     '/support',
     '/delete-account',
     '/post/:path*',
+    '/myeats',
   ],
 };

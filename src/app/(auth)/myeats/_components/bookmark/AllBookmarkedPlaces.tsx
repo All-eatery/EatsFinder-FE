@@ -3,10 +3,84 @@ import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
 
 export const AllBookmarkedPlaces = () => {
   return (
-    <div className='flex flex-col gap-9'>
-      <BookmarkedPlaceCard src={url} />
-      <BookmarkedPlaceCard src={url} />
-      <BookmarkedPlaceCard src={url} />
+    <div className='grid grid-cols-2 gap-6'>
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={7}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      {/* <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      />
+      <BookmarkedPlaceCard
+        src={url}
+        address='ㅇㄴㄴㅇ'
+        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
+        id={33}
+        name='ㅇㄴㄹㄴㅇ'
+      /> */}
     </div>
   );
 };
