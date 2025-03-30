@@ -8,10 +8,10 @@ import { useLocation } from '../_hooks/useLocation';
 import { useToggleHandler } from '@/hooks/useToggleHandler';
 import { CrossHairSVG } from '@/components/svg/CrossHairSVG';
 import { getNearByPlaces } from '@/api/place';
-import { UserData } from '@/types/authType';
+import { UserDatatype } from '@/types/authType';
 import { PlaceDetail } from '@/types/placeType';
 
-const NearByPlaces = ({ userInfo }: { userInfo?: UserData }) => {
+const NearByPlaces = ({ userInfo }: { userInfo?: UserDatatype }) => {
   const [localPlace, setLocalPlace] = useState<PlaceDetail[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const { value: isOpen, handleValue: handleToggleOpen } = useToggleHandler();
