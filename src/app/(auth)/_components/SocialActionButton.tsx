@@ -44,7 +44,7 @@ export const SocialActionButton = ({
       console.log('리벨리데이트완료');
     },
   });
-  console.log('loggedIn', isLoggedIn);
+  // console.log('loggedIn', isLoggedIn);
 
   const handleSocialActionButton = async () => {
     if (!isLoggedIn) {

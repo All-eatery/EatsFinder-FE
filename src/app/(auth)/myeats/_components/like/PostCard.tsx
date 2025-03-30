@@ -22,7 +22,13 @@ export const PostCard = ({
       className='relative h-[408px] w-[250px] overflow-hidden rounded-3xl'
       onClick={() => console.log(id)}
     >
-      <Image fill alt='게시글 이미지' src={src} />
+      <Image
+        fill
+        alt='게시글 이미지'
+        src={src}
+        //check 임시 사이즈 설정
+        sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+      />
       <SocialActionButton id={id} isConnected={isLiked} type='post' />
       <div className='absolute bottom-5 left-5 z-10 flex items-center gap-2'>
         <ProfileImage src={profileImage} size={60} />

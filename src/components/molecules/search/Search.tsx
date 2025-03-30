@@ -33,7 +33,11 @@ export const Search = ({
       <div className='pointer-events-none absolute'>
         <SearchSVG />
       </div>
-      <input className='w-full pl-8 outline-none' {...props} />
+      <input
+        className='w-full pl-8 outline-none'
+        {...props}
+        onChange={props.onChange}
+      />
       <button aria-label='search button' type='button' onClick={onSearch}>
         <UploadSVG />
       </button>

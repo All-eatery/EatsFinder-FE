@@ -12,7 +12,6 @@ import {
 import { SignupType } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 import { urlToFile } from '@/utils/urlToFile';
-import { error } from 'console';
 import { UseFormSetValue, UseFormTrigger, UseFormWatch } from 'react-hook-form';
 const accessToken = getUserToken();
 
