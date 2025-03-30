@@ -3,7 +3,7 @@ import { Button } from '@/components/atoms';
 import { Search } from '@/components/molecules';
 import React from 'react';
 import { PostCard } from './PostCard';
-import { getLikedPosts } from '@/api/socialActions';
+import { getLikedPosts, getSearchLikedPosts } from '@/api/socialActions';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '@/components/atoms/loading/Loading';
 import { LikedPostsType } from '@/types/authType';
@@ -15,7 +15,8 @@ export const LikedPosts = () => {
     queryFn: () => getLikedPosts(),
   });
   console.log(data);
-  const { searchText, searchbarHandler, handleSearch } = useSearchbarHandler();
+  const { searchText, searchbarHandler, handleSearch } =
+    useSearchbarHandler(getSearchLikedPosts);
   if (isLoading) {
     return <Loading />;
   }

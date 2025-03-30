@@ -1,5 +1,5 @@
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
-import { SocialActionsType } from '@/types/authType';
+import { LikedPostsType, SocialActionsType } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 
 export const socialAction = async ({ method, type, id }: SocialActionsType) => {
@@ -48,5 +48,20 @@ export const getLikedPosts = async () => {
     },
   });
 
+  return response.json();
+};
+export const getSearchLikedPosts = async (
+  keyword: string,
+): Promise<LikedPostsType> => {
+  const token = await getUserToken();
+  const response = await fetch(
+    `${KOTLIN_SERVER}/search/liked-posts?keyword=${keyword}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
   return response.json();
 };
