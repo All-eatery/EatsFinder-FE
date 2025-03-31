@@ -16,7 +16,7 @@ import {
 import { useHandleCheckBox } from '@/app/(auth)/_hooks/useHandleCheckBox';
 import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
 
-export const BookmarkedPlacesList = () => {
+export const BookmarkedPlaceLists = () => {
   const params = useSearchParams();
   const select = params.get('select');
   const router = useRouter();
