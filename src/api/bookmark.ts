@@ -62,8 +62,9 @@ export const renameBookmarkList = async (id: number, title: string) => {
   });
   return response.json();
 };
-export const deleteBookmarkList = async (id: number) => {
+export const deleteBookmarkList = async (id: number[] | number) => {
   const token = await getUserToken();
+  console.log('idididid', id);
   const response = await fetch(`${NEST_SERVER}/bookmarks/lists/${id}`, {
     method: 'DELETE',
     headers: {
@@ -131,5 +132,16 @@ export const deleteBookmarPlaces = async (placeId: string, listId: number) => {
       },
     },
   );
+  return response.json();
+};
+
+export const getBookmarkCounts = async () => {
+  const token = await getUserToken();
+  const response = await fetch(`${NEST_SERVER}//bookmarks/totalcount`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.json();
 };
