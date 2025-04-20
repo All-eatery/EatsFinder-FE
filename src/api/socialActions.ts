@@ -39,17 +39,23 @@ export const socialAction = async ({ method, type, id }: SocialActionsType) => {
   return data;
 };
 
-export const getLikedPosts = async () => {
+export const getLikedPosts = async (
+  cursor: number,
+  size: number = 20,
+): Promise<LikedPostsType> => {
   const token = await getUserToken();
-  const response = await fetch(`${KOTLIN_SERVER}/post-likes`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const response = await fetch(
+    `${KOTLIN_SERVER}/post-likes?cursorId=${cursor}&pageSize=${size}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
-
+  );
   return response.json();
 };
+
 export const getSearchLikedPosts = async (
   keyword: string,
 ): Promise<LikedPostsType> => {

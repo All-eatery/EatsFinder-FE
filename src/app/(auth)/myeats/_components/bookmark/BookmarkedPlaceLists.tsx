@@ -124,9 +124,6 @@ export const BookmarkedPlaceLists = () => {
 
       {isFetchingNextPage && <Loading />}
 
-      {/* {!hasNextPage && (
-        <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
-      )} */}
       <Modal
         isOpen={isCreateNewListModalOpen}
         onClose={closeCreateNewListModal}
