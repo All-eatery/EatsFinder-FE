@@ -18,6 +18,7 @@ import React from 'react';
 import { StickyBox } from '@/components/atoms/stickyBox';
 import { BookmarkModalCard } from '@/components/molecules/bookmarkCard';
 import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
+import { useBookmarkCheckContext } from '@/provider/contextProvider/BookmarkCheckProvider';
 
 export const ListInBookmarkedPlaces = () => {
   const searchParams = useSearchParams();
@@ -46,14 +47,14 @@ export const ListInBookmarkedPlaces = () => {
     lastElementRef,
     isLoadMoreMode,
   } = useInfiniteScrollPer3<ListInPlacesType>({
-    queryKey: ['bookmarkedInPlaces', String(listId)],
+    queryKey: ['bookmarkedInPlaces'],
+    // queryKey: ['bookmarkedInPlaces', String(listId)],
     queryFn: (cursor) => getBookmarkPlaces(listId, cursor),
     getNextPageParam: (lastPage) => lastPage.lastItemId,
   });
-  const { checkAllHandler, checkHandler, isChecked } = useHandleCheckBox();
-  const { checkHandler: modalChekcer, isChecked: modalIsChecked } =
+  const { checkHandler, isChecked, setData } = useBookmarkCheckContext();
+  const { checkHandler: modalChecker, isChecked: modalIsChecked } =
     useHandleCheckBox();
-  console.log(isChecked);
   const {
     data: modalData,
     fetchNextPage,
@@ -71,6 +72,8 @@ export const ListInBookmarkedPlaces = () => {
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
   setListCount(data!.pages[0].pagination.totalItems);
+  setListName(data!.pages[0].title);
+  setData(data);
   return (
     <div>
       <div className='relative'>
@@ -89,16 +92,16 @@ export const ListInBookmarkedPlaces = () => {
                   <div
                     key={item.id}
                     ref={isLastItem ? lastElementRef : null}
-                    onClick={() => checkHandler(item.places.id)}
+                    onClick={() => checkHandler(item.places.id, 'place')}
                     className={`cursor-pointer rounded-3xl border-2 ${
-                      isChecked.includes(item.places.id)
+                      isChecked.place.includes(item.places.id)
                         ? 'border-primary-100'
                         : 'border-gray-100'
                     }`}
                   >
                     <BookmarkedPlaceCard
                       isSelect={!!select}
-                      isSeleceted={isChecked.includes(item.places.id)}
+                      isSeleceted={isChecked.place.includes(item.places.id)}
                       category={item.places.depth2}
                       id={item.places.id}
                       name={item.places.name}
@@ -108,8 +111,7 @@ export const ListInBookmarkedPlaces = () => {
                   </div>
                 ) : (
                   <Link
-                    //posts가아니라 맛집정보로 넘어가야함
-                    href={`/posts/${id}`}
+                    href={`/eatsplace/${id}`}
                     key={item.id}
                     ref={isLastItem ? lastElementRef : null}
                     className='border-2 border-transparent'
@@ -169,8 +171,8 @@ export const ListInBookmarkedPlaces = () => {
         description='이동할 리스트를 선택해주세요.'
         onMainClick={() =>
           moveConfirmButton({
-            places: isChecked,
-            lists: modalIsChecked,
+            places: isChecked.place,
+            lists: modalIsChecked.list,
             id: listId,
           })
         }
@@ -204,8 +206,8 @@ export const ListInBookmarkedPlaces = () => {
                 {page.items.map((list) => (
                   <BookmarkModalCard
                     key={list.id}
-                    onClick={(id) => modalChekcer(id)}
-                    selectedLists={modalIsChecked}
+                    onClick={(id) => modalChecker(id, 'place')}
+                    selectedLists={modalIsChecked.place}
                     id={list.id}
                     count={list.count}
                     title={list.title}
@@ -222,7 +224,7 @@ export const ListInBookmarkedPlaces = () => {
         onClose={closeDeleteModal}
         title='이 맛집들을 삭제할까요?'
         onMainClick={() =>
-          deleteConfirmButton({ places: isChecked, listId: listId })
+          deleteConfirmButton({ places: isChecked.place, listId: listId })
         }
         onSubClick={closeDeleteModal}
         mainButton='적용'

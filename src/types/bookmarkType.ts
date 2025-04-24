@@ -17,7 +17,13 @@ export type BookmarkedListsType = {
   ];
   lastItemId: number;
 };
+export type BookmarkCountsType = {
+  totalItems: number;
+  totalLists: number;
+};
 export type ListInPlacesType = {
+  title: string;
+
   pagination: {
     totalItems: number;
     itemsPerPage: number;
@@ -34,7 +40,7 @@ export type ListInPlacesType = {
       };
     },
   ];
-  lastItemId: 321;
+  lastItemId: number;
 };
 export type BookmarkedPlacesType = {
   pagination: {

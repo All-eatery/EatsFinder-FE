@@ -77,7 +77,6 @@ export const addBookmarkPlaces = async (place: number, lists: number[]) => {
   const token = await getUserToken();
   const response = await fetch(`${NEST_SERVER}/bookmarks/places`, {
     method: 'POST',
-
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
@@ -137,7 +136,7 @@ export const deleteBookmarPlaces = async (placeId: string, listId: number) => {
 
 export const getBookmarkCounts = async () => {
   const token = await getUserToken();
-  const response = await fetch(`${NEST_SERVER}//bookmarks/totalcount`, {
+  const response = await fetch(`${NEST_SERVER}/bookmarks/totalcount`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
