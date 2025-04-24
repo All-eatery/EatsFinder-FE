@@ -1,17 +1,18 @@
 'use client';
 import { Button } from '@/components/atoms';
 import { Search } from '@/components/molecules';
-import React from 'react';
+import React, { useState } from 'react';
 import { PostCard } from './PostCard';
 import { getLikedPosts, getSearchLikedPosts } from '@/api/socialActions';
 import Loading from '@/components/atoms/loading/Loading';
 import { LikedPostsType } from '@/types/authType';
 import { useSearchbarHandler } from '@/hooks/useSearchbarHandler';
 import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export const LikedPosts = () => {
+  const { searchbarHandler, searchText, handleSearch } = useSearchbarHandler();
+
+  const isSearching = !!searchText.trim();
   const {
     data,
     status,
@@ -21,23 +22,22 @@ export const LikedPosts = () => {
     lastElementRef,
     isLoadMoreMode,
   } = useInfiniteScrollPer3<LikedPostsType>({
-    queryKey: ['likedPosts'],
-    queryFn: (cursor) => getLikedPosts(cursor),
+    queryKey: ['likedPosts', searchText],
+    queryFn: (cursor) =>
+      isSearching
+        ? getSearchLikedPosts(cursor, searchText)
+        : getLikedPosts(cursor),
     getNextPageParam: (lastPage) => lastPage.lastItemId,
   });
 
   console.log(data);
-  const router = useRouter();
-  const { searchText, searchbarHandler, handleSearch } =
-    useSearchbarHandler(getSearchLikedPosts);
+
   if (status === 'pending') {
     return <Loading />;
   }
   if (status === 'error') {
     return <div>에러</div>;
   }
-
-  //onSeacrh에 api연결해서 검색하는 로직 추가하기
 
   return (
     <div className='flex flex-col items-center gap-20'>

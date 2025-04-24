@@ -57,16 +57,14 @@ export const getLikedPosts = async (
 };
 
 export const getSearchLikedPosts = async (
+  cursor: number,
   keyword: string,
+  size: number = 20,
 ): Promise<LikedPostsType> => {
-  const token = await getUserToken();
   const response = await fetch(
-    `${KOTLIN_SERVER}/search/liked-posts?keyword=${keyword}`,
+    `/api/auth/search/liked-posts?keyword=${keyword}&cursorId=${cursor}&pageSize=${size}`,
     {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     },
   );
   return response.json();

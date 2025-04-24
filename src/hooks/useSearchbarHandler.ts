@@ -1,18 +1,32 @@
-'use clietn';
+'use client';
 
 import { ChangeEvent, useState } from 'react';
+import { useToast } from '@/provider/contextProvider/ToastProvider';
 
-export const useSearchbarHandler = <U>(
-  searchFunction: (params: string) => Promise<U>,
-) => {
+export const useSearchbarHandler = () => {
+  const { showToast } = useToast();
+
+  const [inputText, setInputText] = useState('');
   const [searchText, setSearchText] = useState('');
+
   const searchbarHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    setInputText(e.target.value);
   };
-  const handleSearch = async () => {
-    if (!searchText.trim()) return;
-    const data = await searchFunction(searchText);
-    return data;
+
+  const handleSearch = () => {
+    const trimmed = inputText.trim();
+    if (!trimmed) {
+      showToast('검색어를 입력해주세요.', 'error');
+      return;
+    }
+    console.log('ㅅㄱㅇㅇㅇ', trimmed);
+    setSearchText(trimmed);
   };
-  return { searchText, searchbarHandler, handleSearch };
+
+  return {
+    inputText,
+    searchbarHandler,
+    handleSearch,
+    searchText,
+  };
 };
