@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search } from '@/components/molecules';
 import { customTwMerge } from '@/utils/customTwMerge';

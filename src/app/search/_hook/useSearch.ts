@@ -11,9 +11,9 @@ const useSearch = (keyword: string, filter: FilterType) => {
       const [, { keyword, filter }] = queryKey;
       const data = await getSearchResult(keyword, filter);
       return {
-        posts: data.post,
-        places: data.place,
-        neighbors: data.neighbor,
+        posts: data.posts,
+        places: data.places,
+        neighbors: data.neighbors,
       };
     },
   });

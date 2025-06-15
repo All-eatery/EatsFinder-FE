@@ -21,7 +21,7 @@ const SearchSection = <T,>({
   const [scrollCount, setScrollCount] = useState(0);
   const [visibleCount, setVisibleCount] = useState(6);
   const observerRef = useRef<HTMLDivElement>(null);
-  const visibleItems = items.slice(0, visibleCount);
+  const visibleItems = items?.slice(0, visibleCount) ?? [];
 
   useEffect(() => {
     const target = observerRef.current;
@@ -46,12 +46,16 @@ const SearchSection = <T,>({
     return () => {
       observer.disconnect();
     };
-  }, [visibleCount, items.length]);
+  }, [visibleCount, items]);
 
   return (
     <div>
-      {items.length <= 0 ? (
-        <div className='flex flex-col items-center justify-center gap-6'>
+      <h3 className='text-gray-700 subTitle-28'>
+        <span className='text-primary-400'>{`#${keyword}`}</span>
+        {title}
+      </h3>
+      {!items || items.length === 0 ? (
+        <div className='mt-12 flex flex-col items-center justify-center gap-6'>
           <DissatisfiedSVG />
           <div className='flex flex-col items-center text-gray-700 subTitle-20'>
             <span>{`"${keyword}"`}에 일치하는 정보를 찾을 수 없어요.</span>
@@ -60,10 +64,6 @@ const SearchSection = <T,>({
         </div>
       ) : (
         <>
-          <h3 className='text-gray-700 subTitle-28'>
-            <span className='text-primary-400'>{`#${keyword}`}</span>
-            {title}
-          </h3>
           <div className='mt-6 grid grid-cols-4 gap-6'>
             {visibleItems.map((item) => renderItem(item))}
           </div>

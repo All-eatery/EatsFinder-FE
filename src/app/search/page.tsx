@@ -1,20 +1,14 @@
-import SearchBar from '../_components/SearchBar';
-import TabMenu from './_components/TabMenu';
+import SearchPage from './_components/SearchPage';
 
-const page = ({
+const page = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const keyword = searchParams.keyword;
-  console.log(keyword);
+  const keyword = searchParams.keyword as string | undefined;
+  const filter = searchParams.filter as string | undefined;
 
-  return (
-    <div className='flex flex-col gap-20'>
-      <SearchBar />
-      <TabMenu />
-    </div>
-  );
+  return <SearchPage keyword={keyword} filter={filter} />;
 };
 
 export default page;

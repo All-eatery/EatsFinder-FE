@@ -1,17 +1,19 @@
-export type FilterType = 'PLACES' | 'POSTS' | 'USERS' | 'ALL';
+export type FilterType = 'Places' | 'Posts' | 'Users' | 'All';
 
 export interface SearchPost {
   userId: number;
-  userImageUrl: string;
-  placeName: string;
   postId: number;
+  placeName: string;
   postThumbnailUrl: string;
   isPostLike: boolean;
   postLikeCount: number;
+  profileImage: string;
+  nickname: string;
   updatedAt: string;
 }
 
 export interface SearchPlace {
+  placeId: number;
   postThumbnailUrl: string;
   placeName: string;
   roadAddress: string;
