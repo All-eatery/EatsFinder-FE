@@ -23,7 +23,6 @@ export type BookmarkCountsType = {
 };
 export type ListInPlacesType = {
   title: string;
-
   pagination: {
     totalItems: number;
     itemsPerPage: number;
@@ -63,4 +62,19 @@ export type BookmarkedPlacesType = {
 };
 export type BookmarkListByPlace = {
   items: { id: number; title: string; count: number }[];
+};
+export type AllBookmarkListsType = {
+  pagination: {
+    totalItems: number;
+    itemsPerPage: number;
+  };
+  items: {
+    id: number;
+    name: string;
+    roadAddress: string;
+    depth2: string;
+    thumbnailUrl: string;
+    bookmarkPlaceId: number;
+  }[];
+  lastItemId: number;
 };

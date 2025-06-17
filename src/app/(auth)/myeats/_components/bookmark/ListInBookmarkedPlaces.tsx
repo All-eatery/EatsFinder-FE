@@ -17,7 +17,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import { StickyBox } from '@/components/atoms/stickyBox';
 import { BookmarkModalCard } from '@/components/molecules/bookmarkCard';
-import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
+import { useBookmarkContext } from '@/provider/contextProvider/BookmarkCountProvider';
 import { useBookmarkCheckContext } from '@/provider/contextProvider/BookmarkCheckProvider';
 
 export const ListInBookmarkedPlaces = () => {

@@ -1,87 +1,74 @@
-import React from 'react';
+'use client';
+import { useSearchbarContext } from '@/provider/contextProvider/SeachBarProvider';
 import { BookmarkedPlaceCard } from './BookmarkedPlaceCard';
+import { useInfiniteScrollPer3 } from '@/app/(auth)/_hooks/useInfiniteScroll';
+import { AllBookmarkListsType } from '@/types/bookmarkType';
+import { getAllBookmarkLists } from '@/api/bookmark';
+import Loading from '@/components/atoms/loading/Loading';
+import { Button } from '@/components/atoms';
 
 export const AllBookmarkedPlaces = () => {
+  const { searchText } = useSearchbarContext();
+  const isSearching = !!searchText.trim();
+  const {
+    data,
+    status,
+    isFetchingNextPage,
+    handleLoadMore,
+    hasNextPage,
+    lastElementRef,
+    isLoadMoreMode,
+  } = useInfiniteScrollPer3<AllBookmarkListsType>({
+    queryKey: ['allBookmarks'],
+    queryFn: (cursor) =>
+      isSearching
+        ? getAllBookmarkLists(cursor, searchText)
+        : getAllBookmarkLists(cursor),
+    getNextPageParam: (lastPage) => lastPage.lastItemId,
+  });
+
+  if (status === 'pending') {
+    return <Loading />;
+  }
+  if (status === 'error') {
+    return <div>에러</div>;
+  }
+  console.log(data);
+
   return (
-    <div className='grid grid-cols-2 gap-6'>
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={7}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      {/* <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      />
-      <BookmarkedPlaceCard
-        src={url}
-        address='ㅇㄴㄴㅇ'
-        category='ㄴㅇㄹㄴㅇㄹㅇㄴ'
-        id={33}
-        name='ㅇㄴㄹㄴㅇ'
-      /> */}
-    </div>
+    <>
+      {data?.pages.map((page, pageIndex) => {
+        return (
+          <div key={pageIndex} className='grid grid-cols-2 gap-6'>
+            {page.items.map((item, index) => {
+              const isLastItem =
+                pageIndex === data.pages.length - 1 &&
+                index === page.items.length - 1;
+              return (
+                <div key={item.id} ref={isLastItem ? lastElementRef : null}>
+                  <BookmarkedPlaceCard
+                    src={url} // 나중에 실제 item.thumbnailUrl 로 바꾸기
+                    address={item.roadAddress}
+                    category={item.depth2}
+                    id={item.id}
+                    name={item.name}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+      {isLoadMoreMode && hasNextPage && (
+        <div className='mt-7 flex justify-center'>
+          <Button onClick={handleLoadMore} variant={'stroke'}>
+            더보기
+          </Button>
+        </div>
+      )}
+
+      {isFetchingNextPage && <Loading />}
+    </>
   );
 };
 export const url =

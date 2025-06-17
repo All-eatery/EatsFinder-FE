@@ -5,10 +5,11 @@ import { Search } from '@/components/molecules';
 import { useRouter } from 'next/navigation';
 import { convertToURLSearchParams } from '@/utils/convertToURLSearchParams';
 import { Checkbox } from '@/components/atoms';
-import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
+import { useBookmarkContext } from '@/provider/contextProvider/BookmarkCountProvider';
 import { BookmarkCountsType } from '@/types/bookmarkType';
 import { useBookmarkCheckContext } from '@/provider/contextProvider/BookmarkCheckProvider';
 import { useState } from 'react';
+import { useSearchbarContext } from '@/provider/contextProvider/SeachBarProvider';
 
 type BookmarkedPlacesTabControllerProps = {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -29,6 +30,7 @@ export const BookmarkedPlacesTabController = ({
   } = useBookmarkContext();
   setTotalItems(counts.totalItems);
   setTotalLists(counts.totalLists);
+
   /**
    * (view=all)전체보기 리스트보기 서치바
    * (view=list)전쳅보기 리스트보기 선택
@@ -65,6 +67,7 @@ export const BookmarkedPlacesTabController = ({
     }));
   };
   console.log(!!list, data);
+  const { searchbarHandler, handleSearch } = useSearchbarContext();
   return (
     <div className='flex w-full flex-col'>
       <div className='flex h-16 justify-between'>
@@ -121,6 +124,8 @@ export const BookmarkedPlacesTabController = ({
             <Search
               variant='large'
               placeholder='스크랩했던 맛집을 빠르게 찾아보세요.'
+              onChange={searchbarHandler}
+              onSearch={handleSearch}
             />
           </div>
         )}

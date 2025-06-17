@@ -30,8 +30,6 @@ export const LikedPosts = () => {
     getNextPageParam: (lastPage) => lastPage.lastItemId,
   });
 
-  console.log(data);
-
   if (status === 'pending') {
     return <Loading />;
   }

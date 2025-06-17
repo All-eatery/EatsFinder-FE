@@ -19,7 +19,6 @@ export const useSearchbarHandler = () => {
       showToast('검색어를 입력해주세요.', 'error');
       return;
     }
-    console.log('ㅅㄱㅇㅇㅇ', trimmed);
     setSearchText(trimmed);
   };
 

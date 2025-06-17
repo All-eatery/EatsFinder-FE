@@ -13,7 +13,7 @@ import {
   useCreateNewListModal,
   useDeleteListModal,
 } from '@/app/(auth)/_hooks/useModal';
-import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
+import { useBookmarkContext } from '@/provider/contextProvider/BookmarkCountProvider';
 import { useBookmarkCheckContext } from '@/provider/contextProvider/BookmarkCheckProvider';
 
 export const BookmarkedPlaceLists = () => {

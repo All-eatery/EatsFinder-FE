@@ -4,7 +4,7 @@ import { AllBookmarkedPlaces } from './AllBookmarkedPlaces';
 import { ListInBookmarkedPlaces } from './ListInBookmarkedPlaces';
 import { BookmarkedPlaceLists } from './BookmarkedPlaceLists';
 import { getBookmarkCounts } from '@/api/bookmark';
-import { BookmarkCheckProvider } from '@/provider/contextProvider/BookmarkCheckProvider';
+import { BookmarkCombinedProvider } from '@/provider/contextProvider/BookmarkCombinedProvider';
 
 export const BookmarkedPlaces = async ({ searchParams }: ParamsProps) => {
   const view = searchParams.view;
@@ -12,7 +12,7 @@ export const BookmarkedPlaces = async ({ searchParams }: ParamsProps) => {
   const counts = await getBookmarkCounts();
 
   return (
-    <BookmarkCheckProvider>
+    <BookmarkCombinedProvider>
       <div className='flex flex-col gap-6'>
         <BookmarkedPlacesTabController
           searchParams={searchParams}
@@ -26,6 +26,6 @@ export const BookmarkedPlaces = async ({ searchParams }: ParamsProps) => {
           <BookmarkedPlaceLists />
         )}
       </div>
-    </BookmarkCheckProvider>
+    </BookmarkCombinedProvider>
   );
 };

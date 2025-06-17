@@ -69,7 +69,7 @@ export const useCreateNewListModal = () => {
     },
     onSettled: (response) => {
       console.log('북마크 리스트 등록 성공', response);
-      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      queryClient.refetchQueries({ queryKey: ['myBookmarks', 'allBookmarks'] });
       setIsModalOpen(false);
     },
   });
@@ -107,7 +107,7 @@ export const useListNameEditModal = () => {
     },
     onSettled: (response) => {
       console.log('북마크 리스트 수정 성공', response);
-      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      queryClient.refetchQueries({ queryKey: ['myBookmarks', 'allBookmarks'] });
       setIsModalOpen(false);
     },
   });
@@ -139,7 +139,7 @@ export const useDeleteListModal = () => {
       console.error('북마크 리스트 삭제 에러', error);
     },
     onSettled: (response) => {
-      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      queryClient.refetchQueries({ queryKey: ['myBookmarks', 'allBookmarks'] });
       setIsModalOpen(false);
     },
   });
@@ -218,7 +218,7 @@ export const useDeletePlacesModal = () => {
       console.log('북마크 리스트 삭제 성공');
       console.log(response);
       queryClient.refetchQueries({
-        queryKey: ['bookmarkedInPlaces'],
+        queryKey: ['bookmarkedInPlaces', 'allBookmarks'],
         // queryKey: ['bookmarkedInPlaces', String(variables.placeId)],
       });
       setIsModalOpen(false);
