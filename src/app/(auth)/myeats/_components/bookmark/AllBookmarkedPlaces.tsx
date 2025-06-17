@@ -9,6 +9,7 @@ import { Button } from '@/components/atoms';
 
 export const AllBookmarkedPlaces = () => {
   const { searchText } = useSearchbarContext();
+  console.log('text', searchText);
   const isSearching = !!searchText.trim();
   const {
     data,
@@ -19,7 +20,7 @@ export const AllBookmarkedPlaces = () => {
     lastElementRef,
     isLoadMoreMode,
   } = useInfiniteScrollPer3<AllBookmarkListsType>({
-    queryKey: ['allBookmarks'],
+    queryKey: ['allBookmarks', searchText],
     queryFn: (cursor) =>
       isSearching
         ? getAllBookmarkLists(cursor, searchText)

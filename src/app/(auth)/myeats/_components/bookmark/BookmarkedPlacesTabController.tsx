@@ -67,7 +67,8 @@ export const BookmarkedPlacesTabController = ({
     }));
   };
   console.log(!!list, data);
-  const { searchbarHandler, handleSearch } = useSearchbarContext();
+  const { searchbarHandler, handleSearch, resetSearchText } =
+    useSearchbarContext();
   return (
     <div className='flex w-full flex-col'>
       <div className='flex h-16 justify-between'>
@@ -80,7 +81,7 @@ export const BookmarkedPlacesTabController = ({
             <span className='text-gray-400 subTitle-22'>{`전체 선택 ${list ? listCount : totalLists}`}</span>
           </button>
         ) : (
-          <div className='flex gap-3'>
+          <div className='flex gap-3' onClick={resetSearchText}>
             <Link href='/myeats?tab=scrap&view=all'>
               <BookmarkedPlacesTab
                 active={view === 'all'}

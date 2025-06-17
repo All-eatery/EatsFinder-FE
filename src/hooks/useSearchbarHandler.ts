@@ -12,6 +12,7 @@ export const useSearchbarHandler = () => {
   const searchbarHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
   };
+  const resetSearchText = () => setSearchText('');
 
   const handleSearch = () => {
     const trimmed = inputText.trim();
@@ -23,6 +24,7 @@ export const useSearchbarHandler = () => {
   };
 
   return {
+    resetSearchText,
     inputText,
     searchbarHandler,
     handleSearch,

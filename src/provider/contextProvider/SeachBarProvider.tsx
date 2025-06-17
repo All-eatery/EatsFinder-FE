@@ -8,6 +8,7 @@ type SearcBarProviderType = {
   searchText: string;
   searchbarHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSearch: () => void;
+  resetSearchText: () => void;
 };
 
 const SearchBarContext = createContext<SearcBarProviderType | null>(null);
