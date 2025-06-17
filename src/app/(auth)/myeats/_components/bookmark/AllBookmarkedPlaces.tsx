@@ -47,7 +47,7 @@ export const AllBookmarkedPlaces = () => {
                 return (
                   <div key={item.id} ref={isLastItem ? lastElementRef : null}>
                     <BookmarkedPlaceCard
-                      src={url} // 나중에 실제 item.thumbnailUrl 로 바꾸기
+                      src={item.thumbnailUrl}
                       address={item.roadAddress}
                       category={item.depth2}
                       id={item.id}
