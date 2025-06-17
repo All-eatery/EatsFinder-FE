@@ -9,7 +9,6 @@ import { Button } from '@/components/atoms';
 
 export const AllBookmarkedPlaces = () => {
   const { searchText } = useSearchbarContext();
-  console.log('text', searchText);
   const isSearching = !!searchText.trim();
   const {
     data,
@@ -34,32 +33,45 @@ export const AllBookmarkedPlaces = () => {
   if (status === 'error') {
     return <div>에러</div>;
   }
-  console.log(data);
+  console.log(data?.pages[0].items.length);
 
   return (
     <>
-      {data?.pages.map((page, pageIndex) => {
-        return (
-          <div key={pageIndex} className='grid grid-cols-2 gap-6'>
-            {page.items.map((item, index) => {
-              const isLastItem =
-                pageIndex === data.pages.length - 1 &&
-                index === page.items.length - 1;
-              return (
-                <div key={item.id} ref={isLastItem ? lastElementRef : null}>
-                  <BookmarkedPlaceCard
-                    src={url} // 나중에 실제 item.thumbnailUrl 로 바꾸기
-                    address={item.roadAddress}
-                    category={item.depth2}
-                    id={item.id}
-                    name={item.name}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
+      {data?.pages[0].items.length ? (
+        data?.pages.map((page, pageIndex) => {
+          return (
+            <div key={pageIndex} className='grid grid-cols-2 gap-6'>
+              {page.items.map((item, index) => {
+                const isLastItem =
+                  pageIndex === data.pages.length - 1 &&
+                  index === page.items.length - 1;
+                return (
+                  <div key={item.id} ref={isLastItem ? lastElementRef : null}>
+                    <BookmarkedPlaceCard
+                      src={url} // 나중에 실제 item.thumbnailUrl 로 바꾸기
+                      address={item.roadAddress}
+                      category={item.depth2}
+                      id={item.id}
+                      name={item.name}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })
+      ) : (
+        <div className='my-20 flex flex-col items-center justify-center text-gray-600 subTitle-20'>
+          {isSearching ? (
+            <>
+              <p>저장한 맛집이 없어요.</p>
+              <p>내가 좋아하는 맛집을 저장해 보세요.</p>
+            </>
+          ) : (
+            <p>내가 스크랩한 맛집에는 검색결과가 없어요.</p>
+          )}
+        </div>
+      )}
       {isLoadMoreMode && hasNextPage && (
         <div className='mt-7 flex justify-center'>
           <Button onClick={handleLoadMore} variant={'stroke'}>
