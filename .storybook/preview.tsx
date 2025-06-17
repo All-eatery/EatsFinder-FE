@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Preview } from '@storybook/react';
 import { Pretendard, TossFace } from '../src/assets/fonts';
 import '../src/app/globals.css';

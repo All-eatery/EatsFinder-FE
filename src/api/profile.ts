@@ -45,7 +45,6 @@ export const getLoggedInUserProfile = async (): Promise<UserDatatype> => {
   console.log(data);
   return data;
 };
-
 export const getMyActives = async (
   filter: string,
   page: number,
@@ -66,6 +65,7 @@ export const getMyActives = async (
   const data = await response.json();
   return data[0];
 };
+
 export const getUserFeeds = async ({
   id,
   page,
@@ -102,6 +102,7 @@ export const getFollowing = async (id: number): Promise<FollowDataType[]> => {
   const data = await response.json();
   return data;
 };
+
 export const getFollower = async (id: number) => {
   const response = await fetch(`${KOTLIN_SERVER}/follower?userId=${id}`, {
     method: 'GET',

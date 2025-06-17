@@ -1,6 +1,6 @@
-import { ParamsProps } from '@/types/paramsType';
-
-export const convertToURLSearchParams = ({ searchParams }: ParamsProps) => {
+export const convertToURLSearchParams = (searchParams: {
+  [key: string]: string | string[] | undefined;
+}) => {
   const queryParams = new URLSearchParams();
   Object.entries(searchParams).forEach(([key, value]) => {
     if (Array.isArray(value)) {

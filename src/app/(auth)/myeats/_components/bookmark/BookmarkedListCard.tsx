@@ -70,7 +70,6 @@ export const BookmarkedListCard = ({
     ));
   };
 
-  console.log(isSeleceted);
   return (
     <div
       className={cx(

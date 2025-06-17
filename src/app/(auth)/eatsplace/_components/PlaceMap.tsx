@@ -124,7 +124,7 @@ export const PlaceMap = ({
     setBoundary(mapInstance.getBounds());
   };
   //바운더리 값구함
-  // console.log('바운더리', boundary);
+  console.log('바운더리', boundary);
 
   return (
     <>

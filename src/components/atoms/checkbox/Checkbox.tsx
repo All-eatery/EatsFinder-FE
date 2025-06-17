@@ -33,6 +33,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>(
             className='peer visually-hidden'
             type='checkbox'
             {...props}
+            readOnly
           />
           <span className='flex cursor-pointer items-center rounded-md peer-focus-visible:outline peer-focus-visible:outline-2 [&>svg:first-child]:hidden peer-checked:[&>svg:first-child]:block peer-checked:[&>svg:last-of-type]:hidden'>
             {icon[variant].map((it, idx) => (
