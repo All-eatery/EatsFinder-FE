@@ -39,11 +39,9 @@ export const useDeletePostModal = () => {
   const confirmButton = async (id: number) => {
     const { data, response } = await deletePost(id);
     if (!response.ok) {
-      console.log('에럴에러러럴');
       setIsModalOpen(false);
       return console.log(data.message);
     }
-    console.log('res', data);
     console.log('삭제되었습니다.');
     queryClient.invalidateQueries({ queryKey: ['userProfile'] });
     setIsModalOpen(false);
@@ -53,7 +51,7 @@ export const useDeletePostModal = () => {
   };
   return { isModalOpen, closeModal, openModal, confirmButton };
 };
-export const createNewListModal = () => {
+export const useCreateNewListModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newListName, setNewListName] = useState('');
   const handleNewListName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +69,7 @@ export const createNewListModal = () => {
     },
     onSettled: (response) => {
       console.log('북마크 리스트 등록 성공', response);
-      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      queryClient.refetchQueries({ queryKey: ['myBookmarks', 'allBookmarks'] });
       setIsModalOpen(false);
     },
   });
@@ -109,7 +107,7 @@ export const useListNameEditModal = () => {
     },
     onSettled: (response) => {
       console.log('북마크 리스트 수정 성공', response);
-      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      queryClient.refetchQueries({ queryKey: ['myBookmarks', 'allBookmarks'] });
       setIsModalOpen(false);
     },
   });
@@ -136,19 +134,18 @@ export const useDeleteListModal = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (id: number) => deleteBookmarkList(id),
+    mutationFn: (id: number[] | number) => deleteBookmarkList(id),
     onError: (error) => {
       console.error('북마크 리스트 삭제 에러', error);
     },
     onSettled: (response) => {
-      console.log('북마크 리스트 삭제 성공');
-      queryClient.refetchQueries({ queryKey: ['myBookmarks'] });
+      queryClient.refetchQueries({ queryKey: ['myBookmarks', 'allBookmarks'] });
       setIsModalOpen(false);
     },
   });
   const confirmButton = async (id: number[] | number) => {
     console.log('컨펌!', id);
-    // mutation.mutate(id);
+    mutation.mutate(id);
     setIsModalOpen(false);
   };
 
@@ -221,8 +218,8 @@ export const useDeletePlacesModal = () => {
       console.log('북마크 리스트 삭제 성공');
       console.log(response);
       queryClient.refetchQueries({
-        queryKey: ['bookmarkedInPlaces'],
-        // queryKey: ['bookmarkedInPlaces', String(variables.id)],
+        queryKey: ['bookmarkedInPlaces', 'allBookmarks'],
+        // queryKey: ['bookmarkedInPlaces', String(variables.placeId)],
       });
       setIsModalOpen(false);
     },

@@ -1,19 +1,35 @@
 'use client';
-import { ParamsProps } from '@/types/paramsType';
 import { BookmarkedPlacesTab } from './BookmarkedPlacesTab';
 import Link from 'next/link';
 import { Search } from '@/components/molecules';
-import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
 import { useRouter } from 'next/navigation';
 import { convertToURLSearchParams } from '@/utils/convertToURLSearchParams';
 import { Checkbox } from '@/components/atoms';
-import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
+import { useBookmarkContext } from '@/provider/contextProvider/BookmarkCountProvider';
+import { BookmarkCountsType } from '@/types/bookmarkType';
+import { useBookmarkCheckContext } from '@/provider/contextProvider/BookmarkCheckProvider';
+import { useState } from 'react';
+import { useSearchbarContext } from '@/provider/contextProvider/SeachBarProvider';
 
+type BookmarkedPlacesTabControllerProps = {
+  searchParams: { [key: string]: string | string[] | undefined };
+  counts: BookmarkCountsType;
+};
 export const BookmarkedPlacesTabController = ({
   searchParams,
-}: ParamsProps) => {
+  counts,
+}: BookmarkedPlacesTabControllerProps) => {
   const router = useRouter();
-  const { listCount, listName, totalLists, totalItems } = useBookmarkContext();
+  const {
+    listCount,
+    setTotalItems,
+    setTotalLists,
+    listName,
+    totalLists,
+    totalItems,
+  } = useBookmarkContext();
+  setTotalItems(counts.totalItems);
+  setTotalLists(counts.totalLists);
 
   /**
    * (view=all)전체보기 리스트보기 서치바
@@ -22,12 +38,13 @@ export const BookmarkedPlacesTabController = ({
    * (view=list&list=리스트아이디)전쳅보기 리스트보기 하위리스트
    * (view=list&list=리스트아이디&select=true&id=1,2,3)전체선택 취소
    */
+
   const view = searchParams.view;
   const select = searchParams.select;
   const list = searchParams.list;
   const id = searchParams.id;
   const handleSelectToggle = () => {
-    const queryParams = convertToURLSearchParams({ searchParams });
+    const queryParams = convertToURLSearchParams(searchParams);
     if (select) {
       queryParams.delete('select');
       if (id) queryParams.delete('id');
@@ -37,16 +54,33 @@ export const BookmarkedPlacesTabController = ({
     queryParams.set('view', 'list');
     router.push(`/myeats?${queryParams.toString()}`);
   };
+  const { checkAllHandler, data } = useBookmarkCheckContext();
+  const [checkboxState, setCheckboxState] = useState({
+    list: false,
+    place: false,
+  });
+  const onAllCheckClick = () => {
+    checkAllHandler(!!list ? 'place' : 'list');
+    setCheckboxState((prev) => ({
+      ...prev,
+      ...(!!list ? { place: true } : { list: true }),
+    }));
+  };
+  const { searchbarHandler, handleSearch, resetSearchText } =
+    useSearchbarContext();
   return (
     <div className='flex w-full flex-col'>
       <div className='flex h-16 justify-between'>
         {select ? (
-          <button className='flex items-center gap-1'>
-            <Checkbox variant='Checkbox_Ver2' />
-            <span className='text-gray-400 subTitle-22'>{`전체 선택${listCount}`}</span>
+          <button className='flex items-center gap-1' onClick={onAllCheckClick}>
+            <Checkbox
+              variant='Checkbox_Ver2'
+              checked={!!list ? checkboxState.place : checkboxState.list}
+            />
+            <span className='text-gray-400 subTitle-22'>{`전체 선택 ${list ? listCount : totalLists}`}</span>
           </button>
         ) : (
-          <div className='flex gap-3'>
+          <div className='flex gap-3' onClick={resetSearchText}>
             <Link href='/myeats?tab=scrap&view=all'>
               <BookmarkedPlacesTab
                 active={view === 'all'}
@@ -88,9 +122,10 @@ export const BookmarkedPlacesTabController = ({
         {view === 'all' && (
           <div className='flex justify-end'>
             <Search
-              className=''
               variant='large'
               placeholder='스크랩했던 맛집을 빠르게 찾아보세요.'
+              onChange={searchbarHandler}
+              onSearch={handleSearch}
             />
           </div>
         )}
@@ -98,4 +133,3 @@ export const BookmarkedPlacesTabController = ({
     </div>
   );
 };
-//TODO: 컨트롤러 상태관리

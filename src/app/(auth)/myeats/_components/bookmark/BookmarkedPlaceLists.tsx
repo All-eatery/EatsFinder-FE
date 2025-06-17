@@ -10,13 +10,13 @@ import { convertToURLSearchParams } from '@/utils/convertToURLSearchParams';
 import { StickyBox } from '@/components/atoms/stickyBox';
 import { Modal } from '@/components/organisms';
 import {
-  createNewListModal,
+  useCreateNewListModal,
   useDeleteListModal,
 } from '@/app/(auth)/_hooks/useModal';
-import { useHandleCheckBox } from '@/app/(auth)/_hooks/useHandleCheckBox';
-import { useBookmarkContext } from '@/provider/contextProvider/BookmarkProvider';
+import { useBookmarkContext } from '@/provider/contextProvider/BookmarkCountProvider';
+import { useBookmarkCheckContext } from '@/provider/contextProvider/BookmarkCheckProvider';
 
-export const BookmarkedPlacesList = () => {
+export const BookmarkedPlaceLists = () => {
   const params = useSearchParams();
   const select = params.get('select');
   const router = useRouter();
@@ -46,31 +46,29 @@ export const BookmarkedPlacesList = () => {
     isModalOpen: isCreateNewListModalOpen,
     openModal: openCreateNewListModal,
     handleNewListName,
-  } = createNewListModal();
+  } = useCreateNewListModal();
   const handleCardClick = (id: number, title: string) => {
     if (select) return;
     const currentParams = new URLSearchParams(window.location.search);
-
     currentParams.set('list', id.toString());
-
-    const newParams = convertToURLSearchParams({
-      searchParams: Object.fromEntries(currentParams),
-    });
-
+    const newParams = convertToURLSearchParams(
+      Object.fromEntries(currentParams),
+    );
     setListName(title);
     router.push(`?${newParams.toString()}`);
   };
-  const { checkAllHandler, checkHandler, isChecked } = useHandleCheckBox();
+  const { checkHandler, isChecked, setData } = useBookmarkCheckContext();
 
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
   setTotalLists(data!.pages[0].pagination.totalItems);
+  setData(data);
 
   return (
     <div>
       <div>
         {data?.pages.map((page, pageIndex) => (
-          <div key={pageIndex} className='grid grid-cols-2 gap-6'>
+          <div key={pageIndex} className='mb-6 grid grid-cols-2 gap-6'>
             {page.items.map((item, index) => {
               const isLastItem =
                 pageIndex === data.pages.length - 1 &&
@@ -82,13 +80,13 @@ export const BookmarkedPlacesList = () => {
                   ref={isLastItem ? lastElementRef : null}
                   onClick={() => {
                     handleCardClick(item.id, item.title);
-                    checkHandler(item.id);
+                    checkHandler(item.id, 'list');
                   }}
                 >
                   <BookmarkedListCard
                     id={item.id}
                     isSelect={!!select}
-                    isSeleceted={isChecked.includes(item.id)}
+                    isSeleceted={isChecked.list.includes(item.id)}
                     title={item.title}
                     count={item.count}
                     thumbnails={item.bookmarkPlaces}
@@ -124,9 +122,6 @@ export const BookmarkedPlacesList = () => {
 
       {isFetchingNextPage && <Loading />}
 
-      {/* {!hasNextPage && (
-        <div className='py-4 text-center'>더 이상 북마크가 없습니다.</div>
-      )} */}
       <Modal
         isOpen={isCreateNewListModalOpen}
         onClose={closeCreateNewListModal}
@@ -151,7 +146,7 @@ export const BookmarkedPlacesList = () => {
         isOpen={isDeleteListModalOpen}
         onClose={closeDeleteListModal}
         title='선택한 리스트들을 삭제할까요?'
-        onMainClick={() => deleteListConfirmButton(isChecked)}
+        onMainClick={() => deleteListConfirmButton(isChecked.list)}
         subButton='취소'
         onSubClick={closeDeleteListModal}
         mainButton='삭제'

@@ -2,6 +2,7 @@
 import { Search } from '@/components/molecules';
 import { SurroundingPlaces } from './SurroundingPlaces';
 import { RecommandPlaces } from './RecommandPlaces';
+//여기서 data fetch?
 
 export const EatsPlacePage = () => {
   return (

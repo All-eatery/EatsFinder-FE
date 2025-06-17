@@ -244,8 +244,8 @@ export type MyfeedCardProps = {
 };
 
 export type LikedPostsType = {
-  totalPostCount: number;
-  posts: [
+  pagination: PaginationType;
+  items: [
     {
       id: number;
       postId: number;
@@ -256,4 +256,5 @@ export type LikedPostsType = {
       postUserProfileImage: string;
     },
   ];
+  lastItemId: number;
 };

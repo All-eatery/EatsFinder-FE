@@ -35,7 +35,6 @@ export const SocialLoginBtnGroup = ({
 }: {
   socialProvider: string | undefined;
 }) => {
-  console.log(socialProvider);
   return (
     <div className='mb-[120px] flex justify-center gap-6'>
       <SocialLoginBtn

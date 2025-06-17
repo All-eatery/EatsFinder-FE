@@ -16,7 +16,7 @@ const BookmarkContext = createContext<BookmarkContextType | undefined>(
   undefined,
 );
 
-export const BookmarkProvider = ({
+export const BookmarkCountProvider = ({
   children,
 }: {
   children: React.ReactNode;
