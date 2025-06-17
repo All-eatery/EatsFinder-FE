@@ -30,16 +30,13 @@ export const Profile = ({
     profileImage,
     id,
   } = userData;
-  console.log('user', userData);
   const formattedNumber = phoneNumber && addDashes(phoneNumber);
-  console.log('로그인유저 ', loggedInUserId);
 
   const { data, isLoading } = useQuery({
     queryKey: ['checkFollow'],
     queryFn: () => checkFollow(id),
     enabled: !!loggedInUserId,
   });
-  console.log('data', data);
   if (isLoading) {
     return <Loading />;
   }

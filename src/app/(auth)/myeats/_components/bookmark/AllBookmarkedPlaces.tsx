@@ -33,7 +33,6 @@ export const AllBookmarkedPlaces = () => {
   if (status === 'error') {
     return <div>에러</div>;
   }
-  console.log(data?.pages[0].items.length);
 
   return (
     <>

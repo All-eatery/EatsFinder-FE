@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request) => {
   const { searchParams } = new URL(req.url);
-  console.log(searchParams);
   const keyword = searchParams.get('keyword');
   const cursorId = Number(searchParams.get('cursorId'));
   const pageSize = searchParams.get('pageSize');

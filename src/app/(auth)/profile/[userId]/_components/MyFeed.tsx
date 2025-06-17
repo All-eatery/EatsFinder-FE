@@ -20,7 +20,6 @@ export const MyFeed = ({ userId, isOwnProfile }: MyFeedProps) => {
         isOwnProfile,
       }),
   });
-  console.log(data);
   if (error) {
     console.log('에러', error);
     return <div>피드를 가져오는 데 문제가 발생했습니다.</div>;
@@ -28,8 +27,6 @@ export const MyFeed = ({ userId, isOwnProfile }: MyFeedProps) => {
   if (!data?.data || !Array.isArray(data.data)) {
     return <Loading />;
   }
-  console.log('data', data);
-  console.log(data.pagination);
   return data.data.length > 0 ? (
     <>
       <div className='grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6'>

@@ -105,7 +105,6 @@ export const editUserProfile = async (
   if (!token) {
     throw new Error('Access token is missing');
   }
-  console.log(Array.from(formData.entries()));
 
   const response = await fetch(`${KOTLIN_SERVER}/users`, {
     method: 'PATCH',

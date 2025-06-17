@@ -66,7 +66,6 @@ export const BookmarkedPlacesTabController = ({
       ...(!!list ? { place: true } : { list: true }),
     }));
   };
-  console.log(!!list, data);
   const { searchbarHandler, handleSearch, resetSearchText } =
     useSearchbarContext();
   return (
