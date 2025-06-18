@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React from 'react';
 import { logoImg } from '@/constants/logo';
 import { SocialActionButton } from '@/app/(auth)/_components/SocialActionButton';
 export const sampleImg =

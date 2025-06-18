@@ -1,6 +1,5 @@
 import { AddSVG } from '@/components/svg/AddSVG';
 import Link from 'next/link';
-import React from 'react';
 
 export const PostingButton = () => {
   return (

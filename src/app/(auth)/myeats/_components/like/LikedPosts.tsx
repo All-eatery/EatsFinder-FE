@@ -1,7 +1,6 @@
 'use client';
 import { Button } from '@/components/atoms';
 import { Search } from '@/components/molecules';
-import React, { useState } from 'react';
 import { PostCard } from './PostCard';
 import { getLikedPosts, getSearchLikedPosts } from '@/api/socialActions';
 import Loading from '@/components/atoms/loading/Loading';

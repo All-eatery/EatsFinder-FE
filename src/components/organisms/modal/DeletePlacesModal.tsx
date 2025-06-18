@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal } from '.';
 import { useDeletePlacesModal } from '@/app/(auth)/_hooks/useModal';
 type DeletePlacesModalProps = {

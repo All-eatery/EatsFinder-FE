@@ -1,5 +1,5 @@
 import { MyFeedCard } from '@/components/molecules/myFeedCard';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getUserFeeds } from '@/api/profile';
 import { NoContent } from '@/components/atoms/noContent/NoContent';

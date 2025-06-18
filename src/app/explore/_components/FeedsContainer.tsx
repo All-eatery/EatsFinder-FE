@@ -1,6 +1,5 @@
 import { PostCard } from '@/app/(auth)/myeats/_components/like/PostCard';
 import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
-import React from 'react';
 
 export const FeedsContainer = () => {
   return (

@@ -1,4 +1,3 @@
-import React from 'react';
 import { CardCarousel } from './CardCarousel';
 const data = new Array(23).fill(0);
 

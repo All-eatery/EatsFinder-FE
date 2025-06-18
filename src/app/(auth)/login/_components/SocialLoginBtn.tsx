@@ -4,7 +4,7 @@ import {
   SocialKakaoSVG,
   SocialNaverSVG,
 } from '@/components/svg/SocialSVG';
-import React, { ComponentProps, ReactNode, useEffect } from 'react';
+import { ComponentProps, ReactNode, useEffect } from 'react';
 import { RecentLoginMsg } from './RecentLoginMsg';
 import Link from 'next/link';
 import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';

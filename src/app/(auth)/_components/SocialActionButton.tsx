@@ -1,6 +1,6 @@
 'use client';
 import { Button, Checkbox } from '@/components/atoms';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { socialAction } from '@/api/socialActions';
 import { SocialActionsType } from '@/types/authType';

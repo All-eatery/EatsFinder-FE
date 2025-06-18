@@ -1,7 +1,7 @@
 'use client';
 import { Tab } from '@/components/atoms/button/Tab';
 import { useTabHandler } from '@/hooks/useTabHandler';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MyFeed } from './MyFeed';
 import { Timeline } from './Timeline';
 import { ProfilePageProps } from '@/types/authType';

@@ -1,6 +1,5 @@
 import { ToggleBtn_Button } from '@/components/atoms/button/ToggleBtn_Button';
 import { useToggleHandler } from '@/hooks/useToggleHandler';
-import React from 'react';
 
 type ToggleBtnProps = {
   text_1: string;

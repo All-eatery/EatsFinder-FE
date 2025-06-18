@@ -1,5 +1,4 @@
 import { Search } from '@/components/molecules';
-import React from 'react';
 import { RealTimeTrendingPosts } from './RealTimeTrendingPosts';
 import { RecentPosts } from './RecentPosts';
 

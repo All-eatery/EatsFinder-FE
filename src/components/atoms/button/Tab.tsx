@@ -1,6 +1,6 @@
 import { customTwMerge } from '@/utils/customTwMerge';
 import { VariantProps, cva } from 'class-variance-authority';
-import React, { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 const tabVariants = cva('flex justify-center  px-[10px] py-[5px]', {
   variants: {
     active: {

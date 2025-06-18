@@ -1,5 +1,3 @@
-import { TextField } from '@/components/atoms/textField';
-import React from 'react';
 import SignupForm from './SignupForm';
 
 export const SignupPage = () => {

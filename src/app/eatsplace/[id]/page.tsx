@@ -1,4 +1,3 @@
-import React from 'react';
 import { EatsPlaceDetailPage } from '../_components/EatsPlaceDetailPage';
 type Params = { id: string };
 

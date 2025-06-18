@@ -1,5 +1,4 @@
 import { TextField } from '@/components/atoms/textField';
-import React from 'react';
 type AccountInfoProps = {
   email: string;
   name: string;
