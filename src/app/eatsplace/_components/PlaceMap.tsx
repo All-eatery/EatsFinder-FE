@@ -5,11 +5,11 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import Loading from '@/components/atoms/loading/Loading';
-import { useGetCoordinate } from '../../_hooks/useGetCoordinate';
 import { useEffect, useRef, useState } from 'react';
 import { SurroundingMapHead } from '@/components/atoms/map/SurroundingMapHead';
 import { MapAddressCopy } from '@/components/atoms/map/MapAddressCopy';
 import { useRouter } from 'next/navigation';
+import { useGetCoordinate } from '@/app/(auth)/_hooks/useGetCoordinate';
 type Markers = {
   id: number;
   lat: number;
