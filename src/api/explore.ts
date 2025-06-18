@@ -16,14 +16,6 @@ export const getNewNeighborPosts = async () => {
   return data;
 };
 
-export const getPopularPosts = async () => {
-  const response = await fetch(`${KOTLIN_SERVER}/posts/popular`, {
-    method: 'GET',
-  });
-  const data = await response.json();
-  return data;
-};
-
 export const getAllPosts = async (cursor: number) => {
   const response = await fetch(`${NEST_SERVER}/posts?cursor=${cursor}`, {
     method: 'GET',

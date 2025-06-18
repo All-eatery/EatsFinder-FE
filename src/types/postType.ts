@@ -36,3 +36,13 @@ export interface PostPaginationType {
   ];
   lastItemId: 321;
 }
+
+export interface PostCardType {
+  postId: 0;
+  placeName: string;
+  postThumbnailUrl: string;
+  isPostLike: true;
+  postLikeCount: number;
+  profileImage: string;
+  nickname: string;
+}

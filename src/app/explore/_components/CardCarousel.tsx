@@ -1,10 +1,9 @@
 'use client';
 import { useState, useMemo } from 'react';
-import { FeedCard } from '@/components/molecules';
 import { NextButton, PrevButton } from '@/components/atoms';
 import { customTwMerge } from '@/utils/customTwMerge';
 import { PostCard } from '@/app/(auth)/myeats/_components/like/PostCard';
-import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
+import { PostCardType } from '@/types/postType';
 
 const CARD_WIDTH = 250;
 const MARGIN_LEFT = 29.5;
@@ -14,11 +13,10 @@ export const CardCarousel = ({
   data,
   title,
 }: {
-  data: number[];
+  data: PostCardType[];
   title: string;
 }) => {
   const [slide, setSlide] = useState(0);
-
   const maxSlide = useMemo(() => {
     return Math.floor(data.length / NUMBER_PER_SCROLL);
   }, [data.length]);
@@ -55,14 +53,14 @@ export const CardCarousel = ({
             className='flex transition-transform duration-700'
             style={{ transform: `translate3d(${-calculateTranslate}px, 0, 0)` }}
           >
-            {data.map((_, idx) => {
+            {data.map((data) => {
               return (
-                <div key={idx} className='mr-[29.5px]'>
+                <div key={data.postId} className='mr-[29.5px]'>
                   <PostCard
-                    id={1}
-                    isLiked={true}
-                    nickname='ddd'
-                    src={sampleImg}
+                    id={data.postId}
+                    isLiked={data.isPostLike}
+                    nickname={data.nickname}
+                    src={data.postThumbnailUrl}
                   />
                 </div>
               );
