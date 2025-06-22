@@ -90,11 +90,9 @@ export const PlaceMap = ({
     );
   }, [data, id]);
   if (!coordinate) return <Loading />;
-  console.log(coordinate);
   const getBounday = (mapInstance: kakao.maps.Map) => {
     setBoundary(mapInstance.getBounds());
   };
-  console.log(boundary);
 
   return (
     <>

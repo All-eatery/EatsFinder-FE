@@ -1,5 +1,10 @@
-import { KOTLIN_SERVER } from '@/constants/baseUrl';
-import { PlacesInboundary } from '@/types/eatsPlaceType';
+import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
+import {
+  GetPlacePostsType,
+  PlaceByIdType,
+  PlacesInboundaryType,
+  PostsAboutPlaceType,
+} from '@/types/eatsPlaceType';
 
 export const getPlacesInBoundary = async ({
   oa,
@@ -11,7 +16,7 @@ export const getPlacesInBoundary = async ({
   ha: number;
   qa: number;
   pa: number;
-}): Promise<PlacesInboundary[]> => {
+}): Promise<PlacesInboundaryType[]> => {
   const response = await fetch(
     `${KOTLIN_SERVER}/places/map?oa=${oa}&ha=${ha}&qa=${qa}&pa=${pa}`,
     {
@@ -19,6 +24,26 @@ export const getPlacesInBoundary = async ({
     },
   );
   const data = await response.json();
-  console.log(data);
+  return data;
+};
+export const getPlaceById = async (id: string): Promise<PlaceByIdType> => {
+  const response = await fetch(`${NEST_SERVER}/places/${id}/details`, {
+    method: 'GET',
+  });
+  const data = await response.json();
+  return data;
+};
+export const getPlacePosts = async ({
+  id,
+  cursor,
+  sort = 'recent',
+}: GetPlacePostsType): Promise<PostsAboutPlaceType> => {
+  const response = await fetch(
+    `${NEST_SERVER}/places/${id}/posts?cursor=${cursor}&sort=${sort}`,
+    {
+      method: 'GET',
+    },
+  );
+  const data = await response.json();
   return data;
 };
