@@ -1,4 +1,3 @@
-'use client';
 import { PlacePosts } from './PlacePosts';
 import { PlaceInfo } from './PlaceInfo';
 import { PlaceMap } from './PlaceMap';

@@ -17,3 +17,11 @@ export interface PostContentType {
   places: PlaceType;
   starRatings: number;
 }
+export interface FeedCardProps {
+  id: number;
+  thumbnailUrl: string;
+  likeCount: number;
+  isLiked: boolean;
+  nickname: string;
+  profileImage: string;
+}

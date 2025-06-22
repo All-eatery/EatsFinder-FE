@@ -1,7 +1,8 @@
 import Image from 'next/image';
-import { Checkbox, Chip } from '@/components/atoms';
+import { Chip } from '@/components/atoms';
 import { PlaceInfoProps } from '@/types/eatsPlaceType';
-export const PlaceInfo = ({ popular, url, placeName }: PlaceInfoProps) => {
+import { BookmarkButton } from '@/app/(auth)/_components/BookmarkButton';
+export const PlaceInfo = ({ popular, url, placeName, id }: PlaceInfoProps) => {
   return (
     <div className='mb-6 flex w-full flex-col items-center gap-6'>
       <figure className='relative h-[250px] w-[250px] overflow-hidden rounded-full'>
@@ -9,7 +10,7 @@ export const PlaceInfo = ({ popular, url, placeName }: PlaceInfoProps) => {
       </figure>
       <div className='gpa-1 flex items-center'>
         <p className='text-primary-400 subTitle-28'>#{placeName}</p>
-        <Checkbox variant='bookmark' />
+        <BookmarkButton placeId={id} isMarked={false} />
       </div>
       <div className='flex items-center gap-2'>
         <div className='flex items-center rounded-xl bg-primary-400 px-2 py-1'>

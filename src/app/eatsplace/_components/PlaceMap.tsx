@@ -1,3 +1,4 @@
+'use client';
 import {
   CustomOverlayMap,
   Map,
@@ -97,7 +98,7 @@ export const PlaceMap = ({
   return (
     <>
       {isSurrounding && <SurroundingMapHead address={address} />}
-      <div className='py-[10px]'>
+      <div className='w-[1368px] py-3'>
         <Map
           className='relative h-[492px] w-full rounded-3xl'
           center={{ lat: coordinate.lat, lng: coordinate.lng }}
