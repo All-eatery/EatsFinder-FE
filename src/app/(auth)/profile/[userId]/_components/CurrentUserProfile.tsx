@@ -9,6 +9,7 @@ export const CurrentUserProfile = ({
   isOwnProfile,
 }: ProfilePageProps) => {
   const { value: isEdit, handleValue: editHandler } = useToggleHandler();
+
   return (
     <>
       {isEdit ? (
