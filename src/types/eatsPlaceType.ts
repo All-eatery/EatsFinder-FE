@@ -6,3 +6,9 @@ export type PlaceInfoProps = {
   lng: number;
   lat: number;
 };
+export type PlacesInboundary = {
+  id: number;
+  name: string;
+  lng: number;
+  lat: number;
+};

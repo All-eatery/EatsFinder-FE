@@ -5,69 +5,72 @@ import {
   ZoomControl,
 } from 'react-kakao-maps-sdk';
 import Loading from '@/components/atoms/loading/Loading';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { SurroundingMapHead } from '@/components/atoms/map/SurroundingMapHead';
 import { MapAddressCopy } from '@/components/atoms/map/MapAddressCopy';
 import { useRouter } from 'next/navigation';
 import { useGetCoordinate } from '@/app/(auth)/_hooks/useGetCoordinate';
-type Markers = {
-  id: number;
-  lat: number;
-  lng: number;
-  name: string;
-  selected: boolean;
-};
-const marekers: Markers[] = [
-  {
-    id: 1,
-    lat: 38.19155,
-    lng: 128.60124,
-    selected: false,
-    name: '1번',
-  },
-  {
-    id: 2,
-    lat: 38.19165,
-    lng: 128.60134,
-    selected: false,
-    name: '2번',
-  },
-  {
-    id: 3,
-    lat: 38.19258,
-    lng: 128.60227,
-    selected: false,
-    name: '3번',
-  },
-  {
-    id: 4,
-    lat: 38.19035,
-    lng: 128.60014,
-    selected: false,
-    name: '4번',
-  },
-  {
-    id: 5,
-    lat: 37.152934,
-    lng: 127.088255,
-    selected: false,
-    name: '5번',
-  },
-  {
-    id: 6,
-    lat: 37.152754,
-    lng: 127.088105,
-    selected: false,
-    name: '6번',
-  },
-  {
-    id: 7,
-    lat: 37.152724,
-    lng: 127.088225,
-    selected: false,
-    name: '7번',
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import { getPlacesInBoundary } from '@/api/place';
+import { PlacesInboundary } from '@/types/eatsPlaceType';
+// type Markers = {
+//   id: number;
+//   lat: number;
+//   lng: number;
+//   name: string;
+//   selected: boolean;
+// };
+// const marekers: Markers[] = [
+//   {
+//     id: 1,
+//     lat: 38.19155,
+//     lng: 128.60124,
+//     selected: false,
+//     name: '1번',
+//   },
+//   {
+//     id: 2,
+//     lat: 38.19165,
+//     lng: 128.60134,
+//     selected: false,
+//     name: '2번',
+//   },
+//   {
+//     id: 3,
+//     lat: 38.19258,
+//     lng: 128.60227,
+//     selected: false,
+//     name: '3번',
+//   },
+//   {
+//     id: 4,
+//     lat: 38.19035,
+//     lng: 128.60014,
+//     selected: false,
+//     name: '4번',
+//   },
+//   {
+//     id: 5,
+//     lat: 37.152934,
+//     lng: 127.088255,
+//     selected: false,
+//     name: '5번',
+//   },
+//   {
+//     id: 6,
+//     lat: 37.152754,
+//     lng: 127.088105,
+//     selected: false,
+//     name: '6번',
+//   },
+//   {
+//     id: 7,
+//     lat: 37.152724,
+//     lng: 127.088225,
+//     selected: false,
+//     name: '7번',
+//   },
+// ];
 interface PlaceMapProps {
   isSurrounding?: boolean;
   lat?: number;
@@ -118,13 +121,36 @@ export const PlaceMap = ({
       setBoundary(map.getBounds());
     }
   }, [map]);
+
+  const { data } = useQuery<PlacesInboundary[]>({
+    queryKey: ['placesInboundary', boundary],
+    queryFn: () => {
+      if (!boundary) return Promise.resolve([]);
+      const sw = boundary.getSouthWest();
+      const ne = boundary.getNorthEast();
+      return getPlacesInBoundary({
+        oa: sw.getLng(),
+        ha: ne.getLng(),
+        qa: sw.getLat(),
+        pa: ne.getLat(),
+      });
+    },
+    enabled: !!boundary,
+  });
+
+  const processedMarkers = useMemo(() => {
+    return (
+      data?.map((place) => ({
+        ...place,
+        selected: place.id === id,
+      })) ?? []
+    );
+  }, [data, id]);
   if (!coordinate) return <Loading />;
   console.log(coordinate);
   const getBounday = (mapInstance: kakao.maps.Map) => {
     setBoundary(mapInstance.getBounds());
   };
-  //바운더리 값구함
-  console.log('바운더리', boundary);
 
   return (
     <>
@@ -142,7 +168,7 @@ export const PlaceMap = ({
           onZoomChanged={getBounday}
           onDrag={getBounday}
         >
-          {marekers.map((marker) => {
+          {processedMarkers.map((marker) => {
             let markerImage = marker.selected
               ? '/marker.png'
               : '/marker_unSelected.png';
@@ -153,7 +179,6 @@ export const PlaceMap = ({
             } else if (hoveredMarkerId === marker.id) {
               markerImage = '/marker.png';
             }
-
             return (
               <MapMarker
                 key={marker.id}
