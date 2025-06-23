@@ -17,6 +17,35 @@ export interface PostContentType {
   places: PlaceType;
   starRatings: number;
 }
+
+export interface PostPaginationType {
+  pagination: {
+    totalItems: number;
+    itemsPerPage: number;
+  };
+  items: [
+    {
+      id: number;
+      thumbnailUrl: string;
+      users: {
+        nickname: string;
+        profileImage: string;
+      };
+      likeStatus: boolean;
+    },
+  ];
+  lastItemId: 321;
+}
+
+export interface PostCardType {
+  postId: 0;
+  placeName: string;
+  postThumbnailUrl: string;
+  isPostLike: true;
+  postLikeCount: number;
+  profileImage: string;
+  nickname: string;
+}
 export interface FeedCardProps {
   id: number;
   thumbnailUrl: string;

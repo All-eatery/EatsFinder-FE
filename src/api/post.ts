@@ -1,4 +1,4 @@
-import { NEST_SERVER } from '@/constants/baseUrl';
+import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
 import { PlaceRequestType } from '@/types/kakaomapType';
 import { PostContentType } from '@/types/postType';
 import { NestResponseError } from '@/types/responseType';
@@ -128,4 +128,17 @@ export const deletePost = async (id: number) => {
   const data = await response.json();
 
   return { data, response };
+};
+export const getPopularPosts = async () => {
+  const token = await getUserToken();
+  const response = await fetch(`${KOTLIN_SERVER}/posts/popular`, {
+    method: 'GET',
+    ...(token && {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  });
+  const data = await response.json();
+  return data;
 };
