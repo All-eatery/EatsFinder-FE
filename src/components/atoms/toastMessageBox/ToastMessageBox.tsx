@@ -9,7 +9,7 @@ import toastErrorImage from '../../../assets/images/toastError.png';
 import toastSuccessImage from '../../../assets/images/toastSuccess.png';
 
 const ToastVariants = cva(
-  'rounded-lg px-5 py-4  transition-opacity body-18 text-gray-900 flex gap-2 h-16 justify-between',
+  'rounded-lg px-5 py-4  transition-opacity body-18 text-gray-900 flex gap-2 h-16 justify-between hover:cursor-pointer',
   {
     variants: {
       type: {
