@@ -19,6 +19,7 @@ export const PostCard = ({
 }: PostCardProps) => {
   return (
     <div className='relative h-[408px] w-[250px] overflow-hidden rounded-3xl'>
+      <div className='absolute z-10 h-full w-full rounded-3xl bg-gray-900 bg-opacity-60' />
       <Link href={`/posts/${id}`}>
         <Image
           fill
