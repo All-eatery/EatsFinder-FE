@@ -6,7 +6,7 @@ import { addDashes } from '@/utils/formatPhoneNumber';
 import { UserDatatype } from '@/types/authType';
 import { useQuery } from '@tanstack/react-query';
 import { checkFollow } from '@/api/profile';
-import { SocialActionButton } from './SocialActionButton';
+import { SocialActionButton } from '../../../_components/SocialActionButton';
 import Loading from '@/components/atoms/loading/Loading';
 type ProfileProps = {
   loggedInUserId?: number;
@@ -30,16 +30,13 @@ export const Profile = ({
     profileImage,
     id,
   } = userData;
-  console.log('user', userData);
   const formattedNumber = phoneNumber && addDashes(phoneNumber);
-  console.log('로그인유저 ', loggedInUserId);
 
   const { data, isLoading } = useQuery({
     queryKey: ['checkFollow'],
     queryFn: () => checkFollow(id),
     enabled: !!loggedInUserId,
   });
-  console.log('data', data);
   if (isLoading) {
     return <Loading />;
   }
@@ -72,7 +69,6 @@ export const Profile = ({
             loggedInUserId ? (data.statusCode ? false : true) : false
           }
           type='follow'
-          isLoggedIn={!!loggedInUserId}
         />
       )}
     </div>

@@ -1,5 +1,6 @@
-import { NEST_SERVER, KOTLIN_SERVER } from '@/constants/baseUrl';
-import { PostContentType, PlaceRequestType, PostCard } from '@/types/postType';
+import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
+import { PlaceRequestType } from '@/types/kakaomapType';
+import { PostContentType, PostCard } from '@/types/postType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 import { NestResponseType, KotlinResponseType } from '@/types/responseType';
 
@@ -16,7 +17,7 @@ export const createNewPost = async (formData: FormData) => {
   });
 
   const data = await res.json();
-  console.log(data);
+
   return data;
 };
 

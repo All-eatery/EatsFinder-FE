@@ -1,6 +1,9 @@
 import { SVGRatingStarProps } from '@/types/props';
 
-export const RatingStarSVG = ({ isFill = 'fill' }: SVGRatingStarProps) => {
+export const RatingStarSVG = ({
+  isFill = 'fill',
+  size = 24,
+}: SVGRatingStarProps) => {
   const { pathData, fillColor } = (() => {
     switch (isFill) {
       case 'empty': {
@@ -28,8 +31,8 @@ export const RatingStarSVG = ({ isFill = 'fill' }: SVGRatingStarProps) => {
 
   return (
     <svg
-      width='24'
-      height='24'
+      width={size}
+      height={size}
       viewBox='0 0 24 24'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

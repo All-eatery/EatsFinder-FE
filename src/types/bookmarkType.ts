@@ -1,4 +1,4 @@
-export type BookmarkedLisdtsType = {
+export type BookmarkedListsType = {
   pagination: {
     totalItems: number;
     itemsPerPage: number;
@@ -13,6 +13,30 @@ export type BookmarkedLisdtsType = {
           thumbnailUrl: string;
         },
       ];
+    },
+  ];
+  lastItemId: number;
+};
+export type BookmarkCountsType = {
+  totalItems: number;
+  totalLists: number;
+};
+export type ListInPlacesType = {
+  title: string;
+  pagination: {
+    totalItems: number;
+    itemsPerPage: number;
+  };
+  items: [
+    {
+      id: number;
+      places: {
+        id: number;
+        name: string;
+        roadAddress: string;
+        depth2: string;
+        thumbnailUrl: string;
+      };
     },
   ];
   lastItemId: number;
@@ -34,5 +58,23 @@ export type BookmarkedPlacesType = {
       };
     },
   ];
+  lastItemId: number;
+};
+export type BookmarkListByPlace = {
+  items: { id: number; title: string; count: number }[];
+};
+export type AllBookmarkListsType = {
+  pagination: {
+    totalItems: number;
+    itemsPerPage: number;
+  };
+  items: {
+    id: number;
+    name: string;
+    roadAddress: string;
+    depth2: string;
+    thumbnailUrl: string;
+    bookmarkPlaceId: number;
+  }[];
   lastItemId: number;
 };

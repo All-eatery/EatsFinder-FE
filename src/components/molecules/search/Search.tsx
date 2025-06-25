@@ -1,3 +1,4 @@
+'use client';
 import { InputHTMLAttributes } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { customTwMerge } from '@/utils/customTwMerge';
@@ -30,6 +31,11 @@ export const Search = ({
   onSearch,
   ...props
 }: SearchProps) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && onSearch) {
+      onSearch();
+    }
+  };
   return (
     <div className={customTwMerge(searchVariant({ variant }), className)}>
       {searchIcon && (
@@ -43,6 +49,7 @@ export const Search = ({
           searchIcon && 'pl-8',
         )}
         {...props}
+        onKeyDown={handleKeyDown}
       />
       <button aria-label='search button' onClick={onSearch}>
         <UploadSVG />

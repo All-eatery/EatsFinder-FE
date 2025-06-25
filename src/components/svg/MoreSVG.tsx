@@ -1,8 +1,10 @@
-export const MoreSVG = () => {
+import { SVGSizeProps } from '@/types/props';
+
+export const MoreSVG = ({ x = 24, y = 24 }: SVGSizeProps) => {
   return (
     <svg
-      width='24'
-      height='24'
+      width={x}
+      height={y}
       viewBox='0 0 24 24'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

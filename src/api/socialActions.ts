@@ -1,5 +1,5 @@
 import { KOTLIN_SERVER } from '@/constants/baseUrl';
-import { SocialActionsType } from '@/types/authType';
+import { LikedPostsType, SocialActionsType } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 
 export const socialAction = async ({ method, type, id }: SocialActionsType) => {
@@ -10,7 +10,6 @@ export const socialAction = async ({ method, type, id }: SocialActionsType) => {
         return 'commentId';
       case 'follow':
         return method === 'connect' ? 'followUserId' : 'unfollowUserId';
-      // return 'followUserId';
       case 'post':
         return 'postId';
       case 'reply':
@@ -38,4 +37,35 @@ export const socialAction = async ({ method, type, id }: SocialActionsType) => {
   });
   const data = await response.json();
   return data;
+};
+
+export const getLikedPosts = async (
+  cursor: number,
+  size: number = 20,
+): Promise<LikedPostsType> => {
+  const token = await getUserToken();
+  const response = await fetch(
+    `${KOTLIN_SERVER}/post-likes?cursorId=${cursor}&pageSize=${size}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.json();
+};
+
+export const getSearchLikedPosts = async (
+  cursor: number,
+  keyword: string,
+  size: number = 20,
+): Promise<LikedPostsType> => {
+  const response = await fetch(
+    `/api/auth/search/liked-posts?keyword=${keyword}&cursorId=${cursor}&pageSize=${size}`,
+    {
+      method: 'GET',
+    },
+  );
+  return response.json();
 };

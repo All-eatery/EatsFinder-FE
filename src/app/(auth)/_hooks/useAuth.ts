@@ -7,11 +7,11 @@ import {
   ProfileEditType,
   ReasonForAccountDeletion,
   SignupFormType,
+  UserDatatype,
 } from '@/types/authType';
 import { SignupType } from '@/types/authType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 import { urlToFile } from '@/utils/urlToFile';
-import { error } from 'console';
 import { UseFormSetValue, UseFormTrigger, UseFormWatch } from 'react-hook-form';
 const accessToken = getUserToken();
 
@@ -85,11 +85,18 @@ export const useNicknameDuplicateCheck = () => {
   return { handleNicknameChecker };
 };
 
-export const editUserProfile = async (data: ProfileEditType) => {
+export const editUserProfile = async (
+  data: ProfileEditType,
+  userData: UserDatatype,
+) => {
   const { nickname, phoneNumber, profileImage } = data;
   const formData = new FormData();
-  formData.append('nickname', nickname);
-  formData.append('phoneNumber', phoneNumber);
+  if (data.nickname !== userData.nickname) {
+    formData.append('nickname', nickname);
+  }
+  if (data.phoneNumber !== userData.phoneNumber) {
+    formData.append('phoneNumber', phoneNumber);
+  }
   if (profileImage) {
     const file = await urlToFile(profileImage, 'profile.png');
     formData.append('profileImage', file);
@@ -98,7 +105,6 @@ export const editUserProfile = async (data: ProfileEditType) => {
   if (!token) {
     throw new Error('Access token is missing');
   }
-  console.log(Array.from(formData.entries()));
 
   const response = await fetch(`${KOTLIN_SERVER}/users`, {
     method: 'PATCH',

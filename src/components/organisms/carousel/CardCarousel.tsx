@@ -1,35 +1,39 @@
 'use client';
-import { useState, useMemo } from 'react';
-import { FeedCard } from '@/components/molecules';
+import React, { useState, useMemo } from 'react';
 import { NextButton, PrevButton } from '@/components/atoms';
 import { customTwMerge } from '@/utils/customTwMerge';
-import { PostCard } from '@/types/postType';
 
 const CARD_WIDTH = 250;
 const MARGIN_LEFT = 29.5;
 const NUMBER_PER_SCROLL = 5;
 
-export const CardCarousel = ({ datas }: { datas: PostCard[] }) => {
+export const CardCarousel = ({
+  data,
+  children,
+}: {
+  data: number[];
+  children: React.ReactNode;
+}) => {
   const [slide, setSlide] = useState(0);
 
   const maxSlide = useMemo(() => {
-    return Math.floor(datas.length / NUMBER_PER_SCROLL);
-  }, [datas.length]);
+    return Math.floor(data.length / NUMBER_PER_SCROLL);
+  }, [data.length]);
 
   const calculateTranslate = useMemo(() => {
     if (slide === maxSlide) {
       return (
-        (datas.length -
+        (data.length -
           NUMBER_PER_SCROLL * slide +
           NUMBER_PER_SCROLL * (slide - 1)) *
         (CARD_WIDTH + MARGIN_LEFT)
       );
     }
     return (CARD_WIDTH + MARGIN_LEFT) * NUMBER_PER_SCROLL * slide;
-  }, [slide, maxSlide, datas.length]);
+  }, [slide, maxSlide, data.length]);
 
   const handleNext = () => {
-    if (slide === maxSlide - 1) return;
+    if (slide === maxSlide) return;
     setSlide((prev) => prev + 1);
   };
 
@@ -45,10 +49,10 @@ export const CardCarousel = ({ datas }: { datas: PostCard[] }) => {
           className='flex transition-transform duration-700'
           style={{ transform: `translate3d(${-calculateTranslate}px, 0, 0)` }}
         >
-          {datas.map((data) => {
+          {data.map((_, idx) => {
             return (
-              <div key={data.postId} className='mr-[29.5px]'>
-                <FeedCard {...data} />
+              <div key={idx} className='mr-[29.5px]'>
+                {children}
               </div>
             );
           })}
@@ -65,7 +69,7 @@ export const CardCarousel = ({ datas }: { datas: PostCard[] }) => {
       <div
         className={customTwMerge(
           'absolute right-0 top-1/2 -translate-y-1/2',
-          slide === maxSlide - 1 && 'hidden',
+          slide === maxSlide && 'hidden',
         )}
       >
         <NextButton onClick={handleNext} />

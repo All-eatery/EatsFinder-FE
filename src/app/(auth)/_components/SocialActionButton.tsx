@@ -1,14 +1,14 @@
 'use client';
-import { Button } from '@/components/atoms';
+import { Button, Checkbox } from '@/components/atoms';
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { socialAction } from '@/api/socialActions';
 import { SocialActionsType } from '@/types/authType';
+import { getClientUserInfo } from '@/utils/getClientUserInfo';
 
 interface SocailActionProps {
   id: number;
   isConnected: boolean;
-  isLoggedIn: boolean;
   type: 'reply' | 'post' | 'comment' | 'follow';
 }
 
@@ -20,9 +20,9 @@ interface SocialActionResponse {
 export const SocialActionButton = ({
   isConnected,
   id,
-  isLoggedIn,
   type,
 }: SocailActionProps) => {
+  const isLoggedIn = getClientUserInfo();
   const [socialActionStatus, setSocialActionStatus] = useState(isConnected);
   const buttonLabel = socialActionStatus ? '팔로우 취소' : '팔로우';
   const queryClient = useQueryClient();
@@ -44,7 +44,6 @@ export const SocialActionButton = ({
       console.log('리벨리데이트완료');
     },
   });
-  console.log('loggedIn', isLoggedIn);
 
   const handleSocialActionButton = async () => {
     if (!isLoggedIn) {
@@ -54,10 +53,25 @@ export const SocialActionButton = ({
 
     mutation.mutate({ method, id, type });
   };
+  const renderActionButton = () => {
+    switch (type) {
+      case 'follow':
+        return (
+          <Button size='mini' onClick={handleSocialActionButton}>
+            {buttonLabel}
+          </Button>
+        );
+      case 'post':
+        return (
+          <Checkbox
+            variant='fav'
+            className='absolute right-5 top-5 z-10'
+            checked={socialActionStatus}
+            onClick={handleSocialActionButton}
+          />
+        );
+    }
+  };
 
-  return (
-    <Button size='mini' onClick={handleSocialActionButton}>
-      {buttonLabel}
-    </Button>
-  );
+  return renderActionButton();
 };

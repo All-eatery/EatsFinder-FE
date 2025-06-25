@@ -8,7 +8,6 @@ import { cookies } from 'next/headers';
 
 export const LoginPage = ({ searchParams }: searchParams) => {
   const socialProvider = cookies().get('socialProvider')?.value;
-  console.log(searchParams?.error);
   return (
     <>
       <h2 className='mb-6 text-gray-800 title-30'>로그인</h2>

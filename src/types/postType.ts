@@ -1,4 +1,5 @@
 import { CommentType } from './comment';
+import { PlaceType } from './kakaomapType';
 
 export interface PostContentType {
   id: number;
@@ -20,19 +21,23 @@ export interface PostContentType {
   likeStatus: boolean;
 }
 
-export interface PlaceType {
-  id: number;
-  name: string;
-  address: string;
-  roadAddress: string;
-  telephone: string;
-  x: number;
-  y: number;
-  category: string;
-  categoryName: string;
-  categoryCode: string;
-  thumbnailUrl: string;
-  categories: { name: string };
+export interface PostPaginationType {
+  pagination: {
+    totalItems: number;
+    itemsPerPage: number;
+  };
+  items: [
+    {
+      id: number;
+      thumbnailUrl: string;
+      users: {
+        nickname: string;
+        profileImage: string;
+      };
+      likeStatus: boolean;
+    },
+  ];
+  lastItemId: 321;
 }
 
 export type PlaceRequestType = Omit<
@@ -87,7 +92,7 @@ export interface Pagination {
   isLastPage: boolean;
 }
 
-export interface PostCard {
+export interface PostCardType {
   postId: number;
   placeName: string;
   postThumbnailUrl: string;

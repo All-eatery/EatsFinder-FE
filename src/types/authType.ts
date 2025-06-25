@@ -242,3 +242,19 @@ export type MyfeedCardProps = {
   data: FeedDataType;
   isOwnProfile: boolean;
 };
+
+export type LikedPostsType = {
+  pagination: PaginationType;
+  items: [
+    {
+      id: number;
+      postId: number;
+      postPlaceName: string;
+      postThumbnailUrl: string;
+      isPostLike: true;
+      postUserNickname: string;
+      postUserProfileImage: string;
+    },
+  ];
+  lastItemId: number;
+};
