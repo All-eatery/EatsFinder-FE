@@ -21,7 +21,6 @@ export const MyFeed = ({ userId, isOwnProfile }: MyFeedProps) => {
       }),
   });
   if (error) {
-    console.log('에러', error);
     return <div>피드를 가져오는 데 문제가 발생했습니다.</div>;
   }
   if (!data?.data || !Array.isArray(data.data)) {

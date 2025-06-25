@@ -26,7 +26,6 @@ export const PlacePosts = ({ id }: { id: number }) => {
   });
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
-  console.log(sortState);
   return (
     <>
       <div className='flex flex-col gap-6'>

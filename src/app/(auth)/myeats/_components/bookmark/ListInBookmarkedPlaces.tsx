@@ -83,7 +83,6 @@ export const ListInBookmarkedPlaces = () => {
           {data?.pages?.map((page, pageIndex) => (
             <div key={pageIndex} className='flex flex-col gap-4'>
               {page.items?.map((item, index) => {
-                console.log(item.places.id, item.places.name);
                 const isLastItem =
                   pageIndex === data.pages.length - 1 &&
                   index === page.items.length - 1;

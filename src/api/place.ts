@@ -5,6 +5,7 @@ import {
   PlacesInboundaryType,
   PostsAboutPlaceType,
 } from '@/types/eatsPlaceType';
+import { getUserToken } from '@/utils/getServerUserInfo';
 
 export const getPlacesInBoundary = async ({
   oa,
@@ -38,10 +39,15 @@ export const getPlacePosts = async ({
   cursor,
   sort = 'recent',
 }: GetPlacePostsType): Promise<PostsAboutPlaceType> => {
+  const token = await getUserToken();
+
   const response = await fetch(
     `${NEST_SERVER}/places/${id}/posts?cursor=${cursor}&sort=${sort}`,
     {
       method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
   );
   const data = await response.json();

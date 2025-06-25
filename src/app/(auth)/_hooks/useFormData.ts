@@ -28,7 +28,6 @@ import { useRouter } from 'next/navigation';
 
 export const useLogin = () => {
   const { showToast } = useToast();
-  const router = useRouter();
 
   const {
     register,
@@ -45,7 +44,6 @@ export const useLogin = () => {
       const responseData = await response.json();
 
       if (!response.ok) {
-        console.log(responseData);
         showToast(responseData.message, 'error');
         return;
       }
@@ -128,7 +126,6 @@ export const useProfileEdit = (handler: () => void, userData: UserDatatype) => {
         showToast(Object.keys(data.data)[0], 'error');
         return;
       }
-      console.log('성공 데이터', data);
       queryClient.invalidateQueries({
         queryKey: ['userProfile', 'LoggedInUserInfo'],
       });

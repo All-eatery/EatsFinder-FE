@@ -12,7 +12,6 @@ export const FeedCard = ({
   profileImage,
   thumbnailUrl,
 }: FeedCardProps) => {
-  console.log(nickname, isLiked);
   return (
     <div className='flex w-[250px] flex-col gap-1'>
       <Link href={`/posts/${id}`}>
