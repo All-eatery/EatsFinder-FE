@@ -11,7 +11,6 @@ export const MyProfile = ({ isOwnProfile, userId }: ProfileProps) => {
     queryFn: () => getLoggedInUserProfile(),
   });
   if (isLoading) return <Loading />;
-
   return (
     <>
       <CurrentUserProfile

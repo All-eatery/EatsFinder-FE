@@ -1,5 +1,4 @@
 import { RadioSVG } from '@/components/svg/RadioSVG';
-import React from 'react';
 
 interface RadioButtonProps {
   options: { value: string; label: string }[];

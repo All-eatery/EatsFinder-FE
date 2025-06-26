@@ -2,7 +2,6 @@
 import { Button } from '@/components/atoms';
 import { TextField } from '@/components/atoms/textField/TextField';
 import Link from 'next/link';
-import React from 'react';
 import { SaveLoginState } from './SaveLoginState';
 import { useLogin } from '../../_hooks/useFormData';
 import { VisibilityButtonIcon } from '../../_components/VisibilityButtonIcon';

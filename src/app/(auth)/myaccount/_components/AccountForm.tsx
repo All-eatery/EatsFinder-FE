@@ -3,7 +3,6 @@ import { VisibilityButtonIcon } from '@/app/(auth)/_components/VisibilityButtonI
 import { useChangePassword } from '@/app/(auth)/_hooks/useFormData';
 import { Button } from '@/components/atoms';
 import { TextField } from '@/components/atoms/textField';
-import React from 'react';
 
 export const AccountForm = () => {
   const { errors, handleSubmit, register } = useChangePassword();

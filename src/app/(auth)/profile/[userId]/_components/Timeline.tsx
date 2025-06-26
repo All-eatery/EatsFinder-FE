@@ -22,6 +22,7 @@ export const Timeline = ({ timelineFilter, page, setPage }: TimelineProps) => {
   if (!data || !Array.isArray(data.data)) {
     return <Loading />;
   }
+
   return data.data.length > 0 ? (
     <>
       {data.data.map((data, i) => {

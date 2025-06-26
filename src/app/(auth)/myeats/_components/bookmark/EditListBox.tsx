@@ -1,5 +1,4 @@
 import { Checkbox } from '@/components/atoms';
-import React from 'react';
 
 export const EditListBox = () => {
   return (

@@ -1,17 +1,24 @@
 'use client';
+import { ToastErrorSVG } from '@/components/svg/ToastErrorSVG';
+import { ToastSuccessSVG } from '@/components/svg/ToastSuccessSVG';
 import { useToast } from '@/provider/contextProvider/ToastProvider';
 import { customTwMerge } from '@/utils/customTwMerge';
-import { VariantProps, cva } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+import Image from 'next/image';
+import toastErrorImage from '../../../assets/images/toastError.png';
+import toastSuccessImage from '../../../assets/images/toastSuccess.png';
 
-const ToastVariants = cva('rounded px-4 py-2 shadow-md transition-opacity ', {
-  variants: {
-    type: {
-      success: 'bg-primary-400 text-white',
-      error: 'bg-error text-white',
+const ToastVariants = cva(
+  'rounded-lg px-5 py-4  transition-opacity body-18 text-gray-900 flex gap-2 h-16 justify-between hover:cursor-pointer',
+  {
+    variants: {
+      type: {
+        success: 'shadow-[0_0_12px_2px_#4592FB] ',
+        error: 'shadow-[0_0_12px_2px_#E62900]',
+      },
     },
   },
-});
-// interface ToastMessageBoxProps extends VariantProps<typeof ToastVariants> {}
+);
 export const ToastMessageBox = () => {
   const { toasts, removeToast } = useToast();
 
@@ -23,7 +30,18 @@ export const ToastMessageBox = () => {
           className={customTwMerge(ToastVariants({ type: toast.type }))}
           onClick={() => removeToast(toast.id)}
         >
-          {toast.message}
+          <div className='flex items-center gap-2'>
+            {toast.type === 'success' ? <ToastSuccessSVG /> : <ToastErrorSVG />}
+            <span>{toast.message}</span>
+          </div>
+          <figure className='relative w-12'>
+            <Image
+              src={
+                toast.type === 'success' ? toastSuccessImage : toastErrorImage
+              }
+              alt='토스트 이미지'
+            />
+          </figure>
         </div>
       ))}
     </div>

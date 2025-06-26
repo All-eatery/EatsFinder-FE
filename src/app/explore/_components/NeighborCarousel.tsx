@@ -6,6 +6,5 @@ const data = new Array(23).fill(0);
 //이웃이 없을 경우와 이웃게시물이 없울 경우 처리
 export const NeighborCarousel = async () => {
   const res = await getNewNeighborPosts();
-  console.log('adfsdfdsfdsfdsfsd', res.neighborPost.length);
   return <CardCarousel data={data} title='이웃님의 새로운 게시물' />;
 };

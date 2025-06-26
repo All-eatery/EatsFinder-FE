@@ -1,11 +1,7 @@
 import { Rating } from '@/components/atoms/riting/Rating';
 import { BookmarkSVG } from '@/components/svg/BookmarkSVG';
 import Image from 'next/image';
-import React from 'react';
-interface BookmarkedPlaceCard {
-  id: string;
-  src: string;
-}
+
 export const SurroundingPlacesCard = ({ src }: { src: string }) => {
   return (
     <div className='flex h-[185px] items-center p-[10px]'>

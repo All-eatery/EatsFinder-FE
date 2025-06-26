@@ -1,5 +1,4 @@
 import { SVGRadioProps } from '@/types/props';
-import React from 'react';
 
 export const RadioSVG = ({ isChecked = false }: SVGRadioProps) => {
   return (

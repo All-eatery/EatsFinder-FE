@@ -4,7 +4,7 @@ import { ProfileImage } from '@/components/atoms';
 import { UserDropdownMenu } from '@/components/molecules/userDropdownMenu/UserDropdownMenu';
 import { AlarmBellSVG } from '@/components/svg/AlarmBellSVG';
 import { useDropdownHandler } from '@/hooks/useDropdownHandler';
-import React, { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Modal } from '..';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '@/api/auth';

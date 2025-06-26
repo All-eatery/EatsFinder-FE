@@ -1,7 +1,7 @@
 'use client';
 
 import { useHandleCheckBox } from '@/app/(auth)/_hooks/useHandleCheckBox';
-import React, { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode } from 'react';
 
 type BookmarkCheckContextType = ReturnType<typeof useHandleCheckBox>;
 

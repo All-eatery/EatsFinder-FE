@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useToggleHandler } from '@/hooks/useToggleHandler';
 import { Modal } from './Modal';
 import { Button } from '@/components/atoms';
+import { useToggleHandler } from '@/hooks/useToggleHandler';
 
 const ModalStory = () => {
   const { value: isOpen, handleValue: handleModalOpen } = useToggleHandler();

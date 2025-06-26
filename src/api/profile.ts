@@ -42,7 +42,6 @@ export const getLoggedInUserProfile = async (): Promise<UserDatatype> => {
     },
   });
   const data = await response.json();
-  console.log(data);
   return data;
 };
 export const getMyActives = async (
@@ -50,7 +49,6 @@ export const getMyActives = async (
   page: number,
 ): Promise<PaginationActiveType> => {
   const token = await getUserToken();
-  console.log('!@32132143214', filter);
   const size = 10;
   const response = await fetch(
     `${KOTLIN_SERVER}/users/actives?filter=${filter}&page=${page}&size=${size}`,

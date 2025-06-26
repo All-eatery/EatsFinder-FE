@@ -1,6 +1,5 @@
 import { Tab } from '@/components/atoms/button/Tab';
 import Link from 'next/link';
-import React from 'react';
 import { LikedPosts } from './like/LikedPosts';
 import { BookmarkedPlaces } from './bookmark/BookmarkedPlaces';
 import { ParamsProps } from '@/types/paramsType';

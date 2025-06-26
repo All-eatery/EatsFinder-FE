@@ -16,8 +16,6 @@ export const UserProfile = ({
     queryFn: () => getUserProfile(userId),
   });
 
-  console.log('vmfhvlfvpdlwl', typeof userId);
-
   if (isLoading) {
     return <Loading />;
   }

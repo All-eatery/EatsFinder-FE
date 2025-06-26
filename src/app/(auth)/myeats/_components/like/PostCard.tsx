@@ -25,7 +25,6 @@ export const PostCard = ({
           fill
           alt='게시글 이미지'
           src={src}
-          //check 임시 사이즈 설정
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         />
         <div className='absolute bottom-5 left-5 z-10 flex items-center gap-2'>
@@ -33,7 +32,9 @@ export const PostCard = ({
           <span className='text-white subTitle-20'>{nickname}</span>
         </div>
       </Link>
-      <SocialActionButton id={id} isConnected={isLiked} type='post' />
+      <div className='absolute right-5 top-5 z-10'>
+        <SocialActionButton id={id} isConnected={isLiked} type='post' />
+      </div>
     </div>
   );
 };
