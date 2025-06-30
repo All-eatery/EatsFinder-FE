@@ -4,7 +4,7 @@ import { getUserToken } from '@/utils/getServerUserInfo';
 export const getNewNeighborPosts = async () => {
   const token = await getUserToken();
   const response = await fetch(
-    `${KOTLIN_SERVER}/posts/follows?page=0&size=1&sort=string`,
+    `${KOTLIN_SERVER}/posts/follows?page=0&size=20&sort=string`,
     {
       method: 'GET',
       headers: {
@@ -17,8 +17,13 @@ export const getNewNeighborPosts = async () => {
 };
 
 export const getAllPosts = async (cursor: number) => {
+  const token = await getUserToken();
+
   const response = await fetch(`${NEST_SERVER}/posts?cursor=${cursor}`, {
     method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   const data = await response.json();
   return data;
