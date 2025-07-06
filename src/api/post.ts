@@ -72,17 +72,28 @@ export const getPlace = async (placeName: string) => {
 export const getKakaoPlace = async (placeName: string) => {
   if (!placeName) return;
 
-  const res = await fetch(
-    `https://dapi.kakao.com/v2/local/search/keyword?category_group_code=FD6,CE7&size=15&query=${placeName}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
-      },
-    },
+  const categoryGroupCodes = ['FD6', 'CE7'];
+
+  const result = await Promise.all(
+    categoryGroupCodes.map(async (code) => {
+      const res = await fetch(
+        `https://dapi.kakao.com/v2/local/search/keyword?category_group_code=${code}&size=15&query=${placeName}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
+          },
+        },
+      );
+
+      return await res.json();
+    }),
   );
 
-  const data = await res.json();
+  const data = [
+    ...(result[0]?.documents || []),
+    ...(result[1]?.documents || []),
+  ];
 
   return data;
 };
