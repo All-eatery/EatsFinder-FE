@@ -1,6 +1,6 @@
 import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
 import { PlaceRequestType } from '@/types/kakaomapType';
-import { PostContentType, PostCard } from '@/types/postType';
+import { PostContentType, PostCardType } from '@/types/postType';
 import { getUserToken } from '@/utils/getServerUserInfo';
 import { NestResponseType, KotlinResponseType } from '@/types/responseType';
 
@@ -194,7 +194,7 @@ export const getFollowsPosts = async (page: number) => {
   return data;
 };
 
-export const getPopularPosts: () => Promise<PostCard[]> = async () => {
+export const getPopularPosts: () => Promise<PostCardType[]> = async () => {
   const token = await getUserToken();
   const res = await fetch(`${KOTLIN_SERVER}/posts/popular`, {
     method: 'GET',

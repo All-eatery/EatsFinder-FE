@@ -1,4 +1,8 @@
-import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
+import {
+  KOTLIN_SERVER,
+  NEST_SERVER,
+  KAKAO_REST_API_KEY,
+} from '@/constants/baseUrl';
 import {
   GetPlacePostsType,
   PlaceByIdType,
@@ -62,6 +66,10 @@ export const getNearByPlaces = async (local: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  if (!res.ok) {
+    return [];
+  }
 
   const data = await res.json();
 

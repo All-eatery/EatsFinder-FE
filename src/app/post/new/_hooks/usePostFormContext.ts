@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { type PostFormValue } from '@/utils/zodSchema';
 import { createNewPost } from '@/api/post';
-import { NestResponseError } from '@/types/responseType';
 
 const usePostFormContext = () => {
   const { register, handleSubmit, watch, setValue, getValues } =
@@ -123,9 +122,7 @@ const usePostFormContext = () => {
       const data = await createNewPost(postForm);
       router.push(`/posts/${data.id}`);
     } catch (err) {
-      if (err instanceof NestResponseError) {
-        console.log(err.message);
-      }
+      console.error(err);
     }
   });
 
