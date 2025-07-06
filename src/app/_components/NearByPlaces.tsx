@@ -27,8 +27,9 @@ const NearByPlaces = ({ userInfo }: { userInfo?: UserDatatype }) => {
   const updateLocalPlace = async (region: string) => {
     setIsFetching(true);
     const data = await getNearByPlaces(region);
+
     setLocalPlace(data);
-    console.log(data);
+
     setIsFetching(false);
   };
 
