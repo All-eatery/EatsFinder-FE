@@ -1,5 +1,4 @@
 import { RatingStarSVG } from '@/components/svg/RatingstarSVG';
-import React from 'react';
 
 export const Rating = ({ rating }: { rating: number }) => {
   return (

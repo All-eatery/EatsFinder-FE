@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { BookmarkedPlaceCard } from '../../myeats/_components/bookmark/BookmarkedPlaceCard';
-import { sampleImg } from '../../profile/[userId]/_components/FollowList';
-import { Pagination } from '@/components/molecules/pagination';
+import { useState } from 'react';
 import { SurroundingPlacesCard } from './SurroundingPlacesCard';
+import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
+import { Pagination } from '@/components/molecules/pagination';
+
 const sampleData = {
   totalItems: 10,
   itemsPerPage: 8,

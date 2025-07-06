@@ -2,7 +2,6 @@
 import { useState, useCallback, ChangeEvent } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import usePostFormContext from '@/app/post/new/_hooks/usePostFormContext';
-import { useToggleHandler } from '@/hooks/useToggleHandler';
 import { TextFieldWithBtn } from '@/components/molecules/texTFieldWithBtn';
 import { TextField } from '@/components/atoms/textField';
 import { Modal } from '@/components/organisms';
@@ -13,6 +12,7 @@ import {
   PlaceRequestType,
   PlaceType,
 } from '@/types/kakaomapType';
+import { useToggleHandler } from '@/hooks/useToggleHandler';
 
 export const PostPlaceField = () => {
   const { placeName, handleSetPlace } = usePostFormContext();

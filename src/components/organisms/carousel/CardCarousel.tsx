@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { NextButton, PrevButton } from '@/components/atoms';
 import { customTwMerge } from '@/utils/customTwMerge';
 

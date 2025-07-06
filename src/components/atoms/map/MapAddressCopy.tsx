@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const MapAddressCopy = ({ address }: { address: string }) => {
   return (
     <div className='mb-2 flex justify-between body-16'>

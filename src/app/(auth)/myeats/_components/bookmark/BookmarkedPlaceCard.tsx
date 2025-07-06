@@ -1,9 +1,7 @@
 import { BookmarkButton } from '@/app/(auth)/_components/BookmarkButton';
 import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
 import { Checkbox } from '@/components/atoms';
-import { CheckBoXSVG_Ver2 } from '@/components/svg/CheckBoxSVG';
 import Image from 'next/image';
-import React from 'react';
 interface BookmarkedPlaceCard {
   id: number;
   src: string;

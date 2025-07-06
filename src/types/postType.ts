@@ -101,3 +101,11 @@ export interface PostCardType {
   profileImage: string;
   nickname: string;
 }
+export interface FeedCardProps {
+  id: number;
+  thumbnailUrl: string;
+  likeCount: number;
+  isLiked: boolean;
+  nickname: string;
+  profileImage: string;
+}

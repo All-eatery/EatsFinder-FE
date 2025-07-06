@@ -6,5 +6,6 @@ export const useToggleHandler = (init = false) => {
   const handleValue = useCallback(() => {
     setValue((prev) => !prev);
   }, []);
+
   return { value, handleValue, setValue };
 };

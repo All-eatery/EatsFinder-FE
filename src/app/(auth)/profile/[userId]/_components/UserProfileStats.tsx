@@ -32,7 +32,6 @@ export const UserProfileStats = ({
   const handleCloseModal = () => {
     setIsFollowModalOpen(false);
   };
-  console.log('stats', id);
   const ref = useRef(null);
   return (
     <>
@@ -44,7 +43,7 @@ export const UserProfileStats = ({
         >
           팔로잉 {followingCount}
         </p>
-        <p 
+        <p
           className='cursor-pointer p-[10px]'
           onClick={() => handleFollowingModal('follower')}
         >

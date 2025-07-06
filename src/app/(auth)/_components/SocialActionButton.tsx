@@ -1,10 +1,11 @@
 'use client';
 import { Button, Checkbox } from '@/components/atoms';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { socialAction } from '@/api/socialActions';
 import { SocialActionsType } from '@/types/authType';
 import { getClientUserInfo } from '@/utils/getClientUserInfo';
+import { useToast } from '@/provider/contextProvider/ToastProvider';
 
 interface SocailActionProps {
   id: number;
@@ -23,6 +24,7 @@ export const SocialActionButton = ({
   type,
 }: SocailActionProps) => {
   const isLoggedIn = getClientUserInfo();
+  const { showToast } = useToast();
   const [socialActionStatus, setSocialActionStatus] = useState(isConnected);
   const buttonLabel = socialActionStatus ? '팔로우 취소' : '팔로우';
   const queryClient = useQueryClient();
@@ -40,14 +42,16 @@ export const SocialActionButton = ({
     onSettled: () => {
       console.log('3');
       console.log('성공');
-      queryClient.invalidateQueries({ queryKey: ['userProfile', id] });
+      queryClient.invalidateQueries({
+        queryKey: ['userProfile', id, 'postsAboutPlace'],
+      });
       console.log('리벨리데이트완료');
     },
   });
 
   const handleSocialActionButton = async () => {
     if (!isLoggedIn) {
-      return console.log('로그인하세요');
+      return showToast('로그인하세요', 'error');
     }
     const method = socialActionStatus ? 'disconnect' : 'connect';
 
@@ -65,7 +69,6 @@ export const SocialActionButton = ({
         return (
           <Checkbox
             variant='fav'
-            className='absolute right-5 top-5 z-10'
             checked={socialActionStatus}
             onClick={handleSocialActionButton}
           />

@@ -1,7 +1,6 @@
 'use client';
 import { Button } from '@/components/atoms';
 import { Search } from '@/components/molecules';
-import React, { useState } from 'react';
 import { PostCard } from './PostCard';
 import { getLikedPosts, getSearchLikedPosts } from '@/api/socialActions';
 import Loading from '@/components/atoms/loading/Loading';
@@ -72,12 +71,12 @@ export const LikedPosts = () => {
         ) : (
           <div className='my-20 flex flex-col items-center justify-center text-gray-600 subTitle-20'>
             {isSearching ? (
+              <p>내가 좋아요한 게시물에는 검색결과가 없어요.</p>
+            ) : (
               <>
                 <p>좋아요한 게시물이 없어요.</p>
                 <p>마음에 드는 게시물을 저장해 보세요.</p>
               </>
-            ) : (
-              <p>내가 좋아요한 게시물에는 검색결과가 없어요.</p>
             )}
           </div>
         )}

@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/atoms';
 import { SignupFormType } from '@/types/authType';
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 type AgreeTermsProps = {
   register: UseFormRegister<SignupFormType>;

@@ -1,6 +1,5 @@
 import { Card, HomeSection } from '@/components/molecules';
 import { CardCarousel } from '@/components/organisms';
-import React from 'react';
 const data = new Array(23).fill(0);
 
 export const RecommandPlaces = () => {
