@@ -27,3 +27,9 @@ export * from './textField';
 export * from './timeLine';
 
 export * from './userTimeline';
+
+export * from './point';
+
+export * from './portal';
+
+export * from './skeleton';

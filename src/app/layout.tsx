@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Footer } from '@/components/organisms';
+import { Footer, LoginModal } from '@/components/organisms';
 import { Pretendard, TossFace } from '@/assets/fonts';
 import './globals.css';
 import { KAKAO_API_KEY } from '@/constants/baseUrl';
@@ -23,13 +23,16 @@ export default function RootLayout({
         <CompoundProvider>
           <div className='flex min-h-screen flex-col'>
             <HeaderFetchData />
-            <main className='mx-auto max-w-[1440px] grow p-9'>{children}</main>
+            <main className='mx-auto w-[1440px] max-w-[1440px] grow px-9'>
+              {children}
+            </main>
             <Footer />
           </div>
           <Script
             src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services,clusterer&autoload=false`}
             strategy='beforeInteractive'
           />
+          <LoginModal />
         </CompoundProvider>
       </body>
     </html>
