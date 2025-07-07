@@ -34,9 +34,7 @@ const FollowsPost = () => {
         </div>
       ) : (
         <>
-          <div>
-            <FeedCard />
-          </div>
+          <div>{/* <FeedCard /> */}</div>
           <div>
             {!isLoading && requestCount < 3 ? (
               <div ref={obCallbackRef} className='h-20'></div>
