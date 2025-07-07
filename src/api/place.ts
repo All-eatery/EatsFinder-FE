@@ -32,10 +32,15 @@ export const getPlacesInBoundary = async ({
   return data;
 };
 export const getPlaceById = async (id: string): Promise<PlaceByIdType> => {
+  const token = await getUserToken();
   const response = await fetch(`${NEST_SERVER}/places/${id}/details`, {
     method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   const data = await response.json();
+  console.log('dsadsadasdasd', data);
   return data;
 };
 export const getPlacePosts = async ({
