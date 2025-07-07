@@ -116,6 +116,13 @@ export const PlaceMap = ({
               <CustomOverlayMap
                 key={marker.id}
                 position={{ lat: marker.lat, lng: marker.lng }}
+                zIndex={
+                  marker.isSelected
+                    ? 10
+                    : hoveredMarkerId === marker.id
+                      ? 20
+                      : 1
+                }
               >
                 <div
                   onMouseOver={() => setHoveredMarkerId(marker.id)}
