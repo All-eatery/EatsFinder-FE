@@ -61,8 +61,15 @@ export interface KakaoPlaceType {
 }
 
 export interface PostCommentType {
-  totalCommentCount: number;
-  comments: CommentType[];
+  pagination: {
+    totalItems: number;
+    itemsPerPage: number;
+    totalPage: number;
+    currentPage: number;
+    lastPage: boolean;
+  };
+  items: CommentType[];
+  lastItemId: number;
 }
 
 export interface ReportStateType {

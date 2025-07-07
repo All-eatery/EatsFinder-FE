@@ -45,7 +45,7 @@ const PostComments = ({
   return (
     <section className='flex flex-col gap-6'>
       <div>
-        <h2 className='text-gray-700 subTitle-28'>{`댓글(${postComments.totalCommentCount})`}</h2>
+        <h2 className='text-gray-700 subTitle-28'>{`댓글(${postComments.pagination.totalItems})`}</h2>
       </div>
       <div className='flex gap-6'>
         <ProfileImage size={60} />
@@ -73,7 +73,7 @@ const PostComments = ({
         />
       </div>
       <div>
-        {postComments.comments.map((comment) => (
+        {postComments.items.map((comment) => (
           <Comment
             key={comment.id}
             userInfo={userInfo}

@@ -12,10 +12,6 @@ export default async function Post({ params }: { params: { postId: number } }) {
     const postComments = await getComments(postId);
     const userInfo = await getServerUserInfo();
 
-    // if (postComments.statusCode === 'ERROR') {
-    //   notFound();
-    // }
-
     return (
       <>
         <PostPage
