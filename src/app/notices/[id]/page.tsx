@@ -1,5 +1,5 @@
 const page = () => {
-  return <div>공지</div>;
+  return <div>ㄴㄴㄴㄴㄴ</div>;
 };
 
 export default page;
