@@ -57,7 +57,7 @@ const PostContent = ({
           <StoreInfo
             name={postContent.places.name}
             starRatings={postContent.starRatings}
-            category={postContent.places.categories.name}
+            category={postContent.places.categoryName}
           />
           <KeywordChips keywordIds={postContent.keywordTag} />
           <p className='min-h-[150px] rounded-3xl border border-gray-100 px-[20px] py-[10px] text-gray-700 body-16'>

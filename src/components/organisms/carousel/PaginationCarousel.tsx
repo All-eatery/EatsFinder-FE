@@ -67,7 +67,19 @@ export const PagenationCarousel = () => {
           {posts.map((post, idx) => {
             return (
               <div key={idx} className='mr-[29.5px]'>
-                {post === null ? <SkeletonFeedCard /> : <FeedCard />}
+                {post === null ? (
+                  <SkeletonFeedCard />
+                ) : (
+                  <FeedCard
+                    postId={post.postId}
+                    placeName={post.placeName}
+                    postLikeCount={post.postLikeCount}
+                    postThumbnailUrl={post.postThumbnamilUrl}
+                    isPostLike={post.isPostLike}
+                    profileImage={post.followingUser.profileImage}
+                    nickname={post.followingUser.nickname}
+                  />
+                )}
               </div>
             );
           })}
