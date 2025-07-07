@@ -35,7 +35,7 @@ jobs:
 
           destination-github-username: Minseok1228
 
-          destination-repository-name: EatsFinder
+          destination-repository-name: EatsFinder-Deploy 
 
           user-email: ${{ secrets.DEPLOY_ACCOUNT_EMAIL }}
 
