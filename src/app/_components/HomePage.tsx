@@ -17,7 +17,7 @@ const HomePage = () => {
       <div className='flex flex-col gap-[80px]'>
         <Search
           variant='large'
-          placeholder='오늘 어떤 음식을 드실 에정인가요??????????'
+          placeholder='오늘 어떤 음식을 드실 에정인가요?'
         />
         <HomeSection title='주변의 맛집'>
           <div className='flex justify-between'>
