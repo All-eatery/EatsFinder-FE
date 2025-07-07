@@ -48,7 +48,10 @@ export const PlaceMap = ({
     if (lat !== undefined && lng !== undefined) {
       setMapCenter({ lat, lng });
     }
-  }, [lat, lng]);
+    if (map) {
+      map.setLevel(3);
+    }
+  }, [lat, lng, map]);
 
   useEffect(() => {
     if (lat === undefined || lng === undefined) {
