@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { Button } from '@/components/atoms';
 
-export const UserCard = ({ user }) => {
+export const UserCard = () => {
   return (
     <div className='flex w-[324px] flex-col gap-6 rounded-3xl border border-gray-200 p-[30px]'>
       <div>
         <div>
-          <Image></Image>
+          {/* <Image></Image> */}
           <div className='text-gray-900 subTitle-20'>이름</div>
         </div>
         <div className='grid grid-cols-2 divide-x text-gray-500 body-16'>
