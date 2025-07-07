@@ -1,14 +1,18 @@
 'use client';
 import { customTwMerge } from '@/utils/customTwMerge';
 import { cva } from 'class-variance-authority';
-import { useState } from 'react';
 
-export const NoticesPagination = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const handlePageClick = (page: number) => {
-    setCurrentPage(page);
-  };
-  const totalPages = 8;
+interface NoticesPaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+export const NoticesPagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: NoticesPaginationProps) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
@@ -18,7 +22,7 @@ export const NoticesPagination = () => {
           key={page}
           page={page}
           isSelected={page === currentPage}
-          onClick={handlePageClick}
+          onClick={onPageChange}
         />
       ))}
     </div>
