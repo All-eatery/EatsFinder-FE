@@ -1,4 +1,5 @@
 'use client';
+
 import {
   CustomOverlayMap,
   Map,
@@ -10,17 +11,23 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { SurroundingMapHead } from '@/components/atoms/map/SurroundingMapHead';
 import { MapAddressCopy } from '@/components/atoms/map/MapAddressCopy';
 import { useRouter } from 'next/navigation';
-import { useGetCoordinate } from '@/app/(auth)/_hooks/useGetCoordinate';
 import { useQuery } from '@tanstack/react-query';
 import { getPlacesInBoundary } from '@/api/place';
-import { PlacesInboundaryType } from '@/types/eatsPlaceType';
+import { PlacesInboundaryType, Coordinate } from '@/types/eatsPlaceType';
 import { EatsPlaceMarker } from './EatsPlaceMarker';
+
+const DEFAULT_COORDINATE: Coordinate = {
+  lat: 38.19155114124001,
+  lng: 128.601247028514,
+};
+
 interface PlaceMapProps {
   isSurrounding?: boolean;
   lat?: number;
   lng?: number;
   id?: number;
 }
+
 export const PlaceMap = ({
   isSurrounding = true,
   lat,
@@ -28,20 +35,44 @@ export const PlaceMap = ({
   id,
 }: PlaceMapProps) => {
   const router = useRouter();
-
   const mapRef = useRef<kakao.maps.Map | null>(null);
-  const { coordinate } = useGetCoordinate({ lat: lat, lng: lng });
+
+  const [mapCenter, setMapCenter] = useState<Coordinate | null>(null);
+
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [address, setAddress] = useState('');
   const [boundary, setBoundary] = useState<kakao.maps.LatLngBounds>();
   const [hoveredMarkerId, setHoveredMarkerId] = useState<Number | null>(null);
+
   useEffect(() => {
-    if (!map || !coordinate) return;
+    if (lat !== undefined && lng !== undefined) {
+      setMapCenter({ lat, lng });
+    }
+  }, [lat, lng]);
+
+  useEffect(() => {
+    if (lat === undefined || lng === undefined) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setMapCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        () => {
+          setMapCenter(DEFAULT_COORDINATE);
+        },
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!map || !mapCenter) return;
     const geocoder = new kakao.maps.services.Geocoder();
     if (isSurrounding) {
       geocoder.coord2RegionCode(
-        coordinate.lng,
-        coordinate.lat,
+        mapCenter.lng,
+        mapCenter.lat,
         (result, status) => {
           if (status === kakao.maps.services.Status.OK) {
             setAddress(result[0].address_name);
@@ -49,17 +80,14 @@ export const PlaceMap = ({
         },
       );
     } else {
-      geocoder.coord2Address(
-        coordinate.lng,
-        coordinate.lat,
-        (result, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            setAddress(result[0].address.address_name);
-          }
-        },
-      );
+      geocoder.coord2Address(mapCenter.lng, mapCenter.lat, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          setAddress(result[0].address.address_name);
+        }
+      });
     }
-  }, [coordinate, map]);
+  }, [mapCenter, map, isSurrounding]);
+
   useEffect(() => {
     if (map) {
       setBoundary(map.getBounds());
@@ -84,16 +112,15 @@ export const PlaceMap = ({
 
   const processedMarkers = useMemo(() => {
     return (
-      data?.map((place) => ({
-        ...place,
-        isSelected: place.id === id,
-      })) ?? []
+      data?.map((place) => ({ ...place, isSelected: place.id === id })) ?? []
     );
   }, [data, id]);
-  if (!coordinate) return <Loading />;
-  const getBounday = (mapInstance: kakao.maps.Map) => {
+
+  const getBoundary = (mapInstance: kakao.maps.Map) => {
     setBoundary(mapInstance.getBounds());
   };
+
+  if (!mapCenter) return <Loading />;
 
   return (
     <>
@@ -101,45 +128,37 @@ export const PlaceMap = ({
       <div className='w-[1368px] py-3'>
         <Map
           className='relative h-[492px] w-full rounded-3xl'
-          center={{ lat: coordinate.lat, lng: coordinate.lng }}
+          center={mapCenter}
           ref={mapRef}
           onCreate={(mapInstance) => {
             mapRef.current = mapInstance;
             setMap(mapInstance);
           }}
           draggable={true}
-          onZoomChanged={getBounday}
-          onDrag={getBounday}
+          onZoomChanged={getBoundary}
+          onDragEnd={getBoundary}
         >
-          {processedMarkers.map((marker) => {
-            return (
-              <CustomOverlayMap
-                key={marker.id}
-                position={{ lat: marker.lat, lng: marker.lng }}
-                zIndex={
-                  marker.isSelected
-                    ? 10
-                    : hoveredMarkerId === marker.id
-                      ? 20
-                      : 1
-                }
+          {processedMarkers.map((marker) => (
+            <CustomOverlayMap
+              key={marker.id}
+              position={{ lat: marker.lat, lng: marker.lng }}
+              zIndex={
+                marker.isSelected ? 10 : hoveredMarkerId === marker.id ? 20 : 1
+              }
+            >
+              <div
+                onMouseOver={() => setHoveredMarkerId(marker.id)}
+                onMouseOut={() => setHoveredMarkerId(null)}
+                onClick={() => router.push(`/eatsplace/${marker.id}`)}
               >
-                <div
-                  onMouseOver={() => setHoveredMarkerId(marker.id)}
-                  onMouseOut={() => setHoveredMarkerId(null)}
-                  onClick={() => {
-                    router.push(`/eatsplace/${marker.id}`);
-                  }}
-                >
-                  <EatsPlaceMarker
-                    name={marker.name}
-                    isSelected={marker.isSelected}
-                    isHovered={hoveredMarkerId === marker.id}
-                  />
-                </div>
-              </CustomOverlayMap>
-            );
-          })}
+                <EatsPlaceMarker
+                  name={marker.name}
+                  isSelected={marker.isSelected}
+                  isHovered={hoveredMarkerId === marker.id}
+                />
+              </div>
+            </CustomOverlayMap>
+          ))}
           <MapTypeControl position={'TOPRIGHT'} />
           <ZoomControl position={'RIGHT'} />
         </Map>
