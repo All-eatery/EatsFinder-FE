@@ -1,3 +1,7 @@
+export type Coordinate = {
+  lat: number;
+  lng: number;
+};
 export type PlaceInfoProps = {
   id: number;
   placeName: string;

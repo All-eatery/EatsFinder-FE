@@ -1,12 +1,15 @@
 'use client';
-import { Search } from '@/components/molecules';
 import { SurroundingPlaces } from './SurroundingPlaces';
+import { SearchAddress } from './SearchAddress';
+import { useState } from 'react';
+import { Coordinate } from '@/types/eatsPlaceType';
 
 export const EatsPlacePage = () => {
+  const [searchResult, setSearchResult] = useState<Coordinate | null>(null);
   return (
     <div className='flex w-[1368px] flex-col gap-14'>
-      <Search variant={'large'} />
-      <SurroundingPlaces />
+      <SearchAddress setSearchResult={setSearchResult} />
+      <SurroundingPlaces searchResult={searchResult} />
     </div>
   );
 };
