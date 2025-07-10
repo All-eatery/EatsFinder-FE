@@ -1,7 +1,7 @@
 'use client';
+import { BoardItem } from '@/components/atoms/board/BoardItem';
+import { BoardPagination } from '@/components/atoms/board/BoardPagination';
 import { useState } from 'react';
-import { NoticeItem } from './NoticeItem';
-import { NoticesPagination } from './NoticesPagination';
 
 export const NoticesSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +17,8 @@ export const NoticesSection = () => {
     <div>
       <div className='my-24'>
         {currentNotices.map((notice) => (
-          <NoticeItem
+          <BoardItem
+            type='notices'
             key={notice.id}
             id={notice.id}
             title={notice.title}
@@ -25,7 +26,7 @@ export const NoticesSection = () => {
           />
         ))}
       </div>
-      <NoticesPagination
+      <BoardPagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}

@@ -23,7 +23,7 @@ export const UserDropdownMenu = ({
       { label: '내 계정', href: '/myaccount/' },
       { label: '공지사항', href: '/notices' },
       { label: '기타 설정', href: '/settings' },
-      { label: '1:1 문의하기', href: '/support' },
+      { label: '1:1 문의하기', href: '/inquiry' },
     ],
     [userId],
   );

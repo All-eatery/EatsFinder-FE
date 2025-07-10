@@ -1,7 +1,6 @@
 import { customTwMerge } from '@/utils/customTwMerge';
 import { VariantProps, cva } from 'class-variance-authority';
 import { ButtonHTMLAttributes } from 'react';
-import { string } from 'zod';
 
 const toggleVariants = cva(
   'flex h-6 w-[70px] items-center justify-center rounded-3xl',

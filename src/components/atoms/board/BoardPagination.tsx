@@ -2,17 +2,17 @@
 import { customTwMerge } from '@/utils/customTwMerge';
 import { cva } from 'class-variance-authority';
 
-interface NoticesPaginationProps {
+interface BoardPagination {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
 }
 
-export const NoticesPagination = ({
+export const BoardPagination = ({
   currentPage,
   totalPages,
   onPageChange,
-}: NoticesPaginationProps) => {
+}: BoardPagination) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
