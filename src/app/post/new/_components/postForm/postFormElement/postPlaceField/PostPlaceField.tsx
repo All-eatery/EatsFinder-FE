@@ -51,7 +51,7 @@ export const PostPlaceField = () => {
       const kakaoData = await getKakaoPlace(trimPlaceName);
 
       setPlaces(data);
-      setKakaoPlaces(kakaoData.documents);
+      setKakaoPlaces(kakaoData ?? []);
     }
   };
 

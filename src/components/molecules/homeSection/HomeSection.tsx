@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 interface HomeSectionProps {
-  title: string;
+  title: ReactNode;
   children: ReactNode;
 }
 

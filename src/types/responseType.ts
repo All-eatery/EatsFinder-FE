@@ -1,9 +1,11 @@
-export class NestResponseError {
+export interface KotlinResponseType<T> {
+  statusCode: 'SUCCESS' | 'ERROR' | number;
+  data: T;
   message: string;
-  statusCode: number;
+}
 
-  constructor(message: string, statusCode: number) {
-    this.message = message;
-    this.statusCode = statusCode;
-  }
+export interface NestResponseType {
+  statusCode: number;
+  error: string;
+  message: string;
 }

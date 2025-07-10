@@ -1,8 +1,10 @@
 import { KOTLIN_SERVER, NEST_SERVER } from '@/constants/baseUrl';
 import { PlaceRequestType } from '@/types/kakaomapType';
-import { PostContentType } from '@/types/postType';
-import { NestResponseError } from '@/types/responseType';
+import { PostContentType, PostCardType } from '@/types/postType';
 import { getUserToken } from '@/utils/getServerUserInfo';
+import { NestResponseType, KotlinResponseType } from '@/types/responseType';
+
+const PAGE_SIZE = 5;
 
 export const createNewPost = async (formData: FormData) => {
   const token = await getUserToken();
@@ -14,17 +16,13 @@ export const createNewPost = async (formData: FormData) => {
     body: formData,
   });
 
-  if (!res.ok) {
-    throw new NestResponseError(res.statusText, res.status);
-  }
-
   const data = await res.json();
 
   return data;
 };
 
 export const getPostContent = async (
-  postId: string,
+  postId: number,
 ): Promise<PostContentType> => {
   const res = await fetch(`${NEST_SERVER}/posts/${postId}/details`, {
     method: 'GET',
@@ -74,17 +72,28 @@ export const getPlace = async (placeName: string) => {
 export const getKakaoPlace = async (placeName: string) => {
   if (!placeName) return;
 
-  const res = await fetch(
-    `https://dapi.kakao.com/v2/local/search/keyword?category_group_code=FD6,CE7&size=15&query=${placeName}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
-      },
-    },
+  const categoryGroupCodes = ['FD6', 'CE7'];
+
+  const result = await Promise.all(
+    categoryGroupCodes.map(async (code) => {
+      const res = await fetch(
+        `https://dapi.kakao.com/v2/local/search/keyword?category_group_code=${code}&size=15&query=${placeName}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `KakaoAK ${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}`,
+          },
+        },
+      );
+
+      return await res.json();
+    }),
   );
 
-  const data = await res.json();
+  const data = [
+    ...(result[0]?.documents || []),
+    ...(result[1]?.documents || []),
+  ];
 
   return data;
 };
@@ -116,11 +125,27 @@ export const createMenu = async (menu: string, placeId: number) => {
   return data;
 };
 
-export const deletePost = async (id: number) => {
+export const getPostEditStatus = async (
+  postId: number,
+): Promise<NestResponseType> => {
+  const res = await fetch(`${NEST_SERVER}/posts/${postId}/check`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const deletePost = async (postId: number) => {
   const token = await getUserToken();
-  const response = await fetch(`${NEST_SERVER}/posts/${id}`, {
+  const response = await fetch(`${NEST_SERVER}/posts/${postId}`, {
     method: 'DELETE',
     headers: {
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
   });
@@ -129,16 +154,56 @@ export const deletePost = async (id: number) => {
 
   return { data, response };
 };
-export const getPopularPosts = async () => {
+
+export const togglePostLike = async (
+  targetId: number,
+  isLiked: boolean,
+): Promise<KotlinResponseType<string>> => {
   const token = await getUserToken();
-  const response = await fetch(`${KOTLIN_SERVER}/posts/popular`, {
-    method: 'GET',
-    ...(token && {
+  const method = isLiked ? 'DELETE' : 'POST';
+
+  const endpoint = `${KOTLIN_SERVER}/post-likes?postId=${targetId}`;
+  const res = await fetch(endpoint, {
+    method: method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok)
+    return { statusCode: res.status, data: '', message: res.statusText };
+
+  const data = await res.json();
+
+  return data;
+};
+
+export const getFollowsPosts = async (page: number) => {
+  const token = await getUserToken();
+  const res = await fetch(
+    `${KOTLIN_SERVER}/posts/follows?page=${page}&size=${PAGE_SIZE}`,
+    {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }),
+    },
+  );
+  const data = await res.json();
+
+  return data;
+};
+
+export const getPopularPosts: () => Promise<PostCardType[]> = async () => {
+  const token = await getUserToken();
+  const res = await fetch(`${KOTLIN_SERVER}/posts/popular`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
-  const data = await response.json();
+
+  const data = await res.json();
+
   return data;
 };

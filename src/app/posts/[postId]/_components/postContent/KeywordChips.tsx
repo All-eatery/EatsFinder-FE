@@ -16,9 +16,9 @@ const KeywordChips = ({
     splitedKeywordIds.includes(keyword.id),
   );
   return (
-    <div className={clsx('flex flex-wrap', `gap-${keywordGap}`)}>
+    <div className={clsx('flex h-24 flex-wrap', `gap-${keywordGap}`)}>
       {filteredKeywords.map((it) => (
-        <Chip key={it.text} text={it.text} emoji={it.emoji} />
+        <Chip key={it.text} text={it.text} emoji={it.emoji} size='small' />
       ))}
     </div>
   );
