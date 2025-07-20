@@ -3,7 +3,7 @@ import { BoardItem } from '@/components/atoms/board/BoardItem';
 import { BoardPagination } from '@/components/atoms/board/BoardPagination';
 import React, { useState } from 'react';
 
-export const InquirySection = () => {
+export const InquiryLists = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -14,20 +14,18 @@ export const InquirySection = () => {
   const totalPages = Math.ceil(Inquiries.length / itemsPerPage);
 
   return (
-    <div>
-      <div className='my-24'>
-        {currentNotices.map((inquiry) => (
-          <BoardItem
-            type='inquiry'
-            key={inquiry.id}
-            id={inquiry.id}
-            title={inquiry.title}
-            date={inquiry.date}
-            content={inquiry.content}
-            status={inquiry.status}
-          />
-        ))}
-      </div>
+    <div className='w-full'>
+      {currentNotices.map((inquiry) => (
+        <BoardItem
+          type='inquiry'
+          key={inquiry.id}
+          id={inquiry.id}
+          title={inquiry.title}
+          date={inquiry.date}
+          content={inquiry.content}
+          status={inquiry.status}
+        />
+      ))}
       <BoardPagination
         currentPage={currentPage}
         totalPages={totalPages}
