@@ -15,7 +15,10 @@ const icon = {
     CheckBoXSVG_Ver2({ isChecked: 'blank' }),
   ],
   bookmark: [BookmarkSVG({ isFill: true }), BookmarkSVG({ isFill: false })],
-  fav: [FavSVG({ isFill: true }), FavSVG({ isFill: false })],
+  fav: [
+    FavSVG({ isFill: true, fillColor: 'primary' }),
+    FavSVG({ isFill: false, fillColor: 'gray' }),
+  ],
 };
 
 interface CheckBoxProps extends InputHTMLAttributes<HTMLInputElement> {
