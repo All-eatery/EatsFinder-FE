@@ -21,18 +21,23 @@ export const LoggedInHeader = ({ loginStateHanlder }: LoggedInHeaderProps) => {
   });
 
   return (
-    <div className='flex items-center gap-6'>
-      <AlarmBellSVG />
+    <div className='flex items-center gap-2 lg:gap-6'>
+      <AlarmBellSVG className='h-5 w-5 text-gray-300 lg:h-10 lg:w-8' />
       <div
         className='relative cursor-pointer'
         ref={dropdownRef}
         onClick={dropdownHanlder}
       >
         {isLoading ? (
-          <div className='h-[50px] w-[50px] rounded-full border'></div>
+          <div className='h-5 w-5 rounded-full border lg:h-[50px] lg:w-[50px]'></div>
         ) : (
           <>
-            <ProfileImage src={data?.profileImage} size={50} />
+            <figure className='hidden lg:block'>
+              <ProfileImage src={data?.profileImage} size={50} />
+            </figure>
+            <figure className='block lg:hidden'>
+              <ProfileImage src={data?.profileImage} size={20} />
+            </figure>
             {isDropdownOpen && (
               <UserDropdownMenu
                 userId={String(data?.id)}
