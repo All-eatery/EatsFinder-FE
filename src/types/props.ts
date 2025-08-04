@@ -1,5 +1,7 @@
 import { ComponentProps } from 'react';
-
+export interface SVGClassProps {
+  className?: string;
+}
 export interface ButtonProps extends ComponentProps<'button'> {}
 export type SVGUsableProps = {
   isUsable?: boolean;

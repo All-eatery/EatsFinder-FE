@@ -1,3 +1,5 @@
+import { SVGClassProps } from '@/types/props';
+
 export const LogoTxtSVG = () => {
   return (
     <svg
@@ -58,9 +60,10 @@ export const LogoTxtSVG = () => {
   );
 };
 
-export const LogoImgSVG = () => {
+export const LogoImgSVG = ({ className }: SVGClassProps) => {
   return (
     <svg
+      className={className}
       width='64'
       height='70'
       viewBox='0 0 64 70'
