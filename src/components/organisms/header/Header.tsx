@@ -28,7 +28,7 @@ export const Header = ({ userInfo }: HeaderProps) => {
     return <AuthHeader />;
   }
   return (
-    <header className='flex items-center justify-around lg:mb-[3.75rem] lg:h-20'>
+    <header className='flex items-center justify-around py-2 lg:mb-[3.75rem] lg:h-20'>
       <div className='flex w-full max-w-[1440px] items-center justify-between px-4 lg:px-9'>
         <div>
           <Link href='/'>
