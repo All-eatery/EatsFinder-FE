@@ -8,6 +8,7 @@ type ToggleBtnProps<T> = {
   label_2: T;
   value: T;
   setState: Dispatch<SetStateAction<T>>;
+  size?: 'small' | 'large';
 };
 
 export const ToggleBtn = <T extends string>({
@@ -17,6 +18,7 @@ export const ToggleBtn = <T extends string>({
   label_2,
   value,
   setState,
+  size,
 }: ToggleBtnProps<T>) => {
   const handleClick = (selected: T) => {
     setState(selected);
@@ -25,12 +27,14 @@ export const ToggleBtn = <T extends string>({
   return (
     <div className='flex gap-[6px] rounded-3xl bg-slate-100 p-[2px] subTitle-12'>
       <ToggleBtn_Button
+        size={'large'}
         onClick={() => handleClick(label_1)}
         active={value === label_1}
       >
         {text_1}
       </ToggleBtn_Button>
       <ToggleBtn_Button
+        size={'large'}
         onClick={() => handleClick(label_2)}
         active={value === label_2}
       >

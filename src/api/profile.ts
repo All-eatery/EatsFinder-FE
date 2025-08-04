@@ -51,7 +51,7 @@ export const getMyActives = async (
   const token = await getUserToken();
   const size = 10;
   const response = await fetch(
-    `${KOTLIN_SERVER}/users/actives?filter=${filter}&page=${page}&size=${size}`,
+    `${KOTLIN_SERVER}/users/actives?filter=${filter}&page=${page}&size=${size}&sorted=createdAt`,
     {
       method: 'GET',
       headers: {
