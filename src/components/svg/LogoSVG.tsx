@@ -1,7 +1,6 @@
-type SvgProps = {
-  className?: string;
-};
-export const LogoMobileSVG = ({ className }: SvgProps) => {
+import { SVGClassProps } from '@/types/props';
+
+export const LogoMobileSVG = ({ className }: SVGClassProps) => {
   return (
     <svg
       className={className}
@@ -770,7 +769,7 @@ export const LogoTxtSVG = () => {
   );
 };
 
-export const LogoImgSVG = ({ className }: SvgProps) => {
+export const LogoImgSVG = ({ className }: SVGClassProps) => {
   return (
     <svg
       className={className}
