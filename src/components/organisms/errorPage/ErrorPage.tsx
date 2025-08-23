@@ -26,6 +26,7 @@ export const ErrorPage = ({ statusCode }: { statusCode: number }) => {
           })}
         </h3>
       </div>
+
       <div className='flex w-full justify-center gap-3 lg:max-w-none lg:gap-4'>
         <Button
           onClick={() => router.back()}

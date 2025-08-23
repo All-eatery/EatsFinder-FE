@@ -1,6 +1,9 @@
-export const UploadSVG = () => {
+import { SVGClassProps } from '@/types/props';
+
+export const UploadSVG = ({ className }: SVGClassProps) => {
   return (
     <svg
+      className={className}
       width='40'
       height='40'
       viewBox='0 0 40 40'

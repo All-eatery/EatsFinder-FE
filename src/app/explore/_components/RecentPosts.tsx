@@ -22,27 +22,31 @@ export const RecentPosts = () => {
   });
   if (status === 'pending') return <Loading />;
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
-
+  console.log({ data });
   return (
-    <div className='flex flex-col gap-6'>
-      <h2 className='my-3 text-gray-700 subTitle-28'>최근 피드</h2>
+    <div className='flex flex-col gap-3 xl:gap-6'>
+      <h2 className='text-gray-700 subTitle-18 xl:subTitle-28'>최근 피드</h2>
       {data?.pages.map((page, pageIndex) => (
-        <div key={pageIndex} className='grid grid-cols-5 gap-4'>
+        <div
+          key={pageIndex}
+          className='grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 md:grid-cols-4 xl:grid-cols-5 xl:gap-4'
+        >
           {page.items.map((item, index) => {
             const isLastItem =
               pageIndex === data.pages.length - 1 &&
               index === page.items.length - 1;
 
             return (
-              <div key={item.id} ref={isLastItem ? lastElementRef : null}>
-                <PostCard
-                  id={item.id}
-                  isLiked={item.likeStatus}
-                  nickname={item.users.nickname}
-                  profileImage={item.users.profileImage}
-                  src={item.thumbnailUrl}
-                />
-              </div>
+              <PostCard
+                key={item.id}
+                ref={isLastItem ? lastElementRef : null}
+                id={item.id}
+                isLiked={item.likeStatus}
+                nickname={item.users.nickname}
+                profileImage={item.users.profileImage}
+                src={item.thumbnailUrl}
+                variant={'recent'}
+              />
             );
           })}
         </div>

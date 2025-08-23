@@ -1,6 +1,9 @@
-export const SearchSVG = () => {
+import { SVGClassProps } from '@/types/props';
+
+export const SearchSVG = ({ className }: SVGClassProps) => {
   return (
     <svg
+      className={className}
       width='24'
       height='24'
       viewBox='0 0 24 24'

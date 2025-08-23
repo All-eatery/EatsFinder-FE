@@ -15,7 +15,9 @@ export const getNewNeighborPosts = async () => {
   const data = await response.json();
   return data;
 };
-
+/**
+ * 이거 지금 5개마 ㄴ가져옴!
+ */
 export const getAllPosts = async (cursor: number) => {
   const token = await getUserToken();
 

@@ -9,7 +9,7 @@ import toastErrorImage from '../../../assets/images/toastError.png';
 import toastSuccessImage from '../../../assets/images/toastSuccess.png';
 
 const ToastVariants = cva(
-  'rounded-lg px-5 py-4  transition-opacity body-18 text-gray-900 flex gap-2 h-16 justify-between hover:cursor-pointer',
+  'rounded-lg px-5 py-4 bg-white transition-opacity body-18 text-gray-900 flex gap-2 h-16 justify-between hover:cursor-pointer',
   {
     variants: {
       type: {
@@ -23,7 +23,7 @@ export const ToastMessageBox = () => {
   const { toasts, removeToast } = useToast();
 
   return (
-    <div className='fixed right-4 top-4 z-50 space-y-4'>
+    <div className='fixed right-4 top-4 z-50 flex flex-col items-end space-y-4'>
       {toasts.map((toast) => (
         <div
           key={toast.id}

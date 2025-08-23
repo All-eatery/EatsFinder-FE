@@ -6,27 +6,29 @@ import { SearchSVG } from '@/components/svg/SearchSVG';
 import { UploadSVG } from '@/components/svg/UploadSVG';
 
 const searchVariant = cva(
-  'relative flex items-center rounded-[30px] h-[60px] gap-2 p-5 border mx-auto border-gray-100 body-18 focus-within:border-primary-400 focus-within:border-2',
+  'relative flex items-center rounded-[30px] h-12 xl:h-[60px] gap-2 p-5 border mx-auto border-gray-100 lg:body-16 xl:body-18 focus-within:border-primary-400 focus-within:border-2',
   {
     variants: {
       variant: {
-        large: 'w-[770px]',
+        large: 'w-full md:w-[770px]',
         small: 'w-[400px]',
       },
     },
   },
 );
-
+//이거 반응형하며 좀 꼬임 낼 다시 정리 ㄱㄱ
 interface SearchProps
   extends VariantProps<typeof searchVariant>,
     InputHTMLAttributes<HTMLInputElement> {
   searchIcon?: boolean;
+  isSearch?: boolean;
   onSearch?: () => void;
 }
 
 export const Search = ({
   variant,
   className,
+  isSearch = true,
   searchIcon = true,
   onSearch,
   ...props
@@ -51,9 +53,16 @@ export const Search = ({
         {...props}
         onKeyDown={handleKeyDown}
       />
-      <button aria-label='search button' onClick={onSearch}>
-        <UploadSVG />
-      </button>
+      {isSearch ? (
+        <button aria-label='search button' onClick={onSearch}>
+          <UploadSVG className='hidden xl:block' />
+          <SearchSVG className='block xl:hidden' />
+        </button>
+      ) : (
+        <button aria-label='search button' onClick={onSearch}>
+          <UploadSVG />
+        </button>
+      )}
     </div>
   );
 };

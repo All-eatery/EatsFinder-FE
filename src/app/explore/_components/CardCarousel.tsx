@@ -4,10 +4,7 @@ import { NextButton, PrevButton } from '@/components/atoms';
 import { customTwMerge } from '@/utils/customTwMerge';
 import { PostCard } from '@/app/(auth)/myeats/_components/like/PostCard';
 import { PostCardType } from '@/types/postType';
-
-const CARD_WIDTH = 250;
-const MARGIN_LEFT = 29.5;
-const NUMBER_PER_SCROLL = 5;
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 export const CardCarousel = ({
   data,
@@ -16,25 +13,60 @@ export const CardCarousel = ({
   data: PostCardType[];
   title: string;
 }) => {
+  const isXl = useMediaQuery('(min-width: 1280px)');
+  const isLg = useMediaQuery('(min-width: 1024px)');
+  const isMd = useMediaQuery('(min-width: 768px)');
+  const isSm = useMediaQuery('(min-width: 640px)');
+
+  const settings = useMemo(() => {
+    if (isXl) {
+      return {
+        cardWidth: 250,
+        cardsPerView: 5,
+        cardsPerScroll: 5,
+        gap: 29.5,
+      };
+    } else if (isLg) {
+      return {
+        cardWidth: 210,
+        cardsPerView: 4,
+        cardsPerScroll: 4,
+        gap: 20,
+      };
+    } else if (isMd) {
+      return {
+        cardWidth: 178,
+        cardsPerView: 3,
+        cardsPerScroll: 3,
+        gap: 12,
+      };
+    } else if (isSm) {
+      return {
+        cardWidth: 160,
+        cardsPerView: 2,
+        cardsPerScroll: 2,
+        gap: 12,
+      };
+    }
+    return {
+      cardWidth: 160,
+      cardsPerView: 2,
+      cardsPerScroll: 2,
+      gap: 12,
+    };
+  }, [isXl, isLg, isMd, isSm]);
+
   const [slide, setSlide] = useState(0);
   const maxSlide = useMemo(() => {
-    return Math.floor(data.length / NUMBER_PER_SCROLL);
-  }, [data.length]);
+    return Math.ceil(data.length / settings.cardsPerScroll) - 1;
+  }, [data.length, settings.cardsPerScroll]);
 
   const calculateTranslate = useMemo(() => {
-    if (slide === maxSlide) {
-      return (
-        (data.length -
-          NUMBER_PER_SCROLL * slide +
-          NUMBER_PER_SCROLL * (slide - 1)) *
-        (CARD_WIDTH + MARGIN_LEFT)
-      );
-    }
-    return (CARD_WIDTH + MARGIN_LEFT) * NUMBER_PER_SCROLL * slide;
-  }, [slide, maxSlide, data.length]);
-
+    const totalMoveWidth = settings.cardWidth + settings.gap;
+    return totalMoveWidth * settings.cardsPerScroll * slide;
+  }, [slide, settings]);
   const handleNext = () => {
-    if (slide === maxSlide) return;
+    if (slide >= maxSlide) return;
     setSlide((prev) => prev + 1);
   };
 
@@ -45,22 +77,26 @@ export const CardCarousel = ({
 
   return (
     <div>
-      <h2 className='my-3 text-gray-700 subTitle-28'>{title}</h2>
-
+      <h2 className='my-3 text-gray-700 subTitle-18 xl:subTitle-28'>{title}</h2>
       <div className='relative'>
         <div className='overflow-hidden'>
           <div
-            className='flex transition-transform duration-700'
+            className='flex transition-transform duration-700 ease-in-out'
             style={{ transform: `translate3d(${-calculateTranslate}px, 0, 0)` }}
           >
             {data.map((data) => {
               return (
-                <div key={data.postId} className='mr-[29.5px]'>
+                <div
+                  key={data.postId}
+                  style={{ marginRight: `${settings.gap}px` }}
+                >
                   <PostCard
                     id={data.postId}
                     isLiked={data.isPostLike}
                     nickname={data.nickname}
                     src={data.postThumbnailUrl}
+                    profileImage={data.profileImage}
+                    variant='explore'
                   />
                 </div>
               );
