@@ -10,7 +10,7 @@ const toggleVariants = cva('flex items-center justify-center rounded-3xl', {
     },
     size: {
       small: 'h-6 w-[70px]',
-      large: 'h-12 w-36',
+      large: 'h-8 xl:h-12 w-24 xl:w-36',
     },
   },
   defaultVariants: {
@@ -34,9 +34,3 @@ export const ToggleBtn_Button = ({
     />
   );
 };
-//     <div className='flex gap-[6px] rounded-3xl bg-slate-100 p-[2px] subTitle-12'>
-//     {text_1}
-//   <div className='flex h-6 w-[70px] items-center justify-center rounded-3xl text-gray-400'>
-//     {text_2}
-//   </div>
-// </div>

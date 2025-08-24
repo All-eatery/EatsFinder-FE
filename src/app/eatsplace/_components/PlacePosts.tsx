@@ -28,7 +28,7 @@ export const PlacePosts = ({ id }: { id: number }) => {
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
   return (
     <>
-      <div className='flex flex-col gap-6'>
+      <div className='flex flex-col xl:gap-6'>
         <div className='flex justify-end'>
           <ToggleBtn
             text_1='최신순'

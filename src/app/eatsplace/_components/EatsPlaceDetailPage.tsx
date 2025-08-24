@@ -15,7 +15,7 @@ export const EatsPlaceDetailPage = ({ data }: { data: PlaceByIdType }) => {
         lat={data.y}
         lng={data.x}
       />
-      <div className='flex flex-col gap-10'>
+      <div className='flex flex-col gap-4 xl:gap-10'>
         <PlaceMap
           isSurrounding={false}
           lat={data.y}

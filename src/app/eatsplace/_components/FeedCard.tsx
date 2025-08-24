@@ -13,9 +13,9 @@ export const FeedCard = ({
   thumbnailUrl,
 }: FeedCardProps) => {
   return (
-    <div className='flex w-[250px] flex-col gap-1'>
+    <div className='flex w-40 flex-col gap-1 md:w-44 lg:w-48 xl:w-[250px]'>
       <Link href={`/posts/${id}`}>
-        <figure className='relative h-[350px] overflow-hidden rounded-3xl'>
+        <figure className='relative h-[224px] overflow-hidden rounded-3xl md:h-[246px] lg:h-[269px] xl:h-[350px]'>
           <Image
             className='object-cover'
             src={thumbnailUrl}
@@ -26,7 +26,9 @@ export const FeedCard = ({
       </Link>
       <div className='flex justify-between'>
         <div className='flex items-center justify-center gap-2'>
-          <ProfileImage size={40} src={profileImage} />
+          <figure className='hidden xl:block'>
+            <ProfileImage size={40} src={profileImage} />
+          </figure>
           <div className='flex flex-col'>
             <span className='text-gray-500 subTitle-20'>{nickname}</span>
             <span className='text-gray-500 body-14'>파스타 참 맛있는 집</span>
