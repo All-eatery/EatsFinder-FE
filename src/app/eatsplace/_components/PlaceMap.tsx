@@ -15,6 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPlacesInBoundary } from '@/api/place';
 import { PlacesInboundaryType, Coordinate } from '@/types/eatsPlaceType';
 import { EatsPlaceMarker } from './EatsPlaceMarker';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const DEFAULT_COORDINATE: Coordinate = {
   lat: 38.19155114124001,
@@ -43,13 +44,12 @@ export const PlaceMap = ({
   const [address, setAddress] = useState('');
   const [boundary, setBoundary] = useState<kakao.maps.LatLngBounds>();
   const [hoveredMarkerId, setHoveredMarkerId] = useState<Number | null>(null);
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const initialMapLevel = isMobile ? 4 : 3;
 
   useEffect(() => {
     if (lat !== undefined && lng !== undefined) {
       setMapCenter({ lat, lng });
-    }
-    if (map) {
-      map.setLevel(3);
     }
   }, [lat, lng, map]);
 
@@ -128,9 +128,10 @@ export const PlaceMap = ({
   return (
     <>
       {isSurrounding && <SurroundingMapHead address={address} />}
-      <div className='w-[1368px] py-3'>
+      <div className='w-full py-3'>
         <Map
-          className='relative h-[492px] w-full rounded-3xl'
+          level={initialMapLevel}
+          className='relative h-52 w-full rounded-3xl md:h-80 lg:h-96 xl:h-[492px]'
           center={mapCenter}
           ref={mapRef}
           onCreate={(mapInstance) => {

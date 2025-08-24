@@ -3,7 +3,7 @@ import { NAV_DATA } from '@/constants/navData';
 
 export const MobileNav = ({ path }: { path: string }) => {
   return (
-    <nav className='fixed bottom-0 z-20 w-full bg-white lg:hidden'>
+    <nav className='fixed bottom-0 z-20 w-full bg-white xl:hidden'>
       <ul className='flex justify-between'>
         {NAV_DATA.map(({ href, Icon, label, page }) => {
           return (

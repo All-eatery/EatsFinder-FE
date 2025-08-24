@@ -4,6 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { customTwMerge } from '@/utils/customTwMerge';
 import { SearchSVG } from '@/components/svg/SearchSVG';
 import { UploadSVG } from '@/components/svg/UploadSVG';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const searchVariant = cva(
   'relative flex items-center rounded-[30px] h-12 xl:h-[60px] gap-2 p-5 border mx-auto border-gray-100 lg:body-16 xl:body-18 focus-within:border-primary-400 focus-within:border-2',
@@ -33,6 +34,10 @@ export const Search = ({
   onSearch,
   ...props
 }: SearchProps) => {
+  //임시로 해둠 다른 페이지 보고 결정
+  const isXl = useMediaQuery('(min-width: 1280px)');
+  const showSearchIcon = searchIcon && isXl;
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && onSearch) {
       onSearch();
@@ -40,7 +45,7 @@ export const Search = ({
   };
   return (
     <div className={customTwMerge(searchVariant({ variant }), className)}>
-      {searchIcon && (
+      {showSearchIcon && (
         <div className='pointer-events-none absolute'>
           <SearchSVG />
         </div>
@@ -48,7 +53,7 @@ export const Search = ({
       <input
         className={customTwMerge(
           'w-full bg-transparent outline-none',
-          searchIcon && 'pl-8',
+          showSearchIcon && 'pl-8',
         )}
         {...props}
         onKeyDown={handleKeyDown}

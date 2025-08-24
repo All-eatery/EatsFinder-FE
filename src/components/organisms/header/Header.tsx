@@ -28,15 +28,15 @@ export const Header = ({ userInfo }: HeaderProps) => {
     return <AuthHeader />;
   }
   return (
-    <header className='flex items-center justify-around py-2 lg:mb-[3.75rem] lg:h-20'>
-      <div className='flex w-full max-w-[1440px] items-center justify-between px-4 lg:px-9'>
+    <header className='flex items-center justify-around py-2 xl:mb-[3.75rem] xl:h-20'>
+      <div className='flex w-full max-w-[1440px] items-center justify-between px-4 xl:px-9'>
         <div>
           <Link href='/'>
-            <LogoImgSVG className='hidden lg:block' />
-            <LogoMobileSVG className='block lg:hidden' />
+            <LogoImgSVG className='hidden xl:block' />
+            <LogoMobileSVG className='block xl:hidden' />
           </Link>
         </div>
-        <nav className='hidden lg:block'>
+        <nav className='hidden xl:block'>
           <ul className='flex gap-[60px]'>
             {NAV_DATA.map(({ label, href, page }, index) => {
               const isActive = path === page;

@@ -55,19 +55,20 @@ export const SearchAddress = ({ setSearchResult }: SearchAddressProps) => {
 
   return (
     <div className='flex flex-col items-center gap-4'>
-      <div className='relative mx-auto flex h-[60px] w-[770px] items-center gap-2 rounded-[30px] border border-gray-100 p-5 body-18 focus-within:border-2 focus-within:border-primary-400'>
-        <div className='pointer-events-none absolute'>
+      <div className='relative mx-auto flex h-12 w-full max-w-[770px] items-center gap-2 rounded-[30px] border border-gray-100 p-5 body-18 focus-within:border-2 focus-within:border-primary-400 xl:h-[60px]'>
+        <div className='pointer-events-none absolute hidden xl:block'>
           <SearchSVG />
         </div>
         <input
-          className='w-full pl-8 outline-none'
+          className='w-full outline-none xl:pl-8'
           placeholder='지역명, 건물명 등을 입력하세요 '
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         <button aria-label='search button' type='button' onClick={handleSearch}>
-          <UploadSVG />
+          <UploadSVG className='hidden xl:block' />
+          <SearchSVG className='block xl:hidden' />{' '}
         </button>
       </div>
     </div>
