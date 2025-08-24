@@ -14,9 +14,9 @@ export const NavHomeSVG = ({ isActive }: NavIconProps) => {
       <path
         d='M9 22V12H15V22M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z'
         stroke={color}
-        stroke-width='1.2'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -34,9 +34,9 @@ export const NavExploreSVG = ({ isActive }: NavIconProps) => {
       <path
         d='M9.33331 3V21M15.4359 3H5.33331C4.22874 3 3.33331 3.89543 3.33331 5V9M15.4359 3H19.3333C20.4379 3 21.3333 3.89543 21.3333 5V9M15.4359 3V21M15.4359 21H19.3333C20.4379 21 21.3333 20.1046 21.3333 19V15M15.4359 21H5.33331C4.22874 21 3.33331 20.1046 3.33331 19V15M3.33331 9H21.3333M3.33331 9V15M21.3333 9V15M3.33331 15H21.3333'
         stroke={color}
-        stroke-width='1.2'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -55,9 +55,9 @@ export const NavMyEatsSVG = ({ isActive }: NavIconProps) => {
       <path
         d='M21.5066 4.60987C20.9959 4.09888 20.3894 3.69352 19.722 3.41696C19.0545 3.14039 18.3391 2.99805 17.6166 2.99805C16.8941 2.99805 16.1787 3.14039 15.5113 3.41696C14.8438 3.69352 14.2374 4.09888 13.7266 4.60987L12.6666 5.66987L11.6066 4.60987C10.5749 3.57818 9.17566 2.99858 7.71662 2.99858C6.25759 2.99858 4.85831 3.57818 3.82662 4.60987C2.79493 5.64156 2.21533 7.04084 2.21533 8.49987C2.21533 9.95891 2.79493 11.3582 3.82662 12.3899L12.6666 21.2299L21.5066 12.3899C22.0176 11.8791 22.423 11.2727 22.6995 10.6052C22.9761 9.93777 23.1184 9.22236 23.1184 8.49987C23.1184 7.77738 22.9761 7.06198 22.6995 6.39452C22.423 5.72706 22.0176 5.12063 21.5066 4.60987Z'
         stroke={color}
-        stroke-width='1.2'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
@@ -75,14 +75,14 @@ export const NavEatsplaceSVG = ({ isActive }: NavIconProps) => {
     >
       <mask id='path-1-inside-1_7012_77199' fill='white'>
         <path
-          fill-rule='evenodd'
-          clip-rule='evenodd'
+          fillRule='evenodd'
+          clipRule='evenodd'
           d='M5.9998 1.20117C3.34883 1.20117 1.1998 3.35021 1.1998 6.00117V8.40117C1.1998 10.1778 2.16508 11.7291 3.5998 12.559V20.4012C3.5998 21.7267 4.67432 22.8012 5.9998 22.8012C7.32528 22.8012 8.3998 21.7267 8.3998 20.4012V12.559C9.83452 11.7291 10.7998 10.1778 10.7998 8.40117V6.00117C10.7998 3.35021 8.65077 1.20117 5.9998 1.20117Z'
         />
       </mask>
       <path
-        fill-rule='evenodd'
-        clip-rule='evenodd'
+        fillRule='evenodd'
+        clipRule='evenodd'
         d='M5.9998 1.20117C3.34883 1.20117 1.1998 3.35021 1.1998 6.00117V8.40117C1.1998 10.1778 2.16508 11.7291 3.5998 12.559V20.4012C3.5998 21.7267 4.67432 22.8012 5.9998 22.8012C7.32528 22.8012 8.3998 21.7267 8.3998 20.4012V12.559C9.83452 11.7291 10.7998 10.1778 10.7998 8.40117V6.00117C10.7998 3.35021 8.65077 1.20117 5.9998 1.20117Z'
         fill='white'
       />
@@ -93,14 +93,14 @@ export const NavEatsplaceSVG = ({ isActive }: NavIconProps) => {
       />
       <mask id='path-3-inside-2_7012_77199' fill='white'>
         <path
-          fill-rule='evenodd'
-          clip-rule='evenodd'
+          fillRule='evenodd'
+          clipRule='evenodd'
           d='M16.7998 1.20117C14.8116 1.20117 13.1998 2.81295 13.1998 4.80117V9.60117C13.1998 11.1686 14.2016 12.5021 15.5998 12.9963V20.4012C15.5998 21.7267 16.6743 22.8012 17.9998 22.8012C19.3253 22.8012 20.3998 21.7267 20.3998 20.4012V12.9963C21.798 12.5021 22.7998 11.1686 22.7998 9.60117V4.80117C22.7998 2.81295 21.188 1.20117 19.1998 1.20117H16.7998Z'
         />
       </mask>
       <path
-        fill-rule='evenodd'
-        clip-rule='evenodd'
+        fillRule='evenodd'
+        clipRule='evenodd'
         d='M16.7998 1.20117C14.8116 1.20117 13.1998 2.81295 13.1998 4.80117V9.60117C13.1998 11.1686 14.2016 12.5021 15.5998 12.9963V20.4012C15.5998 21.7267 16.6743 22.8012 17.9998 22.8012C19.3253 22.8012 20.3998 21.7267 20.3998 20.4012V12.9963C21.798 12.5021 22.7998 11.1686 22.7998 9.60117V4.80117C22.7998 2.81295 21.188 1.20117 19.1998 1.20117H16.7998Z'
         fill='white'
       />
@@ -112,14 +112,14 @@ export const NavEatsplaceSVG = ({ isActive }: NavIconProps) => {
       <path
         d='M16.8 2.40039V8.40039'
         stroke='#A6A6A6'
-        stroke-width='1.2'
-        stroke-linecap='round'
+        strokeWidth='1.2'
+        strokeLinecap='round'
       />
       <path
         d='M19.2 2.40039V8.40039'
         stroke='#A6A6A6'
-        stroke-width='1.2'
-        stroke-linecap='round'
+        strokeWidth='1.2'
+        strokeLinecap='round'
       />
     </svg>
   );
