@@ -4,12 +4,12 @@ import { PlaceInfoProps } from '@/types/eatsPlaceType';
 import { BookmarkButton } from '@/app/(auth)/_components/BookmarkButton';
 export const PlaceInfo = ({ popular, url, placeName, id }: PlaceInfoProps) => {
   return (
-    <div className='mb-6 flex w-full flex-col items-center gap-4 xl:gap-6'>
-      <figure className='relative h-[150px] w-[150px] overflow-hidden rounded-full xl:h-[250px] xl:w-[250px]'>
+    <div className='mb-6 flex w-full flex-col items-center gap-4 lg:gap-6'>
+      <figure className='relative h-[150px] w-[150px] overflow-hidden rounded-full lg:h-[250px] lg:w-[250px]'>
         <Image src={url} alt='리스트 맛집 이미지' fill />
       </figure>
       <div className='gpa-1 flex items-center'>
-        <p className='text-primary-400 subTitle-20 xl:subTitle-28'>
+        <p className='text-primary-400 subTitle-20 lg:subTitle-28'>
           #{placeName}
         </p>
         <BookmarkButton placeId={id} isMarked={false} />

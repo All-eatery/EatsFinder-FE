@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { forwardRef } from 'react';
 const postCardVariants = cva(
-  'relative overflow-hidden rounded-3xl  xl:h-[408px] xl:w-[250px]',
+  'relative overflow-hidden rounded-3xl  lg:h-[408px] lg:w-[250px]',
   {
     variants: {
       variant: {
@@ -45,10 +45,10 @@ export const PostCard = forwardRef<HTMLDivElement, PostCardProps>(
             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           />
           <div className='absolute bottom-5 left-5 z-10 flex items-center gap-2'>
-            <figure className='hidden xl:block'>
+            <figure className='hidden lg:block'>
               <ProfileImage src={profileImage} size={60} />
             </figure>
-            <span className='text-white subTitle-16 xl:subTitle-20'>
+            <span className='text-white subTitle-16 lg:subTitle-20'>
               {nickname}
             </span>
           </div>

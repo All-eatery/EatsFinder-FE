@@ -24,12 +24,12 @@ export const RecentPosts = () => {
   if (status === 'error') return <div>데이터를 불러오는 중 오류 발생</div>;
   console.log({ data });
   return (
-    <div className='flex flex-col gap-3 xl:gap-6'>
-      <h2 className='text-gray-700 subTitle-18 xl:subTitle-28'>최근 피드</h2>
+    <div className='flex flex-col gap-3 lg:gap-6'>
+      <h2 className='text-gray-700 subTitle-18 lg:subTitle-28'>최근 피드</h2>
       {data?.pages.map((page, pageIndex) => (
         <div
           key={pageIndex}
-          className='grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 md:grid-cols-4 xl:grid-cols-5 xl:gap-4'
+          className='grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4'
         >
           {page.items.map((item, index) => {
             const isLastItem =

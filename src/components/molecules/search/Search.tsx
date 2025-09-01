@@ -7,7 +7,7 @@ import { UploadSVG } from '@/components/svg/UploadSVG';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const searchVariant = cva(
-  'relative flex items-center rounded-[30px] h-12 xl:h-[60px] gap-2 p-5 border mx-auto border-gray-100 lg:body-16 xl:body-18 focus-within:border-primary-400 focus-within:border-2',
+  'relative flex items-center rounded-[30px] h-12 lg:h-[60px] gap-2 p-5 border mx-auto border-gray-100 lg:body-16 lg:body-18 focus-within:border-primary-400 focus-within:border-2',
   {
     variants: {
       variant: {
@@ -60,8 +60,8 @@ export const Search = ({
       />
       {isSearch ? (
         <button aria-label='search button' onClick={onSearch}>
-          <UploadSVG className='hidden xl:block' />
-          <SearchSVG className='block xl:hidden' />
+          <UploadSVG className='hidden lg:block' />
+          <SearchSVG className='block lg:hidden' />
         </button>
       ) : (
         <button aria-label='search button' onClick={onSearch}>

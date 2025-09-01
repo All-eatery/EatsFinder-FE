@@ -19,10 +19,10 @@ export const NavLink = ({
     <Link
       href={href}
       className={customTwMerge(
-        'flex h-14 items-center justify-center p-[10px] body-12 hover:text-primary-400 hover:subTitle-12 xl:h-12 xl:body-20 xl:hover:subTitle-20',
+        'flex h-14 items-center justify-center p-[10px] body-12 hover:text-primary-400 hover:subTitle-12 lg:h-12 lg:body-20 lg:hover:subTitle-20',
         active
-          ? 'border-b-[3px] border-primary-400 text-primary-400 subTitle-12 xl:subTitle-20'
-          : 'text-gray-300 xl:text-gray-800',
+          ? 'border-b-[3px] border-primary-400 text-primary-400 subTitle-12 lg:subTitle-20'
+          : 'text-gray-300 lg:text-gray-800',
 
         className,
       )}

@@ -77,7 +77,7 @@ export const CardCarousel = ({
 
   return (
     <div>
-      <h2 className='my-3 text-gray-700 subTitle-18 xl:subTitle-28'>{title}</h2>
+      <h2 className='my-3 text-gray-700 subTitle-18 lg:subTitle-28'>{title}</h2>
       <div className='relative'>
         <div className='overflow-hidden'>
           <div

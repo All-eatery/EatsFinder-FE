@@ -10,7 +10,7 @@ const toggleVariants = cva('flex items-center justify-center rounded-3xl', {
     },
     size: {
       small: 'h-6 w-[70px]',
-      large: 'h-8 xl:h-12 w-24 xl:w-36',
+      large: 'h-8 lg:h-12 w-24 lg:w-36',
     },
   },
   defaultVariants: {
