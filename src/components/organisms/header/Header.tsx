@@ -10,12 +10,16 @@ import { UserDatatype } from '@/types/authType';
 import { PostingButton } from '@/components/atoms/postingButton/PostingButton';
 import { NAV_DATA } from '@/constants/navData';
 import { MobileNav } from '../mobile/MobileNav';
+import { isRouteKey, RouteKey } from '@/constants/route';
 
 type HeaderProps = {
   userInfo: UserDatatype | undefined;
 };
 export const Header = ({ userInfo }: HeaderProps) => {
   const path = usePathname();
+  const pathSegment = path.split('/')[1] || '/';
+  const pathKey: RouteKey = isRouteKey(pathSegment) ? pathSegment : '/';
+
   const userState = !!userInfo;
   const [isLoggedIn, setIsLoggedIn] = useState(userState);
   useEffect(() => {
@@ -51,7 +55,7 @@ export const Header = ({ userInfo }: HeaderProps) => {
           </ul>
         </nav>
         {isLoggedIn ? (
-          <LoggedInHeader loginStateHanlder={setIsLoggedIn} />
+          <LoggedInHeader loginStateHanlder={setIsLoggedIn} pathKey={pathKey} />
         ) : (
           <Button size={'mini'}>
             <Link href={'/login'}>로그인</Link>

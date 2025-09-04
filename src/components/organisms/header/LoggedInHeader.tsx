@@ -8,10 +8,15 @@ import { Dispatch, SetStateAction } from 'react';
 import { Modal } from '..';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '@/api/auth';
+import { RouteKey } from '@/constants/route';
 interface LoggedInHeaderProps {
   loginStateHanlder: Dispatch<SetStateAction<boolean>>;
+  pathKey: RouteKey;
 }
-export const LoggedInHeader = ({ loginStateHanlder }: LoggedInHeaderProps) => {
+export const LoggedInHeader = ({
+  loginStateHanlder,
+  pathKey,
+}: LoggedInHeaderProps) => {
   const { isDropdownOpen, dropdownHanlder, dropdownRef } = useDropdownHandler();
   const { closeModal, isModalOpen, logoutButton, openLogoutModal } =
     useLogoutModal();
@@ -40,6 +45,7 @@ export const LoggedInHeader = ({ loginStateHanlder }: LoggedInHeaderProps) => {
             </figure>
             {isDropdownOpen && (
               <UserDropdownMenu
+                pathKey={pathKey}
                 userId={String(data?.id)}
                 openLogoutModal={openLogoutModal}
                 dropdownHanlder={dropdownHanlder}
