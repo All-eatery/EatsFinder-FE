@@ -25,6 +25,7 @@ export type SVGCheckBoxProps = {
   isChecked?: 'default' | 'check' | 'blank';
 };
 export type SVGArrowProps = {
+  clasName: string;
   direction: 'down' | 'right' | 'left';
   color?: 'default' | 'orange';
 };

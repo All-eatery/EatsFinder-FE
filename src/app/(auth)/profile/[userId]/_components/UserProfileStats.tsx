@@ -35,7 +35,7 @@ export const UserProfileStats = ({
   const ref = useRef(null);
   return (
     <>
-      <div className='flex gap-[30px] text-gray-700 subTitle-20'>
+      <div className='flex justify-around whitespace-nowrap text-gray-700 subTitle-16 lg:subTitle-20'>
         <p className='p-[10px]'>게시물 {postCount}</p>
         <p
           className='cursor-pointer p-[10px]'

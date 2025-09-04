@@ -37,7 +37,8 @@ export const ProfileContents = ({
 
   return (
     <>
-      <div className='flex w-[1368px] flex-col gap-6'>
+      {/**여기 gap이 내 피드 영향을 줄지 생각해야함 */}
+      <div className='flex max-w-[1368px] flex-col lg:gap-6'>
         <div className='flex w-full items-center justify-between'>
           <div className='flex'>
             {isOwnProfile ? (

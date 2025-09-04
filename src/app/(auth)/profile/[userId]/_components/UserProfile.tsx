@@ -21,7 +21,7 @@ export const UserProfile = ({
   }
   if (userProfileData?.isSuccess) {
     return (
-      <>
+      <div className='w-full'>
         <Profile
           loggedInUserId={loggedInUserId}
           userData={userProfileData.data}
@@ -31,7 +31,7 @@ export const UserProfile = ({
           userData={userProfileData.data}
           isOwnProfile={isOwnProfile}
         />
-      </>
+      </div>
     );
   } else {
     return <div>찾으시는 유저가 없습니다.</div>;

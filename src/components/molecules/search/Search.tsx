@@ -35,7 +35,7 @@ export const Search = ({
   ...props
 }: SearchProps) => {
   //임시로 해둠 다른 페이지 보고 결정
-  const isXl = useMediaQuery('(min-width: 1280px)');
+  const isXl = useMediaQuery('(min-width: 1024px)');
   const showSearchIcon = searchIcon && isXl;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
