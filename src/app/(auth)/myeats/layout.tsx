@@ -5,7 +5,7 @@ type LayoutPops = {
 };
 export default function MyEatsLayout({ children }: LayoutPops) {
   return (
-    <div className='flex select-none flex-col items-center'>
+    <div className='flex w-full select-none flex-col items-center'>
       <BookmarkCountProvider>{children}</BookmarkCountProvider>
     </div>
   );

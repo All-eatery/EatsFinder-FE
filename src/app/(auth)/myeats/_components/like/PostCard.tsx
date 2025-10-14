@@ -7,12 +7,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { forwardRef } from 'react';
 const postCardVariants = cva(
-  'relative overflow-hidden rounded-3xl  lg:h-[408px] lg:w-[250px]',
+  'relative overflow-hidden rounded-3xl  xl:h-[408px] xl:w-[250px]',
   {
     variants: {
       variant: {
         explore: 'h-[200px] w-[160px]  lg:w-[210px] lg:h-[342px]',
-        recent: 'h-[200px] w-[165px]  lg:w-56 ',
+        recent: 'h-[200px] w-[165px] lg:h-80  lg:w-48 ',
       },
     },
     defaultVariants: {

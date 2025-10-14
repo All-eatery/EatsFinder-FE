@@ -7,17 +7,16 @@ import { UploadSVG } from '@/components/svg/UploadSVG';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const searchVariant = cva(
-  'relative flex items-center rounded-[30px] h-12 lg:h-[60px] gap-2 p-5 border mx-auto border-gray-100 lg:body-16 lg:body-18 focus-within:border-primary-400 focus-within:border-2',
+  'relative flex items-center rounded-[30px] h-12 lg:h-[60px] gap-2 p-5 border mx-auto border-gray-100 body-16 lg:body-18 focus-within:border-primary-400 focus-within:border-2',
   {
     variants: {
       variant: {
-        large: 'w-full md:w-[770px]',
+        large: 'w-full md:max-w-[770px] xl:w-[770px]',
         small: 'w-[400px]',
       },
     },
   },
 );
-//이거 반응형하며 좀 꼬임 낼 다시 정리 ㄱㄱ
 interface SearchProps
   extends VariantProps<typeof searchVariant>,
     InputHTMLAttributes<HTMLInputElement> {
@@ -34,7 +33,6 @@ export const Search = ({
   onSearch,
   ...props
 }: SearchProps) => {
-  //임시로 해둠 다른 페이지 보고 결정
   const isXl = useMediaQuery('(min-width: 1024px)');
   const showSearchIcon = searchIcon && isXl;
 

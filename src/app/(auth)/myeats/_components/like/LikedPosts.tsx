@@ -38,7 +38,7 @@ export const LikedPosts = () => {
 
   return (
     <div className='flex flex-col items-center gap-20'>
-      <div className='flex flex-col items-center gap-8'>
+      <div className='flex w-full flex-col gap-8'>
         <Search
           variant='large'
           placeholder='찾고 싶은 게시물 키워드를 검색해보세요.'
@@ -47,7 +47,10 @@ export const LikedPosts = () => {
         />
         {data?.pages[0].items.length ? (
           data?.pages.map((page, pageIndex) => (
-            <div key={pageIndex} className='grid grid-cols-5 gap-4'>
+            <div
+              key={pageIndex}
+              className='grid grid-cols-[repeat(auto-fit,minmax(165px,1fr))] gap-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4'
+            >
               {page.items.map((item, index) => {
                 const isLastItem =
                   pageIndex === data.pages.length - 1 &&

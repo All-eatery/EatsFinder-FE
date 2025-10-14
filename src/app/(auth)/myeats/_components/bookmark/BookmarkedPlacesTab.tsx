@@ -4,8 +4,8 @@ import { ButtonHTMLAttributes } from 'react';
 const tabVariants = cva('flex justify-center py-3', {
   variants: {
     active: {
-      true: 'text-gray-900 title-22 ',
-      false: 'subTitle-22 text-gray-400',
+      true: ' body-16 lg:title-22 text-gray-800 lg:text-gray-900',
+      false: 'body-16 lg:subTitle-22 text-gray-300 lg:text-gray-400',
     },
     display: {
       true: '',
