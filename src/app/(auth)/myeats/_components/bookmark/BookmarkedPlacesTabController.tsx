@@ -73,15 +73,7 @@ export const BookmarkedPlacesTabController = ({
     <div className='flex w-full flex-col'>
       <div className='items-center lg:flex lg:h-16 lg:justify-between lg:gap-6'>
         {/**탭버튼 */}
-        {select ? (
-          <button className='flex items-center gap-1' onClick={onAllCheckClick}>
-            <Checkbox
-              variant='Checkbox_Ver2'
-              checked={!!list ? checkboxState.place : checkboxState.list}
-            />
-            <span className='text-gray-400 subTitle-22'>{`전체 선택 ${list ? listCount : totalLists}`}</span>
-          </button>
-        ) : (
+        {!select && (
           <div className='flex flex-shrink-0 gap-3' onClick={resetSearchText}>
             <Link href='/myeats?tab=scrap&view=all'>
               <BookmarkedPlacesTab
@@ -112,7 +104,24 @@ export const BookmarkedPlacesTabController = ({
             )}
           </div>
         )}
-        <div className='flex w-full justify-end xl:w-auto'>
+
+        <div
+          className={`flex w-full justify-between ${!select && 'xl:w-auto'}`}
+        >
+          {select ? (
+            <button
+              className='flex shrink-0 items-center gap-1'
+              onClick={onAllCheckClick}
+            >
+              <Checkbox
+                variant='Checkbox_Ver2'
+                checked={!!list ? checkboxState.place : checkboxState.list}
+              />
+              <span className='text-gray-400 body-14 lg:subTitle-22'>{`전체 선택 ${list ? listCount : totalLists}`}</span>
+            </button>
+          ) : (
+            <div />
+          )}
           {/**리스트보기에서 선택취소 버튼 */}
           {view === 'list' && (
             <button
