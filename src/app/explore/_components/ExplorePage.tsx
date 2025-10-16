@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'; //좋아요 업데이트를 위해 한 부분이지만 비용이큼 차라리 query로?
+export const dynamic = 'force-dynamic'; //좋아요 업데이트를 위해 한 부분
 import { Search } from '@/components/molecules';
 import { RecentPosts } from './RecentPosts';
 import { getServerUserInfo } from '@/utils/getServerUserInfo';

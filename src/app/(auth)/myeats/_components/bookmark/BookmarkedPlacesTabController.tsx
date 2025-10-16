@@ -69,7 +69,6 @@ export const BookmarkedPlacesTabController = ({
   const { searchbarHandler, handleSearch, resetSearchText } =
     useSearchbarContext();
   return (
-    //하단 카드들 정리하기
     <div className='flex w-full flex-col'>
       <div className='items-center lg:flex lg:h-16 lg:justify-between lg:gap-6'>
         {/**탭버튼 */}
@@ -122,7 +121,7 @@ export const BookmarkedPlacesTabController = ({
           ) : (
             <div />
           )}
-          {/**리스트보기에서 선택취소 버튼 */}
+          {/**리스트보기 선택취소 버튼 */}
           {view === 'list' && (
             <button
               onClick={handleSelectToggle}
@@ -131,7 +130,7 @@ export const BookmarkedPlacesTabController = ({
               {select ? '취소' : '선택'}
             </button>
           )}
-          {/**여기 서치바 */}
+          {/**서치바 */}
           {view === 'all' && (
             <Search
               variant='large'

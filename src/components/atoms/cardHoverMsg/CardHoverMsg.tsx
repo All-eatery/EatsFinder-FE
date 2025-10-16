@@ -13,7 +13,7 @@ export const CardHoverMsg = ({ data, isOwnProfile }: MyfeedCardProps) => {
   const { closeModal, confirmButton, isModalOpen, openModal } =
     useDeletePostModal();
   return (
-    <div className='absolute z-10 flex h-[408px] w-[250px] flex-col justify-between rounded-3xl bg-gray-900 bg-opacity-60 px-[10px] py-[15px] text-white'>
+    <div className='absolute z-10 flex h-[200px] w-full flex-col justify-between rounded-3xl bg-gray-900 bg-opacity-60 px-[10px] py-[15px] text-white lg:h-[408px]'>
       <div className='relative'>
         {isOwnProfile && (
           <button
@@ -26,8 +26,8 @@ export const CardHoverMsg = ({ data, isOwnProfile }: MyfeedCardProps) => {
         {feedOption && <FeedOptionMenu openModal={openModal} />}
       </div>
       <Link href={`/posts/${data.postId}`} className='flex flex-col gap-2'>
-        <p className='truncate subTitle-20'>{data.placeName}</p>
-        <p className='line-clamp-3 body-16'>{data.content}</p>
+        <p className='truncate subTitle-16 lg:subTitle-20'>{data.placeName}</p>
+        <p className='line-clamp-3 body-14 lg:body-16'>{data.content}</p>
         <p className='body-12'>{data.createdAt}</p>
       </Link>
       <Modal

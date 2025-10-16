@@ -20,6 +20,7 @@ export const MyFeed = ({ userId, isOwnProfile }: MyFeedProps) => {
         isOwnProfile,
       }),
   });
+  console.log({ data });
   if (error) {
     return <div>피드를 가져오는 데 문제가 발생했습니다.</div>;
   }
@@ -28,7 +29,7 @@ export const MyFeed = ({ userId, isOwnProfile }: MyFeedProps) => {
   }
   return data.data.length > 0 ? (
     <>
-      <div className='grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6'>
+      <div className='grid grid-cols-[repeat(auto-fill,minmax(165px,1fr))] items-center gap-3 md:grid-cols-[repeat(auto-fill,minmax(175px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] lg:gap-6'>
         {data.data.map((feed, i) => (
           <MyFeedCard data={feed} key={i} isOwnProfile={isOwnProfile} />
         ))}

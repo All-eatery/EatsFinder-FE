@@ -13,7 +13,6 @@ import { cx } from 'class-variance-authority';
 
 const ListImg = ({ url }: { url: string }) => {
   return (
-    //이미지 꽉채우게 하기
     <figure className='relative h-24 flex-1 overflow-hidden rounded-lg lg:h-[70px] lg:w-[125px]'>
       {url ? (
         <Image src={url} alt='리스트 맛집 이미지' fill />
