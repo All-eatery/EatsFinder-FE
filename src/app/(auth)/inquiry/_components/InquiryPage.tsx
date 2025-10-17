@@ -8,8 +8,8 @@ export const InquiryPage = () => {
   const [toggleState, setToggleState] = useState('inquiryForm');
 
   return (
-    <div className='flex flex-col items-center gap-16'>
-      <div className='w-80'>
+    <div className='flex flex-col items-center gap-5 lg:gap-16'>
+      <div className='items-ce flex w-80 justify-center'>
         <ToggleBtn
           text_1='1:1문의하기'
           label_1='inquiryForm'

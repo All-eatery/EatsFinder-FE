@@ -25,7 +25,7 @@ export const ToggleBtn = <T extends string>({
   };
 
   return (
-    <div className='flex gap-[6px] rounded-3xl bg-slate-100 p-[2px] subTitle-12'>
+    <div className='flex w-48 justify-between rounded-3xl bg-slate-100 p-[2px] subTitle-12 lg:w-72'>
       <ToggleBtn_Button
         size={'large'}
         onClick={() => handleClick(label_1)}

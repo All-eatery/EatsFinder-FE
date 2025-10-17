@@ -25,15 +25,17 @@ export const BoardItem = ({
       <div className='flex justify-between'>
         <h3 className='text-lg text-gray-800'>{title}</h3>
         <div
-          className={`${type === 'notices' && 'hidden'} ${status ? 'bg-gray-100 text-gray-300' : 'bg-primary-400 text-white'} rounded-lg px-2`}
+          className={`${type === 'notices' && 'hidden'} ${status ? 'bg-gray-100 text-gray-300' : 'bg-primary-400 text-white'} flex items-center rounded-xl px-2 lg:px-3`}
         >
-          {status ? '답변완료' : '답변대기중'}
+          <span className='text-sm lg:text-base'>
+            {status ? '답변완료' : '답변대기중'}
+          </span>
         </div>
       </div>
       {type === 'inquiry' && (
-        <p className='mt-1 text-gray-700 body-18'>{content}</p>
+        <p className='mt-1 text-gray-700 body-16 lg:body-18'>{content}</p>
       )}
-      <p className='mt-1 text-sm text-gray-400'>
+      <p className='mt-1 text-xs text-gray-400 lg:text-sm'>
         <span>작성일 </span>
         {date}
       </p>
