@@ -1,5 +1,5 @@
 'use client';
-import { BoardItem } from '@/components/atoms/board/BoardItem';
+import { BoardItem, BoardItemProps } from '@/components/atoms/board/BoardItem';
 import { BoardPagination } from '@/components/atoms/board/BoardPagination';
 import React, { useState } from 'react';
 
@@ -17,7 +17,7 @@ export const InquiryLists = () => {
     <div className='w-full'>
       {currentNotices.map((inquiry) => (
         <BoardItem
-          type='inquiry'
+          type={inquiry.type}
           key={inquiry.id}
           id={inquiry.id}
           title={inquiry.title}
@@ -35,7 +35,7 @@ export const InquiryLists = () => {
   );
 };
 
-const Inquiries = [
+const Inquiries: BoardItemProps[] = [
   {
     id: 1,
     type: 'inquiry',
@@ -47,7 +47,7 @@ const Inquiries = [
   },
   {
     id: 2,
-    type: 'inquiry',
+    type: 'reply',
     title: '리뷰 작성이 안돼요',
     date: '2024.06.27',
     status: true,
@@ -65,7 +65,7 @@ const Inquiries = [
   },
   {
     id: 4,
-    type: 'inquiry',
+    type: 'reply',
     title: '탈퇴가 되지 않아요',
     date: '2024.06.22',
     status: true,
