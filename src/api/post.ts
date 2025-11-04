@@ -207,3 +207,17 @@ export const getPopularPosts: () => Promise<PostCardType[]> = async () => {
 
   return data;
 };
+
+export const getNeighborPosts = async () => {
+  const token = await getUserToken();
+  const res = await fetch(`${KOTLIN_SERVER}/posts/follows`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+};
