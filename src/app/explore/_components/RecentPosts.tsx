@@ -26,7 +26,7 @@ export const RecentPosts = () => {
   return (
     <div className='flex flex-col gap-3 lg:gap-6'>
       <h2 className='text-gray-700 subTitle-18 lg:subTitle-28'>최근 피드</h2>
-      <div className='grid grid-cols-[repeat(auto-fit,minmax(165px,1fr))] gap-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4'>
+      <div className='grid grid-cols-[repeat(auto-fill,minmax(165px,1fr))] gap-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4'>
         {data?.pages.map((page, pageIndex) =>
           page.items.map((item, index) => {
             const isLastItem =

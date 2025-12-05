@@ -39,27 +39,27 @@ export const PlacePosts = ({ id }: { id: number }) => {
             setState={setSortState}
           />
         </div>
-        {data?.pages.map((page, pageIndex) => (
-          <div key={pageIndex} className='grid grid-cols-5 gap-2'>
-            {page.items.map((item, index) => {
+        <div className='grid grid-cols-[repeat(auto-fill,minmax(165px,1fr))] gap-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4'>
+          {data?.pages.map((page, pageIndex) =>
+            page.items.map((item, index) => {
               const isLastItem =
                 pageIndex === data.pages.length - 1 &&
                 index === page.items.length - 1;
               return (
-                <div key={item.id} ref={isLastItem ? lastElementRef : null}>
-                  <FeedCard
-                    id={item.id}
-                    isLiked={item.isLiked}
-                    likeCount={item.likeCount}
-                    nickname={item.nickname}
-                    profileImage={item.profileImage}
-                    thumbnailUrl={item.thumbnailUrl}
-                  />
-                </div>
+                <FeedCard
+                  ref={isLastItem ? lastElementRef : null}
+                  key={item.id}
+                  id={item.id}
+                  isLiked={item.isLiked}
+                  likeCount={item.likeCount}
+                  nickname={item.nickname}
+                  profileImage={item.profileImage}
+                  thumbnailUrl={item.thumbnailUrl}
+                />
               );
-            })}
-          </div>
-        ))}
+            }),
+          )}
+        </div>
       </div>
       {isLoadMoreMode && hasNextPage && (
         <div className='mt-7 flex justify-center'>
