@@ -17,7 +17,7 @@ const postCardVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'explore',
+      variant: 'recent',
     },
   },
 );

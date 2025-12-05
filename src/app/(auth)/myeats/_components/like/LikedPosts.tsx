@@ -46,31 +46,27 @@ export const LikedPosts = () => {
           onSearch={handleSearch}
         />
         {data?.pages[0].items.length ? (
-          data?.pages.map((page, pageIndex) => (
-            <div
-              key={pageIndex}
-              className='grid grid-cols-[repeat(auto-fit,minmax(165px,1fr))] gap-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4'
-            >
-              {page.items.map((item, index) => {
+          <div className='grid grid-cols-[repeat(auto-fit,minmax(165px,1fr))] gap-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4'>
+            {data?.pages.map((page, pageIndex) =>
+              page.items.map((item, index) => {
                 const isLastItem =
                   pageIndex === data.pages.length - 1 &&
                   index === page.items.length - 1;
 
                 return (
-                  <div key={item.id} ref={isLastItem ? lastElementRef : null}>
-                    <PostCard
-                      key={item.id}
-                      id={item.postId}
-                      nickname={item.postUserNickname}
-                      src={item.postThumbnailUrl}
-                      profileImage={item.postUserProfileImage}
-                      isLiked={item.isPostLike}
-                    />
-                  </div>
+                  <PostCard
+                    key={item.id}
+                    ref={isLastItem ? lastElementRef : null}
+                    id={item.postId}
+                    nickname={item.postUserNickname}
+                    src={item.postThumbnailUrl}
+                    profileImage={item.postUserProfileImage}
+                    isLiked={item.isPostLike}
+                  />
                 );
-              })}
-            </div>
-          ))
+              }),
+            )}
+          </div>
         ) : (
           <div className='my-20 flex flex-col items-center justify-center text-gray-600 subTitle-20'>
             {isSearching ? (
