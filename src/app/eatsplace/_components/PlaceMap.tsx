@@ -124,7 +124,6 @@ export const PlaceMap = ({
   };
 
   if (!mapCenter) return <Loading />;
-
   return (
     <>
       {isSurrounding && <SurroundingMapHead address={address} />}

@@ -54,7 +54,7 @@ export const ProfileContents = ({
                   );
                 })
               ) : (
-                <div className='border-b-4 border-gray-800 text-gray-800 title-28'>
+                <div className='border-b-4 border-gray-800 text-gray-800 title-20 sm:title-28'>
                   게시글
                 </div>
               )}
