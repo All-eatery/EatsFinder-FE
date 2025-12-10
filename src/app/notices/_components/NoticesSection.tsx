@@ -15,7 +15,7 @@ export const NoticesSection = () => {
 
   return (
     <div>
-      <div className='my-24'>
+      <div className='mb-24'>
         {currentNotices.map((notice) => (
           <BoardItem
             type='notices'

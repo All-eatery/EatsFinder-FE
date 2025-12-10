@@ -1,8 +1,11 @@
-export const AlarmBellSVG = () => {
+interface AlarmBellSVGProps {
+  className?: string;
+}
+
+export const AlarmBellSVG = ({ className }: AlarmBellSVGProps) => {
   return (
     <svg
-      width='34'
-      height='42'
+      className={className}
       viewBox='0 0 34 42'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

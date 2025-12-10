@@ -2,5 +2,5 @@ type LayoutPops = {
   children: React.ReactNode;
 };
 export default function ProfileLayout({ children }: LayoutPops) {
-  return <div className='flex flex-col gap-20'>{children}</div>;
+  return <div className='flex w-full flex-col lg:gap-20'>{children}</div>;
 }

@@ -10,7 +10,10 @@ export function RadioButton({ options, selected, onChange }: RadioButtonProps) {
   return (
     <div className='flex gap-6'>
       {options.map((option) => (
-        <label key={option.value} className='flex cursor-pointer items-center'>
+        <label
+          key={option.value}
+          className='flex flex-shrink-0 cursor-pointer items-center'
+        >
           <input
             type='radio'
             name='radio-group'

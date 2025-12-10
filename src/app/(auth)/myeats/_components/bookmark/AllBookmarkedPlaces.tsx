@@ -39,7 +39,7 @@ export const AllBookmarkedPlaces = () => {
       {data?.pages[0].items.length ? (
         data?.pages.map((page, pageIndex) => {
           return (
-            <div key={pageIndex} className='grid grid-cols-2 gap-6'>
+            <div key={pageIndex} className='grid lg:grid-cols-2 lg:gap-6'>
               {page.items.map((item, index) => {
                 const isLastItem =
                   pageIndex === data.pages.length - 1 &&

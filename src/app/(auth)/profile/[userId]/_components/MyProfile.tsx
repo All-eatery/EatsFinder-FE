@@ -17,6 +17,7 @@ export const MyProfile = ({ isOwnProfile, userId }: ProfileProps) => {
         userData={userProfileData!}
         isOwnProfile={isOwnProfile}
       />
+      <div className='h-1.5 w-full bg-gray-25 lg:hidden' />
       <ProfileContents
         userData={userProfileData!}
         isOwnProfile={isOwnProfile}

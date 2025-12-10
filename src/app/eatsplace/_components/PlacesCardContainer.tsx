@@ -1,3 +1,4 @@
+'use client';
 import { useState } from 'react';
 import { SurroundingPlacesCard } from './SurroundingPlacesCard';
 import { sampleImg } from '@/app/(auth)/profile/[userId]/_components/FollowList';
@@ -15,7 +16,7 @@ export const PlacesCardContainer = () => {
 
   return (
     <>
-      <div className='grid grid-cols-2'>
+      <div className='grid grid-cols-1 lg:grid-cols-2'>
         <SurroundingPlacesCard src={sampleImg} />
         <SurroundingPlacesCard src={sampleImg} />
         <SurroundingPlacesCard src={sampleImg} />

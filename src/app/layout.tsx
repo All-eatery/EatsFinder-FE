@@ -23,7 +23,7 @@ export default function RootLayout({
         <CompoundProvider>
           <div className='flex min-h-screen flex-col'>
             <HeaderFetchData />
-            <main className='mx-auto w-[1440px] max-w-[1440px] grow px-9'>
+            <main className='mx-auto w-full max-w-[1440px] grow px-4 lg:px-9'>
               {children}
             </main>
             <Footer />

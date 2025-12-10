@@ -70,17 +70,10 @@ export const BookmarkedPlacesTabController = ({
     useSearchbarContext();
   return (
     <div className='flex w-full flex-col'>
-      <div className='flex h-16 justify-between'>
-        {select ? (
-          <button className='flex items-center gap-1' onClick={onAllCheckClick}>
-            <Checkbox
-              variant='Checkbox_Ver2'
-              checked={!!list ? checkboxState.place : checkboxState.list}
-            />
-            <span className='text-gray-400 subTitle-22'>{`전체 선택 ${list ? listCount : totalLists}`}</span>
-          </button>
-        ) : (
-          <div className='flex gap-3' onClick={resetSearchText}>
+      <div className='items-center lg:flex lg:h-16 lg:justify-between lg:gap-6'>
+        {/**탭버튼 */}
+        {!select && (
+          <div className='flex flex-shrink-0 gap-3' onClick={resetSearchText}>
             <Link href='/myeats?tab=scrap&view=all'>
               <BookmarkedPlacesTab
                 active={view === 'all'}
@@ -110,25 +103,43 @@ export const BookmarkedPlacesTabController = ({
             )}
           </div>
         )}
-        {view === 'list' && (
-          <button
-            onClick={handleSelectToggle}
-            className={`flex items-center ${select ? 'text-primary-400' : 'text-gray-400'} subTitle-22`}
-          >
-            {select ? '취소' : '선택'}
-          </button>
-        )}
 
-        {view === 'all' && (
-          <div className='flex justify-end'>
+        <div
+          className={`flex w-full justify-between ${!select && 'xl:w-auto'}`}
+        >
+          {select ? (
+            <button
+              className='flex shrink-0 items-center gap-1'
+              onClick={onAllCheckClick}
+            >
+              <Checkbox
+                variant='Checkbox_Ver2'
+                checked={!!list ? checkboxState.place : checkboxState.list}
+              />
+              <span className='text-gray-400 body-14 lg:subTitle-22'>{`전체 선택 ${list ? listCount : totalLists}`}</span>
+            </button>
+          ) : (
+            <div />
+          )}
+          {/**리스트보기 선택취소 버튼 */}
+          {view === 'list' && (
+            <button
+              onClick={handleSelectToggle}
+              className={`flex items-center ${select ? 'text-primary-400' : 'text-gray-400'} items-end body-14 lg:subTitle-22`}
+            >
+              {select ? '취소' : '선택'}
+            </button>
+          )}
+          {/**서치바 */}
+          {view === 'all' && (
             <Search
               variant='large'
               placeholder='스크랩했던 맛집을 빠르게 찾아보세요.'
               onChange={searchbarHandler}
               onSearch={handleSearch}
             />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

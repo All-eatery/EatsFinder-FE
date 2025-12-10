@@ -1,5 +1,7 @@
 import { ComponentProps } from 'react';
-
+export interface SVGClassProps {
+  className?: string;
+}
 export interface ButtonProps extends ComponentProps<'button'> {}
 export type SVGUsableProps = {
   isUsable?: boolean;
@@ -23,6 +25,7 @@ export type SVGCheckBoxProps = {
   isChecked?: 'default' | 'check' | 'blank';
 };
 export type SVGArrowProps = {
+  clasName: string;
   direction: 'down' | 'right' | 'left';
   color?: 'default' | 'orange';
 };

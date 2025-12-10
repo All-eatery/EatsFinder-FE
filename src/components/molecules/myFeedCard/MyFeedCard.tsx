@@ -8,7 +8,7 @@ export const MyFeedCard = ({ data, isOwnProfile }: MyfeedCardProps) => {
   const [isHover, setIsHover] = useState(false);
   return (
     <div
-      className='relative h-[408px] w-[250px]'
+      className='relative h-[200px] w-full lg:h-[408px]'
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
@@ -18,7 +18,7 @@ export const MyFeedCard = ({ data, isOwnProfile }: MyfeedCardProps) => {
         fill={true}
         alt='my feed card'
         priority={true}
-        sizes='(max-width: 250px) 100vw, 250px'
+        sizes='(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 250px'
       />
       {isHover && <CardHoverMsg data={data} isOwnProfile={isOwnProfile} />}
     </div>

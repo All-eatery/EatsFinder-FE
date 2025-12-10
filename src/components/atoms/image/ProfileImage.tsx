@@ -7,10 +7,11 @@ import { useState } from 'react';
 
 interface ProfileImageProps {
   src?: string | null;
-  size: 40 | 50 | 60 | 70 | 100;
+  size: 20 | 40 | 50 | 60 | 70 | 100;
 }
 
 const profileImageSize = {
+  20: 'h-5 w-5',
   40: 'h-[40px] w-[40px]',
   50: 'h-[50px] w-[50px]',
   60: 'h-[60px] w-[60px]',

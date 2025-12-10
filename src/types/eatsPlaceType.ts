@@ -10,6 +10,7 @@ export type PlaceInfoProps = {
   lng: number;
   lat: number;
 };
+//추가되어야 하는 부분
 export type PlacesInboundaryType = {
   id: number;
   name: string;

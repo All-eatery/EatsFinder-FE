@@ -1,3 +1,12 @@
+'use client';
+
+import { getClientUserInfo } from '@/utils/getClientUserInfo';
+
 export const SurroundingMapHead = ({ address }: { address: string }) => {
-  return <h2 className='text-gray-700 subTitle-28'>주변의 맛집 ({address})</h2>;
+  const data = getClientUserInfo();
+  return (
+    <h2 className='text-gray-700 subTitle-16 sm:subTitle-18 lg:subTitle-28'>
+      {data && data.nickname + ' '}주변의 맛집 ({address})
+    </h2>
+  );
 };

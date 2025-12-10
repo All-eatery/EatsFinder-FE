@@ -21,14 +21,14 @@ export const BookmarkedPlaceCard = ({
   isSeleceted,
 }: BookmarkedPlaceCard) => {
   return (
-    <div className='relative flex h-[185px] items-center p-[10px]'>
+    <div className='relative flex h-24 items-center lg:h-[185px] lg:p-[10px]'>
       {isSelect && (
-        <div className='absolute left-6 top-6'>
+        <div className='absolute left-1 top-1 z-10 lg:left-6 lg:top-6'>
           <Checkbox variant='Checkbox_Ver2' checked={isSeleceted} />
         </div>
       )}
-      <div className='flex w-full gap-6 border-b-[1px] border-b-gray-50 p-5 pb-[25px]'>
-        <figure className='relative h-[120px] w-[180px] overflow-hidden rounded-3xl'>
+      <div className='flex w-full gap-6 border-b-[1px] border-b-gray-50 p-2 lg:p-5 lg:pb-[25px]'>
+        <figure className='relative h-20 w-20 overflow-hidden rounded-3xl lg:h-[120px] lg:w-[180px]'>
           <Image
             alt='게시글 이미지'
             src={src || sampleImg}
@@ -37,9 +37,9 @@ export const BookmarkedPlaceCard = ({
           />
         </figure>
         <div className='flex flex-col justify-center gap-1'>
-          <p className='text-gray-500 body-16'>{category}</p>
-          <p className='text-gray-800 subTitle-24'>{name}</p>
-          <p className='text-gray-500 body-16'>{address}</p>
+          <p className='text-gray-500 body-12 lg:body-16'>{category}</p>
+          <p className='text-gray-800 subTitle-16 lg:subTitle-24'>{name}</p>
+          <p className='text-gray-500 body-12 lg:body-16'>{address}</p>
         </div>
       </div>
       <BookmarkButton placeId={id} isMarked={true} />

@@ -13,7 +13,7 @@ import { cx } from 'class-variance-authority';
 
 const ListImg = ({ url }: { url: string }) => {
   return (
-    <figure className='relative h-[70px] w-[125px] overflow-hidden rounded-lg'>
+    <figure className='relative h-24 flex-1 overflow-hidden rounded-lg lg:h-[70px] lg:w-[125px]'>
       {url ? (
         <Image src={url} alt='리스트 맛집 이미지' fill />
       ) : (
@@ -60,14 +60,12 @@ export const BookmarkedListCard = ({
   } = useDeleteListModal();
   const renderListImages = () => {
     const listThumbnails = Array.isArray(thumbnails) ? thumbnails : [];
-
     while (listThumbnails.length < 4) {
       listThumbnails.push({ thumbnailUrl: '' });
     }
-
-    return listThumbnails.map((item, index) => (
-      <ListImg key={index} url={item.thumbnailUrl} />
-    ));
+    return listThumbnails
+      .slice(0, 4)
+      .map((item, index) => <ListImg key={index} url={item.thumbnailUrl} />);
   };
 
   return (
@@ -86,13 +84,16 @@ export const BookmarkedListCard = ({
           <Checkbox variant='Checkbox_Ver2' checked={isSeleceted} />
         </div>
       )}
-      <div className='flex h-[184px] w-full cursor-pointer items-center justify-start gap-6 p-5'>
-        <div className='grid h-36 w-[254px] grid-cols-2 grid-rows-2 gap-1'>
+      <div className='flex h-[184px] w-full cursor-pointer flex-col gap-4 p-5 lg:flex-row lg:items-center lg:justify-start lg:gap-6'>
+        <div className='hidden h-36 w-full grid-cols-2 grid-rows-2 gap-1 lg:grid lg:w-[254px]'>
           {renderListImages()}
         </div>
         <div>
-          <p className='text-gray-800 title-24'>{title}</p>
-          <p className='text-gray-400 body-18'>{`${count}개의 게시물`}</p>
+          <p className='text-gray-800 subTitle-16 lg:title-24'>{title}</p>
+          <p className='text-gray-400 body-12 lg:body-18'>{`${count}개의 게시물`}</p>
+        </div>
+        <div className='flex h-36 w-full gap-1 lg:hidden'>
+          {renderListImages()}
         </div>
       </div>
       <div className='absolute right-5 top-5' ref={optionRef}>

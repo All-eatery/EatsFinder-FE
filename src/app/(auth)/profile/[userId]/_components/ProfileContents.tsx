@@ -37,33 +37,32 @@ export const ProfileContents = ({
 
   return (
     <>
-      <div className='flex w-[1368px] flex-col gap-6'>
-        <div className='flex w-full items-center justify-between'>
-          <div className='flex'>
-            {isOwnProfile ? (
-              tabLabels.map((label, i) => {
-                return (
-                  <Tab
-                    key={i}
-                    active={activeIndex === i}
-                    onClick={() => handleTabClick(i)}
-                  >
-                    {label}
-                  </Tab>
-                );
-              })
-            ) : (
-              <div className='border-b-4 border-gray-800 text-gray-800 title-28'>
-                게시글
-              </div>
+      <div className='flex max-w-[1368px] flex-col gap-2 lg:gap-6'>
+        <div className='flex items-center'>
+          <div className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'>
+            <div className='flex w-1/2 lg:w-auto'>
+              {isOwnProfile ? (
+                tabLabels.map((label, i) => {
+                  return (
+                    <Tab
+                      key={i}
+                      active={activeIndex === i}
+                      onClick={() => handleTabClick(i)}
+                    >
+                      {label}
+                    </Tab>
+                  );
+                })
+              ) : (
+                <div className='border-b-4 border-gray-800 text-gray-800 title-20 sm:title-28'>
+                  게시글
+                </div>
+              )}
+            </div>
+            {activeIndex === 1 && isOwnProfile && (
+              <TimeLineFilter handler={handleFileterState} />
             )}
           </div>
-
-          {activeIndex === 1 && isOwnProfile && (
-            <>
-              <TimeLineFilter handler={handleFileterState} />
-            </>
-          )}
         </div>
         {contents()}
       </div>

@@ -16,15 +16,18 @@ export const getNewNeighborPosts = async () => {
   return data;
 };
 
-export const getAllPosts = async (cursor: number) => {
+export const getAllPosts = async (cursor: number, size: number) => {
   const token = await getUserToken();
 
-  const response = await fetch(`${NEST_SERVER}/posts?cursor=${cursor}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const response = await fetch(
+    `${NEST_SERVER}/posts?cursor=${cursor}&size=${size}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
   const data = await response.json();
   return data;
 };

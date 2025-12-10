@@ -11,11 +11,11 @@ export const RadioSVG = ({ isChecked = false }: SVGRadioProps) => {
     >
       {isChecked ? (
         <>
-          <circle cx='12' cy='12' r='8' stroke='#FB5607' stroke-width='2' />
+          <circle cx='12' cy='12' r='8' stroke='#FB5607' strokeWidth='2' />
           <circle cx='12' cy='12' r='5' fill='#FB5607' />
         </>
       ) : (
-        <circle cx='12' cy='12' r='8' stroke='#A6A6A6' stroke-width='2' />
+        <circle cx='12' cy='12' r='8' stroke='#A6A6A6' strokeWidth='2' />
       )}
     </svg>
   );

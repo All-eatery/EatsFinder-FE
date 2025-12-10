@@ -68,7 +68,10 @@ export const BookmarkedPlaceLists = () => {
     <div>
       <div>
         {data?.pages.map((page, pageIndex) => (
-          <div key={pageIndex} className='mb-6 grid grid-cols-2 gap-6'>
+          <div
+            key={pageIndex}
+            className='mb-6 grid gap-3 lg:grid-cols-2 lg:gap-6'
+          >
             {page.items.map((item, index) => {
               const isLastItem =
                 pageIndex === data.pages.length - 1 &&

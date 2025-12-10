@@ -4,33 +4,38 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { customTwMerge } from '@/utils/customTwMerge';
 import { SearchSVG } from '@/components/svg/SearchSVG';
 import { UploadSVG } from '@/components/svg/UploadSVG';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const searchVariant = cva(
-  'relative flex items-center rounded-[30px] h-[60px] gap-2 p-5 border mx-auto border-gray-100 body-18 focus-within:border-primary-400 focus-within:border-2',
+  'relative flex items-center rounded-[30px] h-12 lg:h-[60px] gap-2 p-5 border mx-auto border-gray-100 body-16 lg:body-18 focus-within:border-primary-400 focus-within:border-2',
   {
     variants: {
       variant: {
-        large: 'w-[770px]',
+        large: 'w-full md:max-w-[770px] xl:w-[770px]',
         small: 'w-[400px]',
       },
     },
   },
 );
-
 interface SearchProps
   extends VariantProps<typeof searchVariant>,
     InputHTMLAttributes<HTMLInputElement> {
   searchIcon?: boolean;
+  isSearch?: boolean;
   onSearch?: () => void;
 }
 
 export const Search = ({
   variant,
   className,
+  isSearch = true,
   searchIcon = true,
   onSearch,
   ...props
 }: SearchProps) => {
+  const isXl = useMediaQuery('(min-width: 1024px)');
+  const showSearchIcon = searchIcon && isXl;
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && onSearch) {
       onSearch();
@@ -38,7 +43,7 @@ export const Search = ({
   };
   return (
     <div className={customTwMerge(searchVariant({ variant }), className)}>
-      {searchIcon && (
+      {showSearchIcon && (
         <div className='pointer-events-none absolute'>
           <SearchSVG />
         </div>
@@ -46,14 +51,21 @@ export const Search = ({
       <input
         className={customTwMerge(
           'w-full bg-transparent outline-none',
-          searchIcon && 'pl-8',
+          showSearchIcon && 'pl-8',
         )}
         {...props}
         onKeyDown={handleKeyDown}
       />
-      <button aria-label='search button' onClick={onSearch}>
-        <UploadSVG />
-      </button>
+      {isSearch ? (
+        <button aria-label='search button' onClick={onSearch}>
+          <UploadSVG className='hidden lg:block' />
+          <SearchSVG className='block lg:hidden' />
+        </button>
+      ) : (
+        <button aria-label='search button' onClick={onSearch}>
+          <UploadSVG />
+        </button>
+      )}
     </div>
   );
 };

@@ -38,7 +38,7 @@ export const LikedPosts = () => {
 
   return (
     <div className='flex flex-col items-center gap-20'>
-      <div className='flex flex-col items-center gap-8'>
+      <div className='flex w-full flex-col gap-8'>
         <Search
           variant='large'
           placeholder='찾고 싶은 게시물 키워드를 검색해보세요.'
@@ -46,28 +46,27 @@ export const LikedPosts = () => {
           onSearch={handleSearch}
         />
         {data?.pages[0].items.length ? (
-          data?.pages.map((page, pageIndex) => (
-            <div key={pageIndex} className='grid grid-cols-5 gap-4'>
-              {page.items.map((item, index) => {
+          <div className='grid grid-cols-[repeat(auto-fill,minmax(165px,1fr))] gap-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-4'>
+            {data?.pages.map((page, pageIndex) =>
+              page.items.map((item, index) => {
                 const isLastItem =
                   pageIndex === data.pages.length - 1 &&
                   index === page.items.length - 1;
 
                 return (
-                  <div key={item.id} ref={isLastItem ? lastElementRef : null}>
-                    <PostCard
-                      key={item.id}
-                      id={item.postId}
-                      nickname={item.postUserNickname}
-                      src={item.postThumbnailUrl}
-                      profileImage={item.postUserProfileImage}
-                      isLiked={item.isPostLike}
-                    />
-                  </div>
+                  <PostCard
+                    key={item.id}
+                    ref={isLastItem ? lastElementRef : null}
+                    id={item.postId}
+                    nickname={item.postUserNickname}
+                    src={item.postThumbnailUrl}
+                    profileImage={item.postUserProfileImage}
+                    isLiked={item.isPostLike}
+                  />
                 );
-              })}
-            </div>
-          ))
+              }),
+            )}
+          </div>
         ) : (
           <div className='my-20 flex flex-col items-center justify-center text-gray-600 subTitle-20'>
             {isSearching ? (

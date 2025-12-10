@@ -8,7 +8,7 @@ export const CreatedBy = ({ nickname, profileUrl }: CreatedBy) => {
   const url = profileUrl ? profileUrl : sampleImg;
   return (
     <div className='flex items-center gap-3'>
-      <div className='relative flex h-[70px] w-[70px] items-center'>
+      <div className='relative flex h-7 w-7 items-center lg:h-[70px] lg:w-[70px]'>
         <Image
           className='rounded-full'
           src={url}
@@ -16,7 +16,9 @@ export const CreatedBy = ({ nickname, profileUrl }: CreatedBy) => {
           alt='user profile'
         />
       </div>
-      <p className='text-gray-600 subTitle-18'>{nickname}</p>
+      <p className='whitespace-nowrap text-gray-600 subTitle-16 lg:subTitle-18'>
+        {nickname}
+      </p>
     </div>
   );
 };
